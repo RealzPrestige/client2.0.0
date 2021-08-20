@@ -20,12 +20,12 @@ public abstract class MixinItemRenderer
     public void renderItem(final ItemStack stack, final EntityLivingBase entitylivingbaseIn, final ItemCameraTransforms.TransformType transform, final boolean leftHanded, final CallbackInfo ci) {
         if (Viewmodel.getINSTANCE().isEnabled() && (transform == ItemCameraTransforms.TransformType.FIRST_PERSON_LEFT_HAND || transform == ItemCameraTransforms.TransformType.FIRST_PERSON_RIGHT_HAND)) {
             final Viewmodel changer = Viewmodel.getINSTANCE();
-            GlStateManager.scale((float)Viewmodel.getINSTANCE().sizeX.getValue(), (float)Viewmodel.getINSTANCE().sizeY.getValue(), (float)Viewmodel.getINSTANCE().sizeZ.getValue());
-            if (transform.equals((Object)ItemCameraTransforms.TransformType.FIRST_PERSON_LEFT_HAND)) {
-                GL11.glTranslated((double)(changer.offhandX.getValue() / 4.0f), (double)(changer.offhandY.getValue() / 4.0f), (double)(changer.offhandZ.getValue() / 4.0f));
+            GlStateManager.scale( Viewmodel.getINSTANCE().sizeX.getValue() , Viewmodel.getINSTANCE().sizeY.getValue() , Viewmodel.getINSTANCE().sizeZ.getValue() );
+            if (transform.equals( ItemCameraTransforms.TransformType.FIRST_PERSON_LEFT_HAND )) {
+                GL11.glTranslated( changer.offhandX.getValue() / 4.0f , changer.offhandY.getValue() / 4.0f , changer.offhandZ.getValue() / 4.0f );
             }
             else {
-                GL11.glTranslated((double)(changer.offsetX.getValue() / 4.0f), (double)(changer.offsetY.getValue() / 4.0f), (double)(changer.offsetZ.getValue() / 4.0f));
+                GL11.glTranslated( changer.offsetX.getValue() / 4.0f , changer.offsetY.getValue() / 4.0f , changer.offsetZ.getValue() / 4.0f );
             }
         }
     }

@@ -15,7 +15,7 @@ import org.lwjgl.opengl.GL11;
 import java.awt.*;
 
 public class MainMenuScreen extends GuiScreen {
-    private ResourceLocation resourceLocation = new ResourceLocation("textures/background.jpg");
+    private final ResourceLocation resourceLocation = new ResourceLocation("textures/background.jpg");
     public ParticleSystem particleSystem;
     private int y;
     private int x;

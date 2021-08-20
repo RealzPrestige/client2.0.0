@@ -2,7 +2,6 @@ package client.mixin;
 
 import client.events.*;
 import client.modules.movement.DirectionalSpeed;
-import client.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityPlayerSP;

@@ -11,9 +11,7 @@ import client.util.PlayerUtil;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.block.BlockEnderChest;
 import net.minecraft.block.BlockObsidian;
-import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.CPacketPlayer;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -56,8 +54,8 @@ public class Surround extends Module {
         this.floor = true;
         this.timer = new client.util.Timer();
         this.retryTimer = new client.util.Timer();
-        this.extendingBlocks = new HashSet<Vec3d>();
-        this.retries = new HashMap<BlockPos, Integer>();
+        this.extendingBlocks = new HashSet <> ( );
+        this.retries = new HashMap <> ( );
         this.didPlace = false;
         this.placements = 0;
         this.extenders = 1;
@@ -72,14 +70,14 @@ public class Surround extends Module {
             this.disable();
         }
         this.lastHotbarSlot = Surround.mc.player.inventory.currentItem;
-        this.startPos = EntityUtil.getRoundedBlockPos((Entity)Surround.mc.player);
+        this.startPos = EntityUtil.getRoundedBlockPos( Surround.mc.player );
         this.center = PlayerUtil.getCenter(Surround.mc.player.posX, Surround.mc.player.posY, Surround.mc.player.posZ);
         if(this.centerp.getValue()) {
             switch (this.centerPlayer.getValue()) {
                 case INSTANT: {
                     Surround.mc.player.motionX = 0.0;
                     Surround.mc.player.motionZ = 0.0;
-                    Surround.mc.player.connection.sendPacket((Packet<net.minecraft.network.play.INetHandlerPlayServer>) new CPacketPlayer.Position(this.center.x, this.center.y, this.center.z, true));
+                    Surround.mc.player.connection.sendPacket( new CPacketPlayer.Position(this.center.x, this.center.y, this.center.z, true) );
                     Surround.mc.player.setPosition(this.center.x, this.center.y, this.center.z);
                     break;
                 }
@@ -105,8 +103,8 @@ public class Surround extends Module {
             return;
         }
         final boolean onWeb = Surround.mc.world.getBlockState(new BlockPos(Surround.mc.player.getPositionVector())).getBlock() == Blocks.WEB;
-        if (!BlockUtil.isSafe((Entity)Surround.mc.player, onWeb ? 1 : 0, this.floor)) {
-            this.placeBlocks(Surround.mc.player.getPositionVector(), BlockUtil.getUnsafeBlockArray(Surround.mc.player.getPositionVector(), (int)(onWeb ? 1 : 0), true), false, false, false);
+        if (!BlockUtil.isSafe( Surround.mc.player , onWeb ? 1 : 0, this.floor)) {
+            this.placeBlocks(Surround.mc.player.getPositionVector(), BlockUtil.getUnsafeBlockArray(Surround.mc.player.getPositionVector(), onWeb ? 1 : 0 , true), false, false, false);
         }
         boolean inEChest = Surround.mc.world.getBlockState(new BlockPos(Surround.mc.player.getPositionVector())).getBlock() == Blocks.ENDER_CHEST;
         if (Surround.mc.player.posY - (int)Surround.mc.player.posY < 0.7) {
@@ -147,13 +145,13 @@ public class Surround extends Module {
         if (this.check()) {
             return;
         }
-        if (!EntityUtil.isSafe((Entity)Surround.mc.player, 0, true)) {
+        if (!EntityUtil.isSafe( Surround.mc.player , 0, true)) {
             this.isSafe = 0;
-            this.placeBlocks(Surround.mc.player.getPositionVector(), EntityUtil.getUnsafeBlockArray((Entity)Surround.mc.player, 0, true), true, false, false);
+            this.placeBlocks(Surround.mc.player.getPositionVector(), EntityUtil.getUnsafeBlockArray( Surround.mc.player , 0, true), true, false, false);
         }
-        else if (!EntityUtil.isSafe((Entity)Surround.mc.player, -1, false)) {
+        else if (!EntityUtil.isSafe( Surround.mc.player , -1, false)) {
             this.isSafe = 1;
-            this.placeBlocks(Surround.mc.player.getPositionVector(), EntityUtil.getUnsafeBlockArray((Entity)Surround.mc.player, -1, false), false, false, true);
+            this.placeBlocks(Surround.mc.player.getPositionVector(), EntityUtil.getUnsafeBlockArray( Surround.mc.player , -1, false), false, false, true);
         }
         else {
             this.isSafe = 3;
@@ -233,7 +231,7 @@ public class Surround extends Module {
         int matches = 0;
         for (final Vec3d vec3d : vec3ds) {
             for (final Vec3d pos : BlockUtil.getUnsafeBlockArray(Surround.mc.player.getPositionVector(), 0, this.floor)) {
-                if (vec3d.equals((Vec3d)pos)) {
+                if (vec3d.equals( pos )) {
                     ++matches;
                 }
             }

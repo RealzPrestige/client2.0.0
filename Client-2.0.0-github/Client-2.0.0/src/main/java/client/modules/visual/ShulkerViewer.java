@@ -19,6 +19,7 @@ import net.minecraft.util.ResourceLocation;
 
 import java.awt.*;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ShulkerViewer extends Module {
@@ -47,17 +48,17 @@ public class ShulkerViewer extends Module {
             ItemShulkerBox shulker = (ItemShulkerBox) item;
             entityBox.blockType = shulker.getBlock();
             entityBox.setWorld(ShulkerViewer.mc.world);
-            ItemStackHelper.loadAllItems(stack.getTagCompound().getCompoundTag("BlockEntityTag"), entityBox.items);
+            ItemStackHelper.loadAllItems( Objects.requireNonNull ( stack.getTagCompound ( ) ).getCompoundTag("BlockEntityTag"), entityBox.items);
             entityBox.readFromNBT(stack.getTagCompound().getCompoundTag("BlockEntityTag"));
             entityBox.setCustomName(name == null ? stack.getDisplayName() : name);
             new Thread(() -> {
                 try {
                     Thread.sleep(200L);
-                } catch (InterruptedException interruptedException) {
+                } catch (InterruptedException ignored ) {
                 }
                 ShulkerViewer.mc.player.displayGUIChest(entityBox);
             }).start();
-        } catch (Exception exception) {
+        } catch (Exception ignored ) {
         }
     }
 

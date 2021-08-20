@@ -1,6 +1,5 @@
 package client.modules.visual;
 
-import java.util.Objects;
 import client.Client;
 import client.events.Render3DEvent;
 import client.modules.Module;
@@ -16,6 +15,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
+
+import java.util.Objects;
 
 public class NameTags extends Module {
     public static NameTags INSTANCE = new NameTags();

@@ -1,15 +1,12 @@
 package client.mixin;
 
 import client.Client;
-import client.events.KeyEvent;
 import client.gui.impl.background.MainMenuScreen;
 import client.gui.impl.background.MenuToggler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.crash.CrashReport;
-import net.minecraftforge.common.MinecraftForge;
-import org.lwjgl.input.Keyboard;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;

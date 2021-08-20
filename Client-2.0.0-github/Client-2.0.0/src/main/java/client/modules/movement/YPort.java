@@ -9,7 +9,7 @@ import client.util.Timer;
 public class YPort extends Module {
     private final Setting<Double> speed;
     public Setting<String> futurePrefix;
-    private Timer timer;
+    private final Timer timer;
 
     public YPort() {
         super("Longjump", "Terrible rip off longjump", Module.Category.MOVEMENT);

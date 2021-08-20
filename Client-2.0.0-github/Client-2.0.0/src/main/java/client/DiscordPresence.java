@@ -10,7 +10,7 @@ public class DiscordPresence{
     private static final DiscordRPC rpc;
     public static DiscordRichPresence presence;
     private static Thread thread;
-    private static int index;
+    private static final int index;
 
     static {
         index = 1;
@@ -35,7 +35,7 @@ public class DiscordPresence{
                 rpc.Discord_UpdatePresence(presence);
                 try {
                     Thread.sleep(2000L);
-                } catch (InterruptedException interruptedException) {
+                } catch (InterruptedException ignored ) {
                 }
             }
         }, "RPC-Callback-Handler");

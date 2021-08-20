@@ -3,7 +3,6 @@ package client.modules.player;
 import client.modules.Module;
 import client.setting.Setting;
 import client.util.Timer;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.item.Item;
@@ -33,7 +32,7 @@ public class HotbarRefill extends Module
         this.crystal = (Setting<Boolean>)this.register(new Setting("Crystals", true));
         this.crystalAmount = (Setting<Integer>)this.register(new Setting("CrystalAmount", 1, 1, 64, v -> this.crystal.getValue()));
         this.timer = new Timer();
-        this.Hotbar = new ArrayList<Item>();
+        this.Hotbar = new ArrayList <> ( );
     }
 
     @Override
@@ -92,7 +91,7 @@ public class HotbarRefill extends Module
         for (int l_I = 9; l_I < 36; ++l_I) {
             final ItemStack l_Item = HotbarRefill.mc.player.inventory.getStackInSlot(l_I);
             if (!l_Item.isEmpty() && this.CanItemBeMergedWith(l_Stack, l_Item)) {
-                HotbarRefill.mc.playerController.windowClick(HotbarRefill.mc.player.inventoryContainer.windowId, l_I, 0, ClickType.QUICK_MOVE, (EntityPlayer)HotbarRefill.mc.player);
+                HotbarRefill.mc.playerController.windowClick(HotbarRefill.mc.player.inventoryContainer.windowId, l_I, 0, ClickType.QUICK_MOVE, HotbarRefill.mc.player );
                 HotbarRefill.mc.playerController.updateController();
                 return true;
             }

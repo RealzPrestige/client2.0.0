@@ -21,16 +21,16 @@ public class ExpESP extends Module {
     public ExpESP(){
         super("ExpESP", "Bottle of enchant rendaaa", Category.VISUAL);
     }
-    public Setting<Boolean> bottles = this.register(new Setting<Boolean>("Bottles", true));
-    public Setting<Boolean> orbs = this.register(new Setting<Boolean>("Orbs", true));
-    public Setting<Integer> red = this.register(new Setting<Integer>("BottlesRed", 255, 0, 255,v-> this.bottles.getValue()));
-    public Setting<Integer> green = this.register(new Setting<Integer>("BottlesGreen", 255, 0, 255,v-> this.bottles.getValue()));
-    public Setting<Integer> blue = this.register(new Setting<Integer>("BottlesBlue", 255, 0, 255,v-> this.bottles.getValue()));
-    public Setting<Integer> alpha = this.register(new Setting<Integer>("BottlesAlpha", 150, 0, 255,v-> this.bottles.getValue()));
-    public Setting<Integer> o_red = this.register(new Setting<Integer>("OrbsRed", 255, 0, 255,v-> this.orbs.getValue()));
-    public Setting<Integer> o_green = this.register(new Setting<Integer>("OrbsGreen", 255, 0, 255,v-> this.orbs.getValue()));
-    public Setting<Integer> o_blue = this.register(new Setting<Integer>("OrbsBlue", 255, 0, 255,v-> this.orbs.getValue()));
-    public Setting<Integer> o_alpha = this.register(new Setting<Integer>("OrbsAlpha", 150, 0, 255,v-> this.orbs.getValue()));
+    public Setting<Boolean> bottles = this.register( new Setting <> ( "Bottles" , true ));
+    public Setting<Boolean> orbs = this.register( new Setting <> ( "Orbs" , true ));
+    public Setting<Integer> red = this.register( new Setting <> ( "BottlesRed" , 255 , 0 , 255 , v -> this.bottles.getValue ( ) ));
+    public Setting<Integer> green = this.register( new Setting <> ( "BottlesGreen" , 255 , 0 , 255 , v -> this.bottles.getValue ( ) ));
+    public Setting<Integer> blue = this.register( new Setting <> ( "BottlesBlue" , 255 , 0 , 255 , v -> this.bottles.getValue ( ) ));
+    public Setting<Integer> alpha = this.register( new Setting <> ( "BottlesAlpha" , 150 , 0 , 255 , v -> this.bottles.getValue ( ) ));
+    public Setting<Integer> o_red = this.register( new Setting <> ( "OrbsRed" , 255 , 0 , 255 , v -> this.orbs.getValue ( ) ));
+    public Setting<Integer> o_green = this.register( new Setting <> ( "OrbsGreen" , 255 , 0 , 255 , v -> this.orbs.getValue ( ) ));
+    public Setting<Integer> o_blue = this.register( new Setting <> ( "OrbsBlue" , 255 , 0 , 255 , v -> this.orbs.getValue ( ) ));
+    public Setting<Integer> o_alpha = this.register( new Setting <> ( "OrbsAlpha" , 150 , 0 , 255 , v -> this.orbs.getValue ( ) ));
     @Override
     public void onRender3D(Render3DEvent event) {
         AxisAlignedBB bb;

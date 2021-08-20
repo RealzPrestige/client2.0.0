@@ -43,7 +43,7 @@ public class Hud extends Module {
     private final Setting<Boolean> potionEffects = register(new Setting("PotionEffects", false));
     private final Setting<Boolean> bottomAlign = register(new Setting("BottomAlign", false,v-> this.potionEffects.getValue()));
     private final Setting<Boolean> coords = register(new Setting("Coords", false, "Your current coordinates"));
-    private final Setting<Boolean> armor = this.register(new Setting<Boolean>("Armor", false, "ArmorHUD"));
+    private final Setting<Boolean> armor = this.register( new Setting <> ( "Armor" , false , "ArmorHUD" ));
     private final Setting<Boolean> percent = this.register(new Setting<Object>("Percent", true, v -> this.armor.getValue()));
     public Hud() {
         super("Hud", "Displays strings on your screen", Category.CORE);
@@ -60,7 +60,7 @@ public class Hud extends Module {
     @Override
     public void onUpdate() {
         if (fovSetting.getValue()) {
-            mc.gameSettings.setOptionFloatValue(GameSettings.Options.FOV, this.fov.getValue().floatValue());
+            mc.gameSettings.setOptionFloatValue(GameSettings.Options.FOV, this.fov.getValue ( ) );
         }
     }
 
@@ -143,18 +143,18 @@ public class Hud extends Module {
         int hposX = (int) (mc.player.posX * nether);
         int hposZ = (int) (mc.player.posZ * nether);
         String coordinates = ChatFormatting.WHITE + "XYZ " + ChatFormatting.RESET + (inHell ? (posX + ", " + posY + ", " + posZ + ChatFormatting.WHITE + " [" + ChatFormatting.RESET + hposX + ", " + hposZ + ChatFormatting.WHITE + "]" + ChatFormatting.RESET) : (posX + ", " + posY + ", " + posZ + ChatFormatting.WHITE + " [" + ChatFormatting.RESET + hposX + ", " + hposZ + ChatFormatting.WHITE + "]"));
-        String coords = this.coords.getValue().booleanValue() ? coordinates : "";
+        String coords = this.coords.getValue ( ) ? coordinates : "";
         i += 10;
         if ((ClickGui.getInstance()).rainbow.getValue()) {
             String rainbowCoords = this.coords.getValue() ? ("XYZ " + (inHell ? (posX + ", " + posY + ", " + posZ + " [" + hposX + ", " + hposZ + "]") : (posX + ", " + posY + ", " + posZ + " [" + hposX + ", " + hposZ + "]"))) : "";
             if ((ClickGui.getInstance()).rainbowModeHud.getValue() == ClickGui.rainbowMode.Static) {
-                this.renderer.drawString(rainbowCoords, 2.0F, (height - i), ColorUtil.rainbow((ClickGui.getInstance()).rainbowHue.getValue().intValue()).getRGB(), true);
+                this.renderer.drawString(rainbowCoords, 2.0F, (height - i), ColorUtil.rainbow( ( ClickGui.getInstance ( ) ).rainbowHue.getValue ( ) ).getRGB(), true);
             } else {
                 int[] counter3 = {1};
                 char[] stringToCharArray2 = rainbowCoords.toCharArray();
                 float u = 0.0F;
                 for (char c : stringToCharArray2) {
-                    this.renderer.drawString(String.valueOf(c), 2.0F + u, (height - i), ColorUtil.rainbow(counter3[0] * (ClickGui.getInstance()).rainbowHue.getValue().intValue()).getRGB(), true);
+                    this.renderer.drawString(String.valueOf(c), 2.0F + u, (height - i), ColorUtil.rainbow(counter3[0] * ( ClickGui.getInstance ( ) ).rainbowHue.getValue ( ) ).getRGB(), true);
                     u += this.renderer.getStringWidth(String.valueOf(c));
                     counter3[0] = counter3[0] + 1;
                 }
@@ -192,7 +192,7 @@ public class Hud extends Module {
             if (!percent) {
                 continue;
             }
-            int dmg = 0;
+            int dmg;
             final int itemDurability = is.getMaxDamage() - is.getItemDamage();
             final float green = (is.getMaxDamage() - (float) is.getItemDamage()) / is.getMaxDamage();
             final float red = 1.0f - green;

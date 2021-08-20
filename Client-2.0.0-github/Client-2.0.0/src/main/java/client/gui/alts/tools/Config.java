@@ -18,14 +18,14 @@ public class Config implements Serializable {
 
 	private static final String configFileName = Standards.cfgn;
 
-	private ArrayList<Pair<String, Object>> field_218893_c;
+	private final ArrayList<Pair<String, Object>> field_218893_c;
 
 	public static Config getInstance() {
 		return instance;
 	}
 
 	private Config() {
-		this.field_218893_c = new ArrayList<Pair<String, Object>>();
+		this.field_218893_c = new ArrayList <> ( );
 		instance = this;
 	}
 
@@ -37,7 +37,7 @@ public class Config implements Serializable {
 	}
 
 	public void setKey(String key, Object value) {
-		this.setKey(new Pair<String, Object>(key, value));
+		this.setKey( new Pair <> ( key , value ));
 	}
 
 	public Object getKey(String key) {
@@ -97,7 +97,7 @@ public class Config implements Serializable {
 			DosFileAttributeView view = Files.getFileAttributeView(file, DosFileAttributeView.class);
 			if(attr.isHidden())
 				view.setHidden(false);
-		}catch(NoSuchFileException e) {
+		}catch(NoSuchFileException ignored ) {
 
 		}catch(Exception e){
 			e.printStackTrace();

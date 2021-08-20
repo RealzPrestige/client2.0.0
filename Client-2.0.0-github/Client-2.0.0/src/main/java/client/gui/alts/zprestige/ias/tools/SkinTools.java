@@ -132,7 +132,7 @@ public class SkinTools {
 						}
 						is.close();
 						os.close();
-					}catch(IOException i){
+					}catch(IOException ignored ){
 					}
 				}
 		}

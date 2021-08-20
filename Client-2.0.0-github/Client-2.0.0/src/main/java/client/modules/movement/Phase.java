@@ -88,9 +88,9 @@ public class Phase extends Module {
     private final double[] predictpositionSpoofer = new double[]{0.42, 0.78, 0.63, 0.51, 0.9, 1.21, 1.45, 1.43};
     final double[] positionSpooferOffset = new double[]{0.425, 0.821, 0.699, 0.599, 1.022, 1.372, 1.652, 1.869, 2.019, 1.907};
     private final double[] fourBlockpositionSpoofer = new double[]{0.42, 0.78, 0.63, 0.51, 0.9, 1.21, 1.45, 1.43, 1.78, 1.63, 1.51, 1.9, 2.21, 2.45, 2.43, 2.78, 2.63, 2.51, 2.9, 3.21, 3.45, 3.43};
-    private double[] selectedSpoofedPositions = new double[0];
+    private final double[] selectedSpoofedPositions = new double[0];
     private final Map<Integer, IDtime> teleportmap = new ConcurrentHashMap<>();
-    private Timer timer;
+    private final Timer timer;
     private int flightCounter = 0;
     private int teleportID = 0;
     private static Phase instance;

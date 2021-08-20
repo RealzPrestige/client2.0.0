@@ -20,17 +20,17 @@ public class AntiFog extends Module {
 
     public AntiFog() {
         super("AntiFog", "Removes fog and makes it colored", Category.VISUAL);
-        this.red = this.register(new Setting<Float>("Red", 1.0f, 0.0f, 1.0f));
-        this.green = this.register(new Setting<Float>("Green", 1.0f, 0.0f, 1.0f));
-        this.blue = this.register(new Setting<Float>("Blue", 1.0f, 0.0f, 1.0f));
-        this.red1 = this.register(new Setting<Float>("Nether Red", 1.0f, 0.0f, 1.0f));
-        this.green1 = this.register(new Setting<Float>("Nether Green", 1.0f, 0.0f, 1.0f));
-        this.blue1 = this.register(new Setting<Float>("Nether Blue", 1.0f, 0.0f, 1.0f));
-        this.red2 = this.register(new Setting<Float>("End Red", 1.0f, 0.0f, 1.0f));
-        this.green2 = this.register(new Setting<Float>("End Green", 1.0f, 0.0f, 1.0f));
-        this.blue2 = this.register(new Setting<Float>("End Blue", 1.0f, 0.0f, 1.0f));
-        this.clear = this.register(new Setting<Boolean>("Remove fog", true));
-        this.color = this.register(new Setting<Boolean>("Color fog", true));
+        this.red = this.register( new Setting <> ( "Red" , 1.0f , 0.0f , 1.0f ));
+        this.green = this.register( new Setting <> ( "Green" , 1.0f , 0.0f , 1.0f ));
+        this.blue = this.register( new Setting <> ( "Blue" , 1.0f , 0.0f , 1.0f ));
+        this.red1 = this.register( new Setting <> ( "Nether Red" , 1.0f , 0.0f , 1.0f ));
+        this.green1 = this.register( new Setting <> ( "Nether Green" , 1.0f , 0.0f , 1.0f ));
+        this.blue1 = this.register( new Setting <> ( "Nether Blue" , 1.0f , 0.0f , 1.0f ));
+        this.red2 = this.register( new Setting <> ( "End Red" , 1.0f , 0.0f , 1.0f ));
+        this.green2 = this.register( new Setting <> ( "End Green" , 1.0f , 0.0f , 1.0f ));
+        this.blue2 = this.register( new Setting <> ( "End Blue" , 1.0f , 0.0f , 1.0f ));
+        this.clear = this.register( new Setting <> ( "Remove fog" , true ));
+        this.color = this.register( new Setting <> ( "Color fog" , true ));
     }
 
     public void onLogin(){

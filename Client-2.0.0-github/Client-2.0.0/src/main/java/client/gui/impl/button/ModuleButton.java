@@ -17,7 +17,7 @@ import java.util.List;
 public class ModuleButton
         extends Button {
     private final Module module;
-    private List<Item> items = new ArrayList<Item>();
+    private List<Item> items = new ArrayList <> ( );
     private boolean subOpen;
 
     public ModuleButton(Module module) {

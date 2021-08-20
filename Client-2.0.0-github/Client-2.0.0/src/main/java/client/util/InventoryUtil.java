@@ -11,7 +11,6 @@ import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.*;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.CPacketHeldItemChange;
 
 import java.util.ArrayList;
@@ -30,7 +29,7 @@ public class InventoryUtil implements Util {
                     break;
                 }
                 case PACKET: {
-                    InventoryUtil.mc.player.connection.sendPacket((Packet)new CPacketHeldItemChange(slot));
+                    InventoryUtil.mc.player.connection.sendPacket( new CPacketHeldItemChange(slot) );
                     break;
                 }
             }
@@ -38,9 +37,9 @@ public class InventoryUtil implements Util {
         InventoryUtil.mc.playerController.updateController();
         ((IPlayerControllerMP)InventoryUtil.mc.playerController).syncCurrentPlayItem();
     }
-    public enum Switch2 {NORMAL, PACKET, NONE;}
+    public enum Switch2 {NORMAL, PACKET, NONE}
 
-    public enum Inventory {INVENTORY, HOTBAR, CRAFTING;}
+    public enum Inventory {INVENTORY, HOTBAR, CRAFTING}
 
     public static void switchToSlot(final Item item, final Switch2 switchMode) {
         if (getItemSlot(item, Inventory.HOTBAR, true) != -1 && InventoryUtil.mc.player.inventory.currentItem != getItemSlot(item, Inventory.HOTBAR, true)) {
@@ -101,7 +100,7 @@ public class InventoryUtil implements Util {
         }
     }
     public static List<Integer> getItemInventory(final Item item) {
-        final List<Integer> ints = new ArrayList<Integer>();
+        final List<Integer> ints = new ArrayList <> ( );
         for (int i = 9; i < 36; ++i) {
             final Item target = mc.player.inventory.getStackInSlot(i).getItem();
             if (item instanceof ItemBlock && ((ItemBlock)item).getBlock().equals(item)) {
@@ -189,7 +188,7 @@ public class InventoryUtil implements Util {
     }
 
     public static List<Integer> findEmptySlots(boolean withXCarry) {
-        ArrayList<Integer> outPut = new ArrayList<Integer>();
+        ArrayList<Integer> outPut = new ArrayList <> ( );
         for (Map.Entry<Integer, ItemStack> entry : InventoryUtil.getInventoryAndHotbarSlots().entrySet()) {
             if (!entry.getValue().isEmpty && entry.getValue().getItem() != Items.AIR) continue;
             outPut.add(entry.getKey());
@@ -235,7 +234,7 @@ public class InventoryUtil implements Util {
     }
 
     private static Map<Integer, ItemStack> getInventorySlots(int currentI, int last) {
-        HashMap<Integer, ItemStack> fullInventorySlots = new HashMap<Integer, ItemStack>();
+        HashMap<Integer, ItemStack> fullInventorySlots = new HashMap <> ( );
         for (int current = currentI; current <= last; ++current) {
             fullInventorySlots.put(current, mc.player.inventoryContainer.getInventory().get(current));
         }
@@ -307,7 +306,7 @@ public class InventoryUtil implements Util {
     }
 
     public static boolean holdingItem(Class clazz) {
-        boolean result = false;
+        boolean result;
         ItemStack stack = mc.player.getHeldItemMainhand();
         result = InventoryUtil.isInstanceOf(stack, clazz);
         if (!result) {

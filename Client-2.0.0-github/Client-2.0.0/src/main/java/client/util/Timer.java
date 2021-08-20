@@ -65,7 +65,7 @@ public class Timer implements Util{
             return true;
         }
     }
-    private long current;
+    private final long current;
 
     public Timer() {
         current = -1;
@@ -102,7 +102,7 @@ public class Timer implements Util{
     public enum Format
     {
         SYSTEM,
-        TICKS;
+        TICKS
     }
     public long getMS(final long time) {
         return time / 1000000L;

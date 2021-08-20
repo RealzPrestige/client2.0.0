@@ -1,11 +1,11 @@
 package client.modules.player;
 
+import client.events.PacketEvent;
 import client.modules.Module;
 import client.setting.Setting;
-import client.events.PacketEvent;
+import net.minecraft.network.play.client.CPacketPlayerTryUseItemOnBlock;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraft.network.play.client.CPacketPlayerTryUseItemOnBlock;
 
 public class Interactions extends Module {
     private static Interactions INSTANCE = new Interactions();

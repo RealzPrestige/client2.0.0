@@ -7,7 +7,7 @@ import client.setting.Setting;
 import org.lwjgl.input.Keyboard;
 
 public class ThirdPerson extends Module {
-    public Setting<Boolean> onlyHold = this.register(new Setting<Boolean>("OnlyHoldBind", false));
+    public Setting<Boolean> onlyHold = this.register( new Setting <> ( "OnlyHoldBind" , false ));
     public Setting<Bind> bind = this.register(new Setting<Object>("Bind:", new Bind(-1)));
     public ThirdPerson() {
         super("ThirdPerson","Third person camera but hold bind.", Category.VISUAL);

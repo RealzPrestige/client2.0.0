@@ -12,7 +12,6 @@ import client.modules.miscellaneous.*;
 import client.modules.movement.*;
 import client.modules.player.*;
 import client.modules.visual.*;
-
 import net.minecraftforge.common.MinecraftForge;
 import org.lwjgl.input.Keyboard;
 
@@ -170,7 +169,7 @@ public class ModuleManager
     }
 
     public ArrayList<Module> getEnabledModules() {
-        ArrayList<Module> enabledModules = new ArrayList<Module>();
+        ArrayList<Module> enabledModules = new ArrayList <> ( );
         for (Module module : this.modules) {
             if (!module.isEnabled()) continue;
             enabledModules.add(module);
@@ -179,7 +178,7 @@ public class ModuleManager
     }
 
     public ArrayList<String> getEnabledModulesName() {
-        ArrayList<String> enabledModules = new ArrayList<String>();
+        ArrayList<String> enabledModules = new ArrayList <> ( );
         for (Module module : this.modules) {
             if (!module.isEnabled() || !module.isDrawn()) continue;
             enabledModules.add(module.getFullArrayString());
@@ -188,7 +187,7 @@ public class ModuleManager
     }
 
     public ArrayList<Module> getModulesByCategory(Module.Category category) {
-        ArrayList<Module> modulesCategory = new ArrayList<Module>();
+        ArrayList<Module> modulesCategory = new ArrayList <> ( );
         this.modules.forEach(module -> {
             if (module.getCategory() == category) {
                 modulesCategory.add(module);

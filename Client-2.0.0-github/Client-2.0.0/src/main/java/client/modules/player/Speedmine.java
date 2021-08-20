@@ -23,9 +23,9 @@ public class Speedmine extends Module {
     public Setting<Mode> mode = this.register(new Setting("Mode", Mode.PACKET));
     public Setting<Boolean> render = this.register(new Setting("Render", false));
     public Setting<Boolean> box = this.register(new Setting("Box", false, v -> this.render.getValue()));
-    private final Setting<Integer> boxAlpha = this.register(new Setting("BoxAlpha", 85, 0, 255, v -> box.getValue() != false && render.getValue() != false));
+    private final Setting<Integer> boxAlpha = this.register(new Setting("BoxAlpha", 85, 0, 255, v -> box.getValue ( ) && render.getValue ( ) ));
     public Setting<Boolean> outline = this.register(new Setting("Outline", true, v -> this.render.getValue()));
-    private final Setting<Float> lineWidth = this.register(new Setting("Width", 1.0f, 0.1f, 5.0f, v -> outline.getValue() != false && render.getValue() != false));
+    private final Setting<Float> lineWidth = this.register(new Setting("Width", 1.0f, 0.1f, 5.0f, v -> outline.getValue ( ) && render.getValue ( ) ));
     public BlockPos currentPos;
     public IBlockState currentBlockState;
 

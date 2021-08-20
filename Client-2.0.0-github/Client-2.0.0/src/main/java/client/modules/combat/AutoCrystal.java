@@ -73,8 +73,8 @@ public class AutoCrystal extends Module {
     public boolean offhand;
     public boolean mainhand;
     public static AutoCrystal INSTANCE;
-    private ArrayList<RenderPos> renderMap = new ArrayList<>();
-    private ArrayList<BlockPos> currentTargets = new ArrayList<>();
+    private final ArrayList<RenderPos> renderMap = new ArrayList<>();
+    private final ArrayList<BlockPos> currentTargets = new ArrayList<>();
 
     public AutoCrystal() {
         super("AutoCrystal", "Automatically places/breaks crystals to deal damage to opponents.", Category.COMBAT);

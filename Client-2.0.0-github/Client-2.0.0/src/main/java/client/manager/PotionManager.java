@@ -14,7 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class PotionManager
         extends Feature {
-    private final Map<EntityPlayer, PotionList> potions = new ConcurrentHashMap<EntityPlayer, PotionList>();
+    private final Map<EntityPlayer, PotionList> potions = new ConcurrentHashMap <> ( );
 
     public List<PotionEffect> getOwnPotions() {
         return this.getPlayerPotions(PotionManager.mc.player);
@@ -22,7 +22,7 @@ public class PotionManager
 
     public List<PotionEffect> getPlayerPotions(EntityPlayer player) {
         PotionList list = this.potions.get(player);
-        List<PotionEffect> potions = new ArrayList<PotionEffect>();
+        List<PotionEffect> potions = new ArrayList <> ( );
         if (list != null) {
             potions = list.getEffects();
         }
@@ -58,7 +58,7 @@ public class PotionManager
     }
 
     public static class PotionList {
-        private final List<PotionEffect> effects = new ArrayList<PotionEffect>();
+        private final List<PotionEffect> effects = new ArrayList <> ( );
 
         public void addEffect(PotionEffect effect) {
             if (effect != null) {

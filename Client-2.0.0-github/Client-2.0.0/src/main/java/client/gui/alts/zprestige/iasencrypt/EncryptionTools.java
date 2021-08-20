@@ -12,11 +12,11 @@ import java.util.Base64;
 
 public final class EncryptionTools {
 	public static final String DEFAULT_ENCODING = "UTF-8";
-	private static Base64.Encoder encoder = Base64.getEncoder();
-	private static Base64.Decoder decoder = Base64.getDecoder();
-	private static MessageDigest sha512 = getSha512Hasher();
-	private static KeyGenerator keyGen = getAESGenerator();
-	private static String secretSalt = "${secretSalt}";
+	private static final Base64.Encoder encoder = Base64.getEncoder();
+	private static final Base64.Decoder decoder = Base64.getDecoder();
+	private static final MessageDigest sha512 = getSha512Hasher();
+	private static final KeyGenerator keyGen = getAESGenerator();
+	private static final String secretSalt = "${secretSalt}";
 
 	public static String decodeOld(String text) {
 		try {

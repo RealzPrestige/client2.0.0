@@ -60,7 +60,7 @@ public class BooleanButton
 
     @Override
     public void toggle() {
-        this.setting.setValue((Boolean) this.setting.getValue() == false);
+        this.setting.setValue( ! ( (Boolean) this.setting.getValue ( ) ) );
     }
 
     @Override

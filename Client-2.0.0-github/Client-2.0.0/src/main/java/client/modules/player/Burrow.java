@@ -1,7 +1,6 @@
 package client.modules.player;
 
 import client.modules.Module;
-import client.modules.client.ClickGui;
 import client.setting.Setting;
 import client.util.BlockUtil;
 import client.util.InventoryUtil;

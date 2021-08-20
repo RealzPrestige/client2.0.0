@@ -43,7 +43,7 @@ public class Notify extends Module {
             Client.commandManager.setClientMessage(getCommandMessage());
     }
     public String getCommandMessage() {
-        if (this.rainbowPrefix.getPlannedValue().booleanValue()) {
+        if ( this.rainbowPrefix.getPlannedValue ( ) ) {
             StringBuilder stringBuilder = new StringBuilder(this.getRawCommandMessage());
             stringBuilder.insert(0, "\u00a7+");
             stringBuilder.append("\u00a7r");

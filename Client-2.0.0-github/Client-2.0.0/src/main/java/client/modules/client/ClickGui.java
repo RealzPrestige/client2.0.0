@@ -19,23 +19,23 @@ public class ClickGui extends Module {
     public enum Gui{NEW, OLD}
 
     //NEW GUI
-    public Setting<Integer> newtopred = this.register(new Setting<Integer>("TopRed", 255, 0, 255, v-> gui.getValue() == Gui.NEW));
-    public Setting<Integer> newtopgreen = this.register(new Setting<Integer>("TopGreen", 0, 0, 255, v-> gui.getValue() == Gui.NEW));
-    public Setting<Integer> newtopblue = this.register(new Setting<Integer>("TopBlue", 0, 0, 255, v-> gui.getValue() == Gui.NEW));
-    public Setting<Integer> newtopalpha = this.register(new Setting<Integer>("TopAlpha", 110, 0, 255, v-> gui.getValue() == Gui.NEW));
-    public Setting<Integer> newared = this.register(new Setting<Integer>("Red", 255, 0, 255, v-> gui.getValue() == Gui.NEW));
-    public Setting<Integer> newagreen = this.register(new Setting<Integer>("Green", 0, 0, 255, v-> gui.getValue() == Gui.NEW));
-    public Setting<Integer> newablue = this.register(new Setting<Integer>("Blue", 0, 0, 255, v-> gui.getValue() == Gui.NEW));
-    public Setting<Integer> newaalpha = this.register(new Setting<Integer>("Alpha", 110, 0, 255, v-> gui.getValue() == Gui.NEW));
-    public Setting<Integer> newred = this.register(new Setting<Integer>("SideRed", 255, 0, 255, v-> gui.getValue() == Gui.NEW));
-    public Setting<Integer> newgreen = this.register(new Setting<Integer>("SideGreen", 255, 0, 255, v-> gui.getValue() == Gui.NEW));
-    public Setting<Integer> newblue = this.register(new Setting<Integer>("SideBlue", 255, 0, 255, v-> gui.getValue() == Gui.NEW));
-    public Setting<Integer> newtheAlpha = this.register(new Setting<Integer>("SideAlpha", 255, 0, 255, v-> gui.getValue() == Gui.NEW));
-    public Setting<Integer> newbgAlpha = this.register(new Setting<Integer>("BackGroundAlpha", 27, 0, 255, v-> gui.getValue() == Gui.NEW));
-    public Setting<Integer> newthirdRed = this.register(new Setting<Integer>("ThirdRed", 255, 0, 255, v-> gui.getValue() == Gui.NEW));
-    public Setting<Integer> newthirdGreen = this.register(new Setting<Integer>("ThirdGreen", 255, 0, 255, v-> gui.getValue() == Gui.NEW));
-    public Setting<Integer> newthirdBlue = this.register(new Setting<Integer>("ThirdBlue", 255, 0, 255, v-> gui.getValue() == Gui.NEW));
-    public Setting<Integer> newthirdAlpha = this.register(new Setting<Integer>("ThirdAlpha", 255, 0, 255, v-> gui.getValue() == Gui.NEW));
+    public Setting<Integer> newtopred = this.register( new Setting <> ( "TopRed" , 255 , 0 , 255 , v -> gui.getValue ( ) == Gui.NEW ));
+    public Setting<Integer> newtopgreen = this.register( new Setting <> ( "TopGreen" , 0 , 0 , 255 , v -> gui.getValue ( ) == Gui.NEW ));
+    public Setting<Integer> newtopblue = this.register( new Setting <> ( "TopBlue" , 0 , 0 , 255 , v -> gui.getValue ( ) == Gui.NEW ));
+    public Setting<Integer> newtopalpha = this.register( new Setting <> ( "TopAlpha" , 110 , 0 , 255 , v -> gui.getValue ( ) == Gui.NEW ));
+    public Setting<Integer> newared = this.register( new Setting <> ( "Red" , 255 , 0 , 255 , v -> gui.getValue ( ) == Gui.NEW ));
+    public Setting<Integer> newagreen = this.register( new Setting <> ( "Green" , 0 , 0 , 255 , v -> gui.getValue ( ) == Gui.NEW ));
+    public Setting<Integer> newablue = this.register( new Setting <> ( "Blue" , 0 , 0 , 255 , v -> gui.getValue ( ) == Gui.NEW ));
+    public Setting<Integer> newaalpha = this.register( new Setting <> ( "Alpha" , 110 , 0 , 255 , v -> gui.getValue ( ) == Gui.NEW ));
+    public Setting<Integer> newred = this.register( new Setting <> ( "SideRed" , 255 , 0 , 255 , v -> gui.getValue ( ) == Gui.NEW ));
+    public Setting<Integer> newgreen = this.register( new Setting <> ( "SideGreen" , 255 , 0 , 255 , v -> gui.getValue ( ) == Gui.NEW ));
+    public Setting<Integer> newblue = this.register( new Setting <> ( "SideBlue" , 255 , 0 , 255 , v -> gui.getValue ( ) == Gui.NEW ));
+    public Setting<Integer> newtheAlpha = this.register( new Setting <> ( "SideAlpha" , 255 , 0 , 255 , v -> gui.getValue ( ) == Gui.NEW ));
+    public Setting<Integer> newbgAlpha = this.register( new Setting <> ( "BackGroundAlpha" , 27 , 0 , 255 , v -> gui.getValue ( ) == Gui.NEW ));
+    public Setting<Integer> newthirdRed = this.register( new Setting <> ( "ThirdRed" , 255 , 0 , 255 , v -> gui.getValue ( ) == Gui.NEW ));
+    public Setting<Integer> newthirdGreen = this.register( new Setting <> ( "ThirdGreen" , 255 , 0 , 255 , v -> gui.getValue ( ) == Gui.NEW ));
+    public Setting<Integer> newthirdBlue = this.register( new Setting <> ( "ThirdBlue" , 255 , 0 , 255 , v -> gui.getValue ( ) == Gui.NEW ));
+    public Setting<Integer> newthirdAlpha = this.register( new Setting <> ( "ThirdAlpha" , 255 , 0 , 255 , v -> gui.getValue ( ) == Gui.NEW ));
 
     //OLD GUI
     public Setting<Boolean> topRectTextBold = this.register(new Setting("TopRectTextBold", true, v-> gui.getValue() == Gui.OLD));
@@ -79,9 +79,9 @@ public class ClickGui extends Module {
     public enum Button {PLUS, DOT}
     public Setting<Boolean> rainbow = this.register(new Setting("Rainbow", false, v-> gui.getValue() == Gui.OLD));
     public Setting<rainbowMode> rainbowModeHud = this.register(new Setting<Object>("HRainbowMode", rainbowMode.Static, v -> this.rainbow.getValue() && gui.getValue() == Gui.OLD));
-    public Setting<Integer> rainbowHue = this.register(new Setting<Object>("Delay", Integer.valueOf(240), Integer.valueOf(0), Integer.valueOf(600), v -> this.rainbow.getValue() && gui.getValue() == Gui.OLD));
-    public Setting<Float> rainbowBrightness = this.register(new Setting<Object>("Brightness ", Float.valueOf(150.0f), Float.valueOf(1.0f), Float.valueOf(255.0f), v -> this.rainbow.getValue() && gui.getValue() == Gui.OLD));
-    public Setting<Float> rainbowSaturation = this.register(new Setting<Object>("Saturation", Float.valueOf(150.0f), Float.valueOf(1.0f), Float.valueOf(255.0f), v -> this.rainbow.getValue() && gui.getValue() == Gui.OLD));
+    public Setting<Integer> rainbowHue = this.register(new Setting<Object>("Delay", 240 , 0 , 600 , v -> this.rainbow.getValue() && gui.getValue() == Gui.OLD));
+    public Setting<Float> rainbowBrightness = this.register(new Setting<Object>("Brightness ", 150.0f , 1.0f , 255.0f , v -> this.rainbow.getValue() && gui.getValue() == Gui.OLD));
+    public Setting<Float> rainbowSaturation = this.register(new Setting<Object>("Saturation", 150.0f , 1.0f , 255.0f , v -> this.rainbow.getValue() && gui.getValue() == Gui.OLD));
 
     public ClickGui() {
         super("ClickGui", "Opens the ClickGui", Module.Category.CORE);

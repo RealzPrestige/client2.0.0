@@ -13,11 +13,11 @@ import java.awt.*;
 public class FontMod
         extends Module {
     private static FontMod INSTANCE = new FontMod();
-    public Setting<String> fontName = this.register(new Setting<String>("FontName: ", "Dialog"));
-    public Setting<Boolean> antiAlias = this.register(new Setting<Boolean>("AntiAlias", true));
-    public Setting<Boolean> fractionalMetrics = this.register(new Setting<Boolean>("Metrics", true));
-    public Setting<Integer> fontSize = this.register(new Setting<Integer>("Size", 17, 12, 30));
-    public Setting<Integer> fontStyle = this.register(new Setting<Integer>("Style", 0, 0, 3 ));
+    public Setting<String> fontName = this.register( new Setting <> ( "FontName: " , "Dialog" ));
+    public Setting<Boolean> antiAlias = this.register( new Setting <> ( "AntiAlias" , true ));
+    public Setting<Boolean> fractionalMetrics = this.register( new Setting <> ( "Metrics" , true ));
+    public Setting<Integer> fontSize = this.register( new Setting <> ( "Size" , 17 , 12 , 30 ));
+    public Setting<Integer> fontStyle = this.register( new Setting <> ( "Style" , 0 , 0 , 3 ));
     private boolean reloadFont = false;
 
     public FontMod() {

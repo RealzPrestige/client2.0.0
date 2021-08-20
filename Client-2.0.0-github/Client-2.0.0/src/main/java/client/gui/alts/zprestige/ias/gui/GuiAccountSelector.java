@@ -24,6 +24,7 @@ import org.lwjgl.input.Keyboard;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class GuiAccountSelector extends GuiScreen {
   private int selectedAccountIndex = 0;
@@ -186,7 +187,7 @@ public class GuiAccountSelector extends GuiScreen {
     loginfailed = null;
     Minecraft.getMinecraft().displayGuiScreen(null);
     ExtendedAccountData current = getCurrentAsEditable();
-    current.useCount++;
+    Objects.requireNonNull ( current ).useCount++;
     current.lastused = JavaTools.getJavaCompat().getDate();
   }
 
@@ -195,13 +196,13 @@ public class GuiAccountSelector extends GuiScreen {
     loginfailed = AltManager.getInstance().setUser(data.user, data.pass);
     if (loginfailed == null) {
       ExtendedAccountData current = getCurrentAsEditable();
-      current.premium = EnumBool.TRUE;
+      Objects.requireNonNull ( current ).premium = EnumBool.TRUE;
       current.useCount++;
       current.lastused = JavaTools.getJavaCompat().getDate();
     } else if (loginfailed instanceof AlreadyLoggedInException) {
-      getCurrentAsEditable().lastused = JavaTools.getJavaCompat().getDate();
+      Objects.requireNonNull ( getCurrentAsEditable ( ) ).lastused = JavaTools.getJavaCompat().getDate();
     } else if (HttpTools.ping("http://minecraft.net")) {
-      getCurrentAsEditable().premium = EnumBool.FALSE;
+      Objects.requireNonNull ( getCurrentAsEditable ( ) ).premium = EnumBool.FALSE;
     }
   }
 

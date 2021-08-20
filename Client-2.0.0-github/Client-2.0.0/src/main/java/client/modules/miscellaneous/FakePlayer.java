@@ -41,7 +41,7 @@ public class FakePlayer extends Module {
             EntityOtherPlayerMP player = new EntityOtherPlayerMP(mc.world, profile);
             player.setLocationAndAngles(mc.player.posX + player.motionX + motion.getValue(), mc.player.posY + player.motionY, mc.player.posZ + player.motionZ + motion.getValue(), 90, 90);
             player.rotationYawHead = mc.player.rotationYawHead;
-            if (this.copyInv.getValue().booleanValue()) {
+            if ( this.copyInv.getValue ( ) ) {
                 player.inventory.copyInventory(mc.player.inventory);
             }
             mc.world.addEntityToWorld(entityId, player);
@@ -55,7 +55,7 @@ public class FakePlayer extends Module {
             EntityOtherPlayerMP player = new EntityOtherPlayerMP(mc.world, profile);
             player.copyLocationAndAnglesFrom(mc.player);
             player.rotationYawHead = mc.player.rotationYawHead;
-            if (this.copyInv.getValue().booleanValue()) {
+            if ( this.copyInv.getValue ( ) ) {
                 player.inventory.copyInventory(mc.player.inventory);
             }
             mc.world.addEntityToWorld(entityId, player);

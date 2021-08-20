@@ -85,12 +85,11 @@ public class CustomFont extends CFont {
                     int colorIndex = 21;
                     try {
                         colorIndex = "0123456789abcdefklmnor".indexOf(text.charAt(i + 1));
-                    } catch (Exception e) {
+                    } catch (Exception ignored ) {
                     }
                     if (colorIndex < 16) {
                         bold = false;
                         italic = false;
-                        randomCase = false;
                         underline = false;
                         strikethrough = false;
                         GlStateManager.bindTexture(tex.getGlTextureId());
@@ -101,7 +100,8 @@ public class CustomFont extends CFont {
                         if (shadow) colorIndex += 16;
                         int colorcode = this.colorCode[colorIndex];
                         GlStateManager.color((colorcode >> 16 & 0xFF) / 255.0F, (colorcode >> 8 & 0xFF) / 255.0F, (colorcode & 0xFF) / 255.0F, alpha);
-                    } else if (colorIndex == 16) randomCase = true;
+                    } else if (colorIndex == 16) {
+                    }
                     else if (colorIndex == 17) {
                         bold = true;
                         if (italic) {
@@ -133,7 +133,6 @@ public class CustomFont extends CFont {
                     } else if (colorIndex == 21) {
                         bold = false;
                         italic = false;
-                        randomCase = false;
                         underline = false;
                         strikethrough = false;
                         GlStateManager.color((color >> 16 & 0xFF) / 255.0F, (color >> 8 & 0xFF) / 255.0F, (color & 0xFF) / 255.0F, alpha);
@@ -255,7 +254,6 @@ public class CustomFont extends CFont {
             }
             if (currentWord.length() > 0) if (getStringWidth(currentWord) < width) {
                 finalWords.add("\u00A7" + lastColorCode + currentWord + " ");
-                currentWord = "";
             } else {
                 for (String s : formatString(currentWord, width))
                     finalWords.add(s);

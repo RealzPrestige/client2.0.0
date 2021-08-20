@@ -12,18 +12,15 @@ import net.minecraft.block.BlockObsidian;
 import net.minecraft.block.BlockWeb;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiInventory;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.CPacketPlayerTryUseItem;
 import net.minecraft.network.play.client.CPacketPlayerTryUseItemOnBlock;
 import net.minecraft.util.EnumHand;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.input.Mouse;
 
@@ -59,7 +56,7 @@ public class Offhand extends Module {
 
     public Offhand() {
         super("Offhand", "Sets items in Offhand slot", Category.COMBAT);
-        this.taskList = new ConcurrentLinkedQueue<InventoryUtil.Task>();
+        this.taskList = new ConcurrentLinkedQueue <> ( );
         this.timer = new Timer();
         this.secondTimer = new Timer();
         this.mode = (Setting<Mode>)this.register(new Setting("Mode:", Mode.NORMAL));
@@ -97,7 +94,7 @@ public class Offhand extends Module {
         if (event.hand == EnumHand.MAIN_HAND && event.stack.getItem() == Items.END_CRYSTAL && Offhand.mc.player.getHeldItemOffhand().getItem() == Items.GOLDEN_APPLE && Offhand.mc.objectMouseOver != null && event.pos == Offhand.mc.objectMouseOver.getBlockPos()) {
             event.setCanceled(true);
             Offhand.mc.player.setActiveHand(EnumHand.OFF_HAND);
-            Offhand.mc.playerController.processRightClick((EntityPlayer)Offhand.mc.player, (World)Offhand.mc.world, EnumHand.OFF_HAND);
+            Offhand.mc.playerController.processRightClick( Offhand.mc.player , Offhand.mc.world , EnumHand.OFF_HAND);
         }
     }
 
@@ -130,7 +127,7 @@ public class Offhand extends Module {
                 if (packet2.getHand() == EnumHand.MAIN_HAND) {
                     if (this.timer.passedMs(50L)) {
                         Offhand.mc.player.setActiveHand(EnumHand.OFF_HAND);
-                        Offhand.mc.player.connection.sendPacket((Packet)new CPacketPlayerTryUseItem(EnumHand.OFF_HAND));
+                        Offhand.mc.player.connection.sendPacket( new CPacketPlayerTryUseItem(EnumHand.OFF_HAND) );
                     }
                     event.setCanceled(true);
                 }
@@ -181,24 +178,24 @@ public class Offhand extends Module {
     public void doSwitch() {
         this.currentMode = CurrentItem.TOTEMS;
         if (mode.getValue() == Mode.NORMAL) {
-            if (this.gapple.getValue().booleanValue() && Offhand.mc.player.getHeldItemMainhand().getItem() instanceof ItemSword && Offhand.mc.gameSettings.keyBindUseItem.isKeyDown() && EntityUtil.isSafe(Offhand.mc.player) && EntityUtil.getHealth(Offhand.mc.player, true) > this.totem.getValue().floatValue()) {
+            if ( this.gapple.getValue ( ) && Offhand.mc.player.getHeldItemMainhand().getItem() instanceof ItemSword && Offhand.mc.gameSettings.keyBindUseItem.isKeyDown() && EntityUtil.isSafe(Offhand.mc.player) && EntityUtil.getHealth(Offhand.mc.player, true) > this.totem.getValue ( ) ) {
                 this.currentMode = CurrentItem.GAPPLES;
-            } else if (this.currentMode != CurrentItem.CRYSTALS && this.offhanditem.getValue() == OffhandItem.CRYSTALS && (EntityUtil.isSafe(Offhand.mc.player) && EntityUtil.getHealth(Offhand.mc.player, true) > this.totem.getValue().floatValue() || EntityUtil.getHealth(Offhand.mc.player, true) > this.totemHealth.getValue().floatValue())) {
+            } else if (this.currentMode != CurrentItem.CRYSTALS && this.offhanditem.getValue() == OffhandItem.CRYSTALS && (EntityUtil.isSafe(Offhand.mc.player) && EntityUtil.getHealth(Offhand.mc.player, true) > this.totem.getValue ( ) || EntityUtil.getHealth(Offhand.mc.player, true) > this.totemHealth.getValue ( ) )) {
                 this.currentMode = CurrentItem.CRYSTALS;
             }
-            if (this.gapple.getValue().booleanValue() && Offhand.mc.player.getHeldItemMainhand().getItem() instanceof ItemSword && Offhand.mc.gameSettings.keyBindUseItem.isKeyDown() && !EntityUtil.isSafe(Offhand.mc.player) && EntityUtil.getHealth(Offhand.mc.player, true) > this.totemHealth.getValue().floatValue()) {
+            if ( this.gapple.getValue ( ) && Offhand.mc.player.getHeldItemMainhand().getItem() instanceof ItemSword && Offhand.mc.gameSettings.keyBindUseItem.isKeyDown() && !EntityUtil.isSafe(Offhand.mc.player) && EntityUtil.getHealth(Offhand.mc.player, true) > this.totemHealth.getValue ( ) ) {
                 this.currentMode = CurrentItem.GAPPLES;
             }
             if (this.currentMode == CurrentItem.CRYSTALS && this.crystals == 0) {
                 this.setMode(CurrentItem.TOTEMS);
             }
-            if (this.currentMode == CurrentItem.CRYSTALS && (!EntityUtil.isSafe(Offhand.mc.player) && EntityUtil.getHealth(Offhand.mc.player, true) <= this.totemHealth.getValue().floatValue() || EntityUtil.getHealth(Offhand.mc.player, true) <= this.totem.getValue().floatValue())) {
+            if (this.currentMode == CurrentItem.CRYSTALS && (!EntityUtil.isSafe(Offhand.mc.player) && EntityUtil.getHealth(Offhand.mc.player, true) <= this.totemHealth.getValue ( ) || EntityUtil.getHealth(Offhand.mc.player, true) <= this.totem.getValue ( ) )) {
                 if (this.currentMode == CurrentItem.CRYSTALS) {
                     this.switchedForHealthReason = true;
                 }
                 this.setMode(CurrentItem.TOTEMS);
             }
-            if (this.switchedForHealthReason && (EntityUtil.isSafe(Offhand.mc.player) && EntityUtil.getHealth(Offhand.mc.player, true) > this.totem.getValue().floatValue() || EntityUtil.getHealth(Offhand.mc.player, true) > this.totemHealth.getValue().floatValue())) {
+            if (this.switchedForHealthReason && (EntityUtil.isSafe(Offhand.mc.player) && EntityUtil.getHealth(Offhand.mc.player, true) > this.totem.getValue ( ) || EntityUtil.getHealth(Offhand.mc.player, true) > this.totemHealth.getValue ( ) )) {
                 this.setMode(CurrentItem.CRYSTALS);
                 this.switchedForHealthReason = false;
             }
@@ -257,16 +254,16 @@ public class Offhand extends Module {
                 }
             }
         } else {
-            if (Offhand.mc.player.getHeldItemMainhand().getItem() instanceof ItemPickaxe && EntityUtil.isSafe(Offhand.mc.player) && EntityUtil.getHealth(Offhand.mc.player, true) > this.totem.getValue().floatValue()){
+            if (Offhand.mc.player.getHeldItemMainhand().getItem() instanceof ItemPickaxe && EntityUtil.isSafe(Offhand.mc.player) && EntityUtil.getHealth(Offhand.mc.player, true) > this.totem.getValue ( ) ){
                 this.currentMode = CurrentItem.CRYSTALS;
             }
-            if (Offhand.mc.player.getHeldItemMainhand().getItem() instanceof ItemPickaxe && !EntityUtil.isSafe(Offhand.mc.player) && EntityUtil.getHealth(Offhand.mc.player, true) > this.totemHealth.getValue().floatValue()){
+            if (Offhand.mc.player.getHeldItemMainhand().getItem() instanceof ItemPickaxe && !EntityUtil.isSafe(Offhand.mc.player) && EntityUtil.getHealth(Offhand.mc.player, true) > this.totemHealth.getValue ( ) ){
                 this.currentMode = CurrentItem.CRYSTALS;
             }
-            if (this.gapple.getValue().booleanValue() && Offhand.mc.player.getHeldItemMainhand().getItem() instanceof ItemSword && Offhand.mc.gameSettings.keyBindUseItem.isKeyDown() && EntityUtil.isSafe(Offhand.mc.player) && EntityUtil.getHealth(Offhand.mc.player, true) > this.totem.getValue().floatValue()) {
+            if ( this.gapple.getValue ( ) && Offhand.mc.player.getHeldItemMainhand().getItem() instanceof ItemSword && Offhand.mc.gameSettings.keyBindUseItem.isKeyDown() && EntityUtil.isSafe(Offhand.mc.player) && EntityUtil.getHealth(Offhand.mc.player, true) > this.totem.getValue ( ) ) {
                 this.currentMode = CurrentItem.GAPPLES;
             }
-            if (this.gapple.getValue().booleanValue() && Offhand.mc.player.getHeldItemMainhand().getItem() instanceof ItemSword && Offhand.mc.gameSettings.keyBindUseItem.isKeyDown() && !EntityUtil.isSafe(Offhand.mc.player) && EntityUtil.getHealth(Offhand.mc.player, true) > this.totemHealth.getValue().floatValue()) {
+            if ( this.gapple.getValue ( ) && Offhand.mc.player.getHeldItemMainhand().getItem() instanceof ItemSword && Offhand.mc.gameSettings.keyBindUseItem.isKeyDown() && !EntityUtil.isSafe(Offhand.mc.player) && EntityUtil.getHealth(Offhand.mc.player, true) > this.totemHealth.getValue ( ) ) {
                 this.currentMode = CurrentItem.GAPPLES;
             }
             if (this.currentMode == CurrentItem.CRYSTALS && (Offhand.mc.player.getItemStackFromSlot(EntityEquipmentSlot.CHEST).getItem() == Items.AIR || Offhand.mc.player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem() == Items.AIR || Offhand.mc.player.getItemStackFromSlot(EntityEquipmentSlot.LEGS).getItem() == Items.AIR || Offhand.mc.player.getItemStackFromSlot(EntityEquipmentSlot.FEET).getItem() == Items.AIR)) {
@@ -367,7 +364,7 @@ public class Offhand extends Module {
     public enum CurrentItem {
         TOTEMS,
         GAPPLES,
-        CRYSTALS;
+        CRYSTALS
     }
     public enum Mode {
         NORMAL,

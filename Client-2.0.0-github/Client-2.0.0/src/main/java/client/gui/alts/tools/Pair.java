@@ -5,8 +5,8 @@ import java.io.Serializable;
 public class Pair<V1, V2> implements Serializable {
 	private static final long serialVersionUID = 2586850598481149380L;
 
-	private V1 obj1;
-	private V2 obj2;
+	private final V1 obj1;
+	private final V2 obj2;
 
 	public Pair(V1 obj1, V2 obj2) {
 		this.obj1 = obj1;

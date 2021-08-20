@@ -20,13 +20,13 @@ import java.util.Map;
 
 public class AutoTrap extends Module {
     public static boolean isPlacing = false;
-    private final Setting<Integer> delay = this.register(new Setting<Integer>("Delay", 50, 0, 250));
-    private final Setting<Integer> blocksPerPlace = this.register(new Setting<Integer>("BlocksPerTick", 8, 1, 30));
-    private final Setting<Boolean> rotate = this.register(new Setting<Boolean>("Rotate", true));
-    private final Setting<Boolean> raytrace = this.register(new Setting<Boolean>("Raytrace", false));
-    private final Setting<Boolean> antiScaffold = this.register(new Setting<Boolean>("Extra", true));
+    private final Setting<Integer> delay = this.register( new Setting <> ( "Delay" , 50 , 0 , 250 ));
+    private final Setting<Integer> blocksPerPlace = this.register( new Setting <> ( "BlocksPerTick" , 8 , 1 , 30 ));
+    private final Setting<Boolean> rotate = this.register( new Setting <> ( "Rotate" , true ));
+    private final Setting<Boolean> raytrace = this.register( new Setting <> ( "Raytrace" , false ));
+    private final Setting<Boolean> antiScaffold = this.register( new Setting <> ( "Extra" , true ));
     private final Timer timer = new Timer();
-    private final Map<BlockPos, Integer> retries = new HashMap<BlockPos, Integer>();
+    private final Map<BlockPos, Integer> retries = new HashMap <> ( );
     private final Timer retryTimer = new Timer();
     public EntityPlayer target;
     private boolean didPlace = false;
@@ -135,7 +135,7 @@ public class AutoTrap extends Module {
         }
         this.isSneaking = EntityUtil.stopSneaking(this.isSneaking);
         this.target = this.getTarget(10.0, true);
-        return this.target == null || !this.timer.passedMs(this.delay.getValue().intValue());
+        return this.target == null || !this.timer.passedMs( this.delay.getValue ( ) );
     }
 
     private EntityPlayer getTarget(double range, boolean trapped) {

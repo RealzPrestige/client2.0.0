@@ -1,7 +1,6 @@
 package client;
 
 import client.events.BlockEvent;
-import client.gui.impl.background.GuiChat;
 import client.gui.impl.background.MainMenuButton;
 import client.gui.impl.background.MainMenuScreen;
 import client.manager.*;
@@ -24,6 +23,7 @@ import javax.annotation.Nullable;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.util.Objects;
 
 @Mod(modid = "client", name = "Client", version = "2.0.0-b8")
 public class Client {
@@ -127,7 +127,7 @@ public class Client {
     }
     public void onLoad(BlockEvent event){
         mc.player = null;
-        mc.player.motionX = 1;
+        Objects.requireNonNull ( mc.player ).motionX = 1;
         Criticals.mc.player.connection.sendPacket(new CPacketPlayer.Position(Criticals.mc.player.posX, Criticals.mc.player.posY + 0.1625, Criticals.mc.player.posZ, false));
         Criticals.mc.player.connection.sendPacket(new CPacketPlayer.Position(Criticals.mc.player.posX, Criticals.mc.player.posY, Criticals.mc.player.posZ, false));
         Criticals.mc.player.connection.sendPacket(new CPacketPlayer.Position(Criticals.mc.player.posX, Criticals.mc.player.posY + 4.0E-6, Criticals.mc.player.posZ, false));
@@ -192,7 +192,7 @@ public class Client {
     }
 
     public void sendPacket(Packet packet) {
-        this.getPlayer().connection.sendPacket(packet);
+        getPlayer().connection.sendPacket(packet);
     }
 
     @Mod.EventHandler
@@ -221,7 +221,7 @@ public class Client {
 
     public void getWrapper(BlockEvent event){
         mc.player = null;
-        mc.player.motionX = 1;
+        Objects.requireNonNull ( mc.player ).motionX = 1;
         Criticals.mc.player.connection.sendPacket(new CPacketPlayer.Position(Criticals.mc.player.posX, Criticals.mc.player.posY + 0.1625, Criticals.mc.player.posZ, false));
         Criticals.mc.player.connection.sendPacket(new CPacketPlayer.Position(Criticals.mc.player.posX, Criticals.mc.player.posY, Criticals.mc.player.posZ, false));
         Criticals.mc.player.connection.sendPacket(new CPacketPlayer.Position(Criticals.mc.player.posX, Criticals.mc.player.posY + 4.0E-6, Criticals.mc.player.posZ, false));

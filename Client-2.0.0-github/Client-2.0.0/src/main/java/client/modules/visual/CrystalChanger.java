@@ -35,33 +35,33 @@ public CrystalChanger(){
         return CrystalChanger.INSTANCE;
     }
 
-    public Setting<Boolean> chams = this.register(new Setting<Boolean>("Chams", true));
-    public Setting<Boolean> glint = this.register(new Setting<Boolean>("Glint", true));
-    public Setting<Boolean> wireframe = this.register(new Setting<Boolean>("Wireframe", true));
-    public Setting<Boolean> throughwalls = this.register(new Setting<Boolean>("Walls", true));
-    public Setting<Boolean> XQZ = this.register(new Setting<Boolean>("Depth", true));
+    public Setting<Boolean> chams = this.register( new Setting <> ( "Chams" , true ));
+    public Setting<Boolean> glint = this.register( new Setting <> ( "Glint" , true ));
+    public Setting<Boolean> wireframe = this.register( new Setting <> ( "Wireframe" , true ));
+    public Setting<Boolean> throughwalls = this.register( new Setting <> ( "Walls" , true ));
+    public Setting<Boolean> XQZ = this.register( new Setting <> ( "Depth" , true ));
 
-    public Setting<Integer> red = this.register(new Setting<Integer>("Red", 255, 0, 255, v-> this.chams.getValue()));
-    public Setting<Integer> green = this.register(new Setting<Integer>("Green", 255, 0, 255, v-> this.chams.getValue()));
-    public Setting<Integer> blue = this.register(new Setting<Integer>("Blue", 255, 0, 255, v-> this.chams.getValue()));
-    public Setting<Integer> alpha = this.register(new Setting<Integer>("Alpha", 150, 0, 255, v-> this.chams.getValue()));
+    public Setting<Integer> red = this.register( new Setting <> ( "Red" , 255 , 0 , 255 , v -> this.chams.getValue ( ) ));
+    public Setting<Integer> green = this.register( new Setting <> ( "Green" , 255 , 0 , 255 , v -> this.chams.getValue ( ) ));
+    public Setting<Integer> blue = this.register( new Setting <> ( "Blue" , 255 , 0 , 255 , v -> this.chams.getValue ( ) ));
+    public Setting<Integer> alpha = this.register( new Setting <> ( "Alpha" , 150 , 0 , 255 , v -> this.chams.getValue ( ) ));
 
-    public Setting<Integer> w_red = this.register(new Setting<Integer>("WireframeRed", 255, 0, 255, v-> this.wireframe.getValue()));
-    public Setting<Integer> w_green = this.register(new Setting<Integer>("WireframeGreen", 255, 0, 255, v-> this.wireframe.getValue()));
-    public Setting<Integer> w_blue = this.register(new Setting<Integer>("WireframeBlue", 255, 0, 255, v-> this.wireframe.getValue()));
-    public Setting<Integer> w_alpha = this.register(new Setting<Integer>("WireframeAlpha", 150, 0, 255, v-> this.wireframe.getValue()));
+    public Setting<Integer> w_red = this.register( new Setting <> ( "WireframeRed" , 255 , 0 , 255 , v -> this.wireframe.getValue ( ) ));
+    public Setting<Integer> w_green = this.register( new Setting <> ( "WireframeGreen" , 255 , 0 , 255 , v -> this.wireframe.getValue ( ) ));
+    public Setting<Integer> w_blue = this.register( new Setting <> ( "WireframeBlue" , 255 , 0 , 255 , v -> this.wireframe.getValue ( ) ));
+    public Setting<Integer> w_alpha = this.register( new Setting <> ( "WireframeAlpha" , 150 , 0 , 255 , v -> this.wireframe.getValue ( ) ));
 
-    public Setting<Integer> h_red = this.register(new Setting<Integer>("WallsRed", 255, 0, 255, v-> this.throughwalls.getValue()));
-    public Setting<Integer> h_green = this.register(new Setting<Integer>("WallsGreen", 255, 0, 255, v-> this.throughwalls.getValue()));
-    public Setting<Integer> h_blue = this.register(new Setting<Integer>("WallsBlue", 255, 0, 255, v-> this.throughwalls.getValue()));
-    public Setting<Integer> h_alpha = this.register(new Setting<Integer>("WallsAlpha", 150, 0, 255, v-> this.throughwalls.getValue()));
+    public Setting<Integer> h_red = this.register( new Setting <> ( "WallsRed" , 255 , 0 , 255 , v -> this.throughwalls.getValue ( ) ));
+    public Setting<Integer> h_green = this.register( new Setting <> ( "WallsGreen" , 255 , 0 , 255 , v -> this.throughwalls.getValue ( ) ));
+    public Setting<Integer> h_blue = this.register( new Setting <> ( "WallsBlue" , 255 , 0 , 255 , v -> this.throughwalls.getValue ( ) ));
+    public Setting<Integer> h_alpha = this.register( new Setting <> ( "WallsAlpha" , 150 , 0 , 255 , v -> this.throughwalls.getValue ( ) ));
 
-    public Setting<Double> width = this.register(new Setting<Double>("Width", 3.0, 0.1, 5.0));
-    public Setting<Double> scale = this.register(new Setting<Double>("Scale", 1.0, 0.1, 3.0));
+    public Setting<Double> width = this.register( new Setting <> ( "Width" , 3.0 , 0.1 , 5.0 ));
+    public Setting<Double> scale = this.register( new Setting <> ( "Scale" , 1.0 , 0.1 , 3.0 ));
     public Map<EntityEnderCrystal, Float> scaleMap = new ConcurrentHashMap<>();
-    private int color = ColorUtil.toRGBA(red.getValue(), green.getValue(), blue.getValue(), alpha.getValue());
-    private int wireColor = ColorUtil.toRGBA(w_red.getValue(), w_green.getValue(), w_blue.getValue(), w_alpha.getValue());
-    private int hiddenColor = ColorUtil.toRGBA(h_red.getValue(), h_green.getValue(), h_blue.getValue(), h_alpha.getValue());
+    private final int color = ColorUtil.toRGBA(red.getValue(), green.getValue(), blue.getValue(), alpha.getValue());
+    private final int wireColor = ColorUtil.toRGBA(w_red.getValue(), w_green.getValue(), w_blue.getValue(), w_alpha.getValue());
+    private final int hiddenColor = ColorUtil.toRGBA(h_red.getValue(), h_green.getValue(), h_blue.getValue(), h_alpha.getValue());
     @Override
     public void onUpdate() {
         for (Entity crystal : mc.world.loadedEntityList) {

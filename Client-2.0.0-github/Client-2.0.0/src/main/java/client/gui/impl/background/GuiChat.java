@@ -73,10 +73,7 @@ public class GuiChat extends GuiNewChat implements Util {
             int j = this.drawnChatLines.size();
             float f = this.mc.gameSettings.chatOpacity * 0.9F + 0.1F;
             if (j > 0) {
-                boolean flag = false;
-                if (getChatOpen()) {
-                    flag = true;
-                }
+                boolean flag = getChatOpen ( );
                 float f1 = getChatScale();
                 GlStateManager.pushMatrix();
                 if ((ChatModifications.getInstance().smoothChat.getValue()) && ChatModifications.getInstance().type.getValue() == ChatModifications.Type.VERTICAL && !this.isScrolled) {

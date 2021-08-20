@@ -1,16 +1,12 @@
 package client.modules.movement;
 
 import client.events.MoveEvent;
-import client.events.PacketEvent;
 import client.events.UpdateWalkingPlayerEvent;
 import client.modules.Module;
 import client.setting.Setting;
 import client.util.PlayerUtil;
 import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.network.play.client.CPacketPlayer;
-import net.minecraft.network.play.server.SPacketSoundEffect;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ElytraFlight extends Module {

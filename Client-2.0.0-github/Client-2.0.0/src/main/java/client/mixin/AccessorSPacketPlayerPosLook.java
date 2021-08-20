@@ -7,9 +7,9 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(value={SPacketPlayerPosLook.class})
 public interface AccessorSPacketPlayerPosLook {
     @Accessor(value="yaw")
-    public void setYaw(float var1);
+    void setYaw ( float var1 );
 
     @Accessor(value="pitch")
-    public void setPitch(float var1);
+    void setPitch ( float var1 );
 }
 

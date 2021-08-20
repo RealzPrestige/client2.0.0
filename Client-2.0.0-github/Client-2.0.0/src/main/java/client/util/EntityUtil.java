@@ -1,7 +1,6 @@
 package client.util;
 
 import client.Client;
-import client.modules.combat.Aura;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
@@ -17,7 +16,6 @@ import net.minecraft.entity.monster.EntityIronGolem;
 import net.minecraft.entity.monster.EntityPigZombie;
 import net.minecraft.entity.passive.EntityAmbientCreature;
 import net.minecraft.entity.passive.EntitySquid;
-import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityFireball;
@@ -29,17 +27,13 @@ import net.minecraft.item.*;
 import net.minecraft.network.play.client.CPacketEntityAction;
 import net.minecraft.network.play.client.CPacketUseEntity;
 import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.Explosion;
-import net.minecraft.world.World;
 
-import java.awt.*;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.*;
-import java.util.List;
 
 public class EntityUtil implements Util {
     public static final Vec3d[] antiDropOffsetList = new Vec3d[]{new Vec3d(0.0, -2.0, 0.0)};
@@ -67,7 +61,7 @@ public class EntityUtil implements Util {
         if (!mc.player.isPotionActive(MobEffects.SPEED)) {
             return EntityUtil.getBaseMovementSpeed();
         }
-        return EntityUtil.getBaseMovementSpeed() * 1.0 + 0.06 * (double)(mc.player.getActivePotionEffect(MobEffects.SPEED).getAmplifier() + 1);
+        return EntityUtil.getBaseMovementSpeed() * 1.0 + 0.06 * (double)( Objects.requireNonNull ( mc.player.getActivePotionEffect ( MobEffects.SPEED ) ).getAmplifier() + 1);
     }
     public static double getBaseMovementSpeed() {
         if (mc.player.isSneaking()) {
@@ -162,12 +156,12 @@ public class EntityUtil implements Util {
         try {
             blockDensity = entity.world.getBlockDensity(vec3d, entity.getEntityBoundingBox());
         }
-        catch (Exception ex) {}
+        catch (Exception ignored ) {}
         final double v = (1.0 - distancedsize) * blockDensity;
         final float damage = (float)(int)((v * v + v) / 2.0 * 7.0 * doubleExplosionSize + 1.0);
         double finald = 1.0;
         if (entity instanceof EntityLivingBase) {
-            finald = getBlastReduction((EntityLivingBase)entity, getDamageMultiplied(damage), new Explosion((World)mc.world, (Entity)null, posX, posY, posZ, 6.0f, false, true));
+            finald = getBlastReduction((EntityLivingBase)entity, getDamageMultiplied(damage), new Explosion( mc.world , null , posX, posY, posZ, 6.0f, false, true));
         }
         return (float)finald;
     }
@@ -263,7 +257,7 @@ public class EntityUtil implements Util {
     }
 
     public static List<Vec3d> getTrapOffsetsList(boolean antiScaffold, boolean antiStep, boolean legs, boolean platform, boolean antiDrop) {
-        ArrayList<Vec3d> offsets = new ArrayList<Vec3d>(EntityUtil.getOffsetList(1, false));
+        ArrayList<Vec3d> offsets = new ArrayList <> ( EntityUtil.getOffsetList ( 1 , false ) );
         offsets.add(new Vec3d(0.0, 2.0, 0.0));
         if (antiScaffold) {
             offsets.add(new Vec3d(0.0, 3.0, 0.0));
@@ -285,7 +279,7 @@ public class EntityUtil implements Util {
     }
 
     public static List<Vec3d> getUntrappedBlocks(EntityPlayer player, boolean antiScaffold, boolean antiStep, boolean legs, boolean platform, boolean antiDrop) {
-        ArrayList<Vec3d> vec3ds = new ArrayList<Vec3d>();
+        ArrayList<Vec3d> vec3ds = new ArrayList <> ( );
         if (!antiStep && EntityUtil.getUnsafeBlocks(player, 2, false).size() == 4) {
             vec3ds.addAll(EntityUtil.getUnsafeBlocks(player, 2, false));
         }
@@ -310,7 +304,7 @@ public class EntityUtil implements Util {
     }
 
     public static List<Vec3d> targets(Vec3d vec3d, boolean antiScaffold, boolean antiStep, boolean legs, boolean platform, boolean antiDrop, boolean raytrace) {
-        ArrayList<Vec3d> placeTargets = new ArrayList<Vec3d>();
+        ArrayList<Vec3d> placeTargets = new ArrayList <> ( );
         if (antiDrop) {
             Collections.addAll(placeTargets, convertVec3ds(vec3d, antiDropOffsetList));
         }
@@ -609,7 +603,7 @@ public class EntityUtil implements Util {
                 if (currentTarget == null) {
                     currentTarget = player;
                 }
-                else if (mc.player.getDistanceSq((Entity)player) < mc.player.getDistanceSq((Entity)currentTarget)) {
+                else if (mc.player.getDistanceSq( player ) < mc.player.getDistanceSq( currentTarget )) {
                     currentTarget = player;
                 }
             }
@@ -620,11 +614,11 @@ public class EntityUtil implements Util {
         EntityPlayer currentTarget = null;
         for (int size = mc.world.playerEntities.size(), i = 0; i < size; ++i) {
             final EntityPlayer player = mc.world.playerEntities.get(i);
-            if (!EntityUtil.isntValid((Entity)player, range)) {
+            if (!EntityUtil.isntValid( player , range)) {
                 if (currentTarget == null) {
                     currentTarget = player;
                 }
-                else if (mc.player.getDistanceSq((Entity)player) < mc.player.getDistanceSq((Entity)currentTarget)) {
+                else if (mc.player.getDistanceSq( player ) < mc.player.getDistanceSq( currentTarget )) {
                     currentTarget = player;
                 }
             }
@@ -640,7 +634,7 @@ public class EntityUtil implements Util {
                 if (currentTarget == null) {
                     currentTarget = player;
                 }
-                else if (mc.player.getDistanceSq((Entity)player) < mc.player.getDistanceSq((Entity)currentTarget)) {
+                else if (mc.player.getDistanceSq( player ) < mc.player.getDistanceSq( currentTarget )) {
                     currentTarget = player;
                 }
             }
@@ -944,7 +938,7 @@ public class EntityUtil implements Util {
                 distanceSB.append("c");
             }
             distanceSB.append(distance);
-            output.put(healthSB.toString() + " " + (Client.friendManager.isFriend(player) ? ChatFormatting.AQUA : ChatFormatting.RED) + player.getName() + " " + distanceSB.toString() + " \u00c2\u00a7f0", (int) mc.player.getDistance(player));
+            output.put( healthSB + " " + (Client.friendManager.isFriend(player) ? ChatFormatting.AQUA : ChatFormatting.RED) + player.getName() + " " + distanceSB + " \u00c2\u00a7f0", (int) mc.player.getDistance(player));
             healthSB.setLength(0);
             distanceSB.setLength(0);
         }
@@ -966,8 +960,8 @@ public class EntityUtil implements Util {
 
     public static double getBaseMoveSpeed() {
         double baseSpeed = 0.2873D;
-        if (mc.player != null && mc.player.isPotionActive(Potion.getPotionById(1))) {
-            int amplifier = mc.player.getActivePotionEffect(Potion.getPotionById(1)).getAmplifier();
+        if (mc.player != null && mc.player.isPotionActive( Objects.requireNonNull ( Potion.getPotionById ( 1 ) ) )) {
+            int amplifier = Objects.requireNonNull ( Objects.requireNonNull ( mc.player.getActivePotionEffect ( Objects.requireNonNull ( Potion.getPotionById ( 1 ) ) ) ) ).getAmplifier();
             baseSpeed *= 1.0D + 0.2D * (double)(amplifier + 1);
         }
 
@@ -997,8 +991,8 @@ public class EntityUtil implements Util {
             }
         }
 
-        double sin = Math.sin(Math.toRadians((double)(yaw + 90.0F)));
-        double cos = Math.cos(Math.toRadians((double)(yaw + 90.0F)));
+        double sin = Math.sin(Math.toRadians( yaw + 90.0F ));
+        double cos = Math.cos(Math.toRadians( yaw + 90.0F ));
         double posX = (double)forward * speed * cos + (double)side * speed * sin;
         double posZ = (double)forward * speed * sin - (double)side * speed * cos;
         return new double[]{posX, posZ};

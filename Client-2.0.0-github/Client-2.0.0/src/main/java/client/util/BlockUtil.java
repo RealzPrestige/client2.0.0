@@ -11,7 +11,6 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.CPacketAnimation;
 import net.minecraft.network.play.client.CPacketEntityAction;
 import net.minecraft.network.play.client.CPacketPlayer;
@@ -29,24 +28,24 @@ public class BlockUtil
     public static void placeCrystalOnBlockHacker(final BlockPos pos, final EnumHand hand) {
         final RayTraceResult result = BlockUtil.mc.world.rayTraceBlocks(new Vec3d(BlockUtil.mc.player.posX, BlockUtil.mc.player.posY + BlockUtil.mc.player.getEyeHeight(), BlockUtil.mc.player.posZ), new Vec3d(pos.getX() + 0.5, pos.getY() - 0.5, pos.getZ() + 0.5));
         final EnumFacing facing = (result == null || result.sideHit == null) ? EnumFacing.UP : result.sideHit;
-        BlockUtil.mc.player.connection.sendPacket((Packet)new CPacketPlayerTryUseItemOnBlock(pos, facing, hand, 0.0f, 0.0f, 0.0f));
+        BlockUtil.mc.player.connection.sendPacket( new CPacketPlayerTryUseItemOnBlock(pos, facing, hand, 0.0f, 0.0f, 0.0f) );
     }
     public static List<BlockPos> possiblePlacePositions(final float placeRange) {
         final NonNullList<BlockPos> positions = NonNullList.create();
-        positions.addAll((Collection)getSphere(EntityUtil.getPlayerPos((EntityPlayer)BlockUtil.mc.player), placeRange, (int)placeRange, false, true, 0).stream().filter(BlockUtil::canPlaceCrystal).collect(Collectors.toList()));
-        return (List<BlockPos>)positions;
+        positions.addAll( getSphere(EntityUtil.getPlayerPos( BlockUtil.mc.player ), placeRange, (int)placeRange, false, true, 0).stream().filter(BlockUtil::canPlaceCrystal).collect(Collectors.toList()) );
+        return positions;
     }
     public static List<BlockPos> possiblePlacePositions(final float placeRange, final boolean specialEntityCheck, final boolean oneDot15) {
         final NonNullList<BlockPos> positions = NonNullList.create();
-        positions.addAll((Collection)getSphere(EntityUtil.getPlayerPos((EntityPlayer)BlockUtil.mc.player), placeRange, (int)placeRange, false, true, 0).stream().filter(pos -> canPlaceCrystal(pos, specialEntityCheck, oneDot15)).collect(Collectors.toList()));
-        return (List<BlockPos>)positions;
+        positions.addAll( getSphere(EntityUtil.getPlayerPos( BlockUtil.mc.player ), placeRange, (int)placeRange, false, true, 0).stream().filter( pos -> canPlaceCrystal(pos, specialEntityCheck, oneDot15)).collect(Collectors.toList()) );
+        return positions;
     }
 
     public static boolean canPlaceCrystal(final BlockPos blockPos) {
         final BlockPos boost = blockPos.add(0, 1, 0);
         final BlockPos boost2 = blockPos.add(0, 2, 0);
         try {
-            return (BlockUtil.mc.world.getBlockState(blockPos).getBlock() == Blocks.BEDROCK || BlockUtil.mc.world.getBlockState(blockPos).getBlock() == Blocks.OBSIDIAN) && BlockUtil.mc.world.getBlockState(boost).getBlock() == Blocks.AIR && BlockUtil.mc.world.getBlockState(boost2).getBlock() == Blocks.AIR && BlockUtil.mc.world.getEntitiesWithinAABB((Class)Entity.class, new AxisAlignedBB(boost)).isEmpty() && BlockUtil.mc.world.getEntitiesWithinAABB((Class)Entity.class, new AxisAlignedBB(boost2)).isEmpty();
+            return (BlockUtil.mc.world.getBlockState(blockPos).getBlock() == Blocks.BEDROCK || BlockUtil.mc.world.getBlockState(blockPos).getBlock() == Blocks.OBSIDIAN) && BlockUtil.mc.world.getBlockState(boost).getBlock() == Blocks.AIR && BlockUtil.mc.world.getBlockState(boost2).getBlock() == Blocks.AIR && BlockUtil.mc.world.getEntitiesWithinAABB( Entity.class , new AxisAlignedBB(boost)).isEmpty() && BlockUtil.mc.world.getEntitiesWithinAABB( Entity.class , new AxisAlignedBB(boost2)).isEmpty();
         }
         catch (Exception e) {
             return false;
@@ -64,7 +63,7 @@ public class BlockUtil
                 return false;
             }
             if (!specialEntityCheck) {
-                return BlockUtil.mc.world.getEntitiesWithinAABB((Class)Entity.class, new AxisAlignedBB(boost)).isEmpty() && (oneDot15 || BlockUtil.mc.world.getEntitiesWithinAABB((Class)Entity.class, new AxisAlignedBB(boost2)).isEmpty());
+                return BlockUtil.mc.world.getEntitiesWithinAABB( Entity.class , new AxisAlignedBB(boost)).isEmpty() && (oneDot15 || BlockUtil.mc.world.getEntitiesWithinAABB( Entity.class , new AxisAlignedBB(boost2)).isEmpty());
             }
             for (final Entity entity : BlockUtil.mc.world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(boost))) {
                 if (!(entity instanceof EntityEnderCrystal)) {
@@ -237,7 +236,7 @@ public class BlockUtil
     public static boolean placeBlockSmartRotate(BlockPos pos, EnumHand hand, boolean rotate, boolean packet, boolean isSneaking) {
         boolean sneaking = false;
         EnumFacing side = BlockUtil.getFirstFacing(pos);
-        Command.sendMessage(side.toString());
+        Command.sendMessage( Objects.requireNonNull ( side ).toString());
         if (side == null) {
             return isSneaking;
         }
@@ -269,7 +268,7 @@ public class BlockUtil
 
     public static void faceVectorPacketInstant(final Vec3d vec) {
         final float[] rotations = getNeededRotations2(vec);
-        BlockUtil.mc.player.connection.sendPacket((Packet)new CPacketPlayer.Rotation(rotations[0], rotations[1], BlockUtil.mc.player.onGround));
+        BlockUtil.mc.player.connection.sendPacket( new CPacketPlayer.Rotation(rotations[0], rotations[1], BlockUtil.mc.player.onGround) );
     }
 
     private static float[] getNeededRotations2(final Vec3d vec) {
@@ -288,7 +287,7 @@ public class BlockUtil
     }
 
     public static List<BlockPos> getCircle(final BlockPos loc, final int y, final float r, final boolean hollow) {
-        final List<BlockPos> circleblocks = new ArrayList<BlockPos>();
+        final List<BlockPos> circleblocks = new ArrayList <> ( );
         final int cx = loc.getX();
         final int cz = loc.getZ();
         for (int x = cx - (int)r; x <= cx + r; ++x) {
@@ -638,7 +637,7 @@ public class BlockUtil
         return getUnsafeBlocksFromVec3d(entity.getPositionVector(), height, floor);
     }
     public static List<Vec3d> getUnsafeBlocksFromVec3d(final Vec3d pos, final int height, final boolean floor) {
-        final ArrayList<Vec3d> vec3ds = new ArrayList<Vec3d>();
+        final ArrayList<Vec3d> vec3ds = new ArrayList <> ( );
         for (final Vec3d vector : getOffsets(height, floor)) {
             final BlockPos targetPos = new BlockPos(pos).add(vector.x, vector.y, vector.z);
             final Block block = Util.mc.world.getBlockState(targetPos).getBlock();
@@ -725,13 +724,13 @@ public class BlockUtil
 
 
     public static List<Vec3d> getOffsetList(final int y, final boolean floor) {
-        final ArrayList<Vec3d> offsets = new ArrayList<Vec3d>();
-        offsets.add(new Vec3d(-1.0, (double)y, 0.0));
-        offsets.add(new Vec3d(1.0, (double)y, 0.0));
-        offsets.add(new Vec3d(0.0, (double)y, -1.0));
-        offsets.add(new Vec3d(0.0, (double)y, 1.0));
+        final ArrayList<Vec3d> offsets = new ArrayList <> ( );
+        offsets.add(new Vec3d(-1.0, y , 0.0));
+        offsets.add(new Vec3d(1.0, y , 0.0));
+        offsets.add(new Vec3d(0.0, y , -1.0));
+        offsets.add(new Vec3d(0.0, y , 1.0));
         if (floor) {
-            offsets.add(new Vec3d(0.0, (double)(y - 1), 0.0));
+            offsets.add(new Vec3d(0.0, y - 1 , 0.0));
         }
         return offsets;
     }
@@ -742,7 +741,7 @@ public class BlockUtil
         return offsets.toArray(array);
     }
     public static List<BlockPos> getCock(final float radius, final boolean ignoreAir) {
-        final ArrayList<BlockPos> sphere = new ArrayList<BlockPos>();
+        final ArrayList<BlockPos> sphere = new ArrayList <> ( );
         final BlockPos pos = new BlockPos(mc.player.getPositionVector());
         final int posX = pos.getX();
         final int posY = pos.getY();

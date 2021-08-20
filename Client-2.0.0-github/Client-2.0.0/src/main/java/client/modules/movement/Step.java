@@ -3,12 +3,11 @@ package client.modules.movement;
 import client.modules.Module;
 import client.setting.Setting;
 import net.minecraft.block.material.Material;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.CPacketPlayer;
 
 public class Step extends Module {
-    public Setting<Boolean> vanilla = this.register(new Setting<Boolean>("Vanilla", false));
-    public Setting<Integer> stepHeight = this.register(new Setting<Object>("Height", Integer.valueOf(2), Integer.valueOf(1), Integer.valueOf(4), v -> this.vanilla.getValue() == false));
+    public Setting<Boolean> vanilla = this.register( new Setting <> ( "Vanilla" , false ));
+    public Setting<Integer> stepHeight = this.register(new Setting<Object>("Height", 2 , 1 , 4 , v -> ! this.vanilla.getValue ( ) ));
     private final double[] oneblockPositions = new double[]{0.42, 0.75};
     private final double[] twoblockPositions = new double[]{0.4, 0.75, 0.5, 0.41, 0.83, 1.16, 1.41, 1.57, 1.58, 1.42};
     private final double[] futurePositions = new double[]{0.42, 0.78, 0.63, 0.51, 0.9, 1.21, 1.45, 1.43};
@@ -37,7 +36,7 @@ public class Step extends Module {
 
     @Override
     public void onUpdate() {
-        if (this.vanilla.getValue().booleanValue()) {
+        if ( this.vanilla.getValue ( ) ) {
             Step.mc.player.stepHeight = this.stepHeight.getValue().floatValue();
             return;
         }
@@ -60,9 +59,9 @@ public class Step extends Module {
         if (Step.mc.player.collidedHorizontally && Step.mc.player.onGround) {
             ++this.packets;
         }
-        if (Step.mc.player.onGround && !Step.mc.player.isInsideOfMaterial(Material.WATER) && !Step.mc.player.isInsideOfMaterial(Material.LAVA) && Step.mc.player.collidedVertically && Step.mc.player.fallDistance == 0.0f && !Step.mc.gameSettings.keyBindJump.pressed && Step.mc.player.collidedHorizontally && !Step.mc.player.isOnLadder() && (this.packets > this.selectedPositions.length - 2 || true && this.packets > 0)) {
+        if (Step.mc.player.onGround && !Step.mc.player.isInsideOfMaterial(Material.WATER) && !Step.mc.player.isInsideOfMaterial(Material.LAVA) && Step.mc.player.collidedVertically && Step.mc.player.fallDistance == 0.0f && !Step.mc.gameSettings.keyBindJump.pressed && Step.mc.player.collidedHorizontally && !Step.mc.player.isOnLadder() && (this.packets > this.selectedPositions.length - 2 || this.packets > 0 )) {
             for (double position : this.selectedPositions) {
-                Step.mc.player.connection.sendPacket((Packet)new CPacketPlayer.Position(Step.mc.player.posX, Step.mc.player.posY + position, Step.mc.player.posZ, true));
+                Step.mc.player.connection.sendPacket( new CPacketPlayer.Position(Step.mc.player.posX, Step.mc.player.posY + position, Step.mc.player.posZ, true) );
             }
             Step.mc.player.setPosition(Step.mc.player.posX, Step.mc.player.posY + this.selectedPositions[this.selectedPositions.length - 1], Step.mc.player.posZ);
             this.packets = 0;

@@ -18,7 +18,7 @@ public class MR {
 			for (Field f : mc.getDeclaredFields()) {
 				if (f.getType().isInstance(s)) {
 					session = f;
-					System.out.println("Found field " + f.toString() + ", injecting...");
+					System.out.println("Found field " + f + ", injecting...");
 				}
 			}
 

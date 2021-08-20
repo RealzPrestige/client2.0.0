@@ -106,7 +106,7 @@ public class Quiver extends Module {
     }
 
     public String getDisplayInfo() {
-        return "Stage: " + String.valueOf(stage);
+        return "Stage: " + stage;
     }
 
     private void switchTo(int from) {
