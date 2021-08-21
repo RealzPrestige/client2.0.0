@@ -51,6 +51,7 @@ public class ModuleManager
         modules.add(new AutoTrap());
         modules.add(new Aura());
         modules.add(new Criticals());
+        modules.add(new AntiCity());
 
         //MISCELLANEOUS
         modules.add(new FakePlayer());
