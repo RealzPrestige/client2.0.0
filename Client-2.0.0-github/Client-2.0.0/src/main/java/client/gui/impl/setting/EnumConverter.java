@@ -1,4 +1,4 @@
-package client.setting;
+package client.gui.impl.setting;
 
 import com.google.common.base.Converter;
 import com.google.gson.JsonElement;

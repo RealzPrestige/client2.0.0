@@ -2,7 +2,7 @@ package client.modules.visual;
 
 
 import client.modules.Module;
-import client.setting.Setting;
+import client.gui.impl.setting.Setting;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumHand;

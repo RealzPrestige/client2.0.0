@@ -4,7 +4,7 @@ import client.events.EntityCollisionEvent;
 import client.events.PacketEvent;
 import client.events.PushEvent;
 import client.modules.Module;
-import client.setting.Setting;
+import client.gui.impl.setting.Setting;
 import net.minecraft.network.play.server.SPacketEntityVelocity;
 import net.minecraft.network.play.server.SPacketExplosion;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;

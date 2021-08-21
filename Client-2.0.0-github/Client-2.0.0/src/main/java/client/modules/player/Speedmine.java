@@ -4,7 +4,7 @@ import client.Client;
 import client.events.BlockEvent;
 import client.events.Render3DEvent;
 import client.modules.Module;
-import client.setting.Setting;
+import client.gui.impl.setting.Setting;
 import client.util.BlockUtil;
 import client.util.RenderUtil;
 import client.util.Timer;

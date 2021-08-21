@@ -2,7 +2,7 @@ package client.modules.combat;
 
 import client.events.PacketEvent;
 import client.modules.Module;
-import client.setting.Setting;
+import client.gui.impl.setting.Setting;
 import client.util.Timer;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.network.play.client.CPacketPlayer;

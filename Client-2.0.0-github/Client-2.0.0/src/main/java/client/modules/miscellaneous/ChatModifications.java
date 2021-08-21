@@ -3,7 +3,7 @@ package client.modules.miscellaneous;
 import client.events.PacketEvent;
 import client.gui.impl.background.GuiChat;
 import client.modules.Module;
-import client.setting.Setting;
+import client.gui.impl.setting.Setting;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.client.gui.GuiIngame;
 import net.minecraft.client.gui.GuiNewChat;

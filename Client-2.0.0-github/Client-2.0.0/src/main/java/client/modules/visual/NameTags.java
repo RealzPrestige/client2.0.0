@@ -3,7 +3,7 @@ package client.modules.visual;
 import client.Client;
 import client.events.Render3DEvent;
 import client.modules.Module;
-import client.setting.Setting;
+import client.gui.impl.setting.Setting;
 import client.util.EntityUtil;
 import client.util.PlayerUtil;
 import client.util.RenderUtil;

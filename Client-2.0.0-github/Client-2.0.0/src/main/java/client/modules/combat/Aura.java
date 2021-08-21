@@ -2,7 +2,7 @@ package client.modules.combat;
 import client.Client;
 import client.events.UpdateWalkingPlayerEvent;
 import client.modules.Module;
-import client.setting.Setting;
+import client.gui.impl.setting.Setting;
 import client.util.EntityUtil;
 import client.util.MathUtil;
 import client.util.PlayerUtil;

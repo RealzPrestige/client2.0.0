@@ -1,7 +1,7 @@
 package client.modules.miscellaneous;
 
 import client.modules.Module;
-import client.setting.Setting;
+import client.gui.impl.setting.Setting;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 

@@ -3,7 +3,7 @@ package client.modules.visual;
 import client.events.PacketEvent;
 import client.events.RenderEntityModelEvent;
 import client.modules.Module;
-import client.setting.Setting;
+import client.gui.impl.setting.Setting;
 import client.util.ColorUtil;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;

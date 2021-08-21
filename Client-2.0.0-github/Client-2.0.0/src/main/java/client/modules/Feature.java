@@ -3,7 +3,7 @@ package client.modules;
 import client.Client;
 import client.gui.ClientGui;
 import client.manager.TextManager;
-import client.setting.Setting;
+import client.gui.impl.setting.Setting;
 import client.util.Util;
 
 import java.util.ArrayList;

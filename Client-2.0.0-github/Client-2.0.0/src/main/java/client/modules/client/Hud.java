@@ -3,7 +3,7 @@ package client.modules.client;
 import client.Client;
 import client.events.Render2DEvent;
 import client.modules.Module;
-import client.setting.Setting;
+import client.gui.impl.setting.Setting;
 import client.util.ColorUtil;
 import client.util.RenderUtil;
 import com.mojang.realmsclient.gui.ChatFormatting;

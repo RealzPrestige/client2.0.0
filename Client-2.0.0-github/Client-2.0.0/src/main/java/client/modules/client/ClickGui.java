@@ -6,7 +6,7 @@ import client.events.ClientEvent;
 import client.gui.ClientGui;
 import client.gui.impl.background.MainMenuButton;
 import client.modules.Module;
-import client.setting.Setting;
+import client.gui.impl.setting.Setting;
 import client.util.HoleUtil;
 import client.util.Util;
 import com.mojang.realmsclient.gui.ChatFormatting;

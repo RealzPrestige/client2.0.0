@@ -1,7 +1,7 @@
 package client.manager;
 
 import client.modules.Feature;
-import client.setting.Setting;
+import client.gui.impl.setting.Setting;
 import client.util.PlayerUtil;
 import net.minecraft.entity.player.EntityPlayer;
 

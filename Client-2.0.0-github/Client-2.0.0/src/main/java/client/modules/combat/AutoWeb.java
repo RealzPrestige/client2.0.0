@@ -5,7 +5,7 @@ import client.command.Command;
 import client.events.Render3DEvent;
 import client.modules.Module;
 import client.modules.client.ClickGui;
-import client.setting.Setting;
+import client.gui.impl.setting.Setting;
 import client.util.*;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.block.BlockWeb;

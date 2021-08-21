@@ -2,7 +2,7 @@ package client.command;
 
 import client.Client;
 import client.modules.Module;
-import client.setting.Bind;
+import client.gui.impl.setting.Bind;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import org.lwjgl.input.Keyboard;
 

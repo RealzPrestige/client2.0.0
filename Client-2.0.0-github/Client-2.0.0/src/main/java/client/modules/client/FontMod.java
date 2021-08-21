@@ -4,7 +4,7 @@ import client.Client;
 import client.command.Command;
 import client.events.ClientEvent;
 import client.modules.Module;
-import client.setting.Setting;
+import client.gui.impl.setting.Setting;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 

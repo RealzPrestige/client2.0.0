@@ -1,4 +1,4 @@
-package client.setting;
+package client.gui.impl.setting;
 
 import client.events.ClientEvent;
 import client.modules.Feature;

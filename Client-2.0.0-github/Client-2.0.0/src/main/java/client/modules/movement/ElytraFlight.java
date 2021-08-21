@@ -3,7 +3,7 @@ package client.modules.movement;
 import client.events.MoveEvent;
 import client.events.UpdateWalkingPlayerEvent;
 import client.modules.Module;
-import client.setting.Setting;
+import client.gui.impl.setting.Setting;
 import client.util.PlayerUtil;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;

@@ -4,7 +4,7 @@ import client.Client;
 import client.gui.ClientGui;
 import client.gui.impl.Component;
 import client.modules.client.ClickGui;
-import client.setting.Setting;
+import client.gui.impl.setting.Setting;
 import client.util.ColorUtil;
 import client.util.RenderUtil;
 import com.mojang.realmsclient.gui.ChatFormatting;

@@ -1,7 +1,7 @@
 package client.modules.movement;
 
 import client.modules.Module;
-import client.setting.Setting;
+import client.gui.impl.setting.Setting;
 import net.minecraft.block.material.Material;
 import net.minecraft.network.play.client.CPacketPlayer;
 

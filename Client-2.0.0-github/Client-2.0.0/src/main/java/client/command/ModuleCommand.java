@@ -3,7 +3,7 @@ package client.command;
 import client.Client;
 import client.manager.ConfigManager;
 import client.modules.Module;
-import client.setting.Setting;
+import client.gui.impl.setting.Setting;
 import com.google.gson.JsonParser;
 import com.mojang.realmsclient.gui.ChatFormatting;
 

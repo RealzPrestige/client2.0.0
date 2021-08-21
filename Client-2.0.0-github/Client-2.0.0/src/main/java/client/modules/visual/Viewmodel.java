@@ -2,7 +2,7 @@ package client.modules.visual;
 
 
 import client.modules.Module;
-import client.setting.Setting;
+import client.gui.impl.setting.Setting;
 
 public class Viewmodel extends Module {
     public Setting<Float> sizeX = register(new Setting("SizeX", 1f, 0f, 2f));

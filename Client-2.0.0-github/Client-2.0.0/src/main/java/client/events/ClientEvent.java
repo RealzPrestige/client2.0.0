@@ -1,7 +1,7 @@
 package client.events;
 
 import client.modules.Feature;
-import client.setting.Setting;
+import client.gui.impl.setting.Setting;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 
 @Cancelable

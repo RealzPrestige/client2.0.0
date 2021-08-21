@@ -3,9 +3,9 @@ package client.manager;
 import client.Client;
 import client.modules.Feature;
 import client.modules.Module;
-import client.setting.Bind;
-import client.setting.EnumConverter;
-import client.setting.Setting;
+import client.gui.impl.setting.Bind;
+import client.gui.impl.setting.EnumConverter;
+import client.gui.impl.setting.Setting;
 import client.util.Util;
 import com.google.gson.*;
 

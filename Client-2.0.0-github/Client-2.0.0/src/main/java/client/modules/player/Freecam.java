@@ -4,7 +4,7 @@ import client.events.PacketEvent;
 import client.events.PushEvent;
 import client.modules.Feature;
 import client.modules.Module;
-import client.setting.Setting;
+import client.gui.impl.setting.Setting;
 import client.util.MathUtil;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.client.entity.EntityPlayerSP;

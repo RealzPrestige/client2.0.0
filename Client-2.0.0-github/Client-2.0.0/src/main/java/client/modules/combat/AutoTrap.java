@@ -3,7 +3,7 @@ package client.modules.combat;
 import client.Client;
 import client.command.Command;
 import client.modules.Module;
-import client.setting.Setting;
+import client.gui.impl.setting.Setting;
 import client.util.*;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.block.BlockEnderChest;

@@ -1,7 +1,7 @@
 package client.modules.player;
 
 import client.modules.Module;
-import client.setting.Setting;
+import client.gui.impl.setting.Setting;
 import client.util.Timer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.ClickType;

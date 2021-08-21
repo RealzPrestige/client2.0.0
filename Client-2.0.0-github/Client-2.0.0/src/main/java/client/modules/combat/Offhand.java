@@ -4,7 +4,7 @@ import client.events.PacketEvent;
 import client.events.ProcessRightClickBlockEvent;
 import client.modules.Feature;
 import client.modules.Module;
-import client.setting.Setting;
+import client.gui.impl.setting.Setting;
 import client.util.EntityUtil;
 import client.util.InventoryUtil;
 import client.util.Timer;

@@ -2,7 +2,7 @@ package client.modules.miscellaneous;
 
 import client.events.PacketEvent;
 import client.modules.Module;
-import client.setting.Setting;
+import client.gui.impl.setting.Setting;
 import client.util.MathUtil;
 import client.util.Timer;
 import net.minecraft.network.Packet;

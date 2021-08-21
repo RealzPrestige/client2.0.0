@@ -1,7 +1,7 @@
 package client.modules.movement;
 
 import client.modules.Module;
-import client.setting.Setting;
+import client.gui.impl.setting.Setting;
 
 public class ReverseStep extends Module {
     private final Setting<Integer> speed = this.register( new Setting <> ( "Speed" , 0 , 0 , 20 ));

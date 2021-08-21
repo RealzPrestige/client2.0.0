@@ -3,7 +3,7 @@ package client.modules.combat;
 import client.events.PacketEvent;
 import client.manager.ModuleManager;
 import client.modules.Module;
-import client.setting.Setting;
+import client.gui.impl.setting.Setting;
 import client.util.BlockUtil;
 import client.util.EntityUtil;
 import net.minecraft.block.*;
