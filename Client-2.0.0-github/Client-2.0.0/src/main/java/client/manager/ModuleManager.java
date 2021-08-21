@@ -77,6 +77,7 @@ public class ModuleManager
         modules.add(new Jesus());
         modules.add(new Strafe());
         modules.add(new NoFall());
+        modules.add(new FastSwim());
 
         //PLAYER
         modules.add(new KeyEXP());
@@ -104,6 +105,7 @@ public class ModuleManager
         modules.add(new PearlRender());
         modules.add(new PrestigeChams());
         modules.add(new NameTags());
+        modules.add(new CityESP());
     }
 
     public Module getModuleByName(String name) {

