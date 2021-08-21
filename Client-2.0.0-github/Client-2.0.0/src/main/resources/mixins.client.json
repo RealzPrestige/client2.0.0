@@ -4,6 +4,7 @@
   "package": "client.mixin",
   "refmap": "mixins.client.refmap.json",
   "mixins": [
+    "AccessorSPacketPlayerPosLook",
     "IPlayerControllerMP",
     "MixinClientPlayer",
     "MixinEntityPlayer",
@@ -18,6 +19,7 @@
     "MixinPlayerControllerMP",
     "MixinRenderGlobal",
     "MixinRenderModifiedCrystal",
+    "MixinRenderPlayer",
     "MixinTabOverlay",
     "MixinWorld"
   ]
