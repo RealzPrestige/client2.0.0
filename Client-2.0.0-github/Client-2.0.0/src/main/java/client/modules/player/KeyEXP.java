@@ -1,56 +1,39 @@
 package client.modules.player;
-
 import client.Client;
-import client.modules.Module;
-import client.modules.combat.AutoArmor;
 import client.gui.impl.setting.Bind;
 import client.gui.impl.setting.Setting;
+import client.modules.Module;
+import client.modules.combat.AutoArmor;
+import client.util.PlayerUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.CPacketHeldItemChange;
-import net.minecraft.network.play.client.CPacketPlayer.Rotation;
 import net.minecraft.network.play.client.CPacketPlayerTryUseItem;
 import net.minecraft.util.EnumHand;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import net.minecraft.network.play.client.CPacketPlayer.Rotation;
 
 public class KeyEXP extends Module {
     private int armorCheck = 0;
     private int delay_count;
     int prvSlot;
-    public Setting<Boolean> middleclick = this.register( new Setting <> ( "Middleclick" , false ));
     public Setting<Bind> bind = this.register(new Setting<>("EXPBind:", new Bind(-1)));
-    public Setting<Boolean> feet = this.register( new Setting <> ( "Feet" , false ));
-    public Setting<Boolean> takeOff = this.register( new Setting <> ( "ArmorTakeOff" , false ));
-    private final Setting<Integer> threshold = this.register(new Setting<Object>("Threshold", 100, 0, 100, v-> this.takeOff.getValue()));
-    private final Setting<Integer> enemyRange = this.register(new Setting<Object>("EnemyRange", 0, 0, 20, v-> this.takeOff.getValue()));
+    public Setting<Boolean> feet = this.register(new Setting<>("Feet", false));
+    public Setting<Boolean> takeOff = this.register(new Setting<>("ArmorTakeOff", false));
+    public Setting<Integer> threshold = this.register(new Setting<>("Threshold", 100, 0, 100, v-> this.takeOff.getValue()));
+    public Setting<Integer> enemyRange = this.register(new Setting<>("EnemyRange", 0, 0, 20, v-> this.takeOff.getValue()));
 
     public KeyEXP() {
-        super("KeyEXP", "jretdigyh", Category.PLAYER);
+        super("KeyEXP", "", Category.PLAYER);
     }
 
     @Override
     public void onUpdate(){
-            if (middleclick.getValue()){
-                if (Mouse.isButtonDown(2) && mc.currentScreen == null) {
-                    useXp();
-                    if(AutoArmor.getInstance().isEnabled()){
-                        this.armorCheck = 1;
-                        return;
-                    } else {
-                        return;
-                    }
-                } else {
-                    if(this.armorCheck == 2){
-                        AutoArmor.getInstance().enable();
-                        this.armorCheck = 0;
-
-                    }
-                }
-            } else
+        if(this.bind.getValue().getKey() > -1) {
             if (Keyboard.isKeyDown(this.bind.getValue().getKey()) && mc.currentScreen == null) {
                 useXp();
                 if(AutoArmor.getInstance().isEnabled()){
@@ -66,6 +49,11 @@ public class KeyEXP extends Module {
 
                 }
             }
+        }else if(this.bind.getValue().getKey() < -1) {
+            if (Mouse.isButtonDown(PlayerUtil.convertToMouse(this.bind.getValue().getKey())) && mc.currentScreen == null) {
+                useXp();
+            }
+        }
     }
 
     @Override
@@ -141,11 +129,11 @@ public class KeyEXP extends Module {
         mc.player.connection.sendPacket(new CPacketPlayerTryUseItem(EnumHand.MAIN_HAND));
         mc.player.inventory.currentItem = prvSlot;
         mc.player.connection.sendPacket(new CPacketHeldItemChange(prvSlot));
-        if ( getClosestEnemy() == null){
+        if (this.getClosestEnemy() == null){
             takeArmorOff();
         }
-        if ( getClosestEnemy() != null) {
-            if (takeOff.getValue() && (int) getClosestEnemy().getDistance(mc.player) > this.enemyRange.getValue()) {
+        if (this.getClosestEnemy() != null) {
+            if (takeOff.getValue() && (int) this.getClosestEnemy().getDistance(mc.player) > this.enemyRange.getValue()) {
                 takeArmorOff();
             }
         }
@@ -173,6 +161,10 @@ public class KeyEXP extends Module {
                 n++;
             }
         }
-        return n < 35;
+        if (n >= 35) {
+
+            return false;
+        }
+        return true;
     }
 }

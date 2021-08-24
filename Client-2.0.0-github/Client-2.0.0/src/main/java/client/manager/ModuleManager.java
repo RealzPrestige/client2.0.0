@@ -95,7 +95,6 @@ public class ModuleManager
 
         //VISUAL
         modules.add(new CrystalChanger());
-        modules.add(new ExpESP());
         modules.add(new FullBright());
         modules.add(new BurrowESP());
         modules.add(new ThirdPerson());
@@ -107,6 +106,8 @@ public class ModuleManager
         modules.add(new PrestigeChams());
         modules.add(new NameTags());
         modules.add(new CityESP());
+        modules.add(new ESP());
+
     }
 
     public Module getModuleByName(String name) {

@@ -31,6 +31,7 @@ public class FriendManager
         Friend friend = this.getFriendByName(name);
         if (friend != null) {
             this.friends.add(friend);
+            mc.player.sendChatMessage("/msg " + friend.getUsername() + " You just got added my friend list on Client 2.0.0!");
         }
         this.cleanFriends();
     }
@@ -40,6 +41,7 @@ public class FriendManager
         for (Friend friend : this.friends) {
             if (!friend.getUsername().equalsIgnoreCase(name)) continue;
             this.friends.remove(friend);
+            mc.player.sendChatMessage("/msg " + friend.getUsername() + " You just got remove my friend list on Client 2.0.0, Get ready to die!");
             break;
         }
     }
