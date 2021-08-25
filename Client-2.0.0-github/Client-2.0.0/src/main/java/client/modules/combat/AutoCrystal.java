@@ -31,6 +31,8 @@ public class AutoCrystal extends Module {
     public enum Settings{AUTOCRYSTAL, RENDER}
     public Setting<SpeedFactor> speedFactor;
     public enum SpeedFactor {TICK, UPDATE}
+    public Setting<Boolean> doBreak;
+    public Setting<Boolean> doPlace;
     public Setting<Float> targetRange;
     public Setting<Boolean> cancel;
     public Setting<Float> breakRange;
@@ -80,6 +82,8 @@ public class AutoCrystal extends Module {
         super("AutoCrystal", "Automatically places/breaks crystals to deal damage to opponents.", Category.COMBAT);
         this.setting = (Setting<Settings>)this.register(new Setting<>("Setting", Settings.AUTOCRYSTAL));
         this.speedFactor = (Setting<SpeedFactor>)this.register(new Setting<>("SpeedFactor", SpeedFactor.UPDATE));
+        this.doPlace = (Setting<Boolean>)this.register(new Setting("Place", false, v-> this.setting.getValue() == Settings.AUTOCRYSTAL));
+        this.doBreak = (Setting<Boolean>)this.register(new Setting("Break", false, v-> this.setting.getValue() == Settings.AUTOCRYSTAL));
         this.breakRange = (Setting<Float>)this.register(new Setting("BreakRange", 5.0f, 1.0f, 6.0f, v-> this.setting.getValue() == Settings.AUTOCRYSTAL));
         this.placeRange = (Setting<Float>)this.register(new Setting("PlaceRange", 5.0f, 1.0f, 6.0f, v-> this.setting.getValue() == Settings.AUTOCRYSTAL));
         this.targetRange = (Setting<Float>)this.register(new Setting("TargetRange",9.0f, 1.0f, 15.0f, v-> this.setting.getValue() == Settings.AUTOCRYSTAL));
@@ -155,15 +159,23 @@ public class AutoCrystal extends Module {
             return;
         }
         if (speedFactor.getValue() == SpeedFactor.UPDATE && !announceOnly.getValue()) {
-            this.doPlace();
-            this.doBreak();
+            if(doPlace.getValue()) {
+                this.doPlace();
+            }
+            if(doBreak.getValue()) {
+                this.doBreak();
+            }
         }
     }
     @Override
     public void onTick() {
         if (speedFactor.getValue() == SpeedFactor.TICK && !announceOnly.getValue()) {
-            this.doPlace();
-            this.doBreak();
+            if(doPlace.getValue()) {
+                this.doPlace();
+            }
+            if(doBreak.getValue()) {
+                this.doBreak();
+            }
         }
     }
 
@@ -219,16 +231,13 @@ public class AutoCrystal extends Module {
         }
         if (placePos != null) {
             clearMap(placePos);
-            renderMap.add(new RenderPos(placePos, 0.0));
             Objects.requireNonNull(mc.getConnection()).sendPacket(new CPacketPlayerTryUseItemOnBlock(placePos, EnumFacing.UP, this.offhand ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND , 0.5f, 0.5f, 0.5f));
+            renderMap.add(new RenderPos(placePos, 0.0));
             this.placeSet.add(placePos);
             this.renderPos = placePos;
         } else {
             this.renderPos = null;
         }
-    }
-    public void onLogout(){
-        this.disable();
     }
 
     private void doBreak() {
@@ -269,8 +278,8 @@ public class AutoCrystal extends Module {
             if (entity != null && this.breakTimer.passedMs(this.breakDelay.getValue())) {
                 BlockPos renderPos = entity.getPosition().down();
                 clearMap(renderPos);
-                renderMap.add(new RenderPos(renderPos, 0.0));
                 Objects.requireNonNull(mc.getConnection()).sendPacket(new CPacketUseEntity(entity));
+                renderMap.add(new RenderPos(renderPos, 0.0));
                 if(swing.getValue()) {
                     mc.player.swingArm(this.offhand ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND);
                 }

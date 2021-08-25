@@ -1,25 +1,37 @@
 package client.modules.client;
 
 import client.Client;
+import client.events.PacketEvent;
 import client.events.Render2DEvent;
 import client.modules.Module;
 import client.gui.impl.setting.Setting;
 import client.util.ColorUtil;
 import client.util.RenderUtil;
+import client.util.Timer;
+import com.google.common.collect.Sets;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.settings.GameSettings;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.common.eventhandler.Event;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class Hud extends Module {
     private static Hud INSTANCE = new Hud();
     private int color;
+    private static final ItemStack totem = new ItemStack(Items.TOTEM_OF_UNDYING);
+    private static final ItemStack crystals = new ItemStack(Items.END_CRYSTAL);
+    private static final ItemStack gapples = new ItemStack(Items.GOLDEN_APPLE);
+    private static final ItemStack exp = new ItemStack(Items.EXPERIENCE_BOTTLE);
     public Setting<Boolean> rainbow = register(new Setting("Rainbow", true));
     public Setting<Boolean> sideway = register(new Setting("RainbowSideway", true, v -> this.rainbow.getValue()));
     public Setting<Integer> rainbowDelay = this.register(new Setting<Object>("Delay", 200, 0, 600, v -> this.rainbow.getValue()));
@@ -45,6 +57,8 @@ public class Hud extends Module {
     private final Setting<Boolean> coords = register(new Setting("Coords", false, "Your current coordinates"));
     private final Setting<Boolean> armor = this.register( new Setting <> ( "Armor" , false , "ArmorHUD" ));
     private final Setting<Boolean> percent = this.register(new Setting<Object>("Percent", true, v -> this.armor.getValue()));
+    private final Setting<Boolean> itemInfo = this.register(new Setting<Object>("ItemInfo", true));
+
     public Hud() {
         super("Hud", "Displays strings on your screen", Category.CORE);
         this.setInstance();
@@ -63,7 +77,6 @@ public class Hud extends Module {
             mc.gameSettings.setOptionFloatValue(GameSettings.Options.FOV, this.fov.getValue ( ) );
         }
     }
-
     private void setInstance() {
         INSTANCE = this;
     }
@@ -134,7 +147,6 @@ public class Hud extends Module {
         boolean inHell = mc.world.getBiome(mc.player.getPosition()).getBiomeName().equals("Hell");
         int i;
         i = (mc.currentScreen instanceof GuiChat) ? 14 : 0;
-        int width = this.renderer.scaledWidth;
         int height = this.renderer.scaledHeight;
         int posX = (int) mc.player.posX;
         int posY = (int) mc.player.posY;
@@ -165,6 +177,12 @@ public class Hud extends Module {
         if (this.armor.getValue()) {
             this.renderArmorHUD(this.percent.getValue());
         }
+        if(itemInfo.getValue()){
+            renderTotemHUD();
+            renderCrystalHud();
+            renderExpHud();
+            renderGapsHud();
+        }
     }
     public void renderArmorHUD(final boolean percent) {
         final int width = this.renderer.scaledWidth;
@@ -193,19 +211,89 @@ public class Hud extends Module {
                 continue;
             }
             int dmg;
-            final int itemDurability = is.getMaxDamage() - is.getItemDamage();
             final float green = (is.getMaxDamage() - (float) is.getItemDamage()) / is.getMaxDamage();
             final float red = 1.0f - green;
-            if (percent) {
-                dmg = 100 - (int) (red * 100.0f);
-            } else {
-                dmg = itemDurability;
-            }
+            dmg = 100 - (int) (red * 100.0f);
             this.renderer.drawStringWithShadow(dmg + "", (float) (x + 8 - this.renderer.getStringWidth(dmg + "") / 2), (float) (y - 11), ColorUtil.toRGBA((int) (red * 255.0f), (int) (green * 255.0f), 0));
         }
         GlStateManager.enableDepth();
         GlStateManager.disableLighting();
     }
 
-
+    public void renderTotemHUD() {
+        int totems = mc.player.inventory.mainInventory.stream().filter(itemStack -> (itemStack.getItem() == Items.TOTEM_OF_UNDYING)).mapToInt(ItemStack::getCount).sum();
+        if (mc.player.getHeldItemOffhand().getItem() == Items.TOTEM_OF_UNDYING)
+            totems += mc.player.getHeldItemOffhand().getCount();
+        if (totems > 0) {
+            GlStateManager.enableTexture2D();
+            GlStateManager.enableDepth();
+            RenderUtil.itemRender.zLevel = 200.0F;
+            RenderUtil.itemRender.renderItemAndEffectIntoGUI(totem, 0, 20);
+            RenderUtil.itemRender.renderItemOverlayIntoGUI(mc.fontRenderer, totem, 0, 20, "");
+            RenderUtil.itemRender.zLevel = 0.0F;
+            GlStateManager.enableTexture2D();
+            GlStateManager.disableLighting();
+            GlStateManager.disableDepth();
+            this.renderer.drawStringWithShadow(totems + "", 10, 30, 16777215);
+            GlStateManager.enableDepth();
+            GlStateManager.disableLighting();
+        }
+    }
+    public void renderCrystalHud() {
+        int totems = mc.player.inventory.mainInventory.stream().filter(itemStack -> (itemStack.getItem() == Items.END_CRYSTAL)).mapToInt(ItemStack::getCount).sum();
+        if (mc.player.getHeldItemOffhand().getItem() == Items.END_CRYSTAL)
+            totems += mc.player.getHeldItemOffhand().getCount();
+        if (totems > 0) {
+            GlStateManager.enableTexture2D();
+            GlStateManager.enableDepth();
+            RenderUtil.itemRender.zLevel = 200.0F;
+            RenderUtil.itemRender.renderItemAndEffectIntoGUI(crystals, 0, 37);
+            RenderUtil.itemRender.renderItemOverlayIntoGUI(mc.fontRenderer, crystals, 0, 37, "");
+            RenderUtil.itemRender.zLevel = 0.0F;
+            GlStateManager.enableTexture2D();
+            GlStateManager.disableLighting();
+            GlStateManager.disableDepth();
+            this.renderer.drawStringWithShadow(totems + "", 10, 47, 16777215);
+            GlStateManager.enableDepth();
+            GlStateManager.disableLighting();
+        }
+    }
+    public void renderExpHud() {
+        int totems = mc.player.inventory.mainInventory.stream().filter(itemStack -> (itemStack.getItem() == Items.EXPERIENCE_BOTTLE)).mapToInt(ItemStack::getCount).sum();
+        if (mc.player.getHeldItemOffhand().getItem() == Items.EXPERIENCE_BOTTLE)
+            totems += mc.player.getHeldItemOffhand().getCount();
+        if (totems > 0) {
+            GlStateManager.enableTexture2D();
+            GlStateManager.enableDepth();
+            RenderUtil.itemRender.zLevel = 200.0F;
+            RenderUtil.itemRender.renderItemAndEffectIntoGUI(exp, 0, 54);
+            RenderUtil.itemRender.renderItemOverlayIntoGUI(mc.fontRenderer, exp, 10, 54, "");
+            RenderUtil.itemRender.zLevel = 0.0F;
+            GlStateManager.enableTexture2D();
+            GlStateManager.disableLighting();
+            GlStateManager.disableDepth();
+            this.renderer.drawStringWithShadow(totems + "", 10, 64, 16777215);
+            GlStateManager.enableDepth();
+            GlStateManager.disableLighting();
+        }
+    }
+    public void renderGapsHud() {
+        int totems = mc.player.inventory.mainInventory.stream().filter(itemStack -> (itemStack.getItem() == Items.GOLDEN_APPLE)).mapToInt(ItemStack::getCount).sum();
+        if (mc.player.getHeldItemOffhand().getItem() == Items.GOLDEN_APPLE)
+            totems += mc.player.getHeldItemOffhand().getCount();
+        if (totems > 0) {
+            GlStateManager.enableTexture2D();
+            GlStateManager.enableDepth();
+            RenderUtil.itemRender.zLevel = 200.0F;
+            RenderUtil.itemRender.renderItemAndEffectIntoGUI(gapples, 0, 69);
+            RenderUtil.itemRender.renderItemOverlayIntoGUI(mc.fontRenderer, gapples, 0, 69, "");
+            RenderUtil.itemRender.zLevel = 0.0F;
+            GlStateManager.enableTexture2D();
+            GlStateManager.disableLighting();
+            GlStateManager.disableDepth();
+            this.renderer.drawStringWithShadow(totems + "", 10, 79, 16777215);
+            GlStateManager.enableDepth();
+            GlStateManager.disableLighting();
+        }
+    }
 }

@@ -71,7 +71,6 @@ public class ModuleManager
         modules.add(new YPort());
         modules.add(new Step());
         modules.add(new Phase());
-        modules.add(new DirectionalSpeed());
         modules.add(new Velocity());
         modules.add(new NoSlow());
         modules.add(new ElytraFlight());
