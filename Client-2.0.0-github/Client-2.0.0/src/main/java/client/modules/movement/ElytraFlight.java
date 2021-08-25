@@ -17,7 +17,6 @@ public class ElytraFlight extends Module {
         super("ElytraFlight", "Allows travel with Elytras to be more easy.", Category.MOVEMENT);
     }
 
-
     @SubscribeEvent
     public void onMove(MoveEvent event) {
             if (!mc.player.isElytraFlying()) {
