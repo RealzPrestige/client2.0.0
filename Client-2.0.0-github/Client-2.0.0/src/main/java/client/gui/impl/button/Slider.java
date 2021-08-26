@@ -28,19 +28,19 @@ public class Slider
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        if (ClickGui.getInstance().gui.getValue() == ClickGui.Gui.OLD) {
+        if (ClickGui.getInstance().gui.getCurrentState() == ClickGui.Gui.OLD) {
             this.dragSetting(mouseX, mouseY);
-            RenderUtil.drawRect(this.x, this.y, this.x + (float) this.width + 8.0f, this.y + (float) this.height - 0.9999999f, ColorUtil.toRGBA(ClickGui.getInstance().d_red.getValue(), ClickGui.getInstance().d_green.getValue(), ClickGui.getInstance().d_blue.getValue(), ClickGui.getInstance().d_alpha.getValue()));
-            RenderUtil.drawRect(this.x, this.y, ((Number) this.setting.getValue()).floatValue() <= this.min.floatValue() ? this.x : this.x + ((float) this.width + 7.4f) * this.partialMultiplier(), this.y + (float) this.height - 0.5f, !this.isHovering(mouseX, mouseY) ? Client.colorManager.getColorWithAlpha(Client.moduleManager.getModuleByClass(ClickGui.class).alpha.getValue()) : Client.colorManager.getColorWithAlpha(Client.moduleManager.getModuleByClass(ClickGui.class).alpha.getValue()));
-            Client.textManager.drawStringWithShadow(this.getName() + " " + ChatFormatting.GRAY + (this.setting.getValue() instanceof Float ? this.setting.getValue() : Double.valueOf(((Number) this.setting.getValue()).doubleValue())), this.x + 2.3f, this.y - 1.7f - (float) ClientGui.getClickGui().getTextOffset(), -1);
+            RenderUtil.drawRect(this.x, this.y, this.x + (float) this.width + 8.0f, this.y + (float) this.height - 0.9999999f, ColorUtil.toRGBA(ClickGui.getInstance().d_red.getCurrentState(), ClickGui.getInstance().d_green.getCurrentState(), ClickGui.getInstance().d_blue.getCurrentState(), ClickGui.getInstance().d_alpha.getCurrentState()));
+            RenderUtil.drawRect(this.x, this.y, ((Number) this.setting.getCurrentState()).floatValue() <= this.min.floatValue() ? this.x : this.x + ((float) this.width + 7.4f) * this.partialMultiplier(), this.y + (float) this.height - 0.5f, !this.isHovering(mouseX, mouseY) ? Client.colorManager.getColorWithAlpha(Client.moduleManager.getModuleByClass(ClickGui.class).alpha.getCurrentState()) : Client.colorManager.getColorWithAlpha(Client.moduleManager.getModuleByClass(ClickGui.class).alpha.getCurrentState()));
+            Client.textManager.drawStringWithShadow(this.getName() + " " + ChatFormatting.GRAY + (this.setting.getCurrentState() instanceof Float ? this.setting.getCurrentState() : Double.valueOf(((Number) this.setting.getCurrentState()).doubleValue())), this.x + 2.3f, this.y - 1.7f - (float) ClientGui.getClickGui().getTextOffset(), -1);
         } else {
             this.dragSetting(mouseX, mouseY);
-            int ercolor = ColorUtil.toARGB(ClickGui.getInstance().newred.getValue(), ClickGui.getInstance().newgreen.getValue(), ClickGui.getInstance().newblue.getValue(), ClickGui.getInstance().newtheAlpha.getValue());
+            int ercolor = ColorUtil.toARGB(ClickGui.getInstance().newred.getCurrentState(), ClickGui.getInstance().newgreen.getCurrentState(), ClickGui.getInstance().newblue.getCurrentState(), ClickGui.getInstance().newtheAlpha.getCurrentState());
             int color = ColorUtil.toARGB(30, 30, 30, 80);
-            RenderUtil.drawRect(this.x, this.y, ((Number) this.setting.getValue()).floatValue() <= this.min.floatValue() ? this.x : this.x + ((float) this.width + 7.4f) * this.partialMultiplier(), this.y + (float) this.height - 0.5f, color);
+            RenderUtil.drawRect(this.x, this.y, ((Number) this.setting.getCurrentState()).floatValue() <= this.min.floatValue() ? this.x : this.x + ((float) this.width + 7.4f) * this.partialMultiplier(), this.y + (float) this.height - 0.5f, color);
             RenderUtil.drawRect(this.x, this.y, this.x + 1, this.y + (float) this.height + 0.5f, ercolor);
             Client.textManager.drawStringWithShadow(this.getName(), this.x + 2.3f, this.y - 1.7f - (float) ClientGui.getClickGui().getTextOffset(), -1);
-            Client.textManager.drawStringWithShadow("" + ChatFormatting.GRAY + (this.setting.getValue() instanceof Float ? this.setting.getValue() : Double.valueOf(((Number) this.setting.getValue()).doubleValue())), this.x + 3 + this.width - this.renderer.getStringWidth("" + (this.setting.getValue() instanceof Float ? this.setting.getValue() : Double.valueOf(((Number) this.setting.getValue()).doubleValue()))), this.y - 1.7f - (float) ClientGui.getClickGui().getTextOffset(), -1);
+            Client.textManager.drawStringWithShadow("" + ChatFormatting.GRAY + (this.setting.getCurrentState() instanceof Float ? this.setting.getCurrentState() : Double.valueOf(((Number) this.setting.getCurrentState()).doubleValue())), this.x + 3 + this.width - this.renderer.getStringWidth("" + (this.setting.getCurrentState() instanceof Float ? this.setting.getCurrentState() : Double.valueOf(((Number) this.setting.getCurrentState()).doubleValue()))), this.y - 1.7f - (float) ClientGui.getClickGui().getTextOffset(), -1);
         }
     }
 
@@ -79,13 +79,13 @@ public class Slider
 
     private void setSettingFromX(int mouseX) {
         float percent = ((float) mouseX - this.x) / ((float) this.width + 7.4f);
-        if (this.setting.getValue() instanceof Double) {
+        if (this.setting.getCurrentState() instanceof Double) {
             double result = (Double) this.setting.getMin() + (double) ((float) this.difference * percent);
             this.setting.setValue((double) Math.round(10.0 * result) / 10.0);
-        } else if (this.setting.getValue() instanceof Float) {
+        } else if (this.setting.getCurrentState() instanceof Float) {
             float result = (Float) this.setting.getMin ( ) + (float) this.difference * percent;
             this.setting.setValue( (float) Math.round ( 10.0f * result ) / 10.0f );
-        } else if (this.setting.getValue() instanceof Integer) {
+        } else if (this.setting.getCurrentState() instanceof Integer) {
             this.setting.setValue((Integer) this.setting.getMin() + (int) ((float) this.difference * percent));
         }
     }
@@ -95,7 +95,7 @@ public class Slider
     }
 
     private float part() {
-        return ((Number) this.setting.getValue()).floatValue() - this.min.floatValue();
+        return ((Number) this.setting.getCurrentState()).floatValue() - this.min.floatValue();
     }
 
     private float partialMultiplier() {

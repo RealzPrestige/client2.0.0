@@ -24,13 +24,13 @@ public class MixinRenderModifiedCrystal {
     @Redirect(method={"doRender"}, at=@At(value="INVOKE", target="Lnet/minecraft/client/model/ModelBase;render(Lnet/minecraft/entity/Entity;FFFFFF)V"))
     public void renderModelBasezPrestigesSexyBelly(ModelBase model, Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
         if (CrystalChanger.getInstance().isEnabled()) {
-            GlStateManager.scale(CrystalChanger.getInstance().scale.getValue().floatValue(), CrystalChanger.getInstance().scale.getValue().floatValue(), CrystalChanger.getInstance().scale.getValue().floatValue());
+            GlStateManager.scale(CrystalChanger.getInstance().scale.getCurrentState().floatValue(), CrystalChanger.getInstance().scale.getCurrentState().floatValue(), CrystalChanger.getInstance().scale.getCurrentState().floatValue());
         }
-        if (CrystalChanger.getInstance().isEnabled() && CrystalChanger.getInstance().wireframe.getValue()) {
+        if (CrystalChanger.getInstance().isEnabled() && CrystalChanger.getInstance().wireframe.getCurrentState()) {
             RenderEntityModelEvent event = new RenderEntityModelEvent(0, model, entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
             CrystalChanger.getInstance().onRenderModel(event);
         }
-        if (CrystalChanger.getInstance().isEnabled() && CrystalChanger.getInstance().chams.getValue()) {
+        if (CrystalChanger.getInstance().isEnabled() && CrystalChanger.getInstance().chams.getCurrentState()) {
             GL11.glPushAttrib(1048575);
             GL11.glDisable(3008);
             GL11.glDisable(3553);
@@ -39,32 +39,32 @@ public class MixinRenderModifiedCrystal {
             GL11.glBlendFunc(770, 771);
             GL11.glLineWidth(1.5f);
             GL11.glEnable(2960);
-            if (CrystalChanger.getInstance().XQZ.getValue() && CrystalChanger.getInstance().throughwalls.getValue()) {
-                int hiddencolor = ColorUtil.toRGBA(CrystalChanger.getInstance().h_red.getValue(), CrystalChanger.getInstance().h_green.getValue(), CrystalChanger.getInstance().h_blue.getValue(), CrystalChanger.getInstance().h_alpha.getValue());
-                int visibleColor = ColorUtil.toRGBA(CrystalChanger.getInstance().red.getValue(), CrystalChanger.getInstance().green.getValue(), CrystalChanger.getInstance().blue.getValue(), CrystalChanger.getInstance().alpha.getValue());
-                if (CrystalChanger.getInstance().throughwalls.getValue()) {
+            if (CrystalChanger.getInstance().XQZ.getCurrentState() && CrystalChanger.getInstance().throughwalls.getCurrentState()) {
+                int hiddencolor = ColorUtil.toRGBA(CrystalChanger.getInstance().h_red.getCurrentState(), CrystalChanger.getInstance().h_green.getCurrentState(), CrystalChanger.getInstance().h_blue.getCurrentState(), CrystalChanger.getInstance().h_alpha.getCurrentState());
+                int visibleColor = ColorUtil.toRGBA(CrystalChanger.getInstance().red.getCurrentState(), CrystalChanger.getInstance().green.getCurrentState(), CrystalChanger.getInstance().blue.getCurrentState(), CrystalChanger.getInstance().alpha.getCurrentState());
+                if (CrystalChanger.getInstance().throughwalls.getCurrentState()) {
                     GL11.glDisable(2929);
                     GL11.glDepthMask(false);
                 }
                 GL11.glEnable(10754);
-                GL11.glColor4f(((float)CrystalChanger.getInstance().h_red.getValue() / 255.0f), ((float)CrystalChanger.getInstance().h_green.getValue() / 255.0f), (float)CrystalChanger.getInstance().h_blue.getValue() / 255.0f, (float)CrystalChanger.getInstance().alpha.getValue() / 255.0f);
+                GL11.glColor4f(((float)CrystalChanger.getInstance().h_red.getCurrentState() / 255.0f), ((float)CrystalChanger.getInstance().h_green.getCurrentState() / 255.0f), (float)CrystalChanger.getInstance().h_blue.getCurrentState() / 255.0f, (float)CrystalChanger.getInstance().alpha.getCurrentState() / 255.0f);
                 model.render(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
-                if (CrystalChanger.getInstance().throughwalls.getValue()) {
+                if (CrystalChanger.getInstance().throughwalls.getCurrentState()) {
                     GL11.glEnable(2929);
                     GL11.glDepthMask(true);
                 }
-                GL11.glColor4f((float)CrystalChanger.getInstance().red.getValue() / 255.0f, (float)CrystalChanger.getInstance().green.getValue() / 255.0f, (float)CrystalChanger.getInstance().blue.getValue() / 255.0f, (float)CrystalChanger.getInstance().alpha.getValue() / 255.0f);
+                GL11.glColor4f((float)CrystalChanger.getInstance().red.getCurrentState() / 255.0f, (float)CrystalChanger.getInstance().green.getCurrentState() / 255.0f, (float)CrystalChanger.getInstance().blue.getCurrentState() / 255.0f, (float)CrystalChanger.getInstance().alpha.getCurrentState() / 255.0f);
                 model.render(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
             } else {
-                 int visibleColor = ColorUtil.toRGBA(CrystalChanger.getInstance().red.getValue(), CrystalChanger.getInstance().green.getValue(), CrystalChanger.getInstance().blue.getValue(), CrystalChanger.getInstance().alpha.getValue());
-                if (CrystalChanger.getInstance().throughwalls.getValue()) {
+                 int visibleColor = ColorUtil.toRGBA(CrystalChanger.getInstance().red.getCurrentState(), CrystalChanger.getInstance().green.getCurrentState(), CrystalChanger.getInstance().blue.getCurrentState(), CrystalChanger.getInstance().alpha.getCurrentState());
+                if (CrystalChanger.getInstance().throughwalls.getCurrentState()) {
                     GL11.glDisable(2929);
                     GL11.glDepthMask(false);
                 }
                 GL11.glEnable(10754);
-                GL11.glColor4f(((float)CrystalChanger.getInstance().red.getValue() / 255.0f), ((float)CrystalChanger.getInstance().green.getValue() / 255.0f), ((float)CrystalChanger.getInstance().blue.getValue() / 255.0f), (float)CrystalChanger.getInstance().alpha.getValue() / 255.0f);
+                GL11.glColor4f(((float)CrystalChanger.getInstance().red.getCurrentState() / 255.0f), ((float)CrystalChanger.getInstance().green.getCurrentState() / 255.0f), ((float)CrystalChanger.getInstance().blue.getCurrentState() / 255.0f), (float)CrystalChanger.getInstance().alpha.getCurrentState() / 255.0f);
                 model.render(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
-                if (CrystalChanger.getInstance().throughwalls.getValue()) {
+                if (CrystalChanger.getInstance().throughwalls.getCurrentState()) {
                     GL11.glEnable(2929);
                     GL11.glDepthMask(true);
                 }
@@ -74,7 +74,7 @@ public class MixinRenderModifiedCrystal {
             GL11.glEnable(3553);
             GL11.glEnable(3008);
             GL11.glPopAttrib();
-            if (CrystalChanger.getInstance().glint.getValue()) {
+            if (CrystalChanger.getInstance().glint.getCurrentState()) {
                 GL11.glDisable(2929);
                 GL11.glDepthMask(false);
                 GlStateManager.enableAlpha();
@@ -88,11 +88,11 @@ public class MixinRenderModifiedCrystal {
             model.render(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
         }
         if (CrystalChanger.getInstance().isEnabled()) {
-            GlStateManager.scale((1.0f / CrystalChanger.getInstance().scale.getValue().floatValue()), (1.0f / CrystalChanger.getInstance().scale.getValue().floatValue()), 1.0f / CrystalChanger.getInstance().scale.getValue().floatValue());
+            GlStateManager.scale((1.0f / CrystalChanger.getInstance().scale.getCurrentState().floatValue()), (1.0f / CrystalChanger.getInstance().scale.getCurrentState().floatValue()), 1.0f / CrystalChanger.getInstance().scale.getCurrentState().floatValue());
         }
     }
     static {
-        if (CrystalChanger.getInstance().glint.getValue()) {
+        if (CrystalChanger.getInstance().glint.getCurrentState()) {
             ENDER_CRYSTAL_TEXTURES = new ResourceLocation("textures/rainbower.png");
         }
     }

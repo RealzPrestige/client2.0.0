@@ -7,7 +7,7 @@ import net.minecraft.network.play.client.CPacketPlayer;
 
 public class Step extends Module {
     public Setting<Boolean> vanilla = this.register( new Setting <> ( "Vanilla" , false ));
-    public Setting<Integer> stepHeight = this.register(new Setting<Object>("Height", 2 , 1 , 4 , v -> ! this.vanilla.getValue ( ) ));
+    public Setting<Integer> stepHeight = this.register(new Setting<Object>("Height", 2 , 1 , 4 , v -> ! this.vanilla.getCurrentState( ) ));
     private final double[] oneblockPositions = new double[]{0.42, 0.75};
     private final double[] twoblockPositions = new double[]{0.4, 0.75, 0.5, 0.41, 0.83, 1.16, 1.41, 1.57, 1.58, 1.42};
     private final double[] futurePositions = new double[]{0.42, 0.78, 0.63, 0.51, 0.9, 1.21, 1.45, 1.43};
@@ -36,11 +36,11 @@ public class Step extends Module {
 
     @Override
     public void onUpdate() {
-        if ( this.vanilla.getValue ( ) ) {
-            Step.mc.player.stepHeight = this.stepHeight.getValue().floatValue();
+        if ( this.vanilla.getCurrentState( ) ) {
+            Step.mc.player.stepHeight = this.stepHeight.getCurrentState().floatValue();
             return;
         }
-        switch (this.stepHeight.getValue()) {
+        switch (this.stepHeight.getCurrentState()) {
             case 1: {
                 this.selectedPositions = this.oneblockPositions;
                 break;
@@ -69,7 +69,7 @@ public class Step extends Module {
     }
     @Override
     public String getDisplayInfo() {
-        if (this.vanilla.getValue()){
+        if (this.vanilla.getCurrentState()){
             return "Vanilla";
         } else {
             return "NCP";

@@ -32,42 +32,42 @@ public class Aura extends Module {
     }
 
     public void onTick() {
-        if (!this.rotate.getValue())
+        if (!this.rotate.getCurrentState())
             attackEnemy();
     }
 
     @SubscribeEvent
     public void onUpdateWalkingPlayerEvent(UpdateWalkingPlayerEvent event) {
-        if (event.getStage() == 0 && this.rotate.getValue())
+        if (event.getStage() == 0 && this.rotate.getCurrentState())
             attackEnemy();
     }
 
     private void attackEnemy() {
-        if (this.swordOnly.getValue() && !EntityUtil.holdingWeapon(mc.player)) {
+        if (this.swordOnly.getCurrentState() && !EntityUtil.holdingWeapon(mc.player)) {
             target = null;
             return;
         }
-        int wait = !this.delay.getValue() ? 0 : (int) (EntityUtil.getCooldownByWeapon(mc.player) * (tps.getValue() ? Client.serverManager.getTpsFactor() : 1.0F));
+        int wait = !this.delay.getCurrentState() ? 0 : (int) (EntityUtil.getCooldownByWeapon(mc.player) * (tps.getCurrentState() ? Client.serverManager.getTpsFactor() : 1.0F));
         if (!this.timer.passedMs(wait))
             return;
         target = getTarget();
         if (target == null)
             return;
-        if (this.rotate.getValue())
+        if (this.rotate.getCurrentState())
             Client.rotationManager.lookAtEntity(target);
-        EntityUtil.attackEntity(target, this.packet.getValue(), true);
+        EntityUtil.attackEntity(target, this.packet.getCurrentState(), true);
         this.timer.reset();
     }
 
     private Entity getTarget() {
         Entity target = null;
-        double distance = this.range.getValue();
+        double distance = this.range.getCurrentState();
         double maxHealth = 36.0D;
         for (Entity entity : mc.world.playerEntities) {
-            if (((!this.players.getValue() || !(entity instanceof EntityPlayer)) && (!this.animals.getValue() || !EntityUtil.isPassive(entity)) && (!this.mobs.getValue() || !EntityUtil.isMobAggressive(entity)) && (!this.vehicles.getValue() || !EntityUtil.isVehicle(entity)) && (!this.projectiles.getValue() || !EntityUtil.isProjectile(entity))) || (entity instanceof net.minecraft.entity.EntityLivingBase &&
+            if (((!this.players.getCurrentState() || !(entity instanceof EntityPlayer)) && (!this.animals.getCurrentState() || !EntityUtil.isPassive(entity)) && (!this.mobs.getCurrentState() || !EntityUtil.isMobAggressive(entity)) && (!this.vehicles.getCurrentState() || !EntityUtil.isVehicle(entity)) && (!this.projectiles.getCurrentState() || !EntityUtil.isProjectile(entity))) || (entity instanceof net.minecraft.entity.EntityLivingBase &&
                     EntityUtil.isntValid(entity, distance)))
                 continue;
-            if (!mc.player.canEntityBeSeen(entity) && !EntityUtil.canEntityFeetBeSeen(entity) && mc.player.getDistanceSq(entity) > MathUtil.square(this.wallRange.getValue()))
+            if (!mc.player.canEntityBeSeen(entity) && !EntityUtil.canEntityFeetBeSeen(entity) && mc.player.getDistanceSq(entity) > MathUtil.square(this.wallRange.getCurrentState()))
                 continue;
             if (target == null) {
                 target = entity;

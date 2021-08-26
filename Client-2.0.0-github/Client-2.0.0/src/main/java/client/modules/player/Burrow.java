@@ -27,7 +27,7 @@ public class Burrow extends Module {
     private final Setting<Boolean> anvil = this.register(new Setting<>("Anvil", false));
     int swapBlock = -1;
     BlockPos oldPos;
-    Block blockW = anvil.getValue() ? Blocks.ANVIL : Blocks.OBSIDIAN;
+    Block blockW = anvil.getCurrentState() ? Blocks.ANVIL : Blocks.OBSIDIAN;
     boolean flag;
 
     public Burrow() {
@@ -60,7 +60,7 @@ public class Burrow extends Module {
 
 
         oldPos = PlayerUtil.getPlayerPos();
-        if (anvil.getValue()) {
+        if (anvil.getCurrentState()) {
             if (InventoryUtil.findHotbarBlock(BlockAnvil.class) > 1) {
                 swapBlock = InventoryUtil.findHotbarBlock(BlockAnvil.class);
             } else {
@@ -78,7 +78,7 @@ public class Burrow extends Module {
                 this.disable();
                 return;
             }
-            if (instant.getValue()) {
+            if (instant.getCurrentState()) {
                 this.setTimer(50f);
             }
         }
@@ -93,15 +93,15 @@ public class Burrow extends Module {
             mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 1.16610926093821, mc.player.posZ, true));
             int old = mc.player.inventory.currentItem;
             this.switchToSlot(swapBlock);
-            BlockUtil.placeBlock(oldPos, EnumHand.MAIN_HAND, rotate.getValue(), true, false);
+            BlockUtil.placeBlock(oldPos, EnumHand.MAIN_HAND, rotate.getCurrentState(), true, false);
             this.switchToSlot(old);
-            mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + force.getValue(), mc.player.posZ, false));
+            mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + force.getCurrentState(), mc.player.posZ, false));
             this.disable();
     }
 
     @Override
     public void onDisable(){
-        if(instant.getValue() && !nullCheck()){
+        if(instant.getCurrentState() && !nullCheck()){
             this.setTimer(1f);
         }
     }

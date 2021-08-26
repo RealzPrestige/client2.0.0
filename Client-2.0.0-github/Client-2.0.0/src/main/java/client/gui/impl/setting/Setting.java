@@ -92,7 +92,7 @@ public class Setting<T> {
         return this.name;
     }
 
-    public T getValue() {
+    public T getCurrentState() {
         return this.value;
     }
 
@@ -249,7 +249,7 @@ public class Setting<T> {
         if (this.visibility == null) {
             return true;
         }
-        return this.visibility.test(this.getValue());
+        return this.visibility.test(this.getCurrentState());
     }
 }
 

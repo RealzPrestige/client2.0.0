@@ -1,8 +1,10 @@
 package client.gui.impl.background;
 
 import client.Client;
+import client.modules.client.Notify;
 import client.modules.miscellaneous.ChatModifications;
 import client.util.MathUtil;
+import client.util.TextUtil;
 import client.util.Timer;
 import client.util.Util;
 import com.google.common.collect.Lists;
@@ -18,13 +20,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nullable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-/**
- * @author Madmegsox1
- * @since 27/04/2021
- */
 @SideOnly(Side.CLIENT)
 public class GuiChat extends GuiNewChat implements Util {
     private static final Logger LOGGER = Client.LOGGER;
@@ -76,10 +76,10 @@ public class GuiChat extends GuiNewChat implements Util {
                 boolean flag = getChatOpen ( );
                 float f1 = getChatScale();
                 GlStateManager.pushMatrix();
-                if ((ChatModifications.getInstance().smoothChat.getValue()) && ChatModifications.getInstance().type.getValue() == ChatModifications.Type.VERTICAL && !this.isScrolled) {
-                    GlStateManager.translate(2.0F +  ChatModifications.getInstance().xOffset.getValue().floatValue(), 8.0F + ChatModifications.getInstance().yOffset.getValue().floatValue() + (9.0F - 9.0F * percent) * f1, 0.0F);
+                if (ChatModifications.getInstance().isOn() && (ChatModifications.getInstance().smoothChat.getCurrentState()) && ChatModifications.getInstance().type.getCurrentState() == ChatModifications.Type.VERTICAL && !this.isScrolled) {
+                    GlStateManager.translate(2.0F +  ChatModifications.getInstance().xOffset.getCurrentState().floatValue(), 8.0F + ChatModifications.getInstance().yOffset.getCurrentState().floatValue() + (9.0F - 9.0F * percent) * f1, 0.0F);
                 } else {
-                    GlStateManager.translate(2.0F + ChatModifications.getInstance().xOffset.getValue().floatValue(), 8.0F +  ChatModifications.getInstance().yOffset.getValue().floatValue(), 0.0F);
+                    GlStateManager.translate(2.0F + ChatModifications.getInstance().xOffset.getCurrentState().floatValue(), 8.0F +  ChatModifications.getInstance().yOffset.getCurrentState().floatValue(), 0.0F);
                 }
                 GlStateManager.scale(f1, f1, 1.0F);
                 int l = 0;
@@ -104,13 +104,13 @@ public class GuiChat extends GuiNewChat implements Util {
                                 int j2 = -i1 * 9;
                                 String s = chatline.getChatComponent().getFormattedText();
                                 GlStateManager.enableBlend();
-                                if (ChatModifications.getInstance().smoothChat.getValue() && i1 <= newLines) {
-                                    if (this.messageTimer.passedMs(ChatModifications.getInstance().vSpeed.getValue().intValue()) && messageAdd < 0) {
-                                        messageAdd += ChatModifications.getInstance().vIncrements.getValue().intValue();
+                                if (ChatModifications.getInstance().smoothChat.getCurrentState() && i1 <= newLines) {
+                                    if (this.messageTimer.passedMs(ChatModifications.getInstance().vSpeed.getCurrentState().intValue()) && messageAdd < 0) {
+                                        messageAdd += ChatModifications.getInstance().vIncrements.getCurrentState().intValue();
                                         if (messageAdd > 0) messageAdd = 0;
                                         this.messageTimer.reset();
                                     }
-                                            this.mc.fontRenderer.drawStringWithShadow(s, 0.0F + (ChatModifications.getInstance().type.getValue() == ChatModifications.Type.HORIZONTAL ? messageAdd : 0), (j2 - 8), 16777215 + ((l1) << 24));
+                                            this.mc.fontRenderer.drawStringWithShadow(s, 0.0F + (ChatModifications.getInstance().type.getCurrentState() == ChatModifications.Type.HORIZONTAL ? messageAdd : 0), (j2 - 8), 16777215 + ((l1) << 24));
                                 } else {
                                             this.mc.fontRenderer.drawStringWithShadow(s, i2, (j2 - 8), 16777215 + (l1 << 24));
                                 }
@@ -138,7 +138,6 @@ public class GuiChat extends GuiNewChat implements Util {
             }
         }
     }
-
     public void printChatMessage(ITextComponent chatComponent) {
         printChatMessageWithOptionalDeletion(chatComponent, 0);
     }
@@ -150,7 +149,7 @@ public class GuiChat extends GuiNewChat implements Util {
     }
 
     private void setChatLine(ITextComponent chatComponent, int chatLineId, int updateCounter, boolean displayOnly) {
-        messageAdd = - ChatModifications.getInstance().vLength.getValue().intValue();
+        messageAdd = - ChatModifications.getInstance().vLength.getCurrentState().intValue();
         if (chatLineId != 0) {
             deleteChatLine(chatLineId);
         }
@@ -220,8 +219,8 @@ public class GuiChat extends GuiNewChat implements Util {
         ScaledResolution scaledresolution = new ScaledResolution(this.mc);
         int i = scaledresolution.getScaleFactor();
         float f = getChatScale();
-        int j = mouseX / i - 2 - (ChatModifications.getInstance().xOffset.getValue()).intValue();
-        int k = mouseY / i - 40 + (ChatModifications.getInstance().yOffset.getValue()).intValue();
+        int j = mouseX / i - 2 - (ChatModifications.getInstance().xOffset.getCurrentState()).intValue();
+        int k = mouseY / i - 40 + (ChatModifications.getInstance().yOffset.getCurrentState()).intValue();
         j = MathHelper.floor(j / f);
         k = MathHelper.floor(k / f);
         if (j >= 0 && k >= 0) {

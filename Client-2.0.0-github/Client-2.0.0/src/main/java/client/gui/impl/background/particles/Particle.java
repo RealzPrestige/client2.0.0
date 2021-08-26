@@ -68,7 +68,7 @@ public class Particle {
             }
         }
 
-        RenderUtil.drawRect(this.pos.x, this.pos.y, this.pos.x + this.size, this.pos.y + this.size, changeAlpha(ColorUtil.toRGBA(ClickGui.getInstance().particlered.getValue(), ClickGui.getInstance().particlegreen.getValue(), ClickGui.getInstance().particleblue.getValue()), this.alpha));
+        RenderUtil.drawRect(this.pos.x, this.pos.y, this.pos.x + this.size, this.pos.y + this.size, changeAlpha(ColorUtil.toRGBA(ClickGui.getInstance().particlered.getCurrentState(), ClickGui.getInstance().particlegreen.getCurrentState(), ClickGui.getInstance().particleblue.getCurrentState()), this.alpha));
     }
 
     public Vector2f getPos() {

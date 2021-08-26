@@ -22,10 +22,10 @@ public class Speedmine extends Module {
     private final Timer timer = new Timer();
     public Setting<Mode> mode = this.register(new Setting("Mode", Mode.PACKET));
     public Setting<Boolean> render = this.register(new Setting("Render", false));
-    public Setting<Boolean> box = this.register(new Setting("Box", false, v -> this.render.getValue()));
-    private final Setting<Integer> boxAlpha = this.register(new Setting("BoxAlpha", 85, 0, 255, v -> box.getValue ( ) && render.getValue ( ) ));
-    public Setting<Boolean> outline = this.register(new Setting("Outline", true, v -> this.render.getValue()));
-    private final Setting<Float> lineWidth = this.register(new Setting("Width", 1.0f, 0.1f, 5.0f, v -> outline.getValue ( ) && render.getValue ( ) ));
+    public Setting<Boolean> box = this.register(new Setting("Box", false, v -> this.render.getCurrentState()));
+    private final Setting<Integer> boxAlpha = this.register(new Setting("BoxAlpha", 85, 0, 255, v -> box.getCurrentState( ) && render.getCurrentState( ) ));
+    public Setting<Boolean> outline = this.register(new Setting("Outline", true, v -> this.render.getCurrentState()));
+    private final Setting<Float> lineWidth = this.register(new Setting("Width", 1.0f, 0.1f, 5.0f, v -> outline.getCurrentState( ) && render.getCurrentState( ) ));
     public BlockPos currentPos;
     public IBlockState currentBlockState;
 
@@ -65,9 +65,9 @@ public class Speedmine extends Module {
 
     @Override
     public void onRender3D(Render3DEvent event) {
-        if (this.render.getValue() && this.currentPos != null && this.currentBlockState.getBlock() == Blocks.OBSIDIAN) {
+        if (this.render.getCurrentState() && this.currentPos != null && this.currentBlockState.getBlock() == Blocks.OBSIDIAN) {
             Color color = new Color(this.timer.passedMs((int) (2000.0f * Client.serverManager.getTpsFactor())) ? 0 : 255, this.timer.passedMs((int) (2000.0f * Client.serverManager.getTpsFactor())) ? 255 : 0, 0, 255);
-            RenderUtil.drawBoxESP(this.currentPos, color, false, color, this.lineWidth.getValue(), this.outline.getValue(), this.box.getValue(), this.boxAlpha.getValue(), false);
+            RenderUtil.drawBoxESP(this.currentPos, color, false, color, this.lineWidth.getCurrentState(), this.outline.getCurrentState(), this.box.getCurrentState(), this.boxAlpha.getCurrentState(), false);
         }
     }
 
@@ -82,7 +82,7 @@ public class Speedmine extends Module {
         if (event.getStage() == 4) {
             if (BlockUtil.canBreak(event.pos)) {
                 Speedmine.mc.playerController.isHittingBlock = false;
-                switch (this.mode.getValue()) {
+                switch (this.mode.getCurrentState()) {
                     case PACKET: {
                         if (this.currentPos == null) {
                             this.currentPos = event.pos;

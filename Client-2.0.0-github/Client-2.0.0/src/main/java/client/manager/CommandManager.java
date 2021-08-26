@@ -13,6 +13,12 @@ public class CommandManager
     private String clientMessage = "<Client 2.0.0>";
     private String prefix = ":";
 
+    public String getRainbowCommandMessage() {
+        StringBuilder stringBuilder = new StringBuilder(this.clientMessage);
+        stringBuilder.insert(0, "\u00a7+");
+        stringBuilder.append("\u00a7r");
+        return stringBuilder.toString();
+    }
     public CommandManager() {
         super("Command");
         this.commands.add(new BindCommand());

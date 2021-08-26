@@ -55,10 +55,10 @@ public class Module
         return null;
     }
     public boolean isOn() {
-        return this.enabled.getValue();
+        return this.enabled.getCurrentState();
     }
     public boolean isOff() {
-        return ! this.enabled.getValue ( );
+        return ! this.enabled.getCurrentState( );
     }
 
     public void setEnabled(boolean enabled) {
@@ -74,7 +74,7 @@ public class Module
         this.enabled.setValue(Boolean.TRUE);
         this.onToggle();
         this.onEnable();
-        if (Notify.getInstance().chatMessages.getValue() && Notify.getInstance().isOn()) {
+        if (Notify.getInstance().chatMessages.getCurrentState() && Notify.getInstance().isOn()) {
             TextComponentString text = new TextComponentString(Client.commandManager.getClientMessage() + " " + ChatFormatting.WHITE + ChatFormatting.BOLD + this.getDisplayName() + ChatFormatting.RESET + ChatFormatting.GREEN + " enabled.");
             Module.mc.ingameGUI.getChatGUI().printChatMessageWithOptionalDeletion(text, 1);
         }
@@ -82,7 +82,7 @@ public class Module
 
     public void disable() {
         this.enabled.setValue(false);
-        if (Notify.getInstance().chatMessages.getValue() && Notify.getInstance().isOn()) {
+        if (Notify.getInstance().chatMessages.getCurrentState() && Notify.getInstance().isOn()) {
             TextComponentString text = new TextComponentString(Client.commandManager.getClientMessage() + " " + ChatFormatting.WHITE + ChatFormatting.BOLD + this.getDisplayName() + ChatFormatting.RESET + ChatFormatting.RED + " disabled.");
             Module.mc.ingameGUI.getChatGUI().printChatMessageWithOptionalDeletion(text, 1);
         }
@@ -100,7 +100,7 @@ public class Module
     }
 
     public String getDisplayName() {
-        return this.displayName.getValue();
+        return this.displayName.getCurrentState();
     }
 
     public void setDisplayName(String name) {
@@ -127,7 +127,7 @@ public class Module
     }
 
     public Bind getBind() {
-        return this.bind.getValue();
+        return this.bind.getCurrentState();
     }
 
     public void setBind(int key) {
@@ -135,7 +135,7 @@ public class Module
     }
 
     public boolean isDrawn() {
-        return this.drawn.getValue();
+        return this.drawn.getCurrentState();
     }
 
     public void setDrawn(boolean drawn) {

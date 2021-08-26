@@ -27,7 +27,55 @@ public class RenderUtil
         RenderUtil.itemRender = mc.getRenderItem();
         RenderUtil.camera = new Frustum();
     }
+    public static void drawFilledBox ( AxisAlignedBB bb , int color ) {
+        GlStateManager.pushMatrix ( );
+        GlStateManager.enableBlend ( );
+        GlStateManager.disableDepth ( );
+        GlStateManager.tryBlendFuncSeparate ( 770 , 771 , 0 , 1 );
+        GlStateManager.disableTexture2D ( );
+        GlStateManager.depthMask ( false );
+        float alpha = (float) ( color >> 24 & 0xFF ) / 255.0f;
+        float red = (float) ( color >> 16 & 0xFF ) / 255.0f;
+        float green = (float) ( color >> 8 & 0xFF ) / 255.0f;
+        float blue = (float) ( color & 0xFF ) / 255.0f;
+        Tessellator tessellator = Tessellator.getInstance ( );
+        BufferBuilder bufferbuilder = tessellator.getBuffer ( );
+        bufferbuilder.begin ( 7 , DefaultVertexFormats.POSITION_COLOR );
+        bufferbuilder.pos ( bb.minX , bb.minY , bb.minZ ).color ( red , green , blue , alpha ).endVertex ( );
+        bufferbuilder.pos ( bb.maxX , bb.minY , bb.minZ ).color ( red , green , blue , alpha ).endVertex ( );
+        bufferbuilder.pos ( bb.maxX , bb.minY , bb.maxZ ).color ( red , green , blue , alpha ).endVertex ( );
+        bufferbuilder.pos ( bb.minX , bb.minY , bb.maxZ ).color ( red , green , blue , alpha ).endVertex ( );
+        bufferbuilder.pos ( bb.minX , bb.maxY , bb.minZ ).color ( red , green , blue , alpha ).endVertex ( );
+        bufferbuilder.pos ( bb.minX , bb.maxY , bb.maxZ ).color ( red , green , blue , alpha ).endVertex ( );
+        bufferbuilder.pos ( bb.maxX , bb.maxY , bb.maxZ ).color ( red , green , blue , alpha ).endVertex ( );
+        bufferbuilder.pos ( bb.maxX , bb.maxY , bb.minZ ).color ( red , green , blue , alpha ).endVertex ( );
+        bufferbuilder.pos ( bb.minX , bb.minY , bb.minZ ).color ( red , green , blue , alpha ).endVertex ( );
+        bufferbuilder.pos ( bb.minX , bb.maxY , bb.minZ ).color ( red , green , blue , alpha ).endVertex ( );
+        bufferbuilder.pos ( bb.maxX , bb.maxY , bb.minZ ).color ( red , green , blue , alpha ).endVertex ( );
+        bufferbuilder.pos ( bb.maxX , bb.minY , bb.minZ ).color ( red , green , blue , alpha ).endVertex ( );
+        bufferbuilder.pos ( bb.maxX , bb.minY , bb.minZ ).color ( red , green , blue , alpha ).endVertex ( );
+        bufferbuilder.pos ( bb.maxX , bb.maxY , bb.minZ ).color ( red , green , blue , alpha ).endVertex ( );
+        bufferbuilder.pos ( bb.maxX , bb.maxY , bb.maxZ ).color ( red , green , blue , alpha ).endVertex ( );
+        bufferbuilder.pos ( bb.maxX , bb.minY , bb.maxZ ).color ( red , green , blue , alpha ).endVertex ( );
+        bufferbuilder.pos ( bb.minX , bb.minY , bb.maxZ ).color ( red , green , blue , alpha ).endVertex ( );
+        bufferbuilder.pos ( bb.maxX , bb.minY , bb.maxZ ).color ( red , green , blue , alpha ).endVertex ( );
+        bufferbuilder.pos ( bb.maxX , bb.maxY , bb.maxZ ).color ( red , green , blue , alpha ).endVertex ( );
+        bufferbuilder.pos ( bb.minX , bb.maxY , bb.maxZ ).color ( red , green , blue , alpha ).endVertex ( );
+        bufferbuilder.pos ( bb.minX , bb.minY , bb.minZ ).color ( red , green , blue , alpha ).endVertex ( );
+        bufferbuilder.pos ( bb.minX , bb.minY , bb.maxZ ).color ( red , green , blue , alpha ).endVertex ( );
+        bufferbuilder.pos ( bb.minX , bb.maxY , bb.maxZ ).color ( red , green , blue , alpha ).endVertex ( );
+        bufferbuilder.pos ( bb.minX , bb.maxY , bb.minZ ).color ( red , green , blue , alpha ).endVertex ( );
+        tessellator.draw ( );
+        GlStateManager.depthMask ( true );
+        GlStateManager.enableDepth ( );
+        GlStateManager.enableTexture2D ( );
+        GlStateManager.disableBlend ( );
+        GlStateManager.popMatrix ( );
+    }
 
+    public static AxisAlignedBB interpolateAxis ( AxisAlignedBB bb ) {
+        return new AxisAlignedBB ( bb.minX - RenderUtil.mc.getRenderManager ( ).viewerPosX , bb.minY - RenderUtil.mc.getRenderManager ( ).viewerPosY , bb.minZ - RenderUtil.mc.getRenderManager ( ).viewerPosZ , bb.maxX - RenderUtil.mc.getRenderManager ( ).viewerPosX , bb.maxY - RenderUtil.mc.getRenderManager ( ).viewerPosY , bb.maxZ - RenderUtil.mc.getRenderManager ( ).viewerPosZ );
+    }
     public static double interpolate(double previous, double current, float partialTicks) {
         return previous + (current - previous) * (double)partialTicks;
     }

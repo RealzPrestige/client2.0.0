@@ -43,13 +43,7 @@ public class Notify extends Module {
             Client.commandManager.setClientMessage(getCommandMessage());
     }
     public String getCommandMessage() {
-        if ( this.rainbowPrefix.getPlannedValue ( ) ) {
-            StringBuilder stringBuilder = new StringBuilder(this.getRawCommandMessage());
-            stringBuilder.insert(0, "\u00a7+");
-            stringBuilder.append("\u00a7r");
-            return stringBuilder.toString();
-        }
-        return TextUtil.coloredString(this.commandBracket.getPlannedValue(), this.bracketColor.getPlannedValue()) + TextUtil.coloredString(this.command.getPlannedValue(), this.commandColor.getPlannedValue()) + TextUtil.coloredString(this.commandBracket2.getPlannedValue(), this.bracketColor.getPlannedValue()) + "\u00a7r";
+        return TextUtil.coloredString(this.commandBracket.getPlannedValue(), this.bracketColor.getPlannedValue()) + TextUtil.coloredString(this.command.getPlannedValue(), this.commandColor.getPlannedValue()) + TextUtil.coloredString(this.commandBracket2.getPlannedValue(), this.bracketColor.getPlannedValue());
     }
 
     public String getRainbowCommandMessage() {
@@ -60,16 +54,6 @@ public class Notify extends Module {
     }
 
     public String getRawCommandMessage() {
-        return this.commandBracket.getValue() + this.command.getValue() + this.commandBracket2.getValue() + "\u00a7r";
-    }
-    public enum Preset {
-        CUSTOM,
-        PRESET
-    }
-    public enum Presets {
-        LINE,
-        DOUBLELINE,
-        TRIPLELINE,
-        DOUBLEARROW
+        return this.commandBracket.getCurrentState() + this.command.getCurrentState() + this.commandBracket2.getCurrentState();
     }
 }

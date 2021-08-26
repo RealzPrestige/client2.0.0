@@ -57,9 +57,9 @@ public abstract class MixinPlayerControllerMP {
     }
     @Inject(method={"getBlockReachDistance"}, at={@At(value="RETURN")}, cancellable=true)
     private void getReachDistanceHook(CallbackInfoReturnable<Float> distance) {
-        if (Interactions.getInstance().isOn() && Interactions.getInstance().reach.getValue()) {
+        if (Interactions.getInstance().isOn() && Interactions.getInstance().reach.getCurrentState()) {
             float range = distance.getReturnValue ( );
-            distance.setReturnValue(Interactions.getInstance().reachAmount.getValue());
+            distance.setReturnValue(Interactions.getInstance().reachAmount.getCurrentState());
         }
     }
 }

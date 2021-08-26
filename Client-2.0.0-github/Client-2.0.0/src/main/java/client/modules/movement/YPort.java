@@ -33,7 +33,7 @@ public class YPort extends Module {
 
         if(Step.mc.player.collidedHorizontally && Step.mc.player.onGround){
             disable();
-            mc.player.sendChatMessage(futurePrefix.getValue() + "toggle Speed");
+            mc.player.sendChatMessage(futurePrefix.getCurrentState() + "toggle Speed");
             Step.getInstance().enable();
         }
     }
@@ -48,7 +48,7 @@ public class YPort extends Module {
             return;
         if (mc.player.onGround) {
             mc.player.jump();
-            EntityUtil.setSpeed(mc.player, EntityUtil.getBaseMoveSpeed() + this.speed.getValue());
+            EntityUtil.setSpeed(mc.player, EntityUtil.getBaseMoveSpeed() + this.speed.getCurrentState());
         } else {
             mc.player.motionY = -1.0D;
         }

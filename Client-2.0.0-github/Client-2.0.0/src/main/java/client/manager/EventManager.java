@@ -11,8 +11,10 @@ import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.network.play.server.SPacketEntityStatus;
 import net.minecraft.network.play.server.SPacketPlayerListItem;
+import net.minecraft.network.play.server.SPacketSoundEffect;
 import net.minecraftforge.client.event.ClientChatEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
@@ -31,6 +33,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class EventManager extends Feature {
     private final Timer logoutTimer = new Timer();
+    private final Timer chorusTimer = new Timer();
     private final AtomicBoolean tickOngoing;
     public EventManager() {
         this.tickOngoing = new AtomicBoolean(false);
@@ -132,8 +135,28 @@ public class EventManager extends Feature {
                         }
                     });
         }
-        if (event.getPacket() instanceof net.minecraft.network.play.server.SPacketTimeUpdate)
+        if (event.getPacket() instanceof net.minecraft.network.play.server.SPacketTimeUpdate) {
             Client.serverManager.update();
+        } else if ( event.getPacket ( ) instanceof SPacketSoundEffect && ( (SPacketSoundEffect) event.getPacket ( ) ).getSound ( ) == SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT ) {
+            // chorus sends 2 sound packets, this is for ignoring the first one and also ignoring your own teleport,
+            // which sends one packet which would break something like a simple "2nd packet" flag
+            if ( ! chorusTimer.passedMs ( 100 ) )
+                MinecraftForge.EVENT_BUS.post ( new ChorusEvent ( ( (SPacketSoundEffect) event.getPacket ( ) ).getX ( ) , ( (SPacketSoundEffect) event.getPacket ( ) ).getY ( ) , ( (SPacketSoundEffect) event.getPacket ( ) ).getZ ( ) ) );
+            chorusTimer.reset ( );
+        }
+        /**
+         *
+         * @Author Perry
+         * 26/08/2021
+         *
+         */
+
+        else if ( event.getPacket ( ) instanceof SPacketSoundEffect && ( (SPacketSoundEffect) event.getPacket ( ) ).getSound ( ) == SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT ) {
+            if (!chorusTimer.passedMs(100)) {
+                MinecraftForge.EVENT_BUS.post(new ChorusEvent(((SPacketSoundEffect) event.getPacket()).getX(), ((SPacketSoundEffect) event.getPacket()).getY(), ((SPacketSoundEffect) event.getPacket()).getZ()));
+                chorusTimer.reset();
+            }
+        }
     }
 
     @SubscribeEvent

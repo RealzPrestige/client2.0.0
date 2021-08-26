@@ -41,7 +41,7 @@ public class NoSlow extends Module {
     }
     @Override
     public void onUpdate() {
-        if ( this.guiMove.getValue ( ) ) {
+        if ( this.guiMove.getCurrentState( ) ) {
             if (mc.currentScreen instanceof GuiOptions || mc.currentScreen instanceof GuiVideoSettings || mc.currentScreen instanceof GuiScreenOptionsSounds || mc.currentScreen instanceof GuiContainer || mc.currentScreen instanceof GuiIngameMenu) {
                 for (KeyBinding bind : keys) {
                     KeyBinding.setKeyBindState(bind.getKeyCode(), Keyboard.isKeyDown(bind.getKeyCode()));
@@ -53,20 +53,20 @@ public class NoSlow extends Module {
                 }
             }
         }
-        if(webs.getValue() && mc.player.isInWeb){
+        if(webs.getCurrentState() && mc.player.isInWeb){
             mc.player.isInWeb = false;
         }
     }
     @SubscribeEvent
     public void onItemEat(InputUpdateEvent event) {
-        if ( this.items.getValue ( ) && mc.player.isHandActive()) {
+        if ( this.items.getCurrentState( ) && mc.player.isHandActive()) {
             event.getMovementInput().moveStrafe *= 5.0f;
             event.getMovementInput().moveForward *= 5.0f;
         }
     }
     @SubscribeEvent
     public void onKeyEvent(KeyEvent event) {
-        if ( this.guiMove.getValue ( ) && event.getStage() == 0 && !(mc.currentScreen instanceof GuiChat)) {
+        if ( this.guiMove.getCurrentState( ) && event.getStage() == 0 && !(mc.currentScreen instanceof GuiChat)) {
             event.info = event.pressed;
         }
     }

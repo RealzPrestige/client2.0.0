@@ -31,7 +31,7 @@ public class Criticals extends Module {
                 return;
             }
             if (Criticals.mc.player.onGround && !Criticals.mc.gameSettings.keyBindJump.isKeyDown() && packet.getEntityFromWorld(Criticals.mc.world) instanceof EntityLivingBase && !Criticals.mc.player.isInWater() && !Criticals.mc.player.isInLava()) {
-                switch (this.packets.getValue()) {
+                switch (this.packets.getCurrentState()) {
                     case 1: {
                         Criticals.mc.player.connection.sendPacket(new CPacketPlayer.Position(Criticals.mc.player.posX, Criticals.mc.player.posY + (double) 0.1f, Criticals.mc.player.posZ, false));
                         Criticals.mc.player.connection.sendPacket(new CPacketPlayer.Position(Criticals.mc.player.posX, Criticals.mc.player.posY, Criticals.mc.player.posZ, false));

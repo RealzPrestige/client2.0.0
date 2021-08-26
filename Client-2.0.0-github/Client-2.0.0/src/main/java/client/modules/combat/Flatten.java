@@ -74,7 +74,7 @@ public class Flatten extends Module {
         Collections.addAll(place_targets, offsetsDefault);
 
         int blocks_placed = 0;
-        while (blocks_placed < blocksPerTick.getValue()) {
+        while (blocks_placed < blocksPerTick.getCurrentState()) {
             if (offsetStep >= place_targets.size()) {
                 offsetStep = 0;
                 break;
@@ -102,7 +102,7 @@ public class Flatten extends Module {
     private void place(BlockPos pos, int slot, int oldSlot) {
         mc.player.inventory.currentItem = slot;
         mc.playerController.updateController();
-        BlockUtil.placeBlock(pos, EnumHand.MAIN_HAND, this.rotate.getValue(), this.packet.getValue(), mc.player.isSneaking());
+        BlockUtil.placeBlock(pos, EnumHand.MAIN_HAND, this.rotate.getCurrentState(), this.packet.getCurrentState(), mc.player.isSneaking());
         mc.player.inventory.currentItem = oldSlot;
         mc.playerController.updateController();
     }

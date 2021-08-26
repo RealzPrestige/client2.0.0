@@ -15,6 +15,7 @@ import client.modules.visual.*;
 import net.minecraftforge.common.MinecraftForge;
 import org.lwjgl.input.Keyboard;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -64,6 +65,7 @@ public class ModuleManager
         modules.add(new PingSpoofer());
         modules.add(new TabTweaks());
         modules.add(new MiddleClickPearl());
+        modules.add(new ChorusPredict());
 
         //MOVEMENT
         modules.add(new ReverseStep());

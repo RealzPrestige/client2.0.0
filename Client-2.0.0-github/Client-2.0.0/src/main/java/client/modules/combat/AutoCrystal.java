@@ -82,37 +82,37 @@ public class AutoCrystal extends Module {
         super("AutoCrystal", "Automatically places/breaks crystals to deal damage to opponents.", Category.COMBAT);
         this.setting = (Setting<Settings>)this.register(new Setting<>("Setting", Settings.AUTOCRYSTAL));
         this.speedFactor = (Setting<SpeedFactor>)this.register(new Setting<>("SpeedFactor", SpeedFactor.UPDATE));
-        this.doPlace = (Setting<Boolean>)this.register(new Setting("Place", false, v-> this.setting.getValue() == Settings.AUTOCRYSTAL));
-        this.doBreak = (Setting<Boolean>)this.register(new Setting("Break", false, v-> this.setting.getValue() == Settings.AUTOCRYSTAL));
-        this.breakRange = (Setting<Float>)this.register(new Setting("BreakRange", 5.0f, 1.0f, 6.0f, v-> this.setting.getValue() == Settings.AUTOCRYSTAL));
-        this.placeRange = (Setting<Float>)this.register(new Setting("PlaceRange", 5.0f, 1.0f, 6.0f, v-> this.setting.getValue() == Settings.AUTOCRYSTAL));
-        this.targetRange = (Setting<Float>)this.register(new Setting("TargetRange",9.0f, 1.0f, 15.0f, v-> this.setting.getValue() == Settings.AUTOCRYSTAL));
-        this.breakWallRange = (Setting<Float>)this.register(new Setting("BreakRangeWall", 5.0f, 1.0f, 6.0f, v-> this.setting.getValue() == Settings.AUTOCRYSTAL));
-        this.placeRangeWall = (Setting<Float>)this.register(new Setting("PlaceRangeWall", 5.0f, 1.0f, 6.0f, v-> this.setting.getValue() == Settings.AUTOCRYSTAL));
-        this.breakDelay = (Setting<Integer>)this.register(new Setting("BreakDelay", 0, 0, 200, v-> this.setting.getValue() == Settings.AUTOCRYSTAL));
-        this.instant = (Setting<Boolean>)this.register(new Setting("Predict", false, v-> this.setting.getValue() == Settings.AUTOCRYSTAL));
-        this.priority = (Setting<Priority>)this.register(new Setting("PrioritizeSelf", Priority.SELF, v-> this.setting.getValue() == Settings.AUTOCRYSTAL));
-        this.cancel = (Setting<Boolean>)this.register(new Setting("Cancel", true, v-> this.setting.getValue() == Settings.AUTOCRYSTAL));
-        this.armorPercent = (Setting<Integer>)this.register(new Setting("Armor%", 10, 0, 100, v-> this.setting.getValue() == Settings.AUTOCRYSTAL));
-        this.facePlaceHP = (Setting<Float>)this.register(new Setting("FaceplaceHP", 8.0f, 0.0f, 36.0f, v-> this.setting.getValue() == Settings.AUTOCRYSTAL));
-        this.minDamage = (Setting<Float>)this.register(new Setting("MinDamage", 4.0f, 1.0f, 36.0f, v-> this.setting.getValue() == Settings.AUTOCRYSTAL));
-        this.maxSelfDamage = (Setting<Float>)this.register(new Setting("MaxSelfDmg",8.0f, 1.0f, 36.0f, v-> this.setting.getValue() == Settings.AUTOCRYSTAL));
-        this.swing = (Setting<Boolean>)this.register(new Setting("Swing", false, v-> this.setting.getValue() == Settings.AUTOCRYSTAL));
-        this.announceOnly = (Setting<Boolean>)this.register(new Setting("AnnounceOnly", false, v-> this.setting.getValue() == Settings.AUTOCRYSTAL));
-        this.box = (Setting<Boolean>)this.register(new Setting<>("Box", true, v-> this.setting.getValue() == Settings.RENDER));
-        this.fade = (Setting<Enum>)this.register(new Setting<>("Fade", Enum.FAST, v-> this.setting.getValue() == Settings.RENDER));
-        this.red = (Setting<Integer>)this.register(new Setting<>("BoxRed", 255, 0, 255, v-> this.setting.getValue() == Settings.RENDER));
-        this.green = (Setting<Integer>)this.register(new Setting<>("BoxGreen", 255, 0, 255, v-> this.setting.getValue() == Settings.RENDER));
-        this.blue = (Setting<Integer>)this.register(new Setting<>("BoxBlue", 255, 0, 255, v-> this.setting.getValue() == Settings.RENDER));
-        this.alpha = (Setting<Integer>)this.register(new Setting<>("BoxAlpha", 120, 0, 255, v-> this.setting.getValue() == Settings.RENDER));
-        this.rainbow = (Setting<Boolean>)this.register(new Setting<>("BoxRainbow", true, v-> this.setting.getValue() == Settings.RENDER));
-        this.outline = (Setting<Boolean>)this.register(new Setting<>("Outline", true, v-> this.setting.getValue() == Settings.RENDER));
-        this.cRed = (Setting<Integer>)this.register(new Setting<>("OutlineRed", 255, 0, 255, v-> this.setting.getValue() == Settings.RENDER));
-        this.cGreen = (Setting<Integer>)this.register(new Setting<>("OutlineGreen", 255, 0, 255, v-> this.setting.getValue() == Settings.RENDER));
-        this.cBlue = (Setting<Integer>)this.register(new Setting<>("OutlineBlue", 255, 0, 255, v-> this.setting.getValue() == Settings.RENDER));
-        this.cAlpha = (Setting<Integer>)this.register(new Setting<>("OutlineAlpha", 255, 0, 255, v-> this.setting.getValue() == Settings.RENDER));
-        this.lineWidth = (Setting<Integer>)this.register(new Setting<>("OutlineWidth", 1, 0, 5, v-> this.setting.getValue() == Settings.RENDER));
-        this.cRainbow = (Setting<Boolean>)this.register(new Setting<>("OutlineRainbow", true, v-> this.setting.getValue() == Settings.RENDER));
+        this.doPlace = (Setting<Boolean>)this.register(new Setting("Place", false, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
+        this.doBreak = (Setting<Boolean>)this.register(new Setting("Break", false, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
+        this.breakRange = (Setting<Float>)this.register(new Setting("BreakRange", 5.0f, 1.0f, 6.0f, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
+        this.placeRange = (Setting<Float>)this.register(new Setting("PlaceRange", 5.0f, 1.0f, 6.0f, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
+        this.targetRange = (Setting<Float>)this.register(new Setting("TargetRange",9.0f, 1.0f, 15.0f, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
+        this.breakWallRange = (Setting<Float>)this.register(new Setting("BreakRangeWall", 5.0f, 1.0f, 6.0f, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
+        this.placeRangeWall = (Setting<Float>)this.register(new Setting("PlaceRangeWall", 5.0f, 1.0f, 6.0f, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
+        this.breakDelay = (Setting<Integer>)this.register(new Setting("BreakDelay", 0, 0, 200, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
+        this.instant = (Setting<Boolean>)this.register(new Setting("Predict", false, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
+        this.priority = (Setting<Priority>)this.register(new Setting("PrioritizeSelf", Priority.SELF, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
+        this.cancel = (Setting<Boolean>)this.register(new Setting("Cancel", true, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
+        this.armorPercent = (Setting<Integer>)this.register(new Setting("Armor%", 10, 0, 100, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
+        this.facePlaceHP = (Setting<Float>)this.register(new Setting("FaceplaceHP", 8.0f, 0.0f, 36.0f, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
+        this.minDamage = (Setting<Float>)this.register(new Setting("MinDamage", 4.0f, 1.0f, 36.0f, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
+        this.maxSelfDamage = (Setting<Float>)this.register(new Setting("MaxSelfDmg",8.0f, 1.0f, 36.0f, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
+        this.swing = (Setting<Boolean>)this.register(new Setting("Swing", false, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
+        this.announceOnly = (Setting<Boolean>)this.register(new Setting("AnnounceOnly", false, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
+        this.box = (Setting<Boolean>)this.register(new Setting<>("Box", true, v-> this.setting.getCurrentState() == Settings.RENDER));
+        this.fade = (Setting<Enum>)this.register(new Setting<>("Fade", Enum.FAST, v-> this.setting.getCurrentState() == Settings.RENDER));
+        this.red = (Setting<Integer>)this.register(new Setting<>("BoxRed", 255, 0, 255, v-> this.setting.getCurrentState() == Settings.RENDER));
+        this.green = (Setting<Integer>)this.register(new Setting<>("BoxGreen", 255, 0, 255, v-> this.setting.getCurrentState() == Settings.RENDER));
+        this.blue = (Setting<Integer>)this.register(new Setting<>("BoxBlue", 255, 0, 255, v-> this.setting.getCurrentState() == Settings.RENDER));
+        this.alpha = (Setting<Integer>)this.register(new Setting<>("BoxAlpha", 120, 0, 255, v-> this.setting.getCurrentState() == Settings.RENDER));
+        this.rainbow = (Setting<Boolean>)this.register(new Setting<>("BoxRainbow", true, v-> this.setting.getCurrentState() == Settings.RENDER));
+        this.outline = (Setting<Boolean>)this.register(new Setting<>("Outline", true, v-> this.setting.getCurrentState() == Settings.RENDER));
+        this.cRed = (Setting<Integer>)this.register(new Setting<>("OutlineRed", 255, 0, 255, v-> this.setting.getCurrentState() == Settings.RENDER));
+        this.cGreen = (Setting<Integer>)this.register(new Setting<>("OutlineGreen", 255, 0, 255, v-> this.setting.getCurrentState() == Settings.RENDER));
+        this.cBlue = (Setting<Integer>)this.register(new Setting<>("OutlineBlue", 255, 0, 255, v-> this.setting.getCurrentState() == Settings.RENDER));
+        this.cAlpha = (Setting<Integer>)this.register(new Setting<>("OutlineAlpha", 255, 0, 255, v-> this.setting.getCurrentState() == Settings.RENDER));
+        this.lineWidth = (Setting<Integer>)this.register(new Setting<>("OutlineWidth", 1, 0, 5, v-> this.setting.getCurrentState() == Settings.RENDER));
+        this.cRainbow = (Setting<Boolean>)this.register(new Setting<>("OutlineRainbow", true, v-> this.setting.getCurrentState() == Settings.RENDER));
         this.placeSet = new HashSet<>();
         this.clearTimer = new Timer();
         this.breakTimer = new Timer();
@@ -154,26 +154,26 @@ public class AutoCrystal extends Module {
         if (!this.update()) {
             return;
         }
-        this.target = EntityUtil.getTarget(this.targetRange.getValue());
+        this.target = EntityUtil.getTarget(this.targetRange.getCurrentState());
         if (this.target == null) {
             return;
         }
-        if (speedFactor.getValue() == SpeedFactor.UPDATE && !announceOnly.getValue()) {
-            if(doPlace.getValue()) {
+        if (speedFactor.getCurrentState() == SpeedFactor.UPDATE && !announceOnly.getCurrentState()) {
+            if(doPlace.getCurrentState()) {
                 this.doPlace();
             }
-            if(doBreak.getValue()) {
+            if(doBreak.getCurrentState()) {
                 this.doBreak();
             }
         }
     }
     @Override
     public void onTick() {
-        if (speedFactor.getValue() == SpeedFactor.TICK && !announceOnly.getValue()) {
-            if(doPlace.getValue()) {
+        if (speedFactor.getCurrentState() == SpeedFactor.TICK && !announceOnly.getCurrentState()) {
+            if(doPlace.getCurrentState()) {
                 this.doPlace();
             }
-            if(doBreak.getValue()) {
+            if(doBreak.getCurrentState()) {
                 this.doBreak();
             }
         }
@@ -183,17 +183,17 @@ public class AutoCrystal extends Module {
     private void doPlace() {
         BlockPos placePos = null;
         float maxDamage = 0.5f;
-        final List<BlockPos> sphere = BlockUtil.getSphere(this.placeRange.getValue(), true);
+        final List<BlockPos> sphere = BlockUtil.getSphere(this.placeRange.getCurrentState(), true);
         for (int size = sphere.size(), i = 0; i < size; ++i) {
             final BlockPos pos = sphere.get(i);
             final float self = this.calculate(pos, mc.player);
             if (BlockUtil.canPlaceCrystal(pos, true)) {
                 final float damage;
                 // ( If health is over self(damage your taking (+0.5hp))      && maxSelfDamage = over selfdamage      && damage(enemy) is over maxdamage(0.5)                    && damage is over the damage you take
-                if (priority.getValue() == Priority.SELF) {
-                    if (EntityUtil.getHealth(mc.player) > self + 0.5f && this.maxSelfDamage.getValue() > self && (damage = this.calculate(pos, this.target)) > maxDamage && damage > self) {
-                        if (damage <= this.minDamage.getValue()) {
-                            if (this.facePlaceHP.getValue() <= EntityUtil.getHealth(this.target) && !PlayerUtil.isArmorLow(this.target, this.armorPercent.getValue())) {
+                if (priority.getCurrentState() == Priority.SELF) {
+                    if (EntityUtil.getHealth(mc.player) > self + 0.5f && this.maxSelfDamage.getCurrentState() > self && (damage = this.calculate(pos, this.target)) > maxDamage && damage > self) {
+                        if (damage <= this.minDamage.getCurrentState()) {
+                            if (this.facePlaceHP.getCurrentState() <= EntityUtil.getHealth(this.target) && !PlayerUtil.isArmorLow(this.target, this.armorPercent.getCurrentState())) {
                                 continue;
                             }
                             if (damage <= 2.0f) {
@@ -206,10 +206,10 @@ public class AutoCrystal extends Module {
                         currentTargets.clear();
                         currentTargets.add(pos);
                     }
-                } else if (priority.getValue() == Priority.ENEMY){
-                    if (EntityUtil.getHealth(mc.player) > self + 0.5f && this.maxSelfDamage.getValue() > self && (damage = this.calculate(pos, this.target)) > maxDamage) {
-                        if (damage <= this.minDamage.getValue()) {
-                            if (this.facePlaceHP.getValue() <= EntityUtil.getHealth(this.target) && !PlayerUtil.isArmorLow(this.target, this.armorPercent.getValue())) {
+                } else if (priority.getCurrentState() == Priority.ENEMY){
+                    if (EntityUtil.getHealth(mc.player) > self + 0.5f && this.maxSelfDamage.getCurrentState() > self && (damage = this.calculate(pos, this.target)) > maxDamage) {
+                        if (damage <= this.minDamage.getCurrentState()) {
+                            if (this.facePlaceHP.getCurrentState() <= EntityUtil.getHealth(this.target) && !PlayerUtil.isArmorLow(this.target, this.armorPercent.getCurrentState())) {
                                 continue;
                             }
                             if (damage <= 2.0f) {
@@ -248,10 +248,10 @@ public class AutoCrystal extends Module {
                 if (crystal.getEntityId() != this.predictedId) {
                     final float self = this.calculate(crystal, mc.player);
                     final float damage;
-                    if (priority.getValue() == Priority.SELF) {
+                    if (priority.getCurrentState() == Priority.SELF) {
                         if (EntityUtil.getHealth(mc.player) > self + 0.5f && (damage = this.calculate(crystal, this.target)) > self && damage > self) {
-                            if (damage <= this.minDamage.getValue()) {
-                                if (this.facePlaceHP.getValue() <= EntityUtil.getHealth(this.target) && !PlayerUtil.isArmorLow(this.target, this.armorPercent.getValue())) {
+                            if (damage <= this.minDamage.getCurrentState()) {
+                                if (this.facePlaceHP.getCurrentState() <= EntityUtil.getHealth(this.target) && !PlayerUtil.isArmorLow(this.target, this.armorPercent.getCurrentState())) {
                                     continue;
                                 }
                                 if (damage <= 2.0f) {
@@ -260,10 +260,10 @@ public class AutoCrystal extends Module {
                             }
                             entity = crystal;
                         }
-                    } else if (priority.getValue() == Priority.ENEMY) {
+                    } else if (priority.getCurrentState() == Priority.ENEMY) {
                         if (EntityUtil.getHealth(mc.player) > self + 0.5f && (damage = this.calculate(crystal, this.target)) > self) {
-                            if (damage <= this.minDamage.getValue()) {
-                                if (this.facePlaceHP.getValue() <= EntityUtil.getHealth(this.target) && !PlayerUtil.isArmorLow(this.target, this.armorPercent.getValue())) {
+                            if (damage <= this.minDamage.getCurrentState()) {
+                                if (this.facePlaceHP.getCurrentState() <= EntityUtil.getHealth(this.target) && !PlayerUtil.isArmorLow(this.target, this.armorPercent.getCurrentState())) {
                                     continue;
                                 }
                                 if (damage <= 2.0f) {
@@ -275,12 +275,12 @@ public class AutoCrystal extends Module {
                     }
                 }
             }
-            if (entity != null && this.breakTimer.passedMs(this.breakDelay.getValue())) {
+            if (entity != null && this.breakTimer.passedMs(this.breakDelay.getCurrentState())) {
                 BlockPos renderPos = entity.getPosition().down();
                 clearMap(renderPos);
                 Objects.requireNonNull(mc.getConnection()).sendPacket(new CPacketUseEntity(entity));
                 renderMap.add(new RenderPos(renderPos, 0.0));
-                if(swing.getValue()) {
+                if(swing.getCurrentState()) {
                     mc.player.swingArm(this.offhand ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND);
                 }
                 this.breakTimer.reset();
@@ -289,7 +289,7 @@ public class AutoCrystal extends Module {
     }
 
     private boolean isValid(final Entity crystal) {
-        return (mc.player.canEntityBeSeen(crystal) ? (this.breakRange.getValue() * this.breakRange.getValue()) : (this.breakWallRange.getValue() * this.breakWallRange.getValue())) > mc.player.getDistanceSq(crystal);
+        return (mc.player.canEntityBeSeen(crystal) ? (this.breakRange.getCurrentState() * this.breakRange.getCurrentState()) : (this.breakWallRange.getCurrentState() * this.breakWallRange.getCurrentState())) > mc.player.getDistanceSq(crystal);
     }
 
     private float calculate(final Entity crystal, final EntityPlayer target) {
@@ -306,25 +306,25 @@ public class AutoCrystal extends Module {
         hitPacket.action = CPacketUseEntity.Action.ATTACK;
         Objects.requireNonNull(mc.getConnection()).sendPacket(hitPacket);
         this.predictedId = id;
-        if(swing.getValue()) {
+        if(swing.getCurrentState()) {
             mc.player.swingArm(this.offhand ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND);
         }
     }
 
     @SubscribeEvent
     public void onPacketReceive(final PacketEvent.Receive event) {
-        if (event.getPacket() instanceof SPacketSpawnObject && this.instant.getValue()) {
+        if (event.getPacket() instanceof SPacketSpawnObject && this.instant.getCurrentState()) {
             final Object packet = event.getPacket();
             final BlockPos pos = new BlockPos(((SPacketSpawnObject)packet).getX(), ((SPacketSpawnObject)packet).getY(), ((SPacketSpawnObject)packet).getZ());
             if (((SPacketSpawnObject)packet).getType() == 51 && this.placeSet.contains(pos.down())) {
-                if (mc.player.getDistance(pos.getX(), pos.getY(), pos.getZ()) > this.breakRange.getValue()) {
+                if (mc.player.getDistance(pos.getX(), pos.getY(), pos.getZ()) > this.breakRange.getCurrentState()) {
                     return;
                 }
                 this.instantHit(((SPacketSpawnObject)packet).getEntityID());
             }
         }
         Object packet;
-        if (event.getPacket() instanceof SPacketSoundEffect && this.cancel.getValue() && ((SPacketSoundEffect)(packet = event.getPacket())).getCategory() == SoundCategory.BLOCKS && ((SPacketSoundEffect)packet).getSound() == SoundEvents.ENTITY_GENERIC_EXPLODE) {
+        if (event.getPacket() instanceof SPacketSoundEffect && this.cancel.getCurrentState() && ((SPacketSoundEffect)(packet = event.getPacket())).getCategory() == SoundCategory.BLOCKS && ((SPacketSoundEffect)packet).getSound() == SoundEvents.ENTITY_GENERIC_EXPLODE) {
             final ArrayList<Entity> entities = new ArrayList<>(mc.world.loadedEntityList);
             for (int size = entities.size(), i = 0; i < size; ++i) {
                 final Entity entity = entities.get(i);
@@ -346,15 +346,15 @@ public class AutoCrystal extends Module {
             RenderPos renderPos = it.next();
             Color color;
             Color color2;
-            color = new Color(red.getValue(), green.getValue(), blue.getValue(), (int) Math.max(alpha.getValue() - renderPos.alpha, 0));
-            color2 = new Color(cRed.getValue(), cGreen.getValue(), cBlue.getValue(), (int) Math.max(cAlpha.getValue() - renderPos.alpha, 0));
-            RenderUtil.drawBoxESP(renderPos.pos, rainbow.getValue() ? ColorUtil.rainbow(ClickGui.getInstance().rainbowHue.getValue()) : color , this.outline.getValue(), cRainbow.getValue() ? ColorUtil.rainbow(ClickGui.getInstance().rainbowHue.getValue()) : color2, this.lineWidth.getValue(), this.outline.getValue(), this.box.getValue(), (int) Math.max(cAlpha.getValue() - renderPos.alpha, 0), true);
-            if (renderPos.alpha > Math.max(alpha.getValue(), rainbow.getValue() ? ColorUtil.rainbow(ClickGui.getInstance().rainbowHue.getValue()).getRGB() : ColorUtil.toRGBA(red.getValue(), green.getValue(), blue.getValue())))
+            color = new Color(red.getCurrentState(), green.getCurrentState(), blue.getCurrentState(), (int) Math.max(alpha.getCurrentState() - renderPos.alpha, 0));
+            color2 = new Color(cRed.getCurrentState(), cGreen.getCurrentState(), cBlue.getCurrentState(), (int) Math.max(cAlpha.getCurrentState() - renderPos.alpha, 0));
+            RenderUtil.drawBoxESP(renderPos.pos, rainbow.getCurrentState() ? ColorUtil.rainbow(ClickGui.getInstance().rainbowHue.getCurrentState()) : color , this.outline.getCurrentState(), cRainbow.getCurrentState() ? ColorUtil.rainbow(ClickGui.getInstance().rainbowHue.getCurrentState()) : color2, this.lineWidth.getCurrentState(), this.outline.getCurrentState(), this.box.getCurrentState(), (int) Math.max(cAlpha.getCurrentState() - renderPos.alpha, 0), true);
+            if (renderPos.alpha > Math.max(alpha.getCurrentState(), rainbow.getCurrentState() ? ColorUtil.rainbow(ClickGui.getInstance().rainbowHue.getCurrentState()).getRGB() : ColorUtil.toRGBA(red.getCurrentState(), green.getCurrentState(), blue.getCurrentState())))
                 toRemove.add(renderPos);
-            renderPos.alpha = renderPos.alpha + (fade.getValue() == Enum.FAST ? 1.5 : fade.getValue() == Enum.SLOW ? 0.5 : 1);
+            renderPos.alpha = renderPos.alpha + (fade.getCurrentState() == Enum.FAST ? 1.5 : fade.getCurrentState() == Enum.SLOW ? 0.5 : 1);
             if (currentTargets.contains(renderPos.pos)) {
                 renderPos.alpha = 0;
-            } else if (fade.getValue() == Enum.NONE) {
+            } else if (fade.getCurrentState() == Enum.NONE) {
                 toRemove.add(renderPos);
             }
         }

@@ -68,12 +68,12 @@ public class Spammer extends Module {
             this.disable();
             return;
         }
-        if (!this.timer.passedS(this.delay.getValue())) {
+        if (!this.timer.passedS(this.delay.getCurrentState())) {
             return;
         }
         if (Spammer.spamMessages.size() > 0) {
             String messageOut;
-            if (this.random.getValue()) {
+            if (this.random.getCurrentState()) {
                 final int index = Spammer.rnd.nextInt(Spammer.spamMessages.size());
                 messageOut = Spammer.spamMessages.get(index);
                 Spammer.spamMessages.remove(index);
@@ -83,7 +83,7 @@ public class Spammer extends Module {
                 Spammer.spamMessages.remove(0);
             }
             Spammer.spamMessages.add(messageOut);
-            if (this.greentext.getValue()) {
+            if (this.greentext.getCurrentState()) {
                 messageOut = "> " + messageOut;
             }
             Spammer.mc.player.connection.sendPacket(new CPacketChatMessage(messageOut.replaceAll("§", "")));

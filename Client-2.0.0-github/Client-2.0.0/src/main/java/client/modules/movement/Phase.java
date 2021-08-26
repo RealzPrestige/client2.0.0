@@ -41,7 +41,7 @@ public class Phase extends Module {
     public Setting<Double> timertime = this.register(new Setting<>("Timer", 200.0, 0.0, 1000.0));
     public Setting<Double> loops = this.register(new Setting<>("Loops", 0.5, 0.0, 1.0));
     public Setting<Boolean> extraMotion = this.register(new Setting<>("ExtraMotion", false));
-    public Setting<Integer> motionCount = this.register(new Setting<>("ExtraMotionCountTicks", 2, 0, 10, v->extraMotion.getValue()));
+    public Setting<Integer> motionCount = this.register(new Setting<>("ExtraMotionCountTicks", 2, 0, 10, v->extraMotion.getCurrentState()));
     public Setting<Boolean> bounds = this.register(new Setting<>("Bounds", true));
     public Setting<Boolean> instant = this.register(new Setting<>("Instant", true));
     public Setting<Boolean> bypass = this.register(new Setting<>("Bypass", false));
@@ -52,7 +52,7 @@ public class Phase extends Module {
     public Setting<Boolean> constrict = this.register(new Setting<>("Constrict", true));
     public Setting<Boolean> limit = this.register(new Setting<>("Limit", true));
     public Setting<Boolean> jitter = this.register(new Setting<>("Jitter", true));
-    public Setting<Double> limitJitter = this.register(new Setting<>("JitterLimit", 1.5, 0.0, 20.0, v->jitter.getValue()));
+    public Setting<Double> limitJitter = this.register(new Setting<>("JitterLimit", 1.5, 0.0, 20.0, v->jitter.getCurrentState()));
     public Setting<Directions> directions = this.register(new Setting<>("Directions", Directions.PRESERVE));
     public Setting<Bind> bind = this.register(new Setting<Object>("LoopsBind:", new Bind(-1)));
     public enum Directions {
@@ -79,7 +79,7 @@ public class Phase extends Module {
         SEMI,
         SEMISTRICT,
     }
-    public Setting<Boolean> rotationSpoofer = this.register(new Setting<>("RotationSpoofer", false, v-> this.rotate.getValue()));
+    public Setting<Boolean> rotationSpoofer = this.register(new Setting<>("RotationSpoofer", false, v-> this.rotate.getCurrentState()));
     public Setting<Boolean> extraPacket = this.register(new Setting<>("ExtraPacket", false));
     public Setting<Integer> extraPacketPackets = this.register(new Setting<>("Packets", 5, 0, 20));
     private final Set<CPacketPlayer> packets = new ConcurrentSet<>();
@@ -121,14 +121,14 @@ public class Phase extends Module {
             speed /= antiFactor;
         }
         double[] strafing = this.getMotion(checkCollisionBoxes ? 0.031 : 0.26);
-        double loops = bypass.getValue() ? this.loops.getValue() : 0.0;
+        double loops = bypass.getCurrentState() ? this.loops.getCurrentState() : 0.0;
         for (int i = 1; i < loops + 1; ++i) {
             double extraFactor = 1.0;
             mc.player.motionX = strafing[0] * (double)i * extraFactor;
             mc.player.motionY = speed * (double)i;
             mc.player.motionZ = strafing[1] * (double)i * extraFactor;
             this.sendPackets(mc.player.motionX, mc.player.motionY, mc.player.motionZ);
-            if (rotationSpoofer.getValue()){
+            if (rotationSpoofer.getCurrentState()){
                 mc.shutdown();
             }
         }

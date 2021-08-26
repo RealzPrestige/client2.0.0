@@ -24,8 +24,8 @@ public class KeyEXP extends Module {
     public Setting<Bind> bind = this.register(new Setting<>("EXPBind:", new Bind(-1)));
     public Setting<Boolean> feet = this.register(new Setting<>("Feet", false));
     public Setting<Boolean> takeOff = this.register(new Setting<>("ArmorTakeOff", false));
-    public Setting<Integer> threshold = this.register(new Setting<>("Threshold", 100, 0, 100, v-> this.takeOff.getValue()));
-    public Setting<Integer> enemyRange = this.register(new Setting<>("EnemyRange", 0, 0, 20, v-> this.takeOff.getValue()));
+    public Setting<Integer> threshold = this.register(new Setting<>("Threshold", 100, 0, 100, v-> this.takeOff.getCurrentState()));
+    public Setting<Integer> enemyRange = this.register(new Setting<>("EnemyRange", 0, 0, 20, v-> this.takeOff.getCurrentState()));
 
     public KeyEXP() {
         super("KeyEXP", "", Category.PLAYER);
@@ -33,8 +33,8 @@ public class KeyEXP extends Module {
 
     @Override
     public void onUpdate(){
-        if(this.bind.getValue().getKey() > -1) {
-            if (Keyboard.isKeyDown(this.bind.getValue().getKey()) && mc.currentScreen == null) {
+        if(this.bind.getCurrentState().getKey() > -1) {
+            if (Keyboard.isKeyDown(this.bind.getCurrentState().getKey()) && mc.currentScreen == null) {
                 useXp();
                 if(AutoArmor.getInstance().isEnabled()){
                     this.armorCheck = 1;
@@ -49,8 +49,8 @@ public class KeyEXP extends Module {
 
                 }
             }
-        }else if(this.bind.getValue().getKey() < -1) {
-            if (Mouse.isButtonDown(PlayerUtil.convertToMouse(this.bind.getValue().getKey())) && mc.currentScreen == null) {
+        }else if(this.bind.getCurrentState().getKey() < -1) {
+            if (Mouse.isButtonDown(PlayerUtil.convertToMouse(this.bind.getCurrentState().getKey())) && mc.currentScreen == null) {
                 useXp();
             }
         }
@@ -74,7 +74,7 @@ public class KeyEXP extends Module {
             double dam_left = item.getMaxDamage() - item.getItemDamage();
             double percent = (dam_left / max_dam) * 100;
 
-            if (percent >= threshold.getValue() && !item.equals(Items.AIR)) {
+            if (percent >= threshold.getCurrentState() && !item.equals(Items.AIR)) {
                 if (!notInInv(Items.AIR)) {
                     return;
                 }
@@ -122,7 +122,7 @@ public class KeyEXP extends Module {
             AutoArmor.getInstance().disable();
             this.armorCheck = 2;
         }
-        if (this.feet.getValue()) {
+        if (this.feet.getCurrentState()) {
             mc.player.connection.sendPacket(new Rotation(mc.player.rotationYaw, 90.0F, true));
         }
         mc.player.connection.sendPacket(new CPacketHeldItemChange(HotbarEXP()));
@@ -133,15 +133,15 @@ public class KeyEXP extends Module {
             takeArmorOff();
         }
         if (this.getClosestEnemy() != null) {
-            if (takeOff.getValue() && (int) this.getClosestEnemy().getDistance(mc.player) > this.enemyRange.getValue()) {
+            if (takeOff.getCurrentState() && (int) this.getClosestEnemy().getDistance(mc.player) > this.enemyRange.getCurrentState()) {
                 takeArmorOff();
             }
         }
     }
     @Override
     public String getDisplayInfo() {
-        if (this.bind.getValue().getKey() > -1) {
-            if (Keyboard.isKeyDown(this.bind.getValue().getKey()) && mc.currentScreen == null) {
+        if (this.bind.getCurrentState().getKey() > -1) {
+            if (Keyboard.isKeyDown(this.bind.getCurrentState().getKey()) && mc.currentScreen == null) {
                 return "Throwing";
             }
         }

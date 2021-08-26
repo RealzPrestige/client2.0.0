@@ -30,13 +30,13 @@ public class ModuleButton
         ArrayList<Item> newItems = new ArrayList<>();
         if (!this.module.getSettings().isEmpty()) {
             for (Setting setting : this.module.getSettings()) {
-                if (setting.getValue() instanceof Boolean && !setting.getName().equals("Enabled")) {
+                if (setting.getCurrentState() instanceof Boolean && !setting.getName().equals("Enabled")) {
                     newItems.add(new BooleanButton(setting));
                 }
-                if (setting.getValue() instanceof Bind && !setting.getName().equalsIgnoreCase("Keybind") && !this.module.getName().equalsIgnoreCase("Hud")) {
+                if (setting.getCurrentState() instanceof Bind && !setting.getName().equalsIgnoreCase("Keybind") && !this.module.getName().equalsIgnoreCase("Hud")) {
                     newItems.add(new BindButton(setting));
                 }
-                if ((setting.getValue() instanceof String || setting.getValue() instanceof Character) && !setting.getName().equalsIgnoreCase("displayName")) {
+                if ((setting.getCurrentState() instanceof String || setting.getCurrentState() instanceof Character) && !setting.getName().equalsIgnoreCase("displayName")) {
                     newItems.add(new StringButton(setting));
                 }
                 if (setting.isNumberSetting() && setting.hasRestriction()) {
@@ -53,10 +53,10 @@ public class ModuleButton
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        if (ClickGui.getInstance().gui.getValue() == ClickGui.Gui.OLD) {
+        if (ClickGui.getInstance().gui.getCurrentState() == ClickGui.Gui.OLD) {
             super.drawScreen(mouseX, mouseY, partialTicks);
             if (!this.items.isEmpty()) {
-                Client.textManager.drawString(ClickGui.getInstance().button.getValue() ? (this.subOpen ? "-" : ClickGui.getInstance().buttonButton.getValue() == ClickGui.Button.DOT ? "\u2022" : "+") : "", this.x - 1.5f + (float) this.width - 7.4f, this.y - 2.0f - (float) ClientGui.getClickGui().getTextOffset(), -1, false);
+                Client.textManager.drawString(ClickGui.getInstance().button.getCurrentState() ? (this.subOpen ? "-" : ClickGui.getInstance().buttonButton.getCurrentState() == ClickGui.Button.DOT ? "\u2022" : "+") : "", this.x - 1.5f + (float) this.width - 7.4f, this.y - 2.0f - (float) ClientGui.getClickGui().getTextOffset(), -1, false);
                 if (this.subOpen) {
                     float height = 1.0f;
                     for (Item item : this.items) {

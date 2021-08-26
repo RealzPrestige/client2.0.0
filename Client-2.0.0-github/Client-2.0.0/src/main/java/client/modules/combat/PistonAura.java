@@ -97,7 +97,7 @@ public class PistonAura extends Module {
     @Override
     public void onEnable() {
         this.coordsD = new double[3];
-        this.delayTable = new int[] { this.startDelay.getValue(), this.trapDelay.getValue(), this.pistonDelay.getValue(), this.crystalDelay.getValue(), this.hitDelay.getValue() };
+        this.delayTable = new int[] { this.startDelay.getCurrentState(), this.trapDelay.getCurrentState(), this.pistonDelay.getCurrentState(), this.crystalDelay.getCurrentState(), this.hitDelay.getCurrentState() };
         this.toPlace = new structureTemp(0.0, 0, null);
         final boolean b = true;
         this.firstRun = b;
@@ -141,7 +141,7 @@ public class PistonAura extends Module {
             return;
         }
         if (this.firstRun) {
-            this.closestTarget = EntityUtil.getTargetDouble(enemyRange.getValue());
+            this.closestTarget = EntityUtil.getTargetDouble(enemyRange.getCurrentState());
             if (this.closestTarget == null) {
                 return;
             }
@@ -244,7 +244,7 @@ public class PistonAura extends Module {
                 else {
                     final EnumFacing side = BlockUtil.getPlaceableSide(pos);
                     if (side != null) {
-                        if (this.rotate.getValue()) {
+                        if (this.rotate.getCurrentState()) {
                             final BlockPos neighbour = pos.offset(side);
                             final EnumFacing opposite = side.getOpposite();
                             final Vec3d hitVec = new Vec3d(neighbour).add(0.5, 1.0, 0.5).add(new Vec3d(opposite.getDirectionVec()).scale(0.5));
@@ -282,18 +282,18 @@ public class PistonAura extends Module {
         return new BlockPos(this.closestTarget.getPositionVector()).add(offsetPos.getX(), offsetPos.getY(), offsetPos.getZ());
     }
     private void breakCrystalPiston(final Entity crystal) {
-        if (this.antiWeakness.getValue()) {
+        if (this.antiWeakness.getCurrentState()) {
             PistonAura.mc.player.inventory.currentItem = this.slot_mat[4];
         }
-        if (this.rotate.getValue()) {
+        if (this.rotate.getCurrentState()) {
             this.lookAtPacket(crystal.posX, crystal.posY, crystal.posZ, PistonAura.mc.player);
         }
-        if (this.breakMode.getValue().equals(BreakModes.swing)) {
+        if (this.breakMode.getCurrentState().equals(BreakModes.swing)) {
             this.breakCrystal(crystal);
             PistonAura.mc.player.connection.sendPacket(new CPacketUseEntity(crystal));
             PistonAura.mc.player.swingArm(EnumHand.MAIN_HAND);
         }
-        if (this.rotate.getValue()) {
+        if (this.rotate.getCurrentState()) {
             resetRotation();
         }
     }
@@ -310,7 +310,7 @@ public class PistonAura extends Module {
             if (this.placeBlock(targetPos, 0, 0.0, 0.0)) {
                 ++blockPlaced;
             }
-            if (blockPlaced == this.blocksPerTick.getValue()) {
+            if (blockPlaced == this.blocksPerTick.getCurrentState()) {
                 return false;
             }
             if (++i >= this.toPlace.supportBlock) {
@@ -344,9 +344,9 @@ public class PistonAura extends Module {
                 PistonAura.mc.player.connection.sendPacket(new CPacketEntityAction(PistonAura.mc.player, CPacketEntityAction.Action.START_SNEAKING));
                 this.isSneaking = true;
             }
-            if (this.rotate.getValue() || step == 1) {
+            if (this.rotate.getCurrentState() || step == 1) {
                 Vec3d positionHit = hitVec;
-                if (!this.rotate.getValue() && step == 1) {
+                if (!this.rotate.getCurrentState() && step == 1) {
                     positionHit = new Vec3d(PistonAura.mc.player.posX + offsetX, PistonAura.mc.player.posY, PistonAura.mc.player.posZ + offsetZ);
                 }
                 BlockUtil.faceVectorPacketInstant(positionHit);
@@ -372,7 +372,7 @@ public class PistonAura extends Module {
                 if (stack.getItem() instanceof ItemEndCrystal) {
                     this.slot_mat[2] = i;
                 }
-                else if (this.antiWeakness.getValue() && stack.getItem() instanceof ItemSword) {
+                else if (this.antiWeakness.getCurrentState() && stack.getItem() instanceof ItemSword) {
                     this.slot_mat[4] = i;
                 }
                 else if (stack.getItem() instanceof ItemBlock) {
@@ -395,7 +395,7 @@ public class PistonAura extends Module {
                 ++count;
             }
         }
-        return count == 4 + ((this.antiWeakness.getValue()) ? 1 : 0);
+        return count == 4 + ((this.antiWeakness.getCurrentState()) ? 1 : 0);
     }
 
     private boolean is_in_hole() {
@@ -421,7 +421,7 @@ public class PistonAura extends Module {
                             boolean b = false;
                             Label_0678: {
                                 Label_0673: {
-                                    if (this.rotate.getValue()) {
+                                    if (this.rotate.getCurrentState()) {
                                         if ((int)pistonCord[0] == meCord[0]) {
                                             if (this.closestTarget.posZ > PistonAura.mc.player.posZ != this.closestTarget.posZ > pistonCord[2]) {
                                                 break Label_0673;
@@ -443,7 +443,7 @@ public class PistonAura extends Module {
                                 boolean b2 = false;
                                 Label_0867: {
                                     Label_0862: {
-                                        if (this.rotate.getValue()) {
+                                        if (this.rotate.getCurrentState()) {
                                             if (meCord[0] == (int)this.closestTarget.posX || meCord[2] == (int)this.closestTarget.posZ) {
                                                 if (PistonAura.mc.player.getDistance(crystalCords[0], crystalCords[1], crystalCords[2]) <= 3.5 || meCord[0] == (int)crystalCords[0]) {
                                                     break Label_0862;
@@ -489,8 +489,8 @@ public class PistonAura extends Module {
                                         float offsetX;
                                         float offsetZ;
                                         if (this.disp_surblock[i][0] != 0) {
-                                            offsetX = (this.rotate.getValue() ? (this.disp_surblock[i][0] / 2.0f) : ((float)this.disp_surblock[i][0]));
-                                            if (this.rotate.getValue()) {
+                                            offsetX = (this.rotate.getCurrentState() ? (this.disp_surblock[i][0] / 2.0f) : ((float)this.disp_surblock[i][0]));
+                                            if (this.rotate.getCurrentState()) {
                                                 if (PistonAura.mc.player.getDistanceSq(pistonCord[0], pistonCord[1], pistonCord[2] + 0.5) > PistonAura.mc.player.getDistanceSq(pistonCord[0], pistonCord[1], pistonCord[2] - 0.5)) {
                                                     offsetZ = -0.5f;
                                                 }
@@ -503,8 +503,8 @@ public class PistonAura extends Module {
                                             }
                                         }
                                         else {
-                                            offsetZ = (this.rotate.getValue() ? (this.disp_surblock[i][2] / 2.0f) : ((float)this.disp_surblock[i][2]));
-                                            if (this.rotate.getValue()) {
+                                            offsetZ = (this.rotate.getCurrentState() ? (this.disp_surblock[i][2] / 2.0f) : ((float)this.disp_surblock[i][2]));
+                                            if (this.rotate.getCurrentState()) {
                                                 if (PistonAura.mc.player.getDistanceSq(pistonCord[0] + 0.5, pistonCord[1], pistonCord[2]) > PistonAura.mc.player.getDistanceSq(pistonCord[0] - 0.5, pistonCord[1], pistonCord[2])) {
                                                     offsetX = -0.5f;
                                                 }
@@ -526,7 +526,7 @@ public class PistonAura extends Module {
                 ++i;
             }
             if (addedStructure.to_place != null) {
-                if (this.blockPlayer.getValue()) {
+                if (this.blockPlayer.getCurrentState()) {
                     final Vec3d valuesStart = addedStructure.to_place.get(addedStructure.supportBlock + 1);
                     final int[] valueBegin = { (int)(-valuesStart.x), (int)valuesStart.y, (int)(-valuesStart.z) };
                     addedStructure.to_place.add(0, new Vec3d(0.0, 2.0, 0.0));

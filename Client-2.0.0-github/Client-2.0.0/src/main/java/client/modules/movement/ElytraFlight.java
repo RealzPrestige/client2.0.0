@@ -25,7 +25,7 @@ public class ElytraFlight extends Module {
             }
                 if (!mc.player.movementInput.jump) {
                     if (mc.player.movementInput.sneak) {
-                        mc.player.motionY = -speedDown.getValue();
+                        mc.player.motionY = -speedDown.getCurrentState();
                     } else if (event.getY() != -1.01E-4) {
                         event.setY(-1.01E-4);
                         ElytraFlight.mc.player.motionY = -1.01E-4;
@@ -33,7 +33,7 @@ public class ElytraFlight extends Module {
                 } else {
                     return;
                 }
-            PlayerUtil.setMoveSpeed(event, speed.getValue());
+            PlayerUtil.setMoveSpeed(event, speed.getCurrentState());
     }
 
     public void onTick() {

@@ -35,7 +35,7 @@ public final class ParticleSystem {
     }
 
     public void render(int mouseX, int mouseY) {
-        if (!ClickGui.getInstance().particles.getValue()) return;
+        if (!ClickGui.getInstance().particles.getCurrentState()) return;
         for (int i = 0; i < PARTS; i++) {
             final Particle particle = this.particles[i];
             for (int j = 1; j < PARTS; j++) {
@@ -44,11 +44,11 @@ public final class ParticleSystem {
                     final Vector2f diffPos = new Vector2f(particle.getPos());
                     diffPos.sub(otherParticle.getPos());
                     final float diff = diffPos.length();
-                    final int distance = ClickGui.getInstance().particleLength.getValue() / (scaledResolution.getScaleFactor() <= 1 ? 3 : scaledResolution.getScaleFactor());
+                    final int distance = ClickGui.getInstance().particleLength.getCurrentState() / (scaledResolution.getScaleFactor() <= 1 ? 3 : scaledResolution.getScaleFactor());
                     if (diff < distance) {
                         final int lineAlpha = (int) map(diff, distance, 0, 0, 127);
                         if (lineAlpha > 8) {
-                            RenderUtil.drawLine(particle.getPos().x + particle.getSize() / 2.0f, particle.getPos().y + particle.getSize() / 2.0f, otherParticle.getPos().x + otherParticle.getSize() / 2.0f, otherParticle.getPos().y + otherParticle.getSize() / 2.0f, 1.0f, Particle.changeAlpha(ColorUtil.toRGBA(ClickGui.getInstance().particlered.getValue(), ClickGui.getInstance().particlegreen.getValue(), ClickGui.getInstance().particleblue.getValue()), lineAlpha));
+                            RenderUtil.drawLine(particle.getPos().x + particle.getSize() / 2.0f, particle.getPos().y + particle.getSize() / 2.0f, otherParticle.getPos().x + otherParticle.getSize() / 2.0f, otherParticle.getPos().y + otherParticle.getSize() / 2.0f, 1.0f, Particle.changeAlpha(ColorUtil.toRGBA(ClickGui.getInstance().particlered.getCurrentState(), ClickGui.getInstance().particlegreen.getCurrentState(), ClickGui.getInstance().particleblue.getCurrentState()), lineAlpha));
                         }
                     }
                 }

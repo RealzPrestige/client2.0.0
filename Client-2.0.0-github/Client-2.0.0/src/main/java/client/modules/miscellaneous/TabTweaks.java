@@ -20,19 +20,19 @@ public class TabTweaks extends Module {
 
     public static String getPlayerName(NetworkPlayerInfo networkPlayerInfoIn) {
         String name = networkPlayerInfoIn.getDisplayName() != null ? networkPlayerInfoIn.getDisplayName().getFormattedText() : ScorePlayerTeam.formatPlayerName(networkPlayerInfoIn.getPlayerTeam(), networkPlayerInfoIn.getGameProfile().getName());
-        if(getINSTANCE().pingDisplay.getValue()) {
-            if(getINSTANCE().coloredPing.getValue()) {
+        if(getINSTANCE().pingDisplay.getCurrentState()) {
+            if(getINSTANCE().coloredPing.getCurrentState()) {
                 if (networkPlayerInfoIn.getResponseTime() <= 50) {
-                        return name + ChatFormatting.GREEN + " " + (getINSTANCE().pingDisplay.getValue() ? networkPlayerInfoIn.getResponseTime() : "");
+                        return name + ChatFormatting.GREEN + " " + (getINSTANCE().pingDisplay.getCurrentState() ? networkPlayerInfoIn.getResponseTime() : "");
                     } else if (networkPlayerInfoIn.getResponseTime() <= 100) {
-                        return name + ChatFormatting.GOLD + " " + (getINSTANCE().pingDisplay.getValue() ? networkPlayerInfoIn.getResponseTime() : "");
+                        return name + ChatFormatting.GOLD + " " + (getINSTANCE().pingDisplay.getCurrentState() ? networkPlayerInfoIn.getResponseTime() : "");
                 } else if (networkPlayerInfoIn.getResponseTime() <= 150) {
-                    return name + ChatFormatting.RED + " " + (getINSTANCE().pingDisplay.getValue() ? networkPlayerInfoIn.getResponseTime() : "");
+                    return name + ChatFormatting.RED + " " + (getINSTANCE().pingDisplay.getCurrentState() ? networkPlayerInfoIn.getResponseTime() : "");
                 } else if (networkPlayerInfoIn.getResponseTime() <= 1000) {
-                    return name + ChatFormatting.DARK_RED + " " + (getINSTANCE().pingDisplay.getValue() ? networkPlayerInfoIn.getResponseTime() : "");
+                    return name + ChatFormatting.DARK_RED + " " + (getINSTANCE().pingDisplay.getCurrentState() ? networkPlayerInfoIn.getResponseTime() : "");
                 }
             } else {
-                return name + ChatFormatting.GRAY + " " + (getINSTANCE().pingDisplay.getValue() ? networkPlayerInfoIn.getResponseTime() : "");
+                return name + ChatFormatting.GRAY + " " + (getINSTANCE().pingDisplay.getCurrentState() ? networkPlayerInfoIn.getResponseTime() : "");
 
             }
         }

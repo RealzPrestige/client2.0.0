@@ -14,8 +14,8 @@ public class ThirdPerson extends Module {
     }
     @Override
     public void onUpdate(){
-        if(this.bind.getValue().getKey() > -1) {
-            if (Keyboard.isKeyDown(this.bind.getValue().getKey())) {
+        if(this.bind.getCurrentState().getKey() > -1) {
+            if (Keyboard.isKeyDown(this.bind.getCurrentState().getKey())) {
                 mc.gameSettings.thirdPersonView = 1;
             } else {
                 mc.gameSettings.thirdPersonView = 0;
@@ -24,13 +24,13 @@ public class ThirdPerson extends Module {
     }
     @Override
     public void onEnable(){
-        if(!this.onlyHold.getValue()){
+        if(!this.onlyHold.getCurrentState()){
             mc.gameSettings.thirdPersonView = 1;
         }
     }
     @Override
     public void onDisable(){
-        if(!this.onlyHold.getValue()){
+        if(!this.onlyHold.getCurrentState()){
             mc.gameSettings.thirdPersonView = 0;
         }
     }

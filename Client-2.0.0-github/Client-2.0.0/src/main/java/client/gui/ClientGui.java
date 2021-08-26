@@ -46,13 +46,13 @@ public class ClientGui extends GuiScreen {
 
     @Override
     public void initGui() {
-        if (OpenGlHelper.shadersSupported && mc.getRenderViewEntity() instanceof EntityPlayer && ClickGui.getInstance().blur.getValue() &&  ClickGui.getInstance().gui.getValue() == ClickGui.Gui.OLD) {
+        if (OpenGlHelper.shadersSupported && mc.getRenderViewEntity() instanceof EntityPlayer && ClickGui.getInstance().blur.getCurrentState() &&  ClickGui.getInstance().gui.getCurrentState() == ClickGui.Gui.OLD) {
                 if (mc.entityRenderer.getShaderGroup() != null) {
                     mc.entityRenderer.getShaderGroup().deleteShaderGroup();
                 }
                 mc.entityRenderer.loadShader(new ResourceLocation("shaders/post/blur.json"));
         }
-        if (OpenGlHelper.shadersSupported && mc.getRenderViewEntity() instanceof EntityPlayer &&  ClickGui.getInstance().gui.getValue() == ClickGui.Gui.NEW) {
+        if (OpenGlHelper.shadersSupported && mc.getRenderViewEntity() instanceof EntityPlayer &&  ClickGui.getInstance().gui.getCurrentState() == ClickGui.Gui.NEW) {
             if (mc.entityRenderer.getShaderGroup() != null) {
                 mc.entityRenderer.getShaderGroup().deleteShaderGroup();
             }
@@ -137,10 +137,10 @@ public class ClientGui extends GuiScreen {
 
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         final ScaledResolution res = new ScaledResolution(mc);
-        if (!_snowList.isEmpty() && ClickGui.getInstance().snowing.getValue() && ClickGui.getInstance().gui.getValue() == ClickGui.Gui.OLD) {
+        if (!_snowList.isEmpty() && ClickGui.getInstance().snowing.getCurrentState() && ClickGui.getInstance().gui.getCurrentState() == ClickGui.Gui.OLD) {
             _snowList.forEach(snow -> snow.Update(res));
         }
-        if (particleSystem != null  && ClickGui.getInstance().gui.getValue() == ClickGui.Gui.OLD) {
+        if (particleSystem != null  && ClickGui.getInstance().gui.getCurrentState() == ClickGui.Gui.OLD) {
             particleSystem.render(mouseX, mouseY);
         } else {
             this.particleSystem = new ParticleSystem(new ScaledResolution(mc));

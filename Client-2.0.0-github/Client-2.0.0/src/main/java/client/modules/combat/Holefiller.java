@@ -94,7 +94,7 @@ public class Holefiller extends Module {
             }
             BlockPos hole = null;
             for (final BlockPos pos : holes) {
-                if (currentTarget.getDistance(pos.getX(), pos.getY(), pos.getZ()) >= this.distance.getValue()) {
+                if (currentTarget.getDistance(pos.getX(), pos.getY(), pos.getZ()) >= this.distance.getCurrentState()) {
                     continue;
                 }
                 hole = pos;
@@ -109,8 +109,8 @@ public class Holefiller extends Module {
 
 
     private void placeBlock(final BlockPos pos) {
-        if (this.bpt.getValue() > this.placeAmount) {
-            BlockUtil.placeBlock(pos, EnumHand.MAIN_HAND, this.rotate.getValue(), this.packet.getValue(), this.isSneaking);
+        if (this.bpt.getCurrentState() > this.placeAmount) {
+            BlockUtil.placeBlock(pos, EnumHand.MAIN_HAND, this.rotate.getCurrentState(), this.packet.getCurrentState(), this.isSneaking);
             ++this.placeAmount;
         }
     }
@@ -126,7 +126,7 @@ public class Holefiller extends Module {
 
     public List<BlockPos> calcHoles() {
         final ArrayList<BlockPos> safeSpots = new ArrayList<>();
-        final List<BlockPos> positions = BlockUtil.getCock(this.range.getValue(), false);
+        final List<BlockPos> positions = BlockUtil.getCock(this.range.getCurrentState(), false);
         for (final BlockPos pos : positions) {
             if (BlockUtil.isPositionPlaceable(pos, true) != 1 && this.mc.world.getBlockState(pos).getBlock().equals(Blocks.AIR) && this.mc.world.getBlockState(pos.add(0, 1, 0)).getBlock().equals(Blocks.AIR)) {
                 if (this.mc.world.getBlockState(pos.add(0, 2, 0)).getBlock().equals(Blocks.AIR)) {
@@ -155,19 +155,19 @@ public class Holefiller extends Module {
     public void onRender3D(Render3DEvent event) {
         assert (mc.renderViewEntity != null);
         Vec3i playerPos = new Vec3i(mc.renderViewEntity.posX, mc.renderViewEntity.posY, mc.renderViewEntity.posZ);
-        for (int x = playerPos.getX() -  5; x < playerPos.getX() + this.range.getValue(); ++x) {
-            for (int z = playerPos.getZ() - 5; z < playerPos.getZ() + this.range.getValue(); ++z) {
+        for (int x = playerPos.getX() -  5; x < playerPos.getX() + this.range.getCurrentState(); ++x) {
+            for (int z = playerPos.getZ() - 5; z < playerPos.getZ() + this.range.getCurrentState(); ++z) {
                 for (int y = playerPos.getY() + 5; y > playerPos.getY() - 5; --y) {
                     BlockPos pos = new BlockPos(x, y, z);
-                    if (!mc.world.getBlockState(pos).getBlock().equals(Blocks.AIR) || !mc.world.getBlockState(pos.add(0, 1, 0)).getBlock().equals(Blocks.AIR) || !mc.world.getBlockState(pos.add(0, 2, 0)).getBlock().equals(Blocks.AIR) || pos.equals(new BlockPos(mc.player.posX, mc.player.posY, mc.player.posZ)) && !isPosInFov(pos) && this.fov.getValue())
+                    if (!mc.world.getBlockState(pos).getBlock().equals(Blocks.AIR) || !mc.world.getBlockState(pos.add(0, 1, 0)).getBlock().equals(Blocks.AIR) || !mc.world.getBlockState(pos.add(0, 2, 0)).getBlock().equals(Blocks.AIR) || pos.equals(new BlockPos(mc.player.posX, mc.player.posY, mc.player.posZ)) && !isPosInFov(pos) && this.fov.getCurrentState())
                         continue;
                     if (mc.world.getBlockState(pos.north()).getBlock() == Blocks.BEDROCK && mc.world.getBlockState(pos.east()).getBlock() == Blocks.BEDROCK && mc.world.getBlockState(pos.west()).getBlock() == Blocks.BEDROCK && mc.world.getBlockState(pos.south()).getBlock() == Blocks.BEDROCK && mc.world.getBlockState(pos.down()).getBlock() == Blocks.BEDROCK) {
-                        RenderUtil.drawBoxESP(pos, new Color(this.red.getValue(), this.green.getValue(), this.blue.getValue(), this.alpha.getValue()), this.outline.getValue(), new Color(this.cRed.getValue(), this.cGreen.getValue(), this.cBlue.getValue(), this.cAlpha.getValue()), this.lineWidth.getValue().floatValue(), this.outline.getValue(), this.box.getValue(), this.boxAlpha.getValue(), true);
+                        RenderUtil.drawBoxESP(pos, new Color(this.red.getCurrentState(), this.green.getCurrentState(), this.blue.getCurrentState(), this.alpha.getCurrentState()), this.outline.getCurrentState(), new Color(this.cRed.getCurrentState(), this.cGreen.getCurrentState(), this.cBlue.getCurrentState(), this.cAlpha.getCurrentState()), this.lineWidth.getCurrentState().floatValue(), this.outline.getCurrentState(), this.box.getCurrentState(), this.boxAlpha.getCurrentState(), true);
                         continue;
                     }
                     if (isBlockUnSafe(mc.world.getBlockState(pos.down()).getBlock()) || isBlockUnSafe(mc.world.getBlockState(pos.east()).getBlock()) || isBlockUnSafe(mc.world.getBlockState(pos.west()).getBlock()) || isBlockUnSafe(mc.world.getBlockState(pos.south()).getBlock()) || isBlockUnSafe(mc.world.getBlockState(pos.north()).getBlock()))
                         continue;
-                    RenderUtil.drawBoxESP(pos, new Color(this.red.getValue(), this.green.getValue(), this.blue.getValue(), this.alpha.getValue()), this.outline.getValue(), new Color(this.cRed.getValue(), this.cGreen.getValue(), this.cBlue.getValue(), this.cAlpha.getValue()), this.lineWidth.getValue().floatValue(), this.outline.getValue(), this.box.getValue(), this.boxAlpha.getValue(), true);
+                    RenderUtil.drawBoxESP(pos, new Color(this.red.getCurrentState(), this.green.getCurrentState(), this.blue.getCurrentState(), this.alpha.getCurrentState()), this.outline.getCurrentState(), new Color(this.cRed.getCurrentState(), this.cGreen.getCurrentState(), this.cBlue.getCurrentState(), this.cAlpha.getCurrentState()), this.lineWidth.getCurrentState().floatValue(), this.outline.getCurrentState(), this.box.getCurrentState(), this.boxAlpha.getCurrentState(), true);
                 }
             }
         }

@@ -4,27 +4,33 @@ import client.events.PacketEvent;
 import client.gui.impl.background.GuiChat;
 import client.modules.Module;
 import client.gui.impl.setting.Setting;
+import client.modules.client.Notify;
+import client.util.TextUtil;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.client.gui.GuiIngame;
 import net.minecraft.client.gui.GuiNewChat;
 import net.minecraft.network.play.client.CPacketChatMessage;
 import net.minecraft.network.play.server.SPacketChat;
 import net.minecraft.util.text.ChatType;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class ChatModifications extends Module {
     private static ChatModifications getInstance = new ChatModifications();
     public Setting<Boolean> suffix = this.register(new Setting("Suffix", true));
     public Setting<Boolean> customChat = this.register(new Setting("CustomChat", false));
-    public Setting<Boolean> nameHighLight = this.register(new Setting("NameHighLight", false, v->customChat.getValue()));
-    public Setting<Boolean> smoothChat = this.register(new Setting("SmoothChat", false, v->customChat.getValue()));
-    public Setting<Double> xOffset = this.register(new Setting("XOffset", 0.0, 0.0, 600, v->smoothChat.getValue() && customChat.getValue()));
-    public Setting<Double> yOffset = this.register(new Setting("YOffset", 0.0, 0.0, 30.0, v->smoothChat.getValue() && customChat.getValue()));
-    public Setting<Double> vSpeed = this.register(new Setting("VSpeed", 30.0, 1.0, 100.0, v->smoothChat.getValue() && customChat.getValue()));
-    public Setting<Double> vLength = this.register(new Setting("VLength", 10.0, 5.0, 100.0, v->smoothChat.getValue() && customChat.getValue()));
-    public Setting<Double> vIncrements = this.register(new Setting("VIncrements", 1.0, 1.0, 5.0, v->smoothChat.getValue() && customChat.getValue()));
-    public Setting<Type> type = this.register(new Setting("Type", Type.HORIZONTAL, v->smoothChat.getValue() && customChat.getValue()));
+    public Setting<Boolean> nameHighLight = this.register(new Setting("NameHighLight", false, v->customChat.getCurrentState()));
+    public Setting<Boolean> smoothChat = this.register(new Setting("SmoothChat", false, v->customChat.getCurrentState()));
+    public Setting<Double> xOffset = this.register(new Setting("XOffset", 0.0, 0.0, 600, v->smoothChat.getCurrentState() && customChat.getCurrentState()));
+    public Setting<Double> yOffset = this.register(new Setting("YOffset", 0.0, 0.0, 30.0, v->smoothChat.getCurrentState() && customChat.getCurrentState()));
+    public Setting<Double> vSpeed = this.register(new Setting("VSpeed", 30.0, 1.0, 100.0, v->smoothChat.getCurrentState() && customChat.getCurrentState()));
+    public Setting<Double> vLength = this.register(new Setting("VLength", 10.0, 5.0, 100.0, v->smoothChat.getCurrentState() && customChat.getCurrentState()));
+    public Setting<Double> vIncrements = this.register(new Setting("VIncrements", 1.0, 1.0, 5.0, v->smoothChat.getCurrentState() && customChat.getCurrentState()));
+    public Setting<Type> type = this.register(new Setting("Type", Type.HORIZONTAL, v->smoothChat.getCurrentState() && customChat.getCurrentState()));
     public enum Type{HORIZONTAL, VERTICAL}
     public static GuiChat guiChatSmooth;
     public static GuiNewChat guiChat;
@@ -45,9 +51,10 @@ public class ChatModifications extends Module {
         getInstance = this;
     }
 
+
     @SubscribeEvent
     public void onPacketSend(PacketEvent.Send event) {
-        if (event.getStage() == 0 && event.getPacket() instanceof CPacketChatMessage && suffix.getValue()) {
+        if (event.getStage() == 0 && event.getPacket() instanceof CPacketChatMessage && suffix.getCurrentState()) {
             CPacketChatMessage packet = event.getPacket();
             String s = packet.getMessage();
             if (s.startsWith("/")) {
@@ -80,7 +87,7 @@ public class ChatModifications extends Module {
             }
             String originalMessage = ((SPacketChat) event.getPacket()).chatComponent.getFormattedText();
             String message = originalMessage;
-            if (nameHighLight.getValue()) {
+            if (nameHighLight.getCurrentState()) {
                 try {
                     message = message.replace(mc.player.getName(), ChatFormatting.RED + mc.player.getName() + ChatFormatting.RESET);
                 } catch (Exception e) {

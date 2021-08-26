@@ -12,7 +12,7 @@ public class Interactions extends Module {
     public Setting<Boolean> liquid = this.register(new Setting("LiquidPlace", false));
     public Setting<Boolean> heightLimit = this.register(new Setting("HeightLimit", false));
     public Setting<Boolean> reach = this.register(new Setting("Reach", false));
-    public Setting<Float> reachAmount = this.register(new Setting<Object>("ReachAmount", 6.0f, 0.0f, 10.0f, v-> reach.getValue()));
+    public Setting<Float> reachAmount = this.register(new Setting<Object>("ReachAmount", 6.0f, 0.0f, 10.0f, v-> reach.getCurrentState()));
 
     public Interactions(){
         super("Interactions", "Changes the way you interact with things", Category.PLAYER);
@@ -33,7 +33,7 @@ public class Interactions extends Module {
     @SubscribeEvent
     public void onPacketSend(PacketEvent.Send event) {
         CPacketPlayerTryUseItemOnBlock packet;
-        if (heightLimit.getValue() && event.getStage() == 0 && event.getPacket() instanceof CPacketPlayerTryUseItemOnBlock && (packet = event.getPacket()).getPos().getY() >= 255 && packet.getDirection() == EnumFacing.UP) {
+        if (heightLimit.getCurrentState() && event.getStage() == 0 && event.getPacket() instanceof CPacketPlayerTryUseItemOnBlock && (packet = event.getPacket()).getPos().getY() >= 255 && packet.getDirection() == EnumFacing.UP) {
             packet.placedBlockDirection = EnumFacing.DOWN;
         }
     }

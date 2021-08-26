@@ -26,11 +26,11 @@ public class HotbarRefill extends Module
         super("HotbarRefill", "Refills item stacks in your hotbar", Category.PLAYER);
         this.delay = (Setting<Integer>)this.register(new Setting("Delay", 0, 0, 10));
         this.gapples = (Setting<Boolean>)this.register(new Setting("Gapples", true));
-        this.gapAmount = (Setting<Integer>)this.register(new Setting("GapAmount", 1, 1, 64, v -> this.gapples.getValue()));
+        this.gapAmount = (Setting<Integer>)this.register(new Setting("GapAmount", 1, 1, 64, v -> this.gapples.getCurrentState()));
         this.exp = (Setting<Boolean>)this.register(new Setting("Exp", true));
-        this.expAmount = (Setting<Integer>)this.register(new Setting("ExpAmount", 1, 1, 64, v -> this.exp.getValue()));
+        this.expAmount = (Setting<Integer>)this.register(new Setting("ExpAmount", 1, 1, 64, v -> this.exp.getCurrentState()));
         this.crystal = (Setting<Boolean>)this.register(new Setting("Crystals", true));
-        this.crystalAmount = (Setting<Integer>)this.register(new Setting("CrystalAmount", 1, 1, 64, v -> this.crystal.getValue()));
+        this.crystalAmount = (Setting<Integer>)this.register(new Setting("CrystalAmount", 1, 1, 64, v -> this.crystal.getCurrentState()));
         this.timer = new Timer();
         this.Hotbar = new ArrayList <> ( );
     }
@@ -57,7 +57,7 @@ public class HotbarRefill extends Module
         if (HotbarRefill.mc.currentScreen != null) {
             return;
         }
-        if (!this.timer.passedMs(this.delay.getValue() * 1000)) {
+        if (!this.timer.passedMs(this.delay.getCurrentState() * 1000)) {
             return;
         }
         for (int l_I = 0; l_I < 9; ++l_I) {
@@ -79,13 +79,13 @@ public class HotbarRefill extends Module
         if (l_Stack.getCount() >= l_Stack.getMaxStackSize()) {
             return false;
         }
-        if (this.gapples.getValue() && l_Stack.getItem().equals(Items.GOLDEN_APPLE) && l_Stack.getCount() >= this.gapAmount.getValue()) {
+        if (this.gapples.getCurrentState() && l_Stack.getItem().equals(Items.GOLDEN_APPLE) && l_Stack.getCount() >= this.gapAmount.getCurrentState()) {
             return false;
         }
-        if (this.exp.getValue() && l_Stack.getItem().equals(Items.EXPERIENCE_BOTTLE) && l_Stack.getCount() > this.expAmount.getValue()) {
+        if (this.exp.getCurrentState() && l_Stack.getItem().equals(Items.EXPERIENCE_BOTTLE) && l_Stack.getCount() > this.expAmount.getCurrentState()) {
             return false;
         }
-        if (this.crystal.getValue() && l_Stack.getItem().equals(Items.END_CRYSTAL) && l_Stack.getCount() > this.crystalAmount.getValue()) {
+        if (this.crystal.getCurrentState() && l_Stack.getItem().equals(Items.END_CRYSTAL) && l_Stack.getCount() > this.crystalAmount.getCurrentState()) {
             return false;
         }
         for (int l_I = 9; l_I < 36; ++l_I) {

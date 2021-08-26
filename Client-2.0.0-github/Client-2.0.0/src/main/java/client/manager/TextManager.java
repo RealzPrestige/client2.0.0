@@ -26,7 +26,7 @@ public class TextManager
     public void init(boolean startup) {
         FontMod cFont = Client.moduleManager.getModuleByClass(FontMod.class);
         try {
-            this.setFontRenderer(new Font(cFont.fontName.getValue(), cFont.fontStyle.getValue(), cFont.fontSize.getValue()), cFont.antiAlias.getValue(), cFont.fractionalMetrics.getValue());
+            this.setFontRenderer(new Font(cFont.fontName.getCurrentState(), cFont.fontStyle.getCurrentState(), cFont.fontSize.getCurrentState()), cFont.antiAlias.getCurrentState(), cFont.fractionalMetrics.getCurrentState());
         } catch (Exception ignored ) {
         }
     }

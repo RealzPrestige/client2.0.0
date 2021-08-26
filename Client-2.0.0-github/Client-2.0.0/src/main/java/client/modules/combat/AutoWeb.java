@@ -32,20 +32,20 @@ public class AutoWeb extends Module {
     private final Setting<Boolean> lowerbody = this.register( new Setting <> ( "Feet" , true ));
     private final Setting<Boolean> upperBody = this.register( new Setting <> ( "Face" , false ));
     private final Setting<Boolean> render = this.register( new Setting <> ( "Render" , false ));
-    public Setting<Boolean> box = this.register( new Setting <> ( "Box" , false , v -> this.render.getValue ( ) ));
-    private final Setting<Integer> red = this.register( new Setting <> ( "Red" , 0 , 0 , 255 , v -> this.box.getValue ( ) ));
-    private final Setting<Integer> green = this.register( new Setting <> ( "Green" , 255 , 0 , 255 , v -> this.box.getValue ( ) ));
-    private final Setting<Integer> blue = this.register( new Setting <> ( "Blue" , 0 , 0 , 255 , v -> this.box.getValue ( ) ));
-    public Setting<Boolean> Rainbow = this.register( new Setting <> ( "Rainbow" , false , v -> this.box.getValue ( ) ));
-    private final Setting<Integer> alpha = this.register( new Setting <> ( "Alpha" , 255 , 0 , 255 , v -> this.box.getValue ( ) ));
-    private final Setting<Integer> boxAlpha = this.register( new Setting <> ( "BoxAlpha" , 125 , 0 , 255 , v -> this.box.getValue ( ) ));
-    public Setting<Boolean> outline = this.register( new Setting <> ( "Outline" , false , v -> this.render.getValue ( ) ));
-    private final Setting<Integer> cRed = this.register(new Setting<Object>("OL-Red", 0 , 0 , 255 , v -> this.outline.getValue()));
-    private final Setting<Integer> cGreen = this.register(new Setting<Object>("OL-Green", 0 , 0 , 255 , v -> this.outline.getValue()));
-    private final Setting<Integer> cBlue = this.register(new Setting<Object>("OL-Blue", 255 , 0 , 255 , v -> this.outline.getValue()));
-    public Setting<Boolean> cRainbow = this.register( new Setting <> ( "OL-Rainbow" , false , v -> this.outline.getValue ( ) ));
-    private final Setting<Integer> cAlpha = this.register(new Setting<Object>("OL-Alpha", 255 , 0 , 255 , v -> this.outline.getValue()));
-    private final Setting<Float> lineWidth = this.register( new Setting <> ( "LineWidth" , 1.0f , 0.1f , 5.0f , v -> this.outline.getValue ( ) ));
+    public Setting<Boolean> box = this.register( new Setting <> ( "Box" , false , v -> this.render.getCurrentState( ) ));
+    private final Setting<Integer> red = this.register( new Setting <> ( "Red" , 0 , 0 , 255 , v -> this.box.getCurrentState( ) ));
+    private final Setting<Integer> green = this.register( new Setting <> ( "Green" , 255 , 0 , 255 , v -> this.box.getCurrentState( ) ));
+    private final Setting<Integer> blue = this.register( new Setting <> ( "Blue" , 0 , 0 , 255 , v -> this.box.getCurrentState( ) ));
+    public Setting<Boolean> Rainbow = this.register( new Setting <> ( "Rainbow" , false , v -> this.box.getCurrentState( ) ));
+    private final Setting<Integer> alpha = this.register( new Setting <> ( "Alpha" , 255 , 0 , 255 , v -> this.box.getCurrentState( ) ));
+    private final Setting<Integer> boxAlpha = this.register( new Setting <> ( "BoxAlpha" , 125 , 0 , 255 , v -> this.box.getCurrentState( ) ));
+    public Setting<Boolean> outline = this.register( new Setting <> ( "Outline" , false , v -> this.render.getCurrentState( ) ));
+    private final Setting<Integer> cRed = this.register(new Setting<Object>("OL-Red", 0 , 0 , 255 , v -> this.outline.getCurrentState()));
+    private final Setting<Integer> cGreen = this.register(new Setting<Object>("OL-Green", 0 , 0 , 255 , v -> this.outline.getCurrentState()));
+    private final Setting<Integer> cBlue = this.register(new Setting<Object>("OL-Blue", 255 , 0 , 255 , v -> this.outline.getCurrentState()));
+    public Setting<Boolean> cRainbow = this.register( new Setting <> ( "OL-Rainbow" , false , v -> this.outline.getCurrentState( ) ));
+    private final Setting<Integer> cAlpha = this.register(new Setting<Object>("OL-Alpha", 255 , 0 , 255 , v -> this.outline.getCurrentState()));
+    private final Setting<Float> lineWidth = this.register( new Setting <> ( "LineWidth" , 1.0f , 0.1f , 5.0f , v -> this.outline.getCurrentState( ) ));
 
     private final Timer timer = new Timer();
     public EntityPlayer target;
@@ -108,10 +108,10 @@ public class AutoWeb extends Module {
     private List<Vec3d> getPlacements() {
         ArrayList<Vec3d> list = new ArrayList <> ( );
         Vec3d baseVec = this.target.getPositionVector();
-        if ( this.lowerbody.getValue ( ) ) {
+        if ( this.lowerbody.getCurrentState( ) ) {
             list.add(baseVec);
         }
-        if ( this.upperBody.getValue ( ) ) {
+        if ( this.upperBody.getCurrentState( ) ) {
             list.add(baseVec.add(0.0, 1.0, 0.0));
         }
         return list;
@@ -123,7 +123,7 @@ public class AutoWeb extends Module {
         for (Vec3d vec3d3 : list) {
             BlockPos position = new BlockPos(vec3d3);
             renderPos = position;
-            int placeability = BlockUtil.isPositionPlaceable(position, this.raytrace.getValue());
+            int placeability = BlockUtil.isPositionPlaceable(position, this.raytrace.getCurrentState());
             if (placeability != 3 && placeability != 1) continue;
             this.placeBlock(position);
         }
@@ -137,7 +137,7 @@ public class AutoWeb extends Module {
         if (this.isOff()) {
             return true;
         }
-        if ( this.disable.getValue ( ) && !this.startPos.equals(EntityUtil.getRoundedBlockPos(AutoWeb.mc.player))) {
+        if ( this.disable.getCurrentState( ) && !this.startPos.equals(EntityUtil.getRoundedBlockPos(AutoWeb.mc.player))) {
             this.disable();
             return true;
         }
@@ -152,7 +152,7 @@ public class AutoWeb extends Module {
         this.switchItem(true);
         this.isSneaking = EntityUtil.stopSneaking(this.isSneaking);
         this.target = this.getTarget(10.0);
-        return this.target == null || !this.timer.passedMs( this.delay.getValue ( ) );
+        return this.target == null || !this.timer.passedMs( this.delay.getCurrentState( ) );
     }
 
     private EntityPlayer getTarget(double range) {
@@ -174,7 +174,7 @@ public class AutoWeb extends Module {
     }
 
     private void placeBlock(BlockPos pos) {
-        if (this.placements < this.blocksPerPlace.getValue() && AutoWeb.mc.player.getDistanceSq(pos) <= MathUtil.square(6.0) && this.switchItem(false)) {
+        if (this.placements < this.blocksPerPlace.getCurrentState() && AutoWeb.mc.player.getDistanceSq(pos) <= MathUtil.square(6.0) && this.switchItem(false)) {
             isPlacing = true;
             int originalSlot = AutoWeb.mc.player.inventory.currentItem;
             int webSlot = InventoryUtil.findHotbarBlock(BlockWeb.class);
@@ -183,7 +183,7 @@ public class AutoWeb extends Module {
             }
                 AutoWeb.mc.player.inventory.currentItem = webSlot == -1 ? webSlot : webSlot;
                 AutoWeb.mc.playerController.updateController();
-                this.isSneaking = BlockUtil.placeBlock(pos, offhand.getValue() ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND, this.rotate.getValue(), this.packet.getValue(), this.isSneaking);
+                this.isSneaking = BlockUtil.placeBlock(pos, offhand.getCurrentState() ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND, this.rotate.getCurrentState(), this.packet.getCurrentState(), this.isSneaking);
                 AutoWeb.mc.player.inventory.currentItem = originalSlot;
                 AutoWeb.mc.playerController.updateController();
             didPlace = true;
@@ -202,8 +202,8 @@ public class AutoWeb extends Module {
     }
     @Override
     public void onRender3D(Render3DEvent event) {
-        if ( this.render.getValue ( ) ) {
-            RenderUtil.drawBoxESP(renderPos, Rainbow.getValue() ? ColorUtil.rainbow(ClickGui.getInstance().rainbowHue.getValue()) : new Color(this.red.getValue(), this.green.getValue(), this.blue.getValue(), this.alpha.getValue()), this.outline.getValue(), cRainbow.getValue() ? ColorUtil.rainbow(ClickGui.getInstance().rainbowHue.getValue()) : new Color(this.cRed.getValue(), this.cGreen.getValue(), this.cBlue.getValue(), this.cAlpha.getValue()), this.lineWidth.getValue ( ) , this.outline.getValue(), this.box.getValue(), this.boxAlpha.getValue(), true);
+        if ( this.render.getCurrentState( ) ) {
+            RenderUtil.drawBoxESP(renderPos, Rainbow.getCurrentState() ? ColorUtil.rainbow(ClickGui.getInstance().rainbowHue.getCurrentState()) : new Color(this.red.getCurrentState(), this.green.getCurrentState(), this.blue.getCurrentState(), this.alpha.getCurrentState()), this.outline.getCurrentState(), cRainbow.getCurrentState() ? ColorUtil.rainbow(ClickGui.getInstance().rainbowHue.getCurrentState()) : new Color(this.cRed.getCurrentState(), this.cGreen.getCurrentState(), this.cBlue.getCurrentState(), this.cAlpha.getCurrentState()), this.lineWidth.getCurrentState( ) , this.outline.getCurrentState(), this.box.getCurrentState(), this.boxAlpha.getCurrentState(), true);
         }
     }
 }

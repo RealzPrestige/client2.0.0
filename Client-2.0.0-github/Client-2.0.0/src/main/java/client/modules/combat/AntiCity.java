@@ -25,7 +25,7 @@ public class AntiCity extends Module {
                 if(whileSlot > -1) {
                 AutoTrap.mc.player.inventory.currentItem = whileSlot;
                 AutoTrap.mc.playerController.updateController();
-                BlockUtil.placeBlock(pos.north().north(), EnumHand.MAIN_HAND, this.rotate.getValue(), packet.getValue(), false);
+                BlockUtil.placeBlock(pos.north().north(), EnumHand.MAIN_HAND, this.rotate.getCurrentState(), packet.getCurrentState(), false);
                 AutoTrap.mc.player.inventory.currentItem = preSlot;
                 AutoTrap.mc.playerController.updateController();
                 }
@@ -34,7 +34,7 @@ public class AntiCity extends Module {
                 if(whileSlot > -1) {
                     AutoTrap.mc.player.inventory.currentItem = whileSlot;
                     AutoTrap.mc.playerController.updateController();
-                    BlockUtil.placeBlock(pos.east().east(), EnumHand.MAIN_HAND, this.rotate.getValue(), packet.getValue(), false);
+                    BlockUtil.placeBlock(pos.east().east(), EnumHand.MAIN_HAND, this.rotate.getCurrentState(), packet.getCurrentState(), false);
                     AutoTrap.mc.player.inventory.currentItem = preSlot;
                     AutoTrap.mc.playerController.updateController();
                 }
@@ -43,7 +43,7 @@ public class AntiCity extends Module {
                 if (whileSlot > -1) {
                     AutoTrap.mc.player.inventory.currentItem = whileSlot;
                     AutoTrap.mc.playerController.updateController();
-                    BlockUtil.placeBlock(pos.south().south(), EnumHand.MAIN_HAND, this.rotate.getValue(), packet.getValue(), false);
+                    BlockUtil.placeBlock(pos.south().south(), EnumHand.MAIN_HAND, this.rotate.getCurrentState(), packet.getCurrentState(), false);
                     AutoTrap.mc.player.inventory.currentItem = preSlot;
                     AutoTrap.mc.playerController.updateController();
                 }
@@ -52,7 +52,7 @@ public class AntiCity extends Module {
                 if(whileSlot > -1) {
                     AutoTrap.mc.player.inventory.currentItem = whileSlot;
                     AutoTrap.mc.playerController.updateController();
-                    BlockUtil.placeBlock(pos.west().west(), EnumHand.MAIN_HAND, this.rotate.getValue(), packet.getValue(), false);
+                    BlockUtil.placeBlock(pos.west().west(), EnumHand.MAIN_HAND, this.rotate.getCurrentState(), packet.getCurrentState(), false);
                     AutoTrap.mc.player.inventory.currentItem = preSlot;
                     AutoTrap.mc.playerController.updateController();
                 }

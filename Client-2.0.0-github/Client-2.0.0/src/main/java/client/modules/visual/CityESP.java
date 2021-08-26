@@ -38,30 +38,30 @@ public class CityESP extends Module {
         if(EntityUtil.isSafe(player)) {
             if (mc.world.getBlockState(pos.north()).getBlock() == Blocks.OBSIDIAN && mc.world.getBlockState(pos.north().north()).getBlock() == Blocks.AIR && mc.world.getBlockState(pos.north().north().up()).getBlock() == Blocks.AIR && (mc.world.getBlockState(pos.north().north().down()).getBlock() == Blocks.OBSIDIAN || mc.world.getBlockState(pos.north().north().down()).getBlock() == Blocks.BEDROCK)) {
                  if(player.getName().contains(mc.getSession().getUsername())){
-                     RenderUtil.drawBoxESP(pos.north(), new Color(ColorUtil.toRGBA(selfred.getValue(), selfgreen.getValue(), selfblue.getValue(), selfalpha.getValue())), false, new Color(ColorUtil.toRGBA(0, 0, 0, 0)), 0, false, true, selfalpha.getValue(), true);
+                     RenderUtil.drawBoxESP(pos.north(), new Color(ColorUtil.toRGBA(selfred.getCurrentState(), selfgreen.getCurrentState(), selfblue.getCurrentState(), selfalpha.getCurrentState())), false, new Color(ColorUtil.toRGBA(0, 0, 0, 0)), 0, false, true, selfalpha.getCurrentState(), true);
                  } else {
-                     RenderUtil.drawBoxESP(pos.north(), new Color(ColorUtil.toRGBA(red.getValue(), green.getValue(), blue.getValue(), alpha.getValue())), false, new Color(ColorUtil.toRGBA(0, 0, 0, 0)), 0, false, true, alpha.getValue(), true);
+                     RenderUtil.drawBoxESP(pos.north(), new Color(ColorUtil.toRGBA(red.getCurrentState(), green.getCurrentState(), blue.getCurrentState(), alpha.getCurrentState())), false, new Color(ColorUtil.toRGBA(0, 0, 0, 0)), 0, false, true, alpha.getCurrentState(), true);
                  }
             }
             if (mc.world.getBlockState(pos.east()).getBlock() == Blocks.OBSIDIAN && mc.world.getBlockState(pos.east().east()).getBlock() == Blocks.AIR && mc.world.getBlockState(pos.east().east().up()).getBlock() == Blocks.AIR && (mc.world.getBlockState(pos.east().east().down()).getBlock() == Blocks.OBSIDIAN || mc.world.getBlockState(pos.east().east().down()).getBlock() == Blocks.BEDROCK)) {
                 if(player.getName().contains(mc.getSession().getUsername())) {
-                    RenderUtil.drawBoxESP(pos.east(), new Color(ColorUtil.toRGBA(selfred.getValue(), selfgreen.getValue(), selfblue.getValue(), selfalpha.getValue())), false, new Color(ColorUtil.toRGBA(0, 0, 0, 0)), 0, false, true, selfalpha.getValue(), true);
+                    RenderUtil.drawBoxESP(pos.east(), new Color(ColorUtil.toRGBA(selfred.getCurrentState(), selfgreen.getCurrentState(), selfblue.getCurrentState(), selfalpha.getCurrentState())), false, new Color(ColorUtil.toRGBA(0, 0, 0, 0)), 0, false, true, selfalpha.getCurrentState(), true);
                 } else {
-                    RenderUtil.drawBoxESP(pos.east(), new Color(ColorUtil.toRGBA(red.getValue(), green.getValue(), blue.getValue(), alpha.getValue())), false, new Color(ColorUtil.toRGBA(0, 0, 0, 0)), 0, false, true, alpha.getValue(), true);
+                    RenderUtil.drawBoxESP(pos.east(), new Color(ColorUtil.toRGBA(red.getCurrentState(), green.getCurrentState(), blue.getCurrentState(), alpha.getCurrentState())), false, new Color(ColorUtil.toRGBA(0, 0, 0, 0)), 0, false, true, alpha.getCurrentState(), true);
                 }
             }
             if (mc.world.getBlockState(pos.south()).getBlock() == Blocks.OBSIDIAN && mc.world.getBlockState(pos.south().south()).getBlock() == Blocks.AIR && mc.world.getBlockState(pos.south().south().up()).getBlock() == Blocks.AIR && (mc.world.getBlockState(pos.south().south().down()).getBlock() == Blocks.OBSIDIAN || mc.world.getBlockState(pos.south().south().down()).getBlock() == Blocks.BEDROCK)) {
                 if(player.getName().contains(mc.getSession().getUsername())) {
-                    RenderUtil.drawBoxESP(pos.south(), new Color(ColorUtil.toRGBA(selfred.getValue(), selfgreen.getValue(), selfblue.getValue(), selfalpha.getValue())), false, new Color(ColorUtil.toRGBA(0, 0, 0, 0)), 0, false, true, selfalpha.getValue(), true);
+                    RenderUtil.drawBoxESP(pos.south(), new Color(ColorUtil.toRGBA(selfred.getCurrentState(), selfgreen.getCurrentState(), selfblue.getCurrentState(), selfalpha.getCurrentState())), false, new Color(ColorUtil.toRGBA(0, 0, 0, 0)), 0, false, true, selfalpha.getCurrentState(), true);
                 } else {
-                    RenderUtil.drawBoxESP(pos.south(), new Color(ColorUtil.toRGBA(red.getValue(), green.getValue(), blue.getValue(), alpha.getValue())), false, new Color(ColorUtil.toRGBA(0, 0, 0, 0)), 0, false, true, alpha.getValue(), true);
+                    RenderUtil.drawBoxESP(pos.south(), new Color(ColorUtil.toRGBA(red.getCurrentState(), green.getCurrentState(), blue.getCurrentState(), alpha.getCurrentState())), false, new Color(ColorUtil.toRGBA(0, 0, 0, 0)), 0, false, true, alpha.getCurrentState(), true);
                 }
             }
             if (mc.world.getBlockState(pos.west()).getBlock() == Blocks.OBSIDIAN && mc.world.getBlockState(pos.west().west()).getBlock() == Blocks.AIR && mc.world.getBlockState(pos.west().west().up()).getBlock() == Blocks.AIR && (mc.world.getBlockState(pos.west().west().down()).getBlock() == Blocks.OBSIDIAN || mc.world.getBlockState(pos.west().west().down()).getBlock() == Blocks.BEDROCK)) {
                 if (player.getName().contains(mc.getSession().getUsername())) {
-                    RenderUtil.drawBoxESP(pos.west(), new Color(ColorUtil.toRGBA(selfred.getValue(),selfgreen.getValue(), selfblue.getValue(), selfalpha.getValue())), false, new Color(ColorUtil.toRGBA(0, 0, 0, 0)), 0, false, true, selfalpha.getValue(), true);
+                    RenderUtil.drawBoxESP(pos.west(), new Color(ColorUtil.toRGBA(selfred.getCurrentState(),selfgreen.getCurrentState(), selfblue.getCurrentState(), selfalpha.getCurrentState())), false, new Color(ColorUtil.toRGBA(0, 0, 0, 0)), 0, false, true, selfalpha.getCurrentState(), true);
                 } else {
-                    RenderUtil.drawBoxESP(pos.west(), new Color(ColorUtil.toRGBA(red.getValue(), green.getValue(), blue.getValue(), alpha.getValue())), false, new Color(ColorUtil.toRGBA(0, 0, 0, 0)), 0, false, true, alpha.getValue(), true);
+                    RenderUtil.drawBoxESP(pos.west(), new Color(ColorUtil.toRGBA(red.getCurrentState(), green.getCurrentState(), blue.getCurrentState(), alpha.getCurrentState())), false, new Color(ColorUtil.toRGBA(0, 0, 0, 0)), 0, false, true, alpha.getCurrentState(), true);
                 }
             }
         }

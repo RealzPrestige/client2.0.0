@@ -1,14 +1,11 @@
 package client.modules.client;
 
 import client.Client;
-import client.events.PacketEvent;
 import client.events.Render2DEvent;
 import client.modules.Module;
 import client.gui.impl.setting.Setting;
 import client.util.ColorUtil;
 import client.util.RenderUtil;
-import client.util.Timer;
-import com.google.common.collect.Sets;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
@@ -17,12 +14,8 @@ import net.minecraft.client.settings.GameSettings;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.common.eventhandler.Event;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 public class Hud extends Module {
@@ -33,10 +26,10 @@ public class Hud extends Module {
     private static final ItemStack gapples = new ItemStack(Items.GOLDEN_APPLE);
     private static final ItemStack exp = new ItemStack(Items.EXPERIENCE_BOTTLE);
     public Setting<Boolean> rainbow = register(new Setting("Rainbow", true));
-    public Setting<Boolean> sideway = register(new Setting("RainbowSideway", true, v -> this.rainbow.getValue()));
-    public Setting<Integer> rainbowDelay = this.register(new Setting<Object>("Delay", 200, 0, 600, v -> this.rainbow.getValue()));
-    public Setting<Float> rainbowBrightness = this.register(new Setting<Object>("Brightness ", 150.0f, 1.0f, 255.0f, v -> this.rainbow.getValue()));
-    public Setting<Float> rainbowSaturation = this.register(new Setting<Object>("Saturation", 150.0f, 1.0f, 255.0f, v -> this.rainbow.getValue()));
+    public Setting<Boolean> sideway = register(new Setting("RainbowSideway", true, v -> this.rainbow.getCurrentState()));
+    public Setting<Integer> rainbowDelay = this.register(new Setting<Object>("Delay", 200, 0, 600, v -> this.rainbow.getCurrentState()));
+    public Setting<Float> rainbowBrightness = this.register(new Setting<Object>("Brightness ", 150.0f, 1.0f, 255.0f, v -> this.rainbow.getCurrentState()));
+    public Setting<Float> rainbowSaturation = this.register(new Setting<Object>("Saturation", 150.0f, 1.0f, 255.0f, v -> this.rainbow.getCurrentState()));
     public Setting<Boolean> fovSetting = this.register(new Setting("Fov", false));
     public Setting<Float> fov = this.register(new Setting("FovValue", 150.0f, 0.0f, 180.0f));
     Setting<Integer> red = this.register(new Setting("Red", 255, 0, 255));
@@ -44,19 +37,19 @@ public class Hud extends Module {
     public Setting<Integer> blue = this.register(new Setting("Blue", 255, 0, 255));
     public Setting<Integer> alpha = this.register(new Setting("Alpha", 255, 0, 255));
     public Setting<Boolean> watermark = register(new Setting("Watermark", false));
-    public Setting<Integer> watermarkX = register(new Setting("WatermarkX", 0, 0, 900, v -> watermark.getValue()));
-    public Setting<Integer> watermarkY = register(new Setting("WatermarkY", 0, 0, 530, v -> watermark.getValue()));
+    public Setting<Integer> watermarkX = register(new Setting("WatermarkX", 0, 0, 900, v -> watermark.getCurrentState()));
+    public Setting<Integer> watermarkY = register(new Setting("WatermarkY", 0, 0, 530, v -> watermark.getCurrentState()));
     public Setting<Boolean> welcomer = register(new Setting("Welcomer", false));
-    public Setting<Integer> welcomerX = register(new Setting("WelcomerX", 0, 0, 900, v -> welcomer.getValue() && !this.welcomerAlign.getValue()));
-    public Setting<Integer> welcomerY = register(new Setting("WelcomerY", 0, 0, 530, v -> welcomer.getValue() && !this.welcomerAlign.getValue()));
-    public Setting<Boolean> welcomerAlign = register(new Setting("WelcomerAlign", false, v -> welcomer.getValue()));
+    public Setting<Integer> welcomerX = register(new Setting("WelcomerX", 0, 0, 900, v -> welcomer.getCurrentState() && !this.welcomerAlign.getCurrentState()));
+    public Setting<Integer> welcomerY = register(new Setting("WelcomerY", 0, 0, 530, v -> welcomer.getCurrentState() && !this.welcomerAlign.getCurrentState()));
+    public Setting<Boolean> welcomerAlign = register(new Setting("WelcomerAlign", false, v -> welcomer.getCurrentState()));
     public Setting<Boolean> nameHider = register(new Setting("NameHider", false));
     public Setting<String> name = register(new Setting("Name...", "popbob"));
     private final Setting<Boolean> potionEffects = register(new Setting("PotionEffects", false));
-    private final Setting<Boolean> bottomAlign = register(new Setting("BottomAlign", false,v-> this.potionEffects.getValue()));
+    private final Setting<Boolean> bottomAlign = register(new Setting("BottomAlign", false,v-> this.potionEffects.getCurrentState()));
     private final Setting<Boolean> coords = register(new Setting("Coords", false, "Your current coordinates"));
     private final Setting<Boolean> armor = this.register( new Setting <> ( "Armor" , false , "ArmorHUD" ));
-    private final Setting<Boolean> percent = this.register(new Setting<Object>("Percent", true, v -> this.armor.getValue()));
+    private final Setting<Boolean> percent = this.register(new Setting<Object>("Percent", true, v -> this.armor.getCurrentState()));
     private final Setting<Boolean> itemInfo = this.register(new Setting<Object>("ItemInfo", true));
 
     public Hud() {
@@ -73,8 +66,8 @@ public class Hud extends Module {
 
     @Override
     public void onUpdate() {
-        if (fovSetting.getValue()) {
-            mc.gameSettings.setOptionFloatValue(GameSettings.Options.FOV, this.fov.getValue ( ) );
+        if (fovSetting.getCurrentState()) {
+            mc.gameSettings.setOptionFloatValue(GameSettings.Options.FOV, this.fov.getCurrentState( ) );
         }
     }
     private void setInstance() {
@@ -83,55 +76,55 @@ public class Hud extends Module {
     public void onRender2D(Render2DEvent event) {
         if (fullNullCheck())
             return;
-        color = ColorUtil.toRGBA(red.getValue(), green.getValue(), blue.getValue(), alpha.getValue());
+        color = ColorUtil.toRGBA(red.getCurrentState(), green.getCurrentState(), blue.getCurrentState(), alpha.getCurrentState());
         String string = Client.MODNAME + " " + Client.MODVER;
-        String welcome = nameHider.getValue() ? "Weclome to " + Client.MODNAME + " " + Client.MODVER + " " + name.getValue() : "Weclome to " + Client.MODNAME + " " + Client.MODVER + " " + mc.player.getName();
+        String welcome = nameHider.getCurrentState() ? "Weclome to " + Client.MODNAME + " " + Client.MODVER + " " + name.getCurrentState() : "Weclome to " + Client.MODNAME + " " + Client.MODVER + " " + mc.player.getName();
         //WATERMARK
-        if (watermark.getValue()) {
-            if (rainbow.getValue()) {
-                if (!sideway.getValue()) {
-                    renderer.drawString(string, watermarkX.getValue(), watermarkY.getValue(), ColorUtil.rainbowHud(rainbowDelay.getValue()).getRGB(), true);
+        if (watermark.getCurrentState()) {
+            if (rainbow.getCurrentState()) {
+                if (!sideway.getCurrentState()) {
+                    renderer.drawString(string, watermarkX.getCurrentState(), watermarkY.getCurrentState(), ColorUtil.rainbowHud(rainbowDelay.getCurrentState()).getRGB(), true);
                 } else {
                     int[] arrayOfInt = {1};
                     char[] stringToCharArray = string.toCharArray();
                     float f = 0.0F;
                     for (char c : stringToCharArray) {
-                        renderer.drawString(String.valueOf(c), watermarkX.getValue() + f, watermarkY.getValue(), ColorUtil.rainbowHud(arrayOfInt[0] * rainbowDelay.getValue()).getRGB(), true);
+                        renderer.drawString(String.valueOf(c), watermarkX.getCurrentState() + f, watermarkY.getCurrentState(), ColorUtil.rainbowHud(arrayOfInt[0] * rainbowDelay.getCurrentState()).getRGB(), true);
                         f += renderer.getStringWidth(String.valueOf(c));
                         arrayOfInt[0] = arrayOfInt[0] + 1;
                     }
                 }
             } else {
-                renderer.drawString(string, watermarkX.getValue(), watermarkY.getValue(), this.color, true);
+                renderer.drawString(string, watermarkX.getCurrentState(), watermarkY.getCurrentState(), this.color, true);
             }
         }
 
-        if (welcomer.getValue()) {
+        if (welcomer.getCurrentState()) {
             float f = 0.0F;
-            if (rainbow.getValue()) {
-                if (!sideway.getValue()) {
-                    renderer.drawString(welcome, welcomerAlign.getValue() ? 400 + f : welcomerX.getValue() + f, welcomerY.getValue(), ColorUtil.rainbowHud(rainbowDelay.getValue()).getRGB(), true);
+            if (rainbow.getCurrentState()) {
+                if (!sideway.getCurrentState()) {
+                    renderer.drawString(welcome, welcomerAlign.getCurrentState() ? 400 + f : welcomerX.getCurrentState() + f, welcomerY.getCurrentState(), ColorUtil.rainbowHud(rainbowDelay.getCurrentState()).getRGB(), true);
                 } else {
                     int[] arrayOfInt = {1};
                     char[] stringToCharArray = welcome.toCharArray();
                     for (char c : stringToCharArray) {
-                        renderer.drawString(String.valueOf(c), welcomerAlign.getValue() ? 400 + f : welcomerX.getValue() + f, welcomerY.getValue(), ColorUtil.rainbowHud(arrayOfInt[0] * rainbowDelay.getValue()).getRGB(), true);
+                        renderer.drawString(String.valueOf(c), welcomerAlign.getCurrentState() ? 400 + f : welcomerX.getCurrentState() + f, welcomerY.getCurrentState(), ColorUtil.rainbowHud(arrayOfInt[0] * rainbowDelay.getCurrentState()).getRGB(), true);
                         f += renderer.getStringWidth(String.valueOf(c));
                         arrayOfInt[0] = arrayOfInt[0] + 1;
                     }
                 }
             } else {
-                renderer.drawString(welcome, welcomerAlign.getValue() ? 400 + f : welcomerX.getValue() + f, welcomerY.getValue(), this.color, true);
+                renderer.drawString(welcome, welcomerAlign.getCurrentState() ? 400 + f : welcomerX.getCurrentState() + f, welcomerY.getCurrentState(), this.color, true);
             }
         }
-        if (this.potionEffects.getValue()) {
+        if (this.potionEffects.getCurrentState()) {
             if (fullNullCheck()) return;
             int width = this.renderer.scaledWidth;
             int height = this.renderer.scaledHeight;
-            this.color = ColorUtil.toRGBA(red.getValue(), green.getValue(), blue.getValue(), alpha.getValue());
-            int i = (mc.currentScreen instanceof GuiChat && this.bottomAlign.getValue()) ? 13 : (this.bottomAlign.getValue() ? -3 : 0);
+            this.color = ColorUtil.toRGBA(red.getCurrentState(), green.getCurrentState(), blue.getCurrentState(), alpha.getCurrentState());
+            int i = (mc.currentScreen instanceof GuiChat && this.bottomAlign.getCurrentState()) ? 13 : (this.bottomAlign.getCurrentState() ? -3 : 0);
             List<PotionEffect> effects = new ArrayList<>((Minecraft.getMinecraft()).player.getActivePotionEffects());
-            if (this.bottomAlign.getValue()) {
+            if (this.bottomAlign.getCurrentState()) {
                 for (PotionEffect potionEffect : effects) {
                     String str = Client.potionManager.getColoredPotionString(potionEffect);
                     i += 10;
@@ -155,18 +148,18 @@ public class Hud extends Module {
         int hposX = (int) (mc.player.posX * nether);
         int hposZ = (int) (mc.player.posZ * nether);
         String coordinates = ChatFormatting.WHITE + "XYZ " + ChatFormatting.RESET + (inHell ? (posX + ", " + posY + ", " + posZ + ChatFormatting.WHITE + " [" + ChatFormatting.RESET + hposX + ", " + hposZ + ChatFormatting.WHITE + "]" + ChatFormatting.RESET) : (posX + ", " + posY + ", " + posZ + ChatFormatting.WHITE + " [" + ChatFormatting.RESET + hposX + ", " + hposZ + ChatFormatting.WHITE + "]"));
-        String coords = this.coords.getValue ( ) ? coordinates : "";
+        String coords = this.coords.getCurrentState( ) ? coordinates : "";
         i += 10;
-        if ((ClickGui.getInstance()).rainbow.getValue()) {
-            String rainbowCoords = this.coords.getValue() ? ("XYZ " + (inHell ? (posX + ", " + posY + ", " + posZ + " [" + hposX + ", " + hposZ + "]") : (posX + ", " + posY + ", " + posZ + " [" + hposX + ", " + hposZ + "]"))) : "";
-            if ((ClickGui.getInstance()).rainbowModeHud.getValue() == ClickGui.rainbowMode.Static) {
-                this.renderer.drawString(rainbowCoords, 2.0F, (height - i), ColorUtil.rainbow( ( ClickGui.getInstance ( ) ).rainbowHue.getValue ( ) ).getRGB(), true);
+        if ((ClickGui.getInstance()).rainbow.getCurrentState()) {
+            String rainbowCoords = this.coords.getCurrentState() ? ("XYZ " + (inHell ? (posX + ", " + posY + ", " + posZ + " [" + hposX + ", " + hposZ + "]") : (posX + ", " + posY + ", " + posZ + " [" + hposX + ", " + hposZ + "]"))) : "";
+            if ((ClickGui.getInstance()).rainbowModeHud.getCurrentState() == ClickGui.rainbowMode.Static) {
+                this.renderer.drawString(rainbowCoords, 2.0F, (height - i), ColorUtil.rainbow( ( ClickGui.getInstance ( ) ).rainbowHue.getCurrentState( ) ).getRGB(), true);
             } else {
                 int[] counter3 = {1};
                 char[] stringToCharArray2 = rainbowCoords.toCharArray();
                 float u = 0.0F;
                 for (char c : stringToCharArray2) {
-                    this.renderer.drawString(String.valueOf(c), 2.0F + u, (height - i), ColorUtil.rainbow(counter3[0] * ( ClickGui.getInstance ( ) ).rainbowHue.getValue ( ) ).getRGB(), true);
+                    this.renderer.drawString(String.valueOf(c), 2.0F + u, (height - i), ColorUtil.rainbow(counter3[0] * ( ClickGui.getInstance ( ) ).rainbowHue.getCurrentState( ) ).getRGB(), true);
                     u += this.renderer.getStringWidth(String.valueOf(c));
                     counter3[0] = counter3[0] + 1;
                 }
@@ -174,10 +167,10 @@ public class Hud extends Module {
         } else {
             this.renderer.drawString(coords, 2.0F, (height - i), this.color, true);
         }
-        if (this.armor.getValue()) {
-            this.renderArmorHUD(this.percent.getValue());
+        if (this.armor.getCurrentState()) {
+            this.renderArmorHUD(this.percent.getCurrentState());
         }
-        if(itemInfo.getValue()){
+        if(itemInfo.getCurrentState()){
             renderTotemHUD();
             renderCrystalHud();
             renderExpHud();

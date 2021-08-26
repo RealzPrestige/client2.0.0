@@ -41,7 +41,7 @@ public class PingSpoofer extends Module {
     }
 
     public void clearQueue() {
-        if (mc.player != null && !mc.isSingleplayer() && mc.player.isEntityAlive() && (this.timer.passedMs(this.delay.getValue()))) {
+        if (mc.player != null && !mc.isSingleplayer() && mc.player.isEntityAlive() && (this.timer.passedMs(this.delay.getCurrentState()))) {
             double limit = MathUtil.getIncremental(Math.random() * 10.0, 1.0);
             this.receive = false;
             int i = 0;

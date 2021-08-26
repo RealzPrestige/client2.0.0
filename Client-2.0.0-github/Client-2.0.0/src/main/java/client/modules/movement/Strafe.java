@@ -1,15 +1,12 @@
 package client.modules.movement;
 
 import client.Client;
-import client.command.Command;
 import client.events.ClientEvent;
-import client.events.KeyEvent;
 import client.events.MoveEvent;
 import client.events.WalkEvent;
 import client.gui.impl.setting.Bind;
 import client.gui.impl.setting.Setting;
 import client.modules.Module;
-import client.modules.client.Notify;
 import client.util.EntityUtil;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.util.MovementInput;
@@ -53,13 +50,13 @@ public class Strafe extends Module {
             ++delay;
         }
         if(delay > 10) {
-            if (switchBind.getValue().getKey() > -1) {
-                if (Keyboard.isKeyDown(switchBind.getValue().getKey())) {
-                    if (mode.getValue() == Mode.INSTANT) {
+            if (switchBind.getCurrentState().getKey() > -1) {
+                if (Keyboard.isKeyDown(switchBind.getCurrentState().getKey())) {
+                    if (mode.getCurrentState() == Mode.INSTANT) {
                         mode.setValue(Mode.STRAFE);
                         mc.ingameGUI.getChatGUI().printChatMessageWithOptionalDeletion(new TextComponentString(Client.commandManager.getClientMessage() + ChatFormatting.BOLD + " Strafe: " + ChatFormatting.GRAY + "Mode set to: " + ChatFormatting.RED + ChatFormatting.BOLD + "Strafe"), 1);
                         delay = 0;
-                    } else if (mode.getValue() == Mode.STRAFE) {
+                    } else if (mode.getCurrentState() == Mode.STRAFE) {
                         mode.setValue(Mode.INSTANT);
                         mc.ingameGUI.getChatGUI().printChatMessageWithOptionalDeletion(new TextComponentString(Client.commandManager.getClientMessage() + ChatFormatting.BOLD + " Strafe: " + ChatFormatting.GRAY + "Mode set to: " + ChatFormatting.RED + ChatFormatting.BOLD + "Instant"), 1);
                         delay = 0;
@@ -71,7 +68,7 @@ public class Strafe extends Module {
 
     @SubscribeEvent
     public void onMove(WalkEvent event) {
-        if (mode.getValue() == Mode.STRAFE) {
+        if (mode.getCurrentState() == Mode.STRAFE) {
             if (!EntityUtil.onMovementInput()) {
                 motion = EntityUtil.getMovementSpeed();
                 event.setMotionX(0.0);
@@ -98,7 +95,7 @@ public class Strafe extends Module {
 
     @Override
     public void onUpdate() {
-        if (mc.player.isSneaking() || mc.player.isInWater() || mc.player.isInLava() || !mc.player.onGround && mode.getValue() == Mode.INSTANT) {
+        if (mc.player.isSneaking() || mc.player.isInWater() || mc.player.isInLava() || !mc.player.onGround && mode.getCurrentState() == Mode.INSTANT) {
             return;
         }
     }
@@ -116,16 +113,10 @@ public class Strafe extends Module {
         }
     }
 
-    public void onLogin(){
-        if(this.isEnabled()) {
-            this.disable();
-            this.enable();
-        }
-    }
 
     @SubscribeEvent
     public void onMode(MoveEvent event) {
-        if(mode.getValue() == Mode.INSTANT){
+        if(mode.getCurrentState() == Mode.INSTANT){
         if (!(event.getStage() != 0 || nullCheck() || mc.player.isSneaking() || mc.player.isInWater() || mc.player.isInLava() || mc.player.movementInput.moveForward == 0.0f && mc.player.movementInput.moveStrafe == 0.0f) || !mc.player.onGround) {
             MovementInput movementInput = mc.player.movementInput;
             float moveForward = movementInput.moveForward;

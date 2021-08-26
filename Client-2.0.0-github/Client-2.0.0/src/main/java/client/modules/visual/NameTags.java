@@ -73,9 +73,9 @@ public class NameTags extends Module {
             camera.posX = RenderUtil.interpolate(camera.prevPosX, camera.posX, delta);
             camera.posY = RenderUtil.interpolate(camera.prevPosY, camera.posY, delta);
             camera.posZ = RenderUtil.interpolate(camera.prevPosZ, camera.posZ, delta);
-            int width = renderer.getStringWidth(player.getDisplayName().getFormattedText() + " " + (ping.getValue() ? Objects.requireNonNull(mc.getConnection()).getPlayerInfo(player.getUniqueID()).getResponseTime() + "ms" : "") + " " + (healthSetting.getValue() ? color + health : "")) / 2;
+            int width = renderer.getStringWidth(player.getDisplayName().getFormattedText() + " " + (ping.getCurrentState() ? Objects.requireNonNull(mc.getConnection()).getPlayerInfo(player.getUniqueID()).getResponseTime() + "ms" : "") + " " + (healthSetting.getCurrentState() ? color + health : "")) / 2;
             double distance = camera.getDistance(x + mc.getRenderManager().viewerPosX, y + mc.getRenderManager().viewerPosY, z + mc.getRenderManager().viewerPosZ);
-            double scale = (0.0018 + size.getValue() * (distance * 0.2)) / 1000.0;
+            double scale = (0.0018 + size.getCurrentState() * (distance * 0.2)) / 1000.0;
             if (distance <= 8.0) {
                 scale = 0.0245;
             }
@@ -108,7 +108,7 @@ public class NameTags extends Module {
             if (renderOffhand.hasEffect() && (renderOffhand.getItem() instanceof ItemTool || renderOffhand.getItem() instanceof ItemArmor)) {
                 renderOffhand.stackSize = 1;
             }
-            renderItems(renderOffhand, xOffset, armor.getValue());
+            renderItems(renderOffhand, xOffset, armor.getCurrentState());
             xOffset += 16;
             for (ItemStack stack : player.inventory.armorInventory) {
                 if (stack == null) continue;
@@ -116,12 +116,12 @@ public class NameTags extends Module {
                 if (armourStack.hasEffect() && (armourStack.getItem() instanceof ItemTool || armourStack.getItem() instanceof ItemArmor)) {
                     armourStack.stackSize = 1;
                 }
-                renderItems(armourStack, xOffset, armor.getValue());
+                renderItems(armourStack, xOffset, armor.getCurrentState());
                 xOffset += 16;
             }
-            renderItems(renderMainHand, xOffset, armor.getValue());
+            renderItems(renderMainHand, xOffset, armor.getCurrentState());
             GlStateManager.popMatrix();
-            renderer.drawStringWithShadow(player.getDisplayName().getFormattedText() + " " + (ping.getValue() ? Objects.requireNonNull(mc.getConnection()).getPlayerInfo(player.getUniqueID()).getResponseTime() + "ms" : "") + " " + (healthSetting.getValue() ? color + health : ""), -width, -8, (Client.friendManager.isFriend(player) ? -11157267 : -1));
+            renderer.drawStringWithShadow(player.getDisplayName().getFormattedText() + " " + (ping.getCurrentState() ? Objects.requireNonNull(mc.getConnection()).getPlayerInfo(player.getUniqueID()).getResponseTime() + "ms" : "") + " " + (healthSetting.getCurrentState() ? color + health : ""), -width, -8, (Client.friendManager.isFriend(player) ? -11157267 : -1));
             camera.posX = originalPositionX;
             camera.posY = originalPositionY;
             camera.posZ = originalPositionZ;

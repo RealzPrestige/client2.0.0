@@ -124,7 +124,7 @@ public class ShulkerViewer extends Module {
             RenderUtil.drawTexturedRect(x, y + 16, 0, 16, 176, 57, 500);
             RenderUtil.drawTexturedRect(x, y + 16 + 54, 0, 160, 176, 8, 500);
             GlStateManager.disableDepth();
-            Color color = new Color(ClickGui.getInstance().red.getValue(), ClickGui.getInstance().green.getValue(), ClickGui.getInstance().blue.getValue(), 200);
+            Color color = new Color(ClickGui.getInstance().red.getCurrentState(), ClickGui.getInstance().green.getCurrentState(), ClickGui.getInstance().blue.getCurrentState(), 200);
             this.renderer.drawStringWithShadow(name == null ? stack.getDisplayName() : name, x + 8, y + 6, ColorUtil.toRGBA(color));
             GlStateManager.enableDepth();
             RenderHelper.enableGUIStandardItemLighting();

@@ -11,8 +11,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class Velocity extends Module {
     public Setting<Boolean> explosions = this.register(new Setting("Explosions", false));
-    public Setting<Float> horizontal = this.register(new Setting("Horizontal", 0.0F, 0.0F, 100.0F, v-> explosions.getValue()));
-    public Setting<Float> vertical = this.register(new Setting("Vertical", 0.0F, 0.0F, 100.0F, v-> explosions.getValue()));
+    public Setting<Float> horizontal = this.register(new Setting("Horizontal", 0.0F, 0.0F, 100.0F, v-> explosions.getCurrentState()));
+    public Setting<Float> vertical = this.register(new Setting("Vertical", 0.0F, 0.0F, 100.0F, v-> explosions.getCurrentState()));
     public Setting<Boolean> noPush = this.register(new Setting("NoPush", false));
     public Setting<Boolean> blocks = this.register(new Setting("Blocks", false));
 
@@ -33,41 +33,41 @@ public class Velocity extends Module {
                 final SPacketEntityVelocity velocity;
                 velocity = event.getPacket();
                 if (velocity.getEntityID() == Velocity.mc.player.entityId) {
-                    if (this.horizontal.getValue() == 0.0f && this.vertical.getValue() == 0.0f) {
+                    if (this.horizontal.getCurrentState() == 0.0f && this.vertical.getCurrentState() == 0.0f) {
                         event.setCanceled(true);
                         return;
                     }
-                    velocity.motionX *= this.horizontal.getValue() / 100;
-                    velocity.motionY *= this.vertical.getValue() / 100;
-                    velocity.motionZ *= this.horizontal.getValue() / 100;
+                    velocity.motionX *= this.horizontal.getCurrentState() / 100;
+                    velocity.motionY *= this.vertical.getCurrentState() / 100;
+                    velocity.motionZ *= this.horizontal.getCurrentState() / 100;
                 }
             }
-            if (this.explosions.getValue() && event.getPacket() instanceof SPacketExplosion) {
-                if (this.horizontal.getValue() == 0.0f && this.vertical.getValue() == 0.0f) {
+            if (this.explosions.getCurrentState() && event.getPacket() instanceof SPacketExplosion) {
+                if (this.horizontal.getCurrentState() == 0.0f && this.vertical.getCurrentState() == 0.0f) {
                     event.setCanceled(true);
                     return;
                 }
                 final SPacketExplosion velocity2;
                 final SPacketExplosion sPacketExplosion4 = (velocity2 = event.getPacket());
-                sPacketExplosion4.motionX *= this.horizontal.getValue();
+                sPacketExplosion4.motionX *= this.horizontal.getCurrentState();
                 final SPacketExplosion sPacketExplosion5 = velocity2;
-                sPacketExplosion5.motionY *= this.vertical.getValue();
+                sPacketExplosion5.motionY *= this.vertical.getCurrentState();
                 final SPacketExplosion sPacketExplosion6 = velocity2;
-                sPacketExplosion6.motionZ *= this.horizontal.getValue();
+                sPacketExplosion6.motionZ *= this.horizontal.getCurrentState();
             }
         }
     }
 
     @SubscribeEvent
     public void onPush(final PushEvent event) {
-        if (event.getStage() == 1 && this.blocks.getValue()) {
+        if (event.getStage() == 1 && this.blocks.getCurrentState()) {
             event.setCanceled(true);
         }
     }
 
     @SubscribeEvent
     public void onEntityCollision(final EntityCollisionEvent event) {
-        if (noPush.getValue()) {
+        if (noPush.getCurrentState()) {
             event.setCanceled(true);
         }
     }

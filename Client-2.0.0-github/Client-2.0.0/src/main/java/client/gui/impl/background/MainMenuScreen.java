@@ -118,7 +118,7 @@ public class MainMenuScreen extends GuiScreen {
         super.drawScreen(970, 540, partialTicks);
         this.drawLogo();
         this.drawRoundedLogo();
-        if (particleSystem != null && MenuToggler.getInstance().particles.getValue()) {
+        if (particleSystem != null && MenuToggler.getInstance().particles.getCurrentState()) {
             particleSystem.render(mouseX, mouseY);
         } else {
             this.particleSystem = new ParticleSystem(new ScaledResolution(mc));

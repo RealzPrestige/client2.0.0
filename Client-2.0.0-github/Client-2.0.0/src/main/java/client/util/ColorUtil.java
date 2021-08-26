@@ -21,17 +21,17 @@ public class ColorUtil {
 
     public static Color rainbow(int delay) {
         double rainbowState = Math.ceil((double) (System.currentTimeMillis() + (long) delay) / 20.0);
-        return Color.getHSBColor((float) ( rainbowState % 360.0 / 360.0), ClickGui.getInstance ( ).rainbowSaturation.getValue ( ) / 255.0f, ClickGui.getInstance ( ).rainbowBrightness.getValue ( ) / 255.0f);
+        return Color.getHSBColor((float) ( rainbowState % 360.0 / 360.0), ClickGui.getInstance ( ).rainbowSaturation.getCurrentState( ) / 255.0f, ClickGui.getInstance ( ).rainbowBrightness.getCurrentState( ) / 255.0f);
     }
 
     public static Color rainbowHighDelay(int delay) {
         double rainbowState = Math.ceil((double) (System.currentTimeMillis() + (long) delay * 100) / 20.0);
-        return Color.getHSBColor((float) ( rainbowState % 360.0 / 360.0), ClickGui.getInstance ( ).rainbowSaturation.getValue ( ) / 255.0f, ClickGui.getInstance ( ).rainbowBrightness.getValue ( ) / 255.0f);
+        return Color.getHSBColor((float) ( rainbowState % 360.0 / 360.0), ClickGui.getInstance ( ).rainbowSaturation.getCurrentState( ) / 255.0f, ClickGui.getInstance ( ).rainbowBrightness.getCurrentState( ) / 255.0f);
     }
 
     public static Color rainbowHud(int delay) {
         double rainbowState = Math.ceil((double) (System.currentTimeMillis() + (long) delay) / 20.0);
-        return Color.getHSBColor((float) ( rainbowState % 360.0 / 360.0), Hud.getInstance ( ).rainbowSaturation.getValue ( ) / 255.0f, Hud.getInstance ( ).rainbowBrightness.getValue ( ) / 255.0f);
+        return Color.getHSBColor((float) ( rainbowState % 360.0 / 360.0), Hud.getInstance ( ).rainbowSaturation.getCurrentState( ) / 255.0f, Hud.getInstance ( ).rainbowBrightness.getCurrentState( ) / 255.0f);
     }
     public static int toRGBA(Color color) {
         return ColorUtil.toRGBA(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());

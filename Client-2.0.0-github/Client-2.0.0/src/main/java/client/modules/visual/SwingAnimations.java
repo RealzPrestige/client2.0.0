@@ -25,24 +25,24 @@ public class SwingAnimations extends Module {
         if (nullCheck()) {
             return;
         }
-        if (this.swing.getValue() == Swing.OFFHAND) {
+        if (this.swing.getCurrentState() == Swing.OFFHAND) {
             mc.player.swingingHand = EnumHand.OFF_HAND;
         }
-        if (this.swing.getValue() == Swing.MAINHAND) {
+        if (this.swing.getCurrentState() == Swing.MAINHAND) {
             mc.player.swingingHand = EnumHand.MAIN_HAND;
         }
 
-        if (switchSetting.getValue() == Switch.ONEDOTEIGHT && (double) mc.entityRenderer.itemRenderer.prevEquippedProgressMainHand >= 0.9) {
+        if (switchSetting.getCurrentState() == Switch.ONEDOTEIGHT && (double) mc.entityRenderer.itemRenderer.prevEquippedProgressMainHand >= 0.9) {
             mc.entityRenderer.itemRenderer.equippedProgressMainHand = 1.0f;
             mc.entityRenderer.itemRenderer.itemStackMainHand = mc.player.getHeldItemMainhand();
         }
-        if(speed.getValue() == Speed.SLOW) {
+        if(speed.getCurrentState() == Speed.SLOW) {
             mc.player.addPotionEffect(new PotionEffect(MobEffects.MINING_FATIGUE, 10));
             mc.player.removePotionEffect(MobEffects.HASTE);
-        } else if(speed.getValue() == Speed.NORMAL){
+        } else if(speed.getCurrentState() == Speed.NORMAL){
             mc.player.removePotionEffect(MobEffects.MINING_FATIGUE);
             mc.player.removePotionEffect(MobEffects.HASTE);
-        } else if(speed.getValue() == Speed.FAST){
+        } else if(speed.getCurrentState() == Speed.FAST){
             mc.player.removePotionEffect(MobEffects.MINING_FATIGUE);
             mc.player.addPotionEffect(new PotionEffect(MobEffects.HASTE, 10));
         }

@@ -49,7 +49,7 @@ public class Surround extends Module {
         this.blocksPerTick = (Setting<Integer>)this.register(new Setting<>("BlocksPerTick", 20, 1, 20));
         this.noGhost = (Setting<Boolean>)this.register(new Setting<>("PacketPlace", false));
         this.centerp = (Setting<Boolean>)this.register(new Setting<>("Center", false));
-        this.centerPlayer = (Setting<Center>)this.register(new Setting("Center", Center.SMOOTH, v-> this.centerp.getValue()));
+        this.centerPlayer = (Setting<Center>)this.register(new Setting("Center", Center.SMOOTH, v-> this.centerp.getCurrentState()));
         this.rotate = (Setting<Boolean>)this.register(new Setting<>("Rotate", true));
         this.floor = true;
         this.timer = new client.util.Timer();
@@ -72,8 +72,8 @@ public class Surround extends Module {
         this.lastHotbarSlot = Surround.mc.player.inventory.currentItem;
         this.startPos = EntityUtil.getRoundedBlockPos( Surround.mc.player );
         this.center = PlayerUtil.getCenter(Surround.mc.player.posX, Surround.mc.player.posY, Surround.mc.player.posZ);
-        if(this.centerp.getValue()) {
-            switch (this.centerPlayer.getValue()) {
+        if(this.centerp.getCurrentState()) {
+            switch (this.centerPlayer.getCurrentState()) {
                 case INSTANT: {
                     Surround.mc.player.motionX = 0.0;
                     Surround.mc.player.motionZ = 0.0;
@@ -202,7 +202,7 @@ public class Surround extends Module {
             this.disable();
             return true;
         }
-        return !this.timer.passedMs(this.delay.getValue());
+        return !this.timer.passedMs(this.delay.getCurrentState());
     }
 
     private void processExtendingBlocks() {
@@ -288,7 +288,7 @@ public class Surround extends Module {
 
 
     private void placeBlock(final BlockPos pos) {
-        if (this.placements < this.blocksPerTick.getValue()) {
+        if (this.placements < this.blocksPerTick.getCurrentState()) {
             final int originalSlot = Surround.mc.player.inventory.currentItem;
             final int obbySlot = InventoryUtil.findHotbarBlock(BlockObsidian.class);
             final int eChestSot = InventoryUtil.findHotbarBlock(BlockEnderChest.class);
@@ -298,7 +298,7 @@ public class Surround extends Module {
             Surround.isPlacing = true;
             Surround.mc.player.inventory.currentItem = ((obbySlot == -1) ? eChestSot : obbySlot);
             Surround.mc.playerController.updateController();
-            this.isSneaking = BlockUtil.placeBlock(pos, this.offHand ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND, this.rotate.getValue(), this.noGhost.getValue(), this.isSneaking);
+            this.isSneaking = BlockUtil.placeBlock(pos, this.offHand ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND, this.rotate.getCurrentState(), this.noGhost.getCurrentState(), this.isSneaking);
             Surround.mc.player.inventory.currentItem = originalSlot;
             Surround.mc.playerController.updateController();
             this.didPlace = true;

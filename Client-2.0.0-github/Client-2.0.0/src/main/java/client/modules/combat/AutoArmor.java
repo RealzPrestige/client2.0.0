@@ -141,7 +141,7 @@ public class AutoArmor extends Module {
                 this.getSlotOn(8, slot);
             }
         }
-        if (this.timer.passedMs((int) ((float) this.delay.getValue ( ) * Client.serverManager.getTpsFactor()))) {
+        if (this.timer.passedMs((int) ((float) this.delay.getCurrentState( ) * Client.serverManager.getTpsFactor()))) {
             if (!this.taskList.isEmpty()) {
                 for (int i = 0; i < this.actions; ++i) {
                     InventoryUtil.Task task = this.taskList.poll();

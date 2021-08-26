@@ -42,7 +42,7 @@ public class AntiFog extends Module {
 
     @SubscribeEvent
     public void onFogDensity(final EntityViewRenderEvent.FogDensity event) {
-        if (this.clear.getValue()) {
+        if (this.clear.getCurrentState()) {
             event.setDensity(0.0f);
         event.setCanceled(true);
         }
@@ -50,12 +50,12 @@ public class AntiFog extends Module {
 
     @SubscribeEvent
     public void onFogColor(final EntityViewRenderEvent.FogColors event) {
-        if (this.color.getValue()) {
-           if (AntiFog.mc.player.dimension == 0) { event.setRed(this.red.getValue());event.setGreen(this.green.getValue());event.setBlue(this.blue.getValue());
+        if (this.color.getCurrentState()) {
+           if (AntiFog.mc.player.dimension == 0) { event.setRed(this.red.getCurrentState());event.setGreen(this.green.getCurrentState());event.setBlue(this.blue.getCurrentState());
             }
-            else if (AntiFog.mc.player.dimension == -1) { event.setRed(this.red1.getValue());event.setGreen(this.green1.getValue());event.setBlue(this.blue1.getValue());
+            else if (AntiFog.mc.player.dimension == -1) { event.setRed(this.red1.getCurrentState());event.setGreen(this.green1.getCurrentState());event.setBlue(this.blue1.getCurrentState());
             }
-            else if (AntiFog.mc.player.dimension == 1) { event.setRed(this.red2.getValue());event.setGreen(this.green2.getValue());event.setBlue(this.blue2.getValue());
+            else if (AntiFog.mc.player.dimension == 1) { event.setRed(this.red2.getCurrentState());event.setGreen(this.green2.getCurrentState());event.setBlue(this.blue2.getCurrentState());
             }
         }
     }

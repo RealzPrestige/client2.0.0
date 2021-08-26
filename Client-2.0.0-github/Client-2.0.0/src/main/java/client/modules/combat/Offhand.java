@@ -177,25 +177,25 @@ public class Offhand extends Module {
 
     public void doSwitch() {
         this.currentMode = CurrentItem.TOTEMS;
-        if (mode.getValue() == Mode.NORMAL) {
-            if ( this.gapple.getValue ( ) && Offhand.mc.player.getHeldItemMainhand().getItem() instanceof ItemSword && Offhand.mc.gameSettings.keyBindUseItem.isKeyDown() && EntityUtil.isSafe(Offhand.mc.player) && EntityUtil.getHealth(Offhand.mc.player, true) > this.totem.getValue ( ) ) {
+        if (mode.getCurrentState() == Mode.NORMAL) {
+            if ( this.gapple.getCurrentState( ) && Offhand.mc.player.getHeldItemMainhand().getItem() instanceof ItemSword && Offhand.mc.gameSettings.keyBindUseItem.isKeyDown() && EntityUtil.isSafe(Offhand.mc.player) && EntityUtil.getHealth(Offhand.mc.player, true) > this.totem.getCurrentState( ) ) {
                 this.currentMode = CurrentItem.GAPPLES;
-            } else if (this.currentMode != CurrentItem.CRYSTALS && this.offhanditem.getValue() == OffhandItem.CRYSTALS && (EntityUtil.isSafe(Offhand.mc.player) && EntityUtil.getHealth(Offhand.mc.player, true) > this.totem.getValue ( ) || EntityUtil.getHealth(Offhand.mc.player, true) > this.totemHealth.getValue ( ) )) {
+            } else if (this.currentMode != CurrentItem.CRYSTALS && this.offhanditem.getCurrentState() == OffhandItem.CRYSTALS && (EntityUtil.isSafe(Offhand.mc.player) && EntityUtil.getHealth(Offhand.mc.player, true) > this.totem.getCurrentState( ) || EntityUtil.getHealth(Offhand.mc.player, true) > this.totemHealth.getCurrentState( ) )) {
                 this.currentMode = CurrentItem.CRYSTALS;
             }
-            if ( this.gapple.getValue ( ) && Offhand.mc.player.getHeldItemMainhand().getItem() instanceof ItemSword && Offhand.mc.gameSettings.keyBindUseItem.isKeyDown() && !EntityUtil.isSafe(Offhand.mc.player) && EntityUtil.getHealth(Offhand.mc.player, true) > this.totemHealth.getValue ( ) ) {
+            if ( this.gapple.getCurrentState( ) && Offhand.mc.player.getHeldItemMainhand().getItem() instanceof ItemSword && Offhand.mc.gameSettings.keyBindUseItem.isKeyDown() && !EntityUtil.isSafe(Offhand.mc.player) && EntityUtil.getHealth(Offhand.mc.player, true) > this.totemHealth.getCurrentState( ) ) {
                 this.currentMode = CurrentItem.GAPPLES;
             }
             if (this.currentMode == CurrentItem.CRYSTALS && this.crystals == 0) {
                 this.setMode(CurrentItem.TOTEMS);
             }
-            if (this.currentMode == CurrentItem.CRYSTALS && (!EntityUtil.isSafe(Offhand.mc.player) && EntityUtil.getHealth(Offhand.mc.player, true) <= this.totemHealth.getValue ( ) || EntityUtil.getHealth(Offhand.mc.player, true) <= this.totem.getValue ( ) )) {
+            if (this.currentMode == CurrentItem.CRYSTALS && (!EntityUtil.isSafe(Offhand.mc.player) && EntityUtil.getHealth(Offhand.mc.player, true) <= this.totemHealth.getCurrentState( ) || EntityUtil.getHealth(Offhand.mc.player, true) <= this.totem.getCurrentState( ) )) {
                 if (this.currentMode == CurrentItem.CRYSTALS) {
                     this.switchedForHealthReason = true;
                 }
                 this.setMode(CurrentItem.TOTEMS);
             }
-            if (this.switchedForHealthReason && (EntityUtil.isSafe(Offhand.mc.player) && EntityUtil.getHealth(Offhand.mc.player, true) > this.totem.getValue ( ) || EntityUtil.getHealth(Offhand.mc.player, true) > this.totemHealth.getValue ( ) )) {
+            if (this.switchedForHealthReason && (EntityUtil.isSafe(Offhand.mc.player) && EntityUtil.getHealth(Offhand.mc.player, true) > this.totem.getCurrentState( ) || EntityUtil.getHealth(Offhand.mc.player, true) > this.totemHealth.getCurrentState( ) )) {
                 this.setMode(CurrentItem.CRYSTALS);
                 this.switchedForHealthReason = false;
             }
@@ -254,16 +254,16 @@ public class Offhand extends Module {
                 }
             }
         } else {
-            if (Offhand.mc.player.getHeldItemMainhand().getItem() instanceof ItemPickaxe && EntityUtil.isSafe(Offhand.mc.player) && EntityUtil.getHealth(Offhand.mc.player, true) > this.totem.getValue ( ) ){
+            if (Offhand.mc.player.getHeldItemMainhand().getItem() instanceof ItemPickaxe && EntityUtil.isSafe(Offhand.mc.player) && EntityUtil.getHealth(Offhand.mc.player, true) > this.totem.getCurrentState( ) ){
                 this.currentMode = CurrentItem.CRYSTALS;
             }
-            if (Offhand.mc.player.getHeldItemMainhand().getItem() instanceof ItemPickaxe && !EntityUtil.isSafe(Offhand.mc.player) && EntityUtil.getHealth(Offhand.mc.player, true) > this.totemHealth.getValue ( ) ){
+            if (Offhand.mc.player.getHeldItemMainhand().getItem() instanceof ItemPickaxe && !EntityUtil.isSafe(Offhand.mc.player) && EntityUtil.getHealth(Offhand.mc.player, true) > this.totemHealth.getCurrentState( ) ){
                 this.currentMode = CurrentItem.CRYSTALS;
             }
-            if ( this.gapple.getValue ( ) && Offhand.mc.player.getHeldItemMainhand().getItem() instanceof ItemSword && Offhand.mc.gameSettings.keyBindUseItem.isKeyDown() && EntityUtil.isSafe(Offhand.mc.player) && EntityUtil.getHealth(Offhand.mc.player, true) > this.totem.getValue ( ) ) {
+            if ( this.gapple.getCurrentState( ) && Offhand.mc.player.getHeldItemMainhand().getItem() instanceof ItemSword && Offhand.mc.gameSettings.keyBindUseItem.isKeyDown() && EntityUtil.isSafe(Offhand.mc.player) && EntityUtil.getHealth(Offhand.mc.player, true) > this.totem.getCurrentState( ) ) {
                 this.currentMode = CurrentItem.GAPPLES;
             }
-            if ( this.gapple.getValue ( ) && Offhand.mc.player.getHeldItemMainhand().getItem() instanceof ItemSword && Offhand.mc.gameSettings.keyBindUseItem.isKeyDown() && !EntityUtil.isSafe(Offhand.mc.player) && EntityUtil.getHealth(Offhand.mc.player, true) > this.totemHealth.getValue ( ) ) {
+            if ( this.gapple.getCurrentState( ) && Offhand.mc.player.getHeldItemMainhand().getItem() instanceof ItemSword && Offhand.mc.gameSettings.keyBindUseItem.isKeyDown() && !EntityUtil.isSafe(Offhand.mc.player) && EntityUtil.getHealth(Offhand.mc.player, true) > this.totemHealth.getCurrentState( ) ) {
                 this.currentMode = CurrentItem.GAPPLES;
             }
             if (this.currentMode == CurrentItem.CRYSTALS && (Offhand.mc.player.getItemStackFromSlot(EntityEquipmentSlot.CHEST).getItem() == Items.AIR || Offhand.mc.player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem() == Items.AIR || Offhand.mc.player.getItemStackFromSlot(EntityEquipmentSlot.LEGS).getItem() == Items.AIR || Offhand.mc.player.getItemStackFromSlot(EntityEquipmentSlot.FEET).getItem() == Items.AIR)) {
