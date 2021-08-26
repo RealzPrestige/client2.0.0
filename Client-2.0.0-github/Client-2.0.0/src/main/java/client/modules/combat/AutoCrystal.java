@@ -19,6 +19,7 @@ import net.minecraft.network.play.server.SPacketSpawnObject;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -51,8 +52,12 @@ public class AutoCrystal extends Module {
     public Setting<Boolean> announceOnly;
     public Setting<Boolean> text;
     public Setting<Boolean> box;
+    public Setting<RenderMode> renderMode;
+    public enum RenderMode{NORMAL, FADE, GLIDE}
+    public Setting<Float> accel;
+    public Setting<Float> moveSpeed;
     public Setting<Enum> fade;
-    public enum Enum{FAST, MEDIUM, SLOW, NONE}
+    public enum Enum{FAST, MEDIUM, SLOW}
     public Setting<Integer> red;
     public Setting<Integer> green;
     public Setting<Integer> blue;
@@ -77,13 +82,16 @@ public class AutoCrystal extends Module {
     public static AutoCrystal INSTANCE;
     private final ArrayList<RenderPos> renderMap = new ArrayList<>();
     private final ArrayList<BlockPos> currentTargets = new ArrayList<>();
+    private BlockPos lastRenderPos;
+    private AxisAlignedBB renderBB;
+    private float timePassed;
 
     public AutoCrystal() {
         super("AutoCrystal", "Automatically places/breaks crystals to deal damage to opponents.", Category.COMBAT);
         this.setting = (Setting<Settings>)this.register(new Setting<>("Setting", Settings.AUTOCRYSTAL));
         this.speedFactor = (Setting<SpeedFactor>)this.register(new Setting<>("SpeedFactor", SpeedFactor.UPDATE));
-        this.doPlace = (Setting<Boolean>)this.register(new Setting("Place", false, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
-        this.doBreak = (Setting<Boolean>)this.register(new Setting("Break", false, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
+        this.doPlace = (Setting<Boolean>)this.register(new Setting("Place", true, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
+        this.doBreak = (Setting<Boolean>)this.register(new Setting("Break", true, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
         this.breakRange = (Setting<Float>)this.register(new Setting("BreakRange", 5.0f, 1.0f, 6.0f, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
         this.placeRange = (Setting<Float>)this.register(new Setting("PlaceRange", 5.0f, 1.0f, 6.0f, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
         this.targetRange = (Setting<Float>)this.register(new Setting("TargetRange",9.0f, 1.0f, 15.0f, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
@@ -99,8 +107,11 @@ public class AutoCrystal extends Module {
         this.maxSelfDamage = (Setting<Float>)this.register(new Setting("MaxSelfDmg",8.0f, 1.0f, 36.0f, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
         this.swing = (Setting<Boolean>)this.register(new Setting("Swing", false, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
         this.announceOnly = (Setting<Boolean>)this.register(new Setting("AnnounceOnly", false, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
+        this.renderMode = (Setting<RenderMode>)this.register(new Setting<>("RenderMode", RenderMode.NORMAL, v-> this.setting.getCurrentState() == Settings.RENDER));
         this.box = (Setting<Boolean>)this.register(new Setting<>("Box", true, v-> this.setting.getCurrentState() == Settings.RENDER));
-        this.fade = (Setting<Enum>)this.register(new Setting<>("Fade", Enum.FAST, v-> this.setting.getCurrentState() == Settings.RENDER));
+        this.fade = (Setting<Enum>)this.register(new Setting<>("Fade", Enum.FAST, v-> this.setting.getCurrentState() == Settings.RENDER && renderMode.getCurrentState() == RenderMode.FADE));
+        this.accel = (Setting<Float>) this.register(new Setting<>("Deceleration" , 0.8f , 0.0f, 1.0f, v-> this.setting.getCurrentState() == Settings.RENDER && renderMode.getCurrentState() == RenderMode.GLIDE));
+        this.moveSpeed = (Setting<Float>) this.register(new Setting<>("Speed" , 900.0f , 0.0f, 1500.0f, v-> this.setting.getCurrentState() == Settings.RENDER && renderMode.getCurrentState() == RenderMode.GLIDE));
         this.red = (Setting<Integer>)this.register(new Setting<>("BoxRed", 255, 0, 255, v-> this.setting.getCurrentState() == Settings.RENDER));
         this.green = (Setting<Integer>)this.register(new Setting<>("BoxGreen", 255, 0, 255, v-> this.setting.getCurrentState() == Settings.RENDER));
         this.blue = (Setting<Integer>)this.register(new Setting<>("BoxBlue", 255, 0, 255, v-> this.setting.getCurrentState() == Settings.RENDER));
@@ -120,6 +131,9 @@ public class AutoCrystal extends Module {
         this.renderPos = null;
         this.pos2 = null;
         this.target = null;
+        BlockPos lastRenderPos;
+        AxisAlignedBB renderBB;
+        float timePassed;
         AutoCrystal.INSTANCE = this;
     }
 
@@ -166,6 +180,9 @@ public class AutoCrystal extends Module {
                 this.doBreak();
             }
         }
+    }
+    public void onDisable(){
+        this.lastRenderPos = null;
     }
     @Override
     public void onTick() {
@@ -348,17 +365,44 @@ public class AutoCrystal extends Module {
             Color color2;
             color = new Color(red.getCurrentState(), green.getCurrentState(), blue.getCurrentState(), (int) Math.max(alpha.getCurrentState() - renderPos.alpha, 0));
             color2 = new Color(cRed.getCurrentState(), cGreen.getCurrentState(), cBlue.getCurrentState(), (int) Math.max(cAlpha.getCurrentState() - renderPos.alpha, 0));
-            RenderUtil.drawBoxESP(renderPos.pos, rainbow.getCurrentState() ? ColorUtil.rainbow(ClickGui.getInstance().rainbowHue.getCurrentState()) : color , this.outline.getCurrentState(), cRainbow.getCurrentState() ? ColorUtil.rainbow(ClickGui.getInstance().rainbowHue.getCurrentState()) : color2, this.lineWidth.getCurrentState(), this.outline.getCurrentState(), this.box.getCurrentState(), (int) Math.max(cAlpha.getCurrentState() - renderPos.alpha, 0), true);
+            if(renderMode.getCurrentState() == RenderMode.NORMAL || renderMode.getCurrentState() == RenderMode.FADE) {
+                RenderUtil.drawBoxESP(renderPos.pos, rainbow.getCurrentState() ? ColorUtil.rainbow(ClickGui.getInstance().rainbowHue.getCurrentState()) : color, this.outline.getCurrentState(), cRainbow.getCurrentState() ? ColorUtil.rainbow(ClickGui.getInstance().rainbowHue.getCurrentState()) : color2, this.lineWidth.getCurrentState(), this.outline.getCurrentState(), this.box.getCurrentState(), (int) Math.max(cAlpha.getCurrentState() - renderPos.alpha, 0), true);
+            }
             if (renderPos.alpha > Math.max(alpha.getCurrentState(), rainbow.getCurrentState() ? ColorUtil.rainbow(ClickGui.getInstance().rainbowHue.getCurrentState()).getRGB() : ColorUtil.toRGBA(red.getCurrentState(), green.getCurrentState(), blue.getCurrentState())))
                 toRemove.add(renderPos);
             renderPos.alpha = renderPos.alpha + (fade.getCurrentState() == Enum.FAST ? 1.5 : fade.getCurrentState() == Enum.SLOW ? 0.5 : 1);
             if (currentTargets.contains(renderPos.pos)) {
                 renderPos.alpha = 0;
-            } else if (fade.getCurrentState() == Enum.NONE) {
+            } else if (renderMode.getCurrentState() != RenderMode.FADE) {
                 toRemove.add(renderPos);
             }
         }
         renderMap.removeAll(toRemove);
+
+        if (renderMode.getCurrentState() == RenderMode.GLIDE && renderPos != null) {
+            Color color2 = new Color(cRed.getCurrentState(), cGreen.getCurrentState(), cBlue.getCurrentState(), cAlpha.getCurrentState());
+            Color color = new Color(red.getCurrentState(), green.getCurrentState(), blue.getCurrentState(), alpha.getCurrentState());
+            if ( this.lastRenderPos == null || AutoCrystal.mc.player.getDistance (this.renderBB.minX , this.renderBB.minY , this.renderBB.minZ ) > this.placeRange.getCurrentState() ) {
+                this.lastRenderPos = this.renderPos;
+                this.renderBB = new AxisAlignedBB( this.renderPos );
+                this.timePassed = 0;
+            }
+            if ( !this.lastRenderPos.equals ( this.renderPos ) ) {
+                this.lastRenderPos = this.renderPos;
+                this.timePassed = 0;
+            }
+            double xDiff = this.renderPos.getX ( ) - this.renderBB.minX;
+            double yDiff = this.renderPos.getY ( ) - this.renderBB.minY;
+            double zDiff = this.renderPos.getZ ( ) - this.renderBB.minZ;
+            float multiplier = this.timePassed / this.moveSpeed.getCurrentState ( ) * this.accel.getCurrentState ( );
+            if ( multiplier > 1 ) multiplier = 1;
+            this.renderBB = this.renderBB.offset ( xDiff * multiplier , yDiff * multiplier , zDiff * multiplier );
+                RenderUtil.drawPerryESP(this.renderBB, color, color2, lineWidth.getCurrentState(), outline.getCurrentState(), box.getCurrentState(), 1.0f, 1.0f, 1.0f);
+            if ( this.renderBB.equals ( new AxisAlignedBB ( this.renderPos ) ) ) {
+                this.timePassed = 0;
+            } else this.timePassed += 50.0f;
+        }
+
     }
     static {
         AutoCrystal.INSTANCE = new AutoCrystal();
