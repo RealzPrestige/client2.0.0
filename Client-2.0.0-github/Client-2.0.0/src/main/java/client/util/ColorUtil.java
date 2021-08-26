@@ -2,6 +2,7 @@ package client.util;
 
 import client.modules.client.ClickGui;
 import client.modules.client.Hud;
+import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 
@@ -35,6 +36,14 @@ public class ColorUtil {
     }
     public static int toRGBA(Color color) {
         return ColorUtil.toRGBA(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
+    }
+
+    public static int getRainbow(int speed, int offset, float s, float b) {
+        float hue = (System.currentTimeMillis() + (long)offset) % (long)speed;
+        return Color.getHSBColor(hue /= (float)speed, s, b).getRGB();
+    }
+    public static void setColor(Color color) {
+        GL11.glColor4d((double)((float)color.getRed() / 255.0f), (double)((float)color.getGreen() / 255.0f), (double)((float)color.getBlue() / 255.0f), (double)((float)color.getAlpha() / 255.0f));
     }
 }
 

@@ -108,6 +108,7 @@ public class ModuleManager
         modules.add(new NameTags());
         modules.add(new CityESP());
         modules.add(new ESP());
+        modules.add(new Chams());
 
     }
 
@@ -127,41 +128,8 @@ public class ModuleManager
         return null;
     }
 
-    public void enableModule(Class<Module> clazz) {
-        Module module = this.getModuleByClass(clazz);
-        if (module != null) {
-            module.enable();
-        }
-    }
-
-    public void disableModule(Class<Module> clazz) {
-        Module module = this.getModuleByClass(clazz);
-        if (module != null) {
-            module.disable();
-        }
-    }
-
-    public void enableModule(String name) {
-        Module module = this.getModuleByName(name);
-        if (module != null) {
-            module.enable();
-        }
-    }
-
-    public void disableModule(String name) {
-        Module module = this.getModuleByName(name);
-        if (module != null) {
-            module.disable();
-        }
-    }
-
     public boolean isModuleEnabled(String name) {
         Module module = this.getModuleByName(name);
-        return module != null && module.isOn();
-    }
-
-    public boolean isModuleEnabled(Class<Module> clazz) {
-        Module module = this.getModuleByClass(clazz);
         return module != null && module.isOn();
     }
 
@@ -181,16 +149,6 @@ public class ModuleManager
         }
         return enabledModules;
     }
-
-    public ArrayList<String> getEnabledModulesName() {
-        ArrayList<String> enabledModules = new ArrayList <> ( );
-        for (Module module : this.modules) {
-            if (!module.isEnabled() || !module.isDrawn()) continue;
-            enabledModules.add(module.getFullArrayString());
-        }
-        return enabledModules;
-    }
-
     public ArrayList<Module> getModulesByCategory(Module.Category category) {
         ArrayList<Module> modulesCategory = new ArrayList <> ( );
         this.modules.forEach(module -> {
@@ -235,6 +193,10 @@ public class ModuleManager
 
     public void onLogin() {
         this.modules.forEach(Module::onLogin);
+        if(Strafe.getInstance().isEnabled()){
+            Strafe.getInstance().disable();
+            Strafe.getInstance().enable();
+        }
     }
 
     public void onUnload() {
@@ -257,25 +219,6 @@ public class ModuleManager
                 module.toggle();
             }
         });
-    }
-
-    private class Animation
-            extends Thread {
-        public Module module;
-        public float offset;
-        public float vOffset;
-        ScheduledExecutorService service;
-
-        public Animation() {
-            super("Animation");
-            this.service = Executors.newSingleThreadScheduledExecutor();
-        }
-
-        @Override
-        public void start() {
-            System.out.println("fgbnrdshugb7gnw47rhnw4875tbg6234yg765tb32yn438y7bg76t5bt6432634rtb6df5t3n76j235t animation thread.");
-            this.service.scheduleAtFixedRate(this, 0L, 1L, TimeUnit.MILLISECONDS);
-        }
     }
 }
 

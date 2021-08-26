@@ -15,8 +15,8 @@ public class FullBright extends Module {
 
     @Override
     public void onUpdate() {
-        if (FullBright.mc.gameSettings.gammaSetting != 1000.0f) {
-            FullBright.mc.gameSettings.gammaSetting = 1000.0f;
+        if (FullBright.mc.gameSettings.gammaSetting != 6969.0f) {
+            FullBright.mc.gameSettings.gammaSetting = 6969.0f;
         }
     }
 }

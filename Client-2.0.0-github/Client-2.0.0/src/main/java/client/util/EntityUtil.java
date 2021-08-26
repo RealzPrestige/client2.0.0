@@ -31,9 +31,13 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.Explosion;
 
+import javax.annotation.Nullable;
+import java.awt.*;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.*;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class EntityUtil implements Util {
     public static final Vec3d[] antiDropOffsetList = new Vec3d[]{new Vec3d(0.0, -2.0, 0.0)};
@@ -42,6 +46,16 @@ public class EntityUtil implements Util {
     public static final Vec3d[] OffsetList = new Vec3d[]{new Vec3d(1.0, 1.0, 0.0), new Vec3d(-1.0, 1.0, 0.0), new Vec3d(0.0, 1.0, 1.0), new Vec3d(0.0, 1.0, -1.0), new Vec3d(0.0, 2.0, 0.0)};
     public static final Vec3d[] antiStepOffsetList = new Vec3d[]{new Vec3d(-1.0, 3.0, 0.0), new Vec3d(1.0, 3.0, 0.0), new Vec3d(0.0, 3.0, 1.0), new Vec3d(0.0, 3.0, -1.0)};
     public static final Vec3d[] antiScaffoldOffsetList = new Vec3d[]{new Vec3d(1.0, -1.0, 0.0), new Vec3d(-1.0, -1.0, 0.0), new Vec3d(0.0, -1.0, 1.0), new Vec3d(0.0, -1.0, -1.0), new Vec3d (0.0, 3.0, 0.0)};
+
+    public static Color getColor(Entity entity, int red, int green, int blue, int alpha, boolean colorFriends) {
+        Color color = new Color((float)red / 255.0f, (float)green / 255.0f, (float)blue / 255.0f, (float)alpha / 255.0f);
+        if (entity instanceof EntityPlayer) {
+            if (colorFriends && Client.friendManager.isFriend((EntityPlayer)entity)) {
+                color = new Color(0.33333334f, 1.0f, 1.0f, (float)alpha / 255.0f);
+            }
+        }
+        return color;
+    }
 
     public static boolean onMovementInput() {
         return mc.player.movementInput.moveForward != 0.0f || mc.player.movementInput.moveStrafe != 0.0f;
