@@ -1,6 +1,7 @@
 package client.gui.impl.button;
 
 import client.Client;
+import client.command.Command;
 import client.gui.ClientGui;
 import client.gui.impl.Component;
 import client.gui.impl.Item;
@@ -8,18 +9,25 @@ import client.modules.Module;
 import client.modules.client.ClickGui;
 import client.gui.impl.setting.Bind;
 import client.gui.impl.setting.Setting;
+import client.util.ColorUtil;
+import client.util.Timer;
+import com.google.common.collect.Sets;
+import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.init.SoundEvents;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class ModuleButton
         extends Button {
+    int coolinteger;
     private final Module module;
     private List<Item> items = new ArrayList <> ( );
     private boolean subOpen;
-
+    HashSet<Integer> drawnFalse = Sets.newHashSet();
+    HashSet<Integer> drawnTrue = Sets.newHashSet();
     public ModuleButton(Module module) {
         super(module.getName());
         this.module = module;
@@ -92,12 +100,23 @@ public class ModuleButton
         }
     }
 
+
     @Override
     public void mouseClicked(int mouseX, int mouseY, int mouseButton) {
         super.mouseClicked(mouseX, mouseY, mouseButton);
         if (!this.items.isEmpty()) {
             if (mouseButton == 1 && this.isHovering(mouseX, mouseY)) {
                 this.subOpen = !this.subOpen;
+                mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0f));
+            }
+            if (mouseButton == 2 && this.isHovering(mouseX, mouseY)) {
+                if(module.isDrawn()) {
+                    module.setDrawn(false);
+                    Command.sendMessage(module.getName() + " is now unDrawn!");
+                } else {
+                    module.setDrawn(true);
+                    Command.sendMessage(module.getName() + " is now Drawn!");
+                }
                 mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0f));
             }
             if (this.subOpen) {

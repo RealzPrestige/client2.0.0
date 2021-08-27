@@ -103,16 +103,6 @@ public class Module
         return this.displayName.getCurrentState();
     }
 
-    public void setDisplayName(String name) {
-        Module module = Client.moduleManager.getModuleByDisplayName(name);
-        Module originalModule = Client.moduleManager.getModuleByName(name);
-        if (module == null && originalModule == null) {
-            Command.sendMessage(this.getDisplayName() + ", name: " + this.getName() + ", has been renamed to: " + name);
-            this.displayName.setValue(name);
-            return;
-        }
-        Command.sendMessage(ChatFormatting.RED + "A module of this name already exists.");
-    }
 
     public String getDescription() {
         return this.description;

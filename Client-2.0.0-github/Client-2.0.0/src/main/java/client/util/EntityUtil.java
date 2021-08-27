@@ -33,6 +33,9 @@ import net.minecraft.world.Explosion;
 
 import javax.annotation.Nullable;
 import java.awt.*;
+import java.lang.reflect.AccessibleObject;
+import java.lang.reflect.Field;
+import java.lang.reflect.Member;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.*;
@@ -46,6 +49,7 @@ public class EntityUtil implements Util {
     public static final Vec3d[] OffsetList = new Vec3d[]{new Vec3d(1.0, 1.0, 0.0), new Vec3d(-1.0, 1.0, 0.0), new Vec3d(0.0, 1.0, 1.0), new Vec3d(0.0, 1.0, -1.0), new Vec3d(0.0, 2.0, 0.0)};
     public static final Vec3d[] antiStepOffsetList = new Vec3d[]{new Vec3d(-1.0, 3.0, 0.0), new Vec3d(1.0, 3.0, 0.0), new Vec3d(0.0, 3.0, 1.0), new Vec3d(0.0, 3.0, -1.0)};
     public static final Vec3d[] antiScaffoldOffsetList = new Vec3d[]{new Vec3d(1.0, -1.0, 0.0), new Vec3d(-1.0, -1.0, 0.0), new Vec3d(0.0, -1.0, 1.0), new Vec3d(0.0, -1.0, -1.0), new Vec3d (0.0, 3.0, 0.0)};
+
 
     public static Color getColor(Entity entity, int red, int green, int blue, int alpha, boolean colorFriends) {
         Color color = new Color((float)red / 255.0f, (float)green / 255.0f, (float)blue / 255.0f, (float)alpha / 255.0f);

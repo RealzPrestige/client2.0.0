@@ -4,6 +4,7 @@ import client.events.Render2DEvent;
 import client.events.Render3DEvent;
 import client.gui.ClientGui;
 import client.gui.impl.background.MenuToggler;
+import client.gui.impl.button.ModuleButton;
 import client.modules.Feature;
 import client.modules.Module;
 import client.modules.client.*;
@@ -66,6 +67,7 @@ public class ModuleManager
         modules.add(new TabTweaks());
         modules.add(new MiddleClickPearl());
         modules.add(new ChorusPredict());
+        modules.add(new NoBreakAnimation());
 
         //MOVEMENT
         modules.add(new ReverseStep());
@@ -93,6 +95,7 @@ public class ModuleManager
         modules.add(new Freecam());
         modules.add(new AntiRotate());
         modules.add(new Blink());
+        modules.add(new XCarry());
 
         //VISUAL
         modules.add(new CrystalChanger());
@@ -193,10 +196,6 @@ public class ModuleManager
 
     public void onLogin() {
         this.modules.forEach(Module::onLogin);
-        if(Strafe.getInstance().isEnabled()){
-            Strafe.getInstance().disable();
-            Strafe.getInstance().enable();
-        }
     }
 
     public void onUnload() {

@@ -18,25 +18,25 @@ public abstract class MixinRenderArmor {
         this.setModelVisible(p_188359_1_);
         switch (slotIn) {
             case HEAD: {
-                p_188359_1_.bipedHead.showModel = Chams.getInstance().isEnabled() && Chams.getInstance().removeArmor.getCurrentState();
-                p_188359_1_.bipedHeadwear.showModel = Chams.getInstance().isEnabled() && Chams.getInstance().removeArmor.getCurrentState();
+                p_188359_1_.bipedHead.showModel = Chams.getInstance().isEnabled() && !Chams.getInstance().removeArmor.getCurrentState();
+                p_188359_1_.bipedHeadwear.showModel = Chams.getInstance().isEnabled() && !Chams.getInstance().removeArmor.getCurrentState();
                 break;
             }
             case CHEST: {
-                p_188359_1_.bipedBody.showModel = Chams.getInstance().isEnabled() && Chams.getInstance().removeArmor.getCurrentState();
-                p_188359_1_.bipedRightArm.showModel = Chams.getInstance().isEnabled() && Chams.getInstance().removeArmor.getCurrentState();
-                p_188359_1_.bipedLeftArm.showModel = Chams.getInstance().isEnabled() && Chams.getInstance().removeArmor.getCurrentState();
+                p_188359_1_.bipedBody.showModel = Chams.getInstance().isEnabled() && !Chams.getInstance().removeArmor.getCurrentState();
+                p_188359_1_.bipedRightArm.showModel = Chams.getInstance().isEnabled() && !Chams.getInstance().removeArmor.getCurrentState();
+                p_188359_1_.bipedLeftArm.showModel = Chams.getInstance().isEnabled() && !Chams.getInstance().removeArmor.getCurrentState();
                 break;
             }
             case LEGS: {
-                p_188359_1_.bipedBody.showModel = Chams.getInstance().isEnabled() && Chams.getInstance().removeArmor.getCurrentState();
-                p_188359_1_.bipedRightLeg.showModel = Chams.getInstance().isEnabled() && Chams.getInstance().removeArmor.getCurrentState();
-                p_188359_1_.bipedLeftLeg.showModel = Chams.getInstance().isEnabled() && Chams.getInstance().removeArmor.getCurrentState();
+                p_188359_1_.bipedBody.showModel = Chams.getInstance().isEnabled() && !Chams.getInstance().removeArmor.getCurrentState();
+                p_188359_1_.bipedRightLeg.showModel = Chams.getInstance().isEnabled() && !Chams.getInstance().removeArmor.getCurrentState();
+                p_188359_1_.bipedLeftLeg.showModel = Chams.getInstance().isEnabled() && !Chams.getInstance().removeArmor.getCurrentState();
                 break;
             }
             case FEET: {
-                p_188359_1_.bipedRightLeg.showModel = Chams.getInstance().isEnabled() && Chams.getInstance().removeArmor.getCurrentState();
-                p_188359_1_.bipedLeftLeg.showModel = Chams.getInstance().isEnabled() && Chams.getInstance().removeArmor.getCurrentState();
+                p_188359_1_.bipedRightLeg.showModel = Chams.getInstance().isEnabled() && !Chams.getInstance().removeArmor.getCurrentState();
+                p_188359_1_.bipedLeftLeg.showModel = Chams.getInstance().isEnabled() && !Chams.getInstance().removeArmor.getCurrentState();
             }
         }
     }

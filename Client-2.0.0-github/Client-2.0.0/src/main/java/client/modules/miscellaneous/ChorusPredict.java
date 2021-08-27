@@ -7,15 +7,11 @@ import client.modules.Module;
 import client.util.ColorUtil;
 import client.util.RenderUtil;
 import client.util.Timer;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL11.GL_LINE_SMOOTH;
 
 /**
  *

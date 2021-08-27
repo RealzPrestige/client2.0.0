@@ -91,10 +91,5 @@ public class MixinRenderModifiedCrystal {
             GlStateManager.scale((1.0f / CrystalChanger.getInstance().scale.getCurrentState().floatValue()), (1.0f / CrystalChanger.getInstance().scale.getCurrentState().floatValue()), 1.0f / CrystalChanger.getInstance().scale.getCurrentState().floatValue());
         }
     }
-    static {
-        if (CrystalChanger.getInstance().glint.getCurrentState()) {
-            ENDER_CRYSTAL_TEXTURES = new ResourceLocation("textures/rainbower.png");
-        }
-    }
 }
 

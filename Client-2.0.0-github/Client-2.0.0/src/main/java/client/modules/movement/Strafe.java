@@ -113,6 +113,14 @@ public class Strafe extends Module {
         }
     }
 
+    @Override
+    public void onLogin(){
+        if(this.isEnabled()){
+            disable();
+            enable();
+        }
+    }
+
 
     @SubscribeEvent
     public void onMode(MoveEvent event) {

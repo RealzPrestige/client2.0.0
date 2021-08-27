@@ -1,11 +1,14 @@
 package client.modules.client;
 
 import client.Client;
+import client.events.PacketEvent;
 import client.events.Render2DEvent;
 import client.modules.Module;
 import client.gui.impl.setting.Setting;
 import client.util.ColorUtil;
 import client.util.RenderUtil;
+import client.util.Timer;
+import com.google.common.collect.Sets;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
@@ -14,8 +17,11 @@ import net.minecraft.client.settings.GameSettings;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class Hud extends Module {
@@ -51,7 +57,9 @@ public class Hud extends Module {
     private final Setting<Boolean> armor = this.register( new Setting <> ( "Armor" , false , "ArmorHUD" ));
     private final Setting<Boolean> percent = this.register(new Setting<Object>("Percent", true, v -> this.armor.getCurrentState()));
     private final Setting<Boolean> itemInfo = this.register(new Setting<Object>("ItemInfo", true));
-
+    private final Setting<Boolean> activeModules = register(new Setting("ActiveModules", false));
+    int packets;
+    int packets2;
     public Hud() {
         super("Hud", "Displays strings on your screen", Category.CORE);
         this.setInstance();
@@ -63,6 +71,7 @@ public class Hud extends Module {
         }
         return INSTANCE;
     }
+
 
     @Override
     public void onUpdate() {
@@ -76,8 +85,22 @@ public class Hud extends Module {
     public void onRender2D(Render2DEvent event) {
         if (fullNullCheck())
             return;
+        int width = this.renderer.scaledWidth;
+        int height = this.renderer.scaledHeight;
+        int[] counter1 = {1};
+        int j = (mc.currentScreen instanceof net.minecraft.client.gui.GuiChat && bottomAlign.getCurrentState()) ? 14 : 0;
+        if(activeModules.getCurrentState()) {
+                    for (int k = 0; k < Client.moduleManager.sortedModules.size(); k++) {
+                        Module module = Client.moduleManager.sortedModules.get(k);
+                        String str = module.getDisplayName() + ChatFormatting.GRAY + ((module.getDisplayInfo() != null) ? (ChatFormatting.WHITE + " [" + module.getDisplayInfo() +  "]") : "");
+                        renderer.drawString(str, (width - 2 - renderer.getStringWidth(str)), (2 + j * 10), rainbow.getCurrentState() ? ColorUtil.rainbowHud(counter1[0] * rainbowDelay.getCurrentState()).getRGB() : color, true);
+                        j++;
+                       counter1[0] = counter1[0] + 1;
+            }
+        }
         color = ColorUtil.toRGBA(red.getCurrentState(), green.getCurrentState(), blue.getCurrentState(), alpha.getCurrentState());
         String string = Client.MODNAME + " " + Client.MODVER;
+
         String welcome = nameHider.getCurrentState() ? "Weclome to " + Client.MODNAME + " " + Client.MODVER + " " + name.getCurrentState() : "Weclome to " + Client.MODNAME + " " + Client.MODVER + " " + mc.player.getName();
         //WATERMARK
         if (watermark.getCurrentState()) {
@@ -89,7 +112,7 @@ public class Hud extends Module {
                     char[] stringToCharArray = string.toCharArray();
                     float f = 0.0F;
                     for (char c : stringToCharArray) {
-                        renderer.drawString(String.valueOf(c), watermarkX.getCurrentState() + f, watermarkY.getCurrentState(), ColorUtil.rainbowHud(arrayOfInt[0] * rainbowDelay.getCurrentState()).getRGB(), true);
+                         renderer.drawString(String.valueOf(c), watermarkX.getCurrentState() + f, watermarkY.getCurrentState(), ColorUtil.rainbowHud(arrayOfInt[0] * rainbowDelay.getCurrentState()).getRGB(), true);
                         f += renderer.getStringWidth(String.valueOf(c));
                         arrayOfInt[0] = arrayOfInt[0] + 1;
                     }
@@ -119,8 +142,6 @@ public class Hud extends Module {
         }
         if (this.potionEffects.getCurrentState()) {
             if (fullNullCheck()) return;
-            int width = this.renderer.scaledWidth;
-            int height = this.renderer.scaledHeight;
             this.color = ColorUtil.toRGBA(red.getCurrentState(), green.getCurrentState(), blue.getCurrentState(), alpha.getCurrentState());
             int i = (mc.currentScreen instanceof GuiChat && this.bottomAlign.getCurrentState()) ? 13 : (this.bottomAlign.getCurrentState() ? -3 : 0);
             List<PotionEffect> effects = new ArrayList<>((Minecraft.getMinecraft()).player.getActivePotionEffects());
@@ -140,7 +161,6 @@ public class Hud extends Module {
         boolean inHell = mc.world.getBiome(mc.player.getPosition()).getBiomeName().equals("Hell");
         int i;
         i = (mc.currentScreen instanceof GuiChat) ? 14 : 0;
-        int height = this.renderer.scaledHeight;
         int posX = (int) mc.player.posX;
         int posY = (int) mc.player.posY;
         int posZ = (int) mc.player.posZ;

@@ -146,8 +146,9 @@ public abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends 
 
 
                     boolean flag1 = setDoRenderBrightness(entity, partialTicks);
-                    if (!(entity instanceof EntityPlayer) && Chams.getInstance().isOff())
+                    if (entity instanceof EntityPlayer && Chams.getInstance().isOff()) {
                         renderModel(entity, f6, f5, f8, f2, f7, f4);
+                    }
                     if (flag1)
                         unsetBrightness();
                     GlStateManager.depthMask(true);

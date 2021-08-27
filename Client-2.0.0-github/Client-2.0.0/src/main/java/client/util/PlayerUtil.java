@@ -126,7 +126,11 @@ public class PlayerUtil implements Util {
 
     public static BlockPos getPlayerPos() {
         return new BlockPos(Math.floor(mc.player.posX), Math.floor(mc.player.posY), Math.floor(mc.player.posZ));
+
+    }   public static BlockPos getPlayerPos1() {
+        return new BlockPos(Math.floor(mc.player.posX), Math.floor(mc.player.posY - 1), Math.floor(mc.player.posZ));
     }
+
 
     public static UUID getUUIDFromName(String name) {
         try {

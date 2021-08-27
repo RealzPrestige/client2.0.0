@@ -9,8 +9,7 @@ import client.util.Util;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Feature
-        implements Util {
+public class Feature implements Util{
     public List<Setting> settings = new ArrayList <> ( );
     public TextManager renderer = Client.textManager;
     private String name;
