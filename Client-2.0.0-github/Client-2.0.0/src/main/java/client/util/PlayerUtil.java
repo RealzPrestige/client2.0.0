@@ -123,8 +123,8 @@ public class PlayerUtil implements Util {
     }
 
     public static void faceVector(Vec3d vec, boolean normalizeAngle) {
-        float[] rotations = RotationUtil.getLegitRotations(vec);
-        RotationUtil.mc.player.connection.sendPacket(new CPacketPlayer.Rotation(rotations[0], normalizeAngle ? (float) MathHelper.normalizeAngle((int) rotations[1], 360) : rotations[1], RotationUtil.mc.player.onGround));
+        float[] rotations = EntityUtil.getLegitRotations(vec);
+        mc.player.connection.sendPacket(new CPacketPlayer.Rotation(rotations[0], normalizeAngle ? (float) MathHelper.normalizeAngle((int) rotations[1], 360) : rotations[1], mc.player.onGround));
     }
 
     public static BlockPos getPlayerPos() {

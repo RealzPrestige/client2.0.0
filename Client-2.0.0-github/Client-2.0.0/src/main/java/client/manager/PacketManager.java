@@ -36,33 +36,6 @@ public class PacketManager
     }
     public final ConcurrentHashMap<String, Integer> targets = new ConcurrentHashMap<>();
 
-    private double totalDeaths;
-    private double totalKills;
-    private int currentKills;
-
-    public int getCurrentKills() {
-        return currentKills;
-    }
-
-    public String getKD() {
-        if (totalDeaths == 0) {
-            return "" + totalKills;
-        }
-        return "" + MathUtil.round(totalKills / totalDeaths, 2);
-    }
-
-    public String getTotalKills() {
-        return "" + totalKills;
-    }
-
-    public String getTotalDeaths() {
-        return "" + totalDeaths;
-    }
-
-    public void addDeath() {
-        totalDeaths++;
-        currentKills = 0;
-    }
 
     public void onUpdate() {
         targets.forEach((name, timeout) -> {
@@ -91,13 +64,5 @@ public class PacketManager
         }
     }
 
-    @SubscribeEvent
-    public void onEntityDeath(DeathEvent event) {
-        if (this.targets.containsKey(event.player.getName())) {
-            totalKills++;
-            currentKills++;
-            this.targets.remove(event.player.getName());
-        }
-    }
 }
 

@@ -81,35 +81,7 @@ public class BlockUtil implements Util {
         return true;
     }
 
-    public static boolean isValidBlock(BlockPos pos) {
-        Block block = BlockUtil.mc.world.getBlockState(pos).getBlock();
-        return !(block instanceof BlockLiquid) && block.getMaterial(null) != Material.AIR;
-    }
-    public static boolean isScaffoldPos(BlockPos pos) {
-        return BlockUtil.mc.world.isAirBlock(pos) || BlockUtil.mc.world.getBlockState(pos).getBlock() == Blocks.SNOW_LAYER || BlockUtil.mc.world.getBlockState(pos).getBlock() == Blocks.TALLGRASS || BlockUtil.mc.world.getBlockState(pos).getBlock() instanceof BlockLiquid;
-    }
-    public static Boolean isPosInFov(BlockPos pos) {
-        int dirnumber = RotationUtil.getDirection4D();
-        if (dirnumber == 0 && (double) pos.getZ() - BlockUtil.mc.player.getPositionVector().z < 0.0) {
-            return false;
-        }
-        if (dirnumber == 1 && (double) pos.getX() - BlockUtil.mc.player.getPositionVector().x > 0.0) {
-            return false;
-        }
-        if (dirnumber == 2 && (double) pos.getZ() - BlockUtil.mc.player.getPositionVector().z > 0.0) {
-            return false;
-        }
-        return dirnumber != 3 || (double) pos.getX() - BlockUtil.mc.player.getPositionVector().x >= 0.0;
-    }
     public static final List<Block> unSafeBlocks = Arrays.asList(Blocks.OBSIDIAN, Blocks.BEDROCK, Blocks.ENDER_CHEST, Blocks.ANVIL);
-    public static boolean isBlockUnSafe(Block block) {
-        return unSafeBlocks.contains(block);
-    }
-
-    public static boolean isBlockSolid(BlockPos pos) {
-        return !BlockUtil.isBlockUnSolid(pos);
-    }
-
     public static boolean isBlockUnSolid(BlockPos pos) {
         return BlockUtil.isBlockUnSolid(BlockUtil.mc.world.getBlockState(pos).getBlock());
     }

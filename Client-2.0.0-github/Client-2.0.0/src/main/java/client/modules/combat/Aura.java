@@ -92,8 +92,4 @@ public class Aura extends Module {
         }
         return target;
     }
-
-    public String hudInfoString() {
-        return target.getName() + " | " + EntityUtil.getHealth(target);
-    }
 }

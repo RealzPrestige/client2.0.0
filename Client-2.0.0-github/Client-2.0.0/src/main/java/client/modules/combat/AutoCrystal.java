@@ -32,6 +32,8 @@ public class AutoCrystal extends Module {
     public enum Settings{AUTOCRYSTAL, RENDER}
     public Setting<SpeedFactor> speedFactor;
     public enum SpeedFactor {TICK, UPDATE}
+    public Setting<CalcMode> calcMode;
+    public enum CalcMode{NORMAL, AUTO}
     public Setting<Boolean> doBreak;
     public Setting<Boolean> doPlace;
     public Setting<Float> targetRange;
@@ -87,7 +89,8 @@ public class AutoCrystal extends Module {
     public AutoCrystal() {
         super("AutoCrystal", "Automatically places/breaks crystals to deal damage to opponents.", Category.COMBAT);
         this.setting = (Setting<Settings>)this.register(new Setting<>("Setting", Settings.AUTOCRYSTAL));
-        this.speedFactor = (Setting<SpeedFactor>)this.register(new Setting<>("SpeedFactor", SpeedFactor.UPDATE));
+        this.speedFactor = (Setting<SpeedFactor>)this.register(new Setting<>("SpeedFactor", SpeedFactor.UPDATE, v-> setting.getCurrentState() == Settings.AUTOCRYSTAL));
+        this.calcMode = (Setting<CalcMode>)this.register(new Setting<>("CalcMode", CalcMode.NORMAL, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
         this.doPlace = (Setting<Boolean>)this.register(new Setting("Place", true, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
         this.doBreak = (Setting<Boolean>)this.register(new Setting("Break", true, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
         this.breakRange = (Setting<Float>)this.register(new Setting("BreakRange", 5.0f, 1.0f, 6.0f, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
@@ -128,9 +131,6 @@ public class AutoCrystal extends Module {
         this.renderPos = null;
         this.pos2 = null;
         this.target = null;
-        BlockPos lastRenderPos;
-        AxisAlignedBB renderBB;
-        float timePassed;
         AutoCrystal.INSTANCE = this;
     }
 
@@ -203,21 +203,40 @@ public class AutoCrystal extends Module {
             final float self = this.calculate(pos, mc.player);
             if (BlockUtil.canPlaceCrystal(pos, true)) {
                 final float damage;
-                // ( If health is over self(damage your taking (+0.5hp))      && maxSelfDamage = over selfdamage      && damage(enemy) is over maxdamage(0.5)                    && damage is over the damage you take
-                if (EntityUtil.getHealth(mc.player) > self + 0.5f && this.maxSelfDamage.getCurrentState() > self && (damage = this.calculate(pos, this.target)) > maxDamage && damage > self) {
-                    if (damage <= this.minDamage.getCurrentState()) {
-                        if (this.facePlaceHP.getCurrentState() <= EntityUtil.getHealth(this.target) && !PlayerUtil.isArmorLow(this.target, this.armorPercent.getCurrentState())) {
-                            continue;
+                if (calcMode.getCurrentState() == CalcMode.NORMAL) {
+                    if (EntityUtil.getHealth(mc.player) > self + 0.5f && this.maxSelfDamage.getCurrentState() > self && (damage = this.calculate(pos, this.target)) > maxDamage && damage > self) {
+                        if (damage <= this.minDamage.getCurrentState()) {
+                            if (this.facePlaceHP.getCurrentState() <= EntityUtil.getHealth(this.target) && !PlayerUtil.isArmorLow(this.target, this.armorPercent.getCurrentState())) {
+                                continue;
+                            }
+                            if (damage <= 2.0f) {
+                                continue;
+                            }
                         }
-                        if (damage <= 2.0f) {
-                            continue;
-                        }
+                        maxDamage = damage;
+                        placePos = pos;
+                        pos2 = placePos;
+                        currentTargets.clear();
+                        currentTargets.add(pos);
                     }
-                    maxDamage = damage;
-                    placePos = pos;
-                    pos2 = placePos;
-                    currentTargets.clear();
-                    currentTargets.add(pos);
+                } else if (calcMode.getCurrentState() == CalcMode.AUTO) {
+                    if ((damage = this.calculate(pos, this.target)) > self && damage > minDamage.getCurrentState() && self < maxSelfDamage.getCurrentState()) {
+                        if (damage <= this.minDamage.getCurrentState()) {
+                            if (this.facePlaceHP.getCurrentState() <= EntityUtil.getHealth(this.target) && !PlayerUtil.isArmorLow(this.target, this.armorPercent.getCurrentState())) {
+                                continue;
+                            }
+                            if (damage <= 2.0f) {
+                                continue;
+                            }
+                        }
+                        maxDamage = damage;
+                        placePos = pos;
+                        pos2 = placePos;
+                        currentTargets.clear();
+                        currentTargets.add(pos);
+                    }
+                } {
+
                 }
             }
 
@@ -398,6 +417,9 @@ public class AutoCrystal extends Module {
     }
 
     public String hudInfoString() {
-        return target.getName() + " | " + calculate(renderPos, target);
+        if(target != null) {
+            return target.getName() + " | " + Math.round(target.getHealth());
+        }
+        return null;
     }
 }

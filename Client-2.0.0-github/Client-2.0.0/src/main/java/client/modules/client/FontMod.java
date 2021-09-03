@@ -19,7 +19,6 @@ public class FontMod
     public Setting<Integer> fontSize = this.register( new Setting <> ( "Size" , 17 , 12 , 30 ));
     public Setting<Integer> fontStyle = this.register( new Setting <> ( "Style" , 0 , 0 , 3 ));
     private boolean reloadFont = false;
-
     public FontMod() {
         super("CustomFont", "Tweaks the way your font looks.", Module.Category.CORE);
         this.setInstance();

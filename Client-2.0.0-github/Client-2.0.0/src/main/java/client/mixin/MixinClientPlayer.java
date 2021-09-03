@@ -19,9 +19,12 @@ public abstract class MixinClientPlayer {
 
     @Inject(method={"getLocationSkin()Lnet/minecraft/util/ResourceLocation;"}, at={@At(value="HEAD")}, cancellable=true)
     public void getLocationSkin(CallbackInfoReturnable<ResourceLocation> callbackInfoReturnable) {
-        if (PrestigeChams.getInstance().isEnabled()) {
+        if (PrestigeChams.getInstance().isEnabled() && PrestigeChams.getInstance().mode.getCurrentState() == PrestigeChams.Mode.ZPRESTIGE) {
             callbackInfoReturnable.setReturnValue(new ResourceLocation("textures/prestigeskin.png"));
+        } else if(PrestigeChams.getInstance().isEnabled() && PrestigeChams.getInstance().mode.getCurrentState() == PrestigeChams.Mode.IIV){
+            callbackInfoReturnable.setReturnValue(new ResourceLocation("textures/iiv.png"));
         }
     }
+
 }
 

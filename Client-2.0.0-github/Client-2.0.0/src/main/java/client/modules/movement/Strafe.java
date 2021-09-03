@@ -115,14 +115,6 @@ public class Strafe extends Module {
     }
 
     @SubscribeEvent
-    public void onSettingChange(ClientEvent event) {
-        if (event.getStage() == 2) {
-            mc.player.motionY = -0.1;
-        }
-    }
-
-
-    @SubscribeEvent
     public void onMove(MoveEvent event) {
         if(mode.getCurrentState() == Mode.INSTANT){
         if (!(event.getStage() != 0 || nullCheck() || mc.player.isSneaking() || mc.player.isInWater() || mc.player.isInLava() || mc.player.movementInput.moveForward == 0.0f && mc.player.movementInput.moveStrafe == 0.0f) || !mc.player.onGround) {

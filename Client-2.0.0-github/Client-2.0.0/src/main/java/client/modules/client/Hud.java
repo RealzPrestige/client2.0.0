@@ -1,7 +1,9 @@
 package client.modules.client;
 
 import client.Client;
+import client.events.PacketEvent;
 import client.events.Render2DEvent;
+import client.manager.EventManager;
 import client.modules.Module;
 import client.gui.impl.setting.Setting;
 import client.util.ColorUtil;
@@ -14,6 +16,7 @@ import net.minecraft.client.settings.GameSettings;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -22,6 +25,10 @@ import java.util.List;
 public class Hud extends Module {
     private static Hud INSTANCE = new Hud();
     private int color;
+    int packetsSent;
+    int packetsReceived;
+    public int count = 0;
+
     private static final ItemStack totem = new ItemStack(Items.TOTEM_OF_UNDYING);
     private static final ItemStack crystals = new ItemStack(Items.END_CRYSTAL);
     private static final ItemStack gapples = new ItemStack(Items.GOLDEN_APPLE);
@@ -40,6 +47,7 @@ public class Hud extends Module {
     public Setting<Boolean> watermark = register(new Setting("Watermark", false));
     public Setting<Integer> watermarkX = register(new Setting("WatermarkX", 0, 0, 900, v -> watermark.getCurrentState()));
     public Setting<Integer> watermarkY = register(new Setting("WatermarkY", 0, 0, 530, v -> watermark.getCurrentState()));
+    public Setting<Boolean> packets = register(new Setting("Packets", false));
     public Setting<Boolean> welcomer = register(new Setting("Welcomer", false));
     public Setting<Integer> welcomerX = register(new Setting("WelcomerX", 0, 0, 900, v -> welcomer.getCurrentState() && !this.welcomerAlign.getCurrentState()));
     public Setting<Integer> welcomerY = register(new Setting("WelcomerY", 0, 0, 530, v -> welcomer.getCurrentState() && !this.welcomerAlign.getCurrentState()));
@@ -52,13 +60,14 @@ public class Hud extends Module {
     private final Setting<Boolean> armor = this.register( new Setting <> ( "Armor" , false , "ArmorHUD" ));
     private final Setting<Boolean> percent = this.register(new Setting<Object>("Percent", true, v -> this.armor.getCurrentState()));
     private final Setting<Boolean> itemInfo = this.register(new Setting<Object>("ItemInfo", true));
+    private final Setting<Integer> itemInfoY = this.register(new Setting<>("ItemInfoY", 10, 0, 400));
     private final Setting<Boolean> activeModules = register(new Setting("ActiveModules", false));
-    private final Setting<ColorMode> colorMode = register(new Setting("ColorMode", ColorMode.NORMAL));
+    private final Setting<ColorMode> colorMode = register(new Setting("ColorMode", ColorMode.NORMAL, v-> activeModules.getCurrentState()));
     public enum ColorMode{NORMAL, ALPHASTEP, RAINBOW}
     public Setting<Integer> index = this.register(new Setting("Index", 30, 0, 100, v-> colorMode.getCurrentState() == ColorMode.ALPHASTEP));
     public Setting<Integer> countt = this.register(new Setting("Count", 25, 0, 30, v-> colorMode.getCurrentState() == ColorMode.ALPHASTEP));
     public Hud() {
-        super("Hud", "Displays strings on your screen.", Category.CORE);
+        super("Hud", "Displays strings on your screen.  ,m", Category.CORE);
         this.setInstance();
     }
 
@@ -76,6 +85,14 @@ public class Hud extends Module {
             mc.gameSettings.setOptionFloatValue(GameSettings.Options.FOV, this.fov.getCurrentState( ) );
         }
     }
+    @SubscribeEvent
+    public void onPacketSend(PacketEvent.Send event){
+        ++packetsSent;
+    }
+    @SubscribeEvent
+    public void onPacketReceive(PacketEvent.Receive event){
+        ++packetsReceived;
+    }
     private void setInstance() {
         INSTANCE = this;
     }
@@ -87,7 +104,6 @@ public class Hud extends Module {
         int[] counter1 = {1};
         int j = (mc.currentScreen instanceof net.minecraft.client.gui.GuiChat && bottomAlign.getCurrentState()) ? 14 : 0;
         if(activeModules.getCurrentState()) {
-            int count = 0;
             if(colorMode.getCurrentState() == ColorMode.NORMAL) {
                 for (int k = 0; k < Client.moduleManager.sortedModules.size(); k++) {
                     Module module = Client.moduleManager.sortedModules.get(k);
@@ -135,6 +151,10 @@ public class Hud extends Module {
                     }
                 }
             } else {
+                if(packets.getCurrentState()) {
+                    renderer.drawString("PacketsSent: " + ChatFormatting.WHITE + Client.eventManager.sendingpackets, watermarkX.getCurrentState(), watermarkY.getCurrentState() + 10, this.color, true);
+                    renderer.drawString("PacketsReceived: " + ChatFormatting.WHITE + Client.eventManager.incomingpackets, watermarkX.getCurrentState(), watermarkY.getCurrentState() + 20, this.color, true);
+                }
                 renderer.drawString(string, watermarkX.getCurrentState(), watermarkY.getCurrentState(), this.color, true);
             }
         }
@@ -236,7 +256,7 @@ public class Hud extends Module {
             GlStateManager.disableLighting();
             GlStateManager.disableDepth();
             final String s = (is.getCount() > 1) ? (is.getCount() + "") : "";
-            this.renderer.drawStringWithShadow(s, (float) (x + 19 - 2 - this.renderer.getStringWidth(s)), (float) (y + 9), 16777215);
+            this.renderer.drawStringWithShadow(s, (float) (x + 19 - 2 - this.renderer.getStringWidth(s)), (float) (y + 9) , 16777215);
             if (!percent) {
                 continue;
             }
@@ -258,13 +278,13 @@ public class Hud extends Module {
             GlStateManager.enableTexture2D();
             GlStateManager.enableDepth();
             RenderUtil.itemRender.zLevel = 200.0F;
-            RenderUtil.itemRender.renderItemAndEffectIntoGUI(totem, 0, 20);
-            RenderUtil.itemRender.renderItemOverlayIntoGUI(mc.fontRenderer, totem, 0, 20, "");
+            RenderUtil.itemRender.renderItemAndEffectIntoGUI(totem, 0, 20 + itemInfoY.getCurrentState());
+            RenderUtil.itemRender.renderItemOverlayIntoGUI(mc.fontRenderer, totem, 0, 20 + itemInfoY.getCurrentState(), "");
             RenderUtil.itemRender.zLevel = 0.0F;
             GlStateManager.enableTexture2D();
             GlStateManager.disableLighting();
             GlStateManager.disableDepth();
-            this.renderer.drawStringWithShadow(totems + "", 10, 30, 16777215);
+            this.renderer.drawStringWithShadow(totems + "", 10, 30 + itemInfoY.getCurrentState(), 16777215);
             GlStateManager.enableDepth();
             GlStateManager.disableLighting();
         }
@@ -277,13 +297,13 @@ public class Hud extends Module {
             GlStateManager.enableTexture2D();
             GlStateManager.enableDepth();
             RenderUtil.itemRender.zLevel = 200.0F;
-            RenderUtil.itemRender.renderItemAndEffectIntoGUI(crystals, 0, 37);
-            RenderUtil.itemRender.renderItemOverlayIntoGUI(mc.fontRenderer, crystals, 0, 37, "");
+            RenderUtil.itemRender.renderItemAndEffectIntoGUI(crystals, 0, 37 + itemInfoY.getCurrentState());
+            RenderUtil.itemRender.renderItemOverlayIntoGUI(mc.fontRenderer, crystals, 0, 37 + itemInfoY.getCurrentState(), "");
             RenderUtil.itemRender.zLevel = 0.0F;
             GlStateManager.enableTexture2D();
             GlStateManager.disableLighting();
             GlStateManager.disableDepth();
-            this.renderer.drawStringWithShadow(totems + "", 10, 47, 16777215);
+            this.renderer.drawStringWithShadow(totems + "", 10, 47 + itemInfoY.getCurrentState(), 16777215);
             GlStateManager.enableDepth();
             GlStateManager.disableLighting();
         }
@@ -296,13 +316,13 @@ public class Hud extends Module {
             GlStateManager.enableTexture2D();
             GlStateManager.enableDepth();
             RenderUtil.itemRender.zLevel = 200.0F;
-            RenderUtil.itemRender.renderItemAndEffectIntoGUI(exp, 0, 54);
-            RenderUtil.itemRender.renderItemOverlayIntoGUI(mc.fontRenderer, exp, 10, 54, "");
+            RenderUtil.itemRender.renderItemAndEffectIntoGUI(exp, 0, 54 + itemInfoY.getCurrentState());
+            RenderUtil.itemRender.renderItemOverlayIntoGUI(mc.fontRenderer, exp, 10, 54 + itemInfoY.getCurrentState(), "");
             RenderUtil.itemRender.zLevel = 0.0F;
             GlStateManager.enableTexture2D();
             GlStateManager.disableLighting();
             GlStateManager.disableDepth();
-            this.renderer.drawStringWithShadow(totems + "", 10, 64, 16777215);
+            this.renderer.drawStringWithShadow(totems + "", 10, 64 + itemInfoY.getCurrentState(), 16777215);
             GlStateManager.enableDepth();
             GlStateManager.disableLighting();
         }
@@ -315,13 +335,13 @@ public class Hud extends Module {
             GlStateManager.enableTexture2D();
             GlStateManager.enableDepth();
             RenderUtil.itemRender.zLevel = 200.0F;
-            RenderUtil.itemRender.renderItemAndEffectIntoGUI(gapples, 0, 69);
-            RenderUtil.itemRender.renderItemOverlayIntoGUI(mc.fontRenderer, gapples, 0, 69, "");
+            RenderUtil.itemRender.renderItemAndEffectIntoGUI(gapples, 0, 69 + itemInfoY.getCurrentState());
+            RenderUtil.itemRender.renderItemOverlayIntoGUI(mc.fontRenderer, gapples, 0, 69 + itemInfoY.getCurrentState(), "");
             RenderUtil.itemRender.zLevel = 0.0F;
             GlStateManager.enableTexture2D();
             GlStateManager.disableLighting();
             GlStateManager.disableDepth();
-            this.renderer.drawStringWithShadow(totems + "", 10, 79, 16777215);
+            this.renderer.drawStringWithShadow(totems + "", 10, 79 + itemInfoY.getCurrentState(), 16777215);
             GlStateManager.enableDepth();
             GlStateManager.disableLighting();
         }

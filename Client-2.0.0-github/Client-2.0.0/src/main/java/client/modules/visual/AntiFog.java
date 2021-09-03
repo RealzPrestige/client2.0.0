@@ -44,7 +44,7 @@ public class AntiFog extends Module {
     public void onFogDensity(final EntityViewRenderEvent.FogDensity event) {
         if (this.clear.getCurrentState()) {
             event.setDensity(0.0f);
-        event.setCanceled(true);
+            event.setCanceled(true);
         }
     }
 

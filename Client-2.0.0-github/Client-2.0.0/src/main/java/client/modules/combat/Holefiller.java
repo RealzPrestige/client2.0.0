@@ -174,6 +174,6 @@ public class Holefiller extends Module {
     }
     private static final List<Block> unSafeBlocks = Arrays.asList(Blocks.OBSIDIAN, Blocks.BEDROCK, Blocks.ENDER_CHEST, Blocks.ANVIL);
     private static boolean isBlockUnSafe(Block block) { return !unSafeBlocks.contains(block); }
-    private static Boolean isPosInFov(BlockPos pos) { int dirnumber = RotationUtil.getDirection4D();if (dirnumber == 0 && (double) pos.getZ() - BlockUtil.mc.player.getPositionVector().z < 0.0) { return false; }if (dirnumber == 1 && (double) pos.getX() - BlockUtil.mc.player.getPositionVector().x > 0.0) { return false; }if (dirnumber == 2 && (double) pos.getZ() - BlockUtil.mc.player.getPositionVector().z > 0.0) { return false; }return dirnumber != 3 || (double) pos.getX() - BlockUtil.mc.player.getPositionVector().x >= 0.0; }
+    private static Boolean isPosInFov(BlockPos pos) { int dirnumber = EntityUtil.getDirection4D();if (dirnumber == 0 && (double) pos.getZ() - BlockUtil.mc.player.getPositionVector().z < 0.0) { return false; }if (dirnumber == 1 && (double) pos.getX() - BlockUtil.mc.player.getPositionVector().x > 0.0) { return false; }if (dirnumber == 2 && (double) pos.getZ() - BlockUtil.mc.player.getPositionVector().z > 0.0) { return false; }return dirnumber != 3 || (double) pos.getX() - BlockUtil.mc.player.getPositionVector().x >= 0.0; }
 
 }

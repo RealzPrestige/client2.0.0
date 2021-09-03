@@ -1,4 +1,5 @@
 package client.mixin;
+
 import client.events.PacketEvent;
 import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.network.NetworkManager;
@@ -19,6 +20,17 @@ public class MixinNetworkManager {
             info.cancel();
         }
     }
+
+    @Inject(method = {"sendPacket(Lnet/minecraft/network/Packet;)V"}, at = {@At(value = "RETURN")}, cancellable = true)
+    private
+    void onSendPacketPost ( Packet < ? > packet , CallbackInfo info ) {
+        PacketEvent.Send event = new PacketEvent.Send ( 1 , packet );
+        MinecraftForge.EVENT_BUS.post ( event );
+        if ( event.isCanceled ( ) ) {
+            info.cancel ( );
+        }
+    }
+
 
     @Inject(method = {"channelRead0"}, at = {@At(value = "HEAD")}, cancellable = true)
     private void onChannelReadPre(ChannelHandlerContext context, Packet<?> packet, CallbackInfo info) {

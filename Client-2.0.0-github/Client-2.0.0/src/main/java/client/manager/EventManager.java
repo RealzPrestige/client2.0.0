@@ -32,6 +32,9 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class EventManager extends Feature {
+    public int incomingpackets;
+    public int sendingpackets;
+    public int resetTimer;
     private final Timer logoutTimer = new Timer();
     private final Timer chorusTimer = new Timer();
     private final AtomicBoolean tickOngoing;
@@ -78,6 +81,7 @@ public class EventManager extends Feature {
             MinecraftForge.EVENT_BUS.post(new DeathEvent(player));
             TotemPopCounter.getInstance().onDeath(player);
         }
+
     }
 
     @SubscribeEvent
@@ -93,11 +97,23 @@ public class EventManager extends Feature {
             Client.rotationManager.restoreRotations();
             Client.positionManager.restorePosition();
         }
+        if(resetTimer < 20) {
+            ++resetTimer;
+        } else {
+            resetTimer = 0;
+            sendingpackets = 0;
+            incomingpackets = 0;
+        }
+
     }
 
-
+    @SubscribeEvent
+    public void onPacketSend(PacketEvent.Send event) {
+        ++sendingpackets;
+    }
     @SubscribeEvent
     public void onPacketReceive(PacketEvent.Receive event) {
+        ++incomingpackets;
         if (event.getStage() != 0)
             return;
         Client.serverManager.onPacketReceived();
