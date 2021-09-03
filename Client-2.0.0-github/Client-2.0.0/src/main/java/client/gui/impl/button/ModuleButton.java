@@ -23,12 +23,9 @@ import java.util.List;
 
 public class ModuleButton
         extends Button {
-    int coolinteger;
     private final Module module;
     private List<Item> items = new ArrayList <> ( );
     private boolean subOpen;
-    HashSet<Integer> drawnFalse = Sets.newHashSet();
-    HashSet<Integer> drawnTrue = Sets.newHashSet();
     public ModuleButton(Module module) {
         super(module.getName());
         this.module = module;

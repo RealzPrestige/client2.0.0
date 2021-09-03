@@ -20,6 +20,9 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
+import static org.lwjgl.opengl.GL11.GL_LIGHTING;
+import static org.lwjgl.opengl.GL11.glEnable;
+
 @Mixin({RenderLivingBase.class})
 public abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends Render<T> {
     @Shadow
@@ -118,8 +121,8 @@ public abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends 
                         GL11.glPushAttrib(1048575);
                         GL11.glDisable(3553);
                         GL11.glDisable(2896);
-                        GL11.glEnable(2848);
-                        GL11.glEnable(3042);
+                        glEnable(2848);
+                        glEnable(3042);
                         GL11.glBlendFunc(770, 771);
                         GL11.glDisable(2929);
                         GL11.glDepthMask(false);
@@ -130,7 +133,7 @@ public abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends 
                         }
                         renderModel(entity, f6, f5, f8, f2, f7, f4);
                         GL11.glDisable(2896);
-                        GL11.glEnable(2929);
+                        glEnable(2929);
                         GL11.glDepthMask(true);
                         if (Client.friendManager.isFriend(entity.getName()) || entity == (Minecraft.getMinecraft()).player) {
                             GL11.glColor4f(0.0F, 191.0F, 255.0F, (Chams.getInstance()).alpha.getCurrentState() / 255.0F);
@@ -138,7 +141,7 @@ public abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends 
                             GL11.glColor4f((Chams.getInstance()).rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).rainbowHue.getCurrentState()).getRed() / 255.0F) : this.red, (Chams.getInstance()).rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).rainbowHue.getCurrentState()).getGreen() / 255.0F) : this.green, (Chams.getInstance()).rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).rainbowHue.getCurrentState()).getBlue() / 255.0F) : this.blue, (Chams.getInstance()).alpha.getCurrentState() / 255.0F);
                         }
                         renderModel(entity, f6, f5, f8, f2, f7, f4);
-                        GL11.glEnable(2896);
+                        glEnable(2896);
                         GlStateManager.popAttrib();
                         GlStateManager.popMatrix();
                     }
@@ -164,8 +167,8 @@ public abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends 
                         GL11.glDisable(3553);
                         GL11.glDisable(2896);
                         GL11.glDisable(2929);
-                        GL11.glEnable(2848);
-                        GL11.glEnable(3042);
+                        glEnable(2848);
+                        glEnable(3042);
                         GL11.glBlendFunc(770, 771);
                         if (Client.friendManager.isFriend(entity.getName()) || entity == (Minecraft.getMinecraft()).player) {
                             GL11.glColor4f(0.0F, 191.0F, 255.0F, (Chams.getInstance()).o_alpha.getCurrentState() / 255.0F);
@@ -174,7 +177,7 @@ public abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends 
                         }
                         GL11.glLineWidth((Chams.getInstance()).lineWidth.getCurrentState());
                         renderModel(entity, f6, f5, f8, f2, f7, f4);
-                        GL11.glEnable(2896);
+                        glEnable(2896);
                         GlStateManager.popAttrib();
                         GlStateManager.popMatrix();
                     }

@@ -30,7 +30,6 @@ public class ESP extends Module {
     HashSet<BlockPos> obsidianholes = Sets.newHashSet();
 
     public Setting<Boolean> holes = register(new Setting<>("Holes", true));
-    public Setting<Boolean> renderPerformance = register(new Setting<>("RenderPerformance", true));
     public Setting<Integer> range = register(new Setting<>("X-Range", 0, 1, 20, v-> holes.getCurrentState()));
     public Setting<Integer> rangeY = register(new Setting<>("Y-Range", 0, 1, 20, v-> holes.getCurrentState()));
     public Setting<Integer> updateDelay = register(new Setting<>("UpdateDelay", 1, 0, 30, v-> holes.getCurrentState()));

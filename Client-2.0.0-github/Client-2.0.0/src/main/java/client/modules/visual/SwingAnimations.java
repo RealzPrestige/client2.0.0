@@ -11,7 +11,7 @@ public class SwingAnimations extends Module {
     private final Setting<Switch> switchSetting = this.register(new Setting<>("Switch", Switch.ONEDOTEIGHT));
     private enum Switch {ONEDOTNINE, ONEDOTEIGHT}
     private final Setting<Swing> swing = this.register(new Setting<>("Swing", Swing.MAINHAND));
-    private enum Swing {MAINHAND, OFFHAND, CANCEL}
+    private enum Swing {MAINHAND, OFFHAND}
 
     private final Setting<Speed> speed = this.register(new Setting<>("Speed", Speed.NORMAL));
     private enum Speed {SLOW, NORMAL, FAST}

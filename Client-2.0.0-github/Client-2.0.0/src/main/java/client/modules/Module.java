@@ -130,12 +130,8 @@ public class Module
         this.drawn = false;
     }
 
-    public boolean listening() {
-        return this.hasListener && this.isOn() || this.alwaysListening;
-    }
-
     public String getFullArrayString() {
-        return this.getDisplayName() + ChatFormatting.GRAY + (this.hudInfoString() != null ? " " + ChatFormatting.WHITE + this.hudInfoString() : "");
+        return this.getDisplayName() + ChatFormatting.GRAY + (this.hudInfoString() != null ? " " + ChatFormatting.WHITE + "[" + this.hudInfoString() + "]" : "");
     }
 
     public enum Category {

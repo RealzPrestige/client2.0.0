@@ -71,7 +71,4 @@ public class Velocity extends Module {
             event.setCanceled(true);
         }
     }
-    public String hudInfoString(){
-        return "H: " + horizontal + " | V:" + vertical;
-    }
 }
