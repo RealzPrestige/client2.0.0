@@ -29,7 +29,6 @@ import java.util.Objects;
 @Mod(modid = "client", name = "Client", version = "2.0.0-b13")
 public class Client {
     public static final Minecraft mc = Minecraft.getMinecraft();
-    public static final String MODID = "client";
     public static final String MODNAME = "Client";
     public static final String MODVER = "2.0.0-b13";
     public static final Logger LOGGER = LogManager.getLogger("Client");
