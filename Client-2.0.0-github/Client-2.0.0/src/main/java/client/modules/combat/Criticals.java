@@ -8,6 +8,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.network.play.client.CPacketPlayer;
 import net.minecraft.network.play.client.CPacketUseEntity;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.spongepowered.asm.mixin.Overwrite;
 
 import java.util.Objects;
 
@@ -19,6 +20,13 @@ public class Criticals extends Module {
         super("Criticals", "Converts regular hits into Critical hits.", Module.Category.COMBAT);
     }
 
+    @Override
+    public void onLogin(){
+        if(this.isEnabled()){
+            disable();
+            enable();
+        }
+    }
     @SubscribeEvent
     public void onPacketSend(PacketEvent.Send event) {
         CPacketUseEntity packet;

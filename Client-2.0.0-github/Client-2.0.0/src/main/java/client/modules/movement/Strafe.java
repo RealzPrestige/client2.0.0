@@ -44,8 +44,8 @@ public class Strafe extends Module {
     @Override
     public void onLogin(){
         if(this.isEnabled()){
-            this.disable();
-            this.enable();
+            disable();
+            enable();
         }
     }
 

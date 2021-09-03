@@ -164,7 +164,7 @@ public class NameTags extends Module {
 
     private String getDisplayTag(EntityPlayer player) {
         String name = player.getDisplayName().getFormattedText();
-        float health = EntityUtil.getHealth(player);
+        float health = Math.round(EntityUtil.getHealth(player));
         String color = health > 18.0f ? "\u00a7a" : (health > 16.0f ? "\u00a72" : (health > 12.0f ? "\u00a7e" : (health > 8.0f ? "\u00a76" : (health > 5.0f ? "\u00a7c" : "\u00a74"))));
         String pingStr = "";
             try {

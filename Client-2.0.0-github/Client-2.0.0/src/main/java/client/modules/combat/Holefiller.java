@@ -42,7 +42,7 @@ public class Holefiller extends Module {
     public Setting<Integer> cAlpha;
     private int placeAmount;
     private int blockSlot;
-    private boolean isSneaking;
+    public EntityPlayer target;
     private static final BlockPos[] surroundOffset;
 
     public Holefiller() {
@@ -76,6 +76,7 @@ public class Holefiller extends Module {
     public void onUpdate() {
         if (this.check()) {
             final EntityPlayer currentTarget = EntityUtil.getTarget(10.0f);
+            target = currentTarget;
             if (currentTarget == null) {
                 return;
             }
@@ -110,7 +111,7 @@ public class Holefiller extends Module {
 
     private void placeBlock(final BlockPos pos) {
         if (this.bpt.getCurrentState() > this.placeAmount) {
-            BlockUtil.placeBlock(pos, EnumHand.MAIN_HAND, this.rotate.getCurrentState(), this.packet.getCurrentState(), this.isSneaking);
+            BlockUtil.placeBlock(pos, EnumHand.MAIN_HAND, this.rotate.getCurrentState(), this.packet.getCurrentState(), false);
             ++this.placeAmount;
         }
     }
@@ -176,4 +177,7 @@ public class Holefiller extends Module {
     private static boolean isBlockUnSafe(Block block) { return !unSafeBlocks.contains(block); }
     private static Boolean isPosInFov(BlockPos pos) { int dirnumber = EntityUtil.getDirection4D();if (dirnumber == 0 && (double) pos.getZ() - BlockUtil.mc.player.getPositionVector().z < 0.0) { return false; }if (dirnumber == 1 && (double) pos.getX() - BlockUtil.mc.player.getPositionVector().x > 0.0) { return false; }if (dirnumber == 2 && (double) pos.getZ() - BlockUtil.mc.player.getPositionVector().z > 0.0) { return false; }return dirnumber != 3 || (double) pos.getX() - BlockUtil.mc.player.getPositionVector().x >= 0.0; }
 
+    public String hudInfoString(){
+        return "Auto | " + target.getName();
+    }
 }
