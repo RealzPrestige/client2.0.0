@@ -1,7 +1,6 @@
 package client.modules;
 
 import client.Client;
-import client.command.Command;
 import client.events.ClientEvent;
 import client.events.Render2DEvent;
 import client.events.Render3DEvent;
@@ -47,7 +46,7 @@ public class Module
     public void onRender2D(Render2DEvent event) { }
     public void onRender3D(Render3DEvent event) { }
     public void onUnload() { }
-    public String getDisplayInfo() {
+    public String hudInfoString() {
         return null;
     }
     public boolean isOn() {
@@ -136,7 +135,7 @@ public class Module
     }
 
     public String getFullArrayString() {
-        return this.getDisplayName() + ChatFormatting.GRAY + (this.getDisplayInfo() != null ? " " + ChatFormatting.WHITE + this.getDisplayInfo() : "");
+        return this.getDisplayName() + ChatFormatting.GRAY + (this.hudInfoString() != null ? " " + ChatFormatting.WHITE + this.hudInfoString() : "");
     }
 
     public enum Category {

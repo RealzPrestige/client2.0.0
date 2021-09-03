@@ -127,7 +127,7 @@ public class Surround extends Module {
 
 
     @Override
-    public String getDisplayInfo() {
+    public String hudInfoString() {
         switch (this.isSafe) {
             case 0: {
                 return ChatFormatting.RED + "Unsafe";

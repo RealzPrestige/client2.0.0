@@ -178,12 +178,6 @@ public class ESP extends Module {
         }
     }
 
-    public void onRender2D(Render2DEvent event) {
-        if (renderPerformance.getCurrentState()) {
-            renderer.drawStringWithShadow(ChatFormatting.WHITE + "ESP " + ChatFormatting.DARK_GRAY + "[" + ChatFormatting.GRAY + updates + " | " + mc.getDebugFPS() + ChatFormatting.DARK_GRAY + "]", 0, 10, 0);
-        }
-    }
-
     public void findHoles() {
         assert (ESP.mc.renderViewEntity != null);
         Vec3i playerPos = new Vec3i(ESP.mc.renderViewEntity.posX, ESP.mc.renderViewEntity.posY, ESP.mc.renderViewEntity.posZ);
@@ -213,6 +207,9 @@ public class ESP extends Module {
                 }
             }
         }
+    }
+    public String hudInfoString(){
+        return updates + " | " + mc.getDebugFPS();
     }
 }
 

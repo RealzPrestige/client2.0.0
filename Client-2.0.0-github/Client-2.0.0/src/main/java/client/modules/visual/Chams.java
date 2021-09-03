@@ -54,5 +54,8 @@ public class Chams extends Module {
     public int enchantColor() {
         return new Color(enchantColorRed.getCurrentState(), enchantColorGreen.getCurrentState(), enchantColorBlue.getCurrentState()).getRGB();
     }
+    public String hudInfoString(){
+        return mode.currentEnumName();
+    }
 }
 

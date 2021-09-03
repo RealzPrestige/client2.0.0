@@ -149,4 +149,12 @@ public class Strafe extends Module {
         }
         }
     }
+    public String hudInfoString() {
+        if(mode.getCurrentState() == Mode.INSTANT){
+            return "Instant";
+        } else if(mode.getCurrentState() == Mode.STRAFE){
+            return "Strafe";
+        }
+        return null;
+    }
 }

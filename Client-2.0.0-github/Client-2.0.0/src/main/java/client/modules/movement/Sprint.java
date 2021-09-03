@@ -46,7 +46,7 @@ public class Sprint extends Module {
     }
 
     @Override
-    public String getDisplayInfo() {
+    public String hudInfoString() {
         if (!Sprint.mc.gameSettings.keyBindForward.isKeyDown() && !Sprint.mc.gameSettings.keyBindBack.isKeyDown() && !Sprint.mc.gameSettings.keyBindLeft.isKeyDown() && !Sprint.mc.gameSettings.keyBindRight.isKeyDown() || Sprint.mc.player.isSneaking() || Sprint.mc.player.collidedHorizontally || (float) Sprint.mc.player.getFoodStats().getFoodLevel() <= 6.0f)
             return null;
         else return "Sprinting";

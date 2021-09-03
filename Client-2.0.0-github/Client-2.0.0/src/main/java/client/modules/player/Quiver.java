@@ -105,7 +105,7 @@ public class Quiver extends Module {
         return false;
     }
 
-    public String getDisplayInfo() {
+    public String hudInfoString() {
         return "Stage: " + stage;
     }
 

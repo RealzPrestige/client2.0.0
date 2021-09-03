@@ -68,7 +68,7 @@ public class Criticals extends Module {
     }
 
     @Override
-    public String getDisplayInfo() {
+    public String hudInfoString() {
         return "Packet";
     }
 }

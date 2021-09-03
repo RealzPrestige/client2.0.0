@@ -139,7 +139,7 @@ public class KeyEXP extends Module {
         }
     }
     @Override
-    public String getDisplayInfo() {
+    public String hudInfoString() {
         if (this.bind.getCurrentState().getKey() > -1) {
             if (Keyboard.isKeyDown(this.bind.getCurrentState().getKey()) && mc.currentScreen == null) {
                 return "Throwing";

@@ -40,8 +40,6 @@ public class AutoCrystal extends Module {
     public Setting<Float> breakWallRange;
     public Setting<Integer> breakDelay;
     public Setting<Boolean> instant;
-    public Setting<Priority> priority;
-    public enum Priority{SELF, ENEMY}
     public Setting<Float> placeRange;
     public Setting<Float> placeRangeWall;
     public Setting<Integer> armorPercent;
@@ -99,7 +97,6 @@ public class AutoCrystal extends Module {
         this.placeRangeWall = (Setting<Float>)this.register(new Setting("PlaceRangeWall", 5.0f, 1.0f, 6.0f, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
         this.breakDelay = (Setting<Integer>)this.register(new Setting("BreakDelay", 0, 0, 200, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
         this.instant = (Setting<Boolean>)this.register(new Setting("Predict", false, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
-        this.priority = (Setting<Priority>)this.register(new Setting("PrioritizeSelf", Priority.SELF, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
         this.cancel = (Setting<Boolean>)this.register(new Setting("Cancel", true, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
         this.armorPercent = (Setting<Integer>)this.register(new Setting("Armor%", 10, 0, 100, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
         this.facePlaceHP = (Setting<Float>)this.register(new Setting("FaceplaceHP", 8.0f, 0.0f, 36.0f, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
@@ -207,40 +204,23 @@ public class AutoCrystal extends Module {
             if (BlockUtil.canPlaceCrystal(pos, true)) {
                 final float damage;
                 // ( If health is over self(damage your taking (+0.5hp))      && maxSelfDamage = over selfdamage      && damage(enemy) is over maxdamage(0.5)                    && damage is over the damage you take
-                if (priority.getCurrentState() == Priority.SELF) {
-                    if (EntityUtil.getHealth(mc.player) > self + 0.5f && this.maxSelfDamage.getCurrentState() > self && (damage = this.calculate(pos, this.target)) > maxDamage && damage > self) {
-                        if (damage <= this.minDamage.getCurrentState()) {
-                            if (this.facePlaceHP.getCurrentState() <= EntityUtil.getHealth(this.target) && !PlayerUtil.isArmorLow(this.target, this.armorPercent.getCurrentState())) {
-                                continue;
-                            }
-                            if (damage <= 2.0f) {
-                                continue;
-                            }
+                if (EntityUtil.getHealth(mc.player) > self + 0.5f && this.maxSelfDamage.getCurrentState() > self && (damage = this.calculate(pos, this.target)) > maxDamage && damage > self) {
+                    if (damage <= this.minDamage.getCurrentState()) {
+                        if (this.facePlaceHP.getCurrentState() <= EntityUtil.getHealth(this.target) && !PlayerUtil.isArmorLow(this.target, this.armorPercent.getCurrentState())) {
+                            continue;
                         }
-                        maxDamage = damage;
-                        placePos = pos;
-                        pos2 = placePos;
-                        currentTargets.clear();
-                        currentTargets.add(pos);
-                    }
-                } else if (priority.getCurrentState() == Priority.ENEMY){
-                    if (EntityUtil.getHealth(mc.player) > self + 0.5f && this.maxSelfDamage.getCurrentState() > self && (damage = this.calculate(pos, this.target)) > maxDamage) {
-                        if (damage <= this.minDamage.getCurrentState()) {
-                            if (this.facePlaceHP.getCurrentState() <= EntityUtil.getHealth(this.target) && !PlayerUtil.isArmorLow(this.target, this.armorPercent.getCurrentState())) {
-                                continue;
-                            }
-                            if (damage <= 2.0f) {
-                                continue;
-                            }
+                        if (damage <= 2.0f) {
+                            continue;
                         }
-                        maxDamage = damage;
-                        placePos = pos;
-                        pos2 = placePos;
-                        currentTargets.clear();
-                        currentTargets.add(pos);
                     }
+                    maxDamage = damage;
+                    placePos = pos;
+                    pos2 = placePos;
+                    currentTargets.clear();
+                    currentTargets.add(pos);
                 }
             }
+
         }
         if (!this.offhand && !this.mainhand) {
             this.renderPos = null;
@@ -265,30 +245,16 @@ public class AutoCrystal extends Module {
                 if (crystal.getEntityId() != this.predictedId) {
                     final float self = this.calculate(crystal, mc.player);
                     final float damage;
-                    if (priority.getCurrentState() == Priority.SELF) {
-                        if (EntityUtil.getHealth(mc.player) > self + 0.5f && (damage = this.calculate(crystal, this.target)) > self && damage > self) {
-                            if (damage <= this.minDamage.getCurrentState()) {
-                                if (this.facePlaceHP.getCurrentState() <= EntityUtil.getHealth(this.target) && !PlayerUtil.isArmorLow(this.target, this.armorPercent.getCurrentState())) {
-                                    continue;
-                                }
-                                if (damage <= 2.0f) {
-                                    continue;
-                                }
+                    if (EntityUtil.getHealth(mc.player) > self + 0.5f && (damage = this.calculate(crystal, this.target)) > self && damage > self) {
+                        if (damage <= this.minDamage.getCurrentState()) {
+                            if (this.facePlaceHP.getCurrentState() <= EntityUtil.getHealth(this.target) && !PlayerUtil.isArmorLow(this.target, this.armorPercent.getCurrentState())) {
+                                continue;
                             }
-                            entity = crystal;
-                        }
-                    } else if (priority.getCurrentState() == Priority.ENEMY) {
-                        if (EntityUtil.getHealth(mc.player) > self + 0.5f && (damage = this.calculate(crystal, this.target)) > self) {
-                            if (damage <= this.minDamage.getCurrentState()) {
-                                if (this.facePlaceHP.getCurrentState() <= EntityUtil.getHealth(this.target) && !PlayerUtil.isArmorLow(this.target, this.armorPercent.getCurrentState())) {
-                                    continue;
-                                }
-                                if (damage <= 2.0f) {
-                                    continue;
-                                }
+                            if (damage <= 2.0f) {
+                                continue;
                             }
-                            entity = crystal;
                         }
+                        entity = crystal;
                     }
                 }
             }
@@ -429,5 +395,9 @@ public class AutoCrystal extends Module {
                 toRemove.add(pos);
         }
         renderMap.removeAll(toRemove);
+    }
+
+    public String hudInfoString() {
+        return target.getName() + " | " + calculate(renderPos, target);
     }
 }

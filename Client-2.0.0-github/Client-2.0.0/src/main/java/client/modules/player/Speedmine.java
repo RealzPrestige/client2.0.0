@@ -108,7 +108,7 @@ public class Speedmine extends Module {
     }
 
     @Override
-    public String getDisplayInfo() {
+    public String hudInfoString() {
         return this.mode.currentEnumName();
     }
 

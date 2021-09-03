@@ -68,7 +68,7 @@ public class Step extends Module {
         }
     }
     @Override
-    public String getDisplayInfo() {
+    public String hudInfoString() {
         if (this.vanilla.getCurrentState()){
             return "Vanilla";
         } else {

@@ -142,7 +142,7 @@ public class Offhand extends Module {
     }
 
     @Override
-    public String getDisplayInfo() {
+    public String hudInfoString() {
         if (Offhand.mc.player.getHeldItemOffhand().getItem() == Items.END_CRYSTAL) {
             return "Crystal";
         }

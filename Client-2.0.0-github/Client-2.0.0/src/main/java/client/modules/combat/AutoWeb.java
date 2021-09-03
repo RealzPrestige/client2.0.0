@@ -76,7 +76,7 @@ public class AutoWeb extends Module {
     }
 
     @Override
-    public String getDisplayInfo() {
+    public String hudInfoString() {
         if (this.target != null) {
             return this.target.getName();
         }

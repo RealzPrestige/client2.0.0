@@ -125,8 +125,8 @@ public class Burrow extends Module {
     }
 
     @Override
-    public String getDisplayInfo() {
-            return "PACKET";
+    public String hudInfoString() {
+            return "Packet";
     }
 
     public void setBlock(Block b){

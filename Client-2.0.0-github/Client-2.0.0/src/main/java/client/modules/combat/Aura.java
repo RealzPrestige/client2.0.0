@@ -93,9 +93,7 @@ public class Aura extends Module {
         return target;
     }
 
-    public String getDisplayInfo() {
-        if (target instanceof EntityPlayer)
-            return target.getName();
-        return null;
+    public String hudInfoString() {
+        return target.getName() + " | " + EntityUtil.getHealth(target);
     }
 }
