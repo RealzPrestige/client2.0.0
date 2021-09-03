@@ -42,6 +42,14 @@ public class Strafe extends Module {
     }
 
     @Override
+    public void onLogin(){
+        if(this.isEnabled()){
+            this.disable();
+            this.enable();
+        }
+    }
+
+    @Override
     public void onEnable() {
         motion = 0.0;
     }
@@ -113,17 +121,9 @@ public class Strafe extends Module {
         }
     }
 
-    @Override
-    public void onLogin(){
-        if(this.isEnabled()){
-            disable();
-            enable();
-        }
-    }
-
 
     @SubscribeEvent
-    public void onMode(MoveEvent event) {
+    public void onMove(MoveEvent event) {
         if(mode.getCurrentState() == Mode.INSTANT){
         if (!(event.getStage() != 0 || nullCheck() || mc.player.isSneaking() || mc.player.isInWater() || mc.player.isInLava() || mc.player.movementInput.moveForward == 0.0f && mc.player.movementInput.moveStrafe == 0.0f) || !mc.player.onGround) {
             MovementInput movementInput = mc.player.movementInput;
@@ -141,7 +141,6 @@ public class Strafe extends Module {
                         rotationYaw += (float) ((double) moveForward > 0.0 ? 45 : -45);
                     }
                     moveStrafe = 0.0f;
-                    float f = moveForward == 0.0f ? moveForward : (moveForward = (double) moveForward > 0.0 ? 1.0f : -1.0f);
                 }
                 moveStrafe = moveStrafe == 0.0f ? moveStrafe : ((double) moveStrafe > 0.0 ? 1.0f : -1.0f);
                 event.setX((double) moveForward * EntityUtil.getMaxSpeed() * Math.cos(Math.toRadians(rotationYaw + 90.0f)) + (double) moveStrafe * EntityUtil.getMaxSpeed() * Math.sin(Math.toRadians(rotationYaw + 90.0f)));

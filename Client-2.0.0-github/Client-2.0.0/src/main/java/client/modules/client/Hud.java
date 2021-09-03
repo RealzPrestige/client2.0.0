@@ -20,6 +20,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -38,7 +39,7 @@ public class Hud extends Module {
     public Setting<Float> rainbowSaturation = this.register(new Setting<Object>("Saturation", 150.0f, 1.0f, 255.0f, v -> this.rainbow.getCurrentState()));
     public Setting<Boolean> fovSetting = this.register(new Setting("Fov", false));
     public Setting<Float> fov = this.register(new Setting("FovValue", 150.0f, 0.0f, 180.0f));
-    Setting<Integer> red = this.register(new Setting("Red", 255, 0, 255));
+    public Setting<Integer> red = this.register(new Setting("Red", 255, 0, 255));
     public Setting<Integer> green = this.register(new Setting("Green", 255, 0, 255));
     public Setting<Integer> blue = this.register(new Setting("Blue", 255, 0, 255));
     public Setting<Integer> alpha = this.register(new Setting("Alpha", 255, 0, 255));
@@ -58,8 +59,10 @@ public class Hud extends Module {
     private final Setting<Boolean> percent = this.register(new Setting<Object>("Percent", true, v -> this.armor.getCurrentState()));
     private final Setting<Boolean> itemInfo = this.register(new Setting<Object>("ItemInfo", true));
     private final Setting<Boolean> activeModules = register(new Setting("ActiveModules", false));
-    int packets;
-    int packets2;
+    private final Setting<ColorMode> colorMode = register(new Setting("ColorMode", ColorMode.NORMAL));
+    public enum ColorMode{NORMAL, ALPHASTEP, RAINBOW}
+    public Setting<Integer> index = this.register(new Setting("Index", 30, 0, 100, v-> colorMode.getCurrentState() == ColorMode.ALPHASTEP));
+    public Setting<Integer> countt = this.register(new Setting("Count", 25, 0, 30, v-> colorMode.getCurrentState() == ColorMode.ALPHASTEP));
     public Hud() {
         super("Hud", "Displays strings on your screen", Category.CORE);
         this.setInstance();
@@ -90,12 +93,32 @@ public class Hud extends Module {
         int[] counter1 = {1};
         int j = (mc.currentScreen instanceof net.minecraft.client.gui.GuiChat && bottomAlign.getCurrentState()) ? 14 : 0;
         if(activeModules.getCurrentState()) {
-                    for (int k = 0; k < Client.moduleManager.sortedModules.size(); k++) {
-                        Module module = Client.moduleManager.sortedModules.get(k);
-                        String str = module.getDisplayName() + ChatFormatting.GRAY + ((module.getDisplayInfo() != null) ? (ChatFormatting.WHITE + " [" + module.getDisplayInfo() +  "]") : "");
-                        renderer.drawString(str, (width - 2 - renderer.getStringWidth(str)), (2 + j * 10), rainbow.getCurrentState() ? ColorUtil.rainbowHud(counter1[0] * rainbowDelay.getCurrentState()).getRGB() : color, true);
-                        j++;
-                       counter1[0] = counter1[0] + 1;
+            int count = 0;
+            if(colorMode.getCurrentState() == ColorMode.NORMAL) {
+                for (int k = 0; k < Client.moduleManager.sortedModules.size(); k++) {
+                    Module module = Client.moduleManager.sortedModules.get(k);
+                    String str = "|" + module.getDisplayName() + ((module.getDisplayInfo() != null) ? (ChatFormatting.WHITE + " [" + module.getDisplayInfo() + "]") : "");
+                    renderer.drawString(str, (width - 2 - renderer.getStringWidth(str)), (2 + j * 10), color, true);
+                    j++;
+                    counter1[0] = counter1[0] + 1;
+                }
+            } else if(colorMode.getCurrentState() == ColorMode.ALPHASTEP) {
+                for (int k = 0; k < Client.moduleManager.sortedModules.size(); k++) {
+                    Module module = Client.moduleManager.sortedModules.get(k);
+                    String str = "|" + module.getDisplayName() + ((module.getDisplayInfo() != null) ? (ChatFormatting.WHITE + " [" + module.getDisplayInfo() + "]") : "");
+                    renderer.drawString(str, (width - 2 - renderer.getStringWidth(str)), (2 + j * 10), ColorUtil.alphaStep(new Color(color), index.getCurrentState(), (count + countt.getCurrentState())).getRGB(), true);
+                    j++;
+                    counter1[0] = counter1[0] + 1;
+                    count++;
+                }
+            } else if(colorMode.getCurrentState() == ColorMode.RAINBOW) {
+                for (int k = 0; k < Client.moduleManager.sortedModules.size(); k++) {
+                    Module module = Client.moduleManager.sortedModules.get(k);
+                    String str = "|" + module.getDisplayName() + ((module.getDisplayInfo() != null) ? (ChatFormatting.WHITE + " [" + module.getDisplayInfo() + "]") : "");
+                    renderer.drawString(str, (width - 2 - renderer.getStringWidth(str)), (2 + j * 10), ColorUtil.rainbowHud(counter1[0] * rainbowDelay.getCurrentState()).getRGB(), true);
+                    j++;
+                    counter1[0] = counter1[0] + 1;
+                }
             }
         }
         color = ColorUtil.toRGBA(red.getCurrentState(), green.getCurrentState(), blue.getCurrentState(), alpha.getCurrentState());

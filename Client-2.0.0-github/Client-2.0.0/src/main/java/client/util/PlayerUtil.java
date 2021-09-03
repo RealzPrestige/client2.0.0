@@ -12,10 +12,13 @@ import com.mojang.util.UUIDTypeAdapter;
 import net.minecraft.advancements.AdvancementManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetworkPlayerInfo;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityEgg;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.*;
 import net.minecraft.network.play.client.CPacketPlayer;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -130,7 +133,43 @@ public class PlayerUtil implements Util {
     }   public static BlockPos getPlayerPos1() {
         return new BlockPos(Math.floor(mc.player.posX), Math.floor(mc.player.posY - 1), Math.floor(mc.player.posZ));
     }
+    public static float[] getDirectionToBlock(int var0, int var1, int var2, EnumFacing var3) {
+        EntityEgg var4 = new EntityEgg(mc.world);
+        var4.posX = (double) var0 + 0.5D;
+        var4.posY = (double) var1 + 0.5D;
+        var4.posZ = (double) var2 + 0.5D;
+        var4.posX += (double) var3.getDirectionVec().getX() * 0.25D;
+        var4.posY += (double) var3.getDirectionVec().getY() * 0.25D;
+        var4.posZ += (double) var3.getDirectionVec().getZ() * 0.25D;
+        return getDirectionToEntity(var4);
+    }
+    private static float[] getDirectionToEntity(Entity var0) {
+        return new float[]{getYaw(var0) + mc.player.rotationYaw, getPitch(var0) + mc.player.rotationPitch};
+    }
+    public static float getYaw(Entity var0) {
+        double var1 = var0.posX - mc.player.posX;
+        double var3 = var0.posZ - mc.player.posZ;
+        double var5;
 
+        if (var3 < 0.0D && var1 < 0.0D) {
+            var5 = 90.0D + Math.toDegrees(Math.atan(var3 / var1));
+        } else if (var3 < 0.0D && var1 > 0.0D) {
+            var5 = -90.0D + Math.toDegrees(Math.atan(var3 / var1));
+        } else {
+            var5 = Math.toDegrees(-Math.atan(var1 / var3));
+        }
+
+        return MathHelper.wrapDegrees(-(mc.player.rotationYaw - (float) var5));
+    }
+
+    public static float getPitch(Entity var0) {
+        double var1 = var0.posX - mc.player.posX;
+        double var3 = var0.posZ - mc.player.posZ;
+        double var5 = var0.posY - 1.6D + (double) var0.getEyeHeight() - mc.player.posY;
+        double var7 = (double) MathHelper.sqrt(var1 * var1 + var3 * var3);
+        double var9 = -Math.toDegrees(Math.atan(var5 / var7));
+        return -MathHelper.wrapDegrees(mc.player.rotationPitch - (float) var9);
+    }
 
     public static UUID getUUIDFromName(String name) {
         try {

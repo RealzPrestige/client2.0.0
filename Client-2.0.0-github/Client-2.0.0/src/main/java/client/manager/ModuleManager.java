@@ -4,7 +4,6 @@ import client.events.Render2DEvent;
 import client.events.Render3DEvent;
 import client.gui.ClientGui;
 import client.gui.impl.background.MenuToggler;
-import client.gui.impl.button.ModuleButton;
 import client.modules.Feature;
 import client.modules.Module;
 import client.modules.client.*;
@@ -16,14 +15,10 @@ import client.modules.visual.*;
 import net.minecraftforge.common.MinecraftForge;
 import org.lwjgl.input.Keyboard;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class ModuleManager
