@@ -25,7 +25,7 @@ public class Freecam extends Module {
     private float pitch;
 
     public Freecam() {
-        super("Freecam", "Lets you fly around when ur really not...", Category.PLAYER);
+        super("Freecam", "Cancels packets to allow you to do stuff from other angles.", Category.PLAYER);
         this.packet = (Setting<Boolean>)this.register(new Setting("Packet", true));
     }
 

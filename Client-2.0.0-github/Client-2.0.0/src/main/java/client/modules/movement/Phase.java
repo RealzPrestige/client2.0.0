@@ -95,7 +95,7 @@ public class Phase extends Module {
     private int teleportID = 0;
     private static Phase instance;
     public Phase() {
-        super("Phase", "Phases you through blocks", Category.MOVEMENT);
+        super("Phase", "Allows you to fly thorugh blocks.", Category.MOVEMENT);
         this.timer = new Timer();
         instance = this;
     }

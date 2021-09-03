@@ -23,7 +23,7 @@ public class HotbarRefill extends Module
     private final ArrayList<Item> Hotbar;
 
     public HotbarRefill() {
-        super("HotbarRefill", "Refills item stacks in your hotbar", Category.PLAYER);
+        super("HotbarRefill", "Refills item stacks in your hotbar.", Category.PLAYER);
         this.delay = (Setting<Integer>)this.register(new Setting("Delay", 0, 0, 10));
         this.gapples = (Setting<Boolean>)this.register(new Setting("Gapples", true));
         this.gapAmount = (Setting<Integer>)this.register(new Setting("GapAmount", 1, 1, 64, v -> this.gapples.getCurrentState()));

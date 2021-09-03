@@ -37,7 +37,7 @@ public class Flatten extends Module {
     private boolean placing = false;
 
     public Flatten() {
-        super("Flatten", "Flatter than 19xp's 14yr old girlfriend", Category.COMBAT);
+        super("Flatten", "Flatter than 19xp's 14yr old girlfriend.", Category.COMBAT);
     }
 
     @Override

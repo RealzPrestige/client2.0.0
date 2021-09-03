@@ -23,7 +23,7 @@ public class NoBreakAnimation extends Module {
     private EnumFacing lastFacing;
 
     public NoBreakAnimation() {
-        super("NoBreakAnimation", "", Category.MISC);
+        super("NoBreakAnimation", "Prevents serverside break animations.", Category.MISC);
         this.isMining = false;
         this.lastPos = null;
         this.lastFacing = null;

@@ -17,7 +17,7 @@ public class SwingAnimations extends Module {
     private enum Speed {SLOW, NORMAL, FAST}
 
     public SwingAnimations() {
-        super("SwingAnimations", "Changes animations.", Module.Category.VISUAL);
+        super("SwingAnimations", "Tweaks the way your hands swing.", Module.Category.VISUAL);
     }
 
     @Override

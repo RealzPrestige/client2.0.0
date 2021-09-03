@@ -6,7 +6,7 @@ public class PrestigeChams extends Module {
 
     private static PrestigeChams INSTANCE = new PrestigeChams();
     public PrestigeChams(){
-        super("PrestigeChams", "Makes everyone look like zPrestige", Category.VISUAL);
+        super("PrestigeChams", "Makes everyone look like the sexy zPrestige.", Category.VISUAL);
         this.setInstance();
     }
 

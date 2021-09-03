@@ -14,7 +14,7 @@ public class ElytraFlight extends Module {
     public Setting<Double> speedDown = this.register(new Setting("SpeedDown", 1.0, 0.1, 10.0));
 
     public ElytraFlight() {
-        super("ElytraFlight", "Allows travel with Elytras to be more easy.", Category.MOVEMENT);
+        super("ElytraFlight", "Allows travel with Elytras to be more easily.", Category.MOVEMENT);
     }
 
 

@@ -17,7 +17,7 @@ public class Viewmodel extends Module {
     private static Viewmodel INSTANCE = new Viewmodel();
 
     public Viewmodel() {
-        super("Viewmodel", "Changes to the size and positions of your hands.", Category.VISUAL);
+        super("Viewmodel", "Tweaks the size and positions of items in your hand.", Category.VISUAL);
         setInstance();
     }
 

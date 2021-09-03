@@ -20,7 +20,7 @@ public class Spammer extends Module {
     private static final Random rnd;
 
     public Spammer() {
-        super("Spammer", "Spams stuff.", Category.MISC);
+        super("Spammer", "Rapidly sends messages through chat.", Category.MISC);
         this.delay = (Setting<Double>)this.register(new Setting<>("Delay", 6.0, 0.1, 20.0));
         this.greentext = (Setting<Boolean>)this.register(new Setting<>("Green", false));
         this.random = (Setting<Boolean>)this.register(new Setting<>("Random", false));

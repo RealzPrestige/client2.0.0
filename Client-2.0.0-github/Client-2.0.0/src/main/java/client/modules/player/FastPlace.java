@@ -17,7 +17,7 @@ public class FastPlace extends Module {
     public Setting <Integer> packets = this.register(new Setting("Packets", 1, 0, 20, v-> crazyFastExpExploit.getCurrentState()));
     public Setting <Boolean> crystal = this.register(new Setting("Crystal", true));
     public FastPlace(){
-        super("FastPlace", "Changes the delay of things", Category.PLAYER);
+        super("FastPlace", "Allows you to do things faster.", Category.PLAYER);
     }
 
     @Override

@@ -46,7 +46,7 @@ public class BurrowESP extends Module {
     private final Map<EntityPlayer, BlockPos> burrowedPlayers = new HashMap<>();
 
     public BurrowESP() {
-        super("BurrowESP", "Shows info about target",Category.VISUAL);
+        super("BurrowESP", "Shows where people are burrowed.",Category.VISUAL);
     }
 
     @Override

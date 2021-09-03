@@ -32,7 +32,7 @@ public class Chams extends Module {
     public Setting<Integer> enchantColorBlue = register(new Setting<>("EnchantColorBlue", 255, 0, 255, v-> enchantColor.getCurrentState()));
 
     public Chams() {
-        super("Chams", "", Category.VISUAL);
+        super("Chams", "Tweaks the way players look.", Category.VISUAL);
         setInstance();
     }
 

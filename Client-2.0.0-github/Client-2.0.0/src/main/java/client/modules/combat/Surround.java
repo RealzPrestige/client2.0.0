@@ -44,7 +44,7 @@ public class Surround extends Module {
     Vec3d center;
 
     public Surround() {
-        super("Surround", "Surrounds you with Obsidian", Category.COMBAT);
+        super("Surround", "Surrounds you with Obsidian.", Category.COMBAT);
         this.delay = (Setting<Integer>)this.register(new Setting<>("Delay", 0, 0, 250));
         this.blocksPerTick = (Setting<Integer>)this.register(new Setting<>("BlocksPerTick", 20, 1, 20));
         this.noGhost = (Setting<Boolean>)this.register(new Setting<>("PacketPlace", false));

@@ -28,7 +28,7 @@ public class Aura extends Module {
     public Setting<Boolean> packet = register(new Setting("Packet", false));
 
     public Aura() {
-        super("Aura", "Attacks enemies.", Category.COMBAT);
+        super("Aura", "Attacks enemies using a sword.", Category.COMBAT);
     }
 
     public void onTick() {

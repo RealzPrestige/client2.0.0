@@ -18,7 +18,7 @@ public class NoSlow extends Module {
     private static final KeyBinding[] keys = new KeyBinding[]{mc.gameSettings.keyBindForward, mc.gameSettings.keyBindBack, mc.gameSettings.keyBindLeft, mc.gameSettings.keyBindRight, mc.gameSettings.keyBindJump, mc.gameSettings.keyBindSprint};
 
     public NoSlow(){
-        super("NoSlow", "Stops packets that slow you down", Category.MOVEMENT);
+        super("NoSlow", "Stops packets that slow you down.", Category.MOVEMENT);
         this.setInstance();
     }
 

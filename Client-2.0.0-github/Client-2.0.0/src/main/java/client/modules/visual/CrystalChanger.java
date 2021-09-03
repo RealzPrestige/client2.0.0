@@ -20,7 +20,7 @@ public class CrystalChanger extends Module {
     private static CrystalChanger INSTANCE;
 
 public CrystalChanger(){
-    super("CrystalChanger", "Modifies looks of end crystals.", Category.VISUAL);
+    super("CrystalChanger", "Tweaks looks of End crystals.", Category.VISUAL);
     this.setInstance();
 }
 

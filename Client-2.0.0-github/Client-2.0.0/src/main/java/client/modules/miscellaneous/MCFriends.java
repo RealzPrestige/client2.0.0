@@ -12,7 +12,7 @@ import org.lwjgl.input.Mouse;
 public class MCFriends extends Module {
     private boolean clicked = false;
     public MCFriends(){
-        super("MCFriends", "Friends people when you middleclick them", Category.MISC);
+        super("MCFriends", "Friends people when you middleclick them.", Category.MISC);
     }
     @Override
     public void onUpdate() {

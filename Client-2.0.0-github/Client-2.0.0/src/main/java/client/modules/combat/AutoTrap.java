@@ -37,7 +37,7 @@ public class AutoTrap extends Module {
     private BlockPos startPos = null;
 
     public AutoTrap() {
-        super("AutoTrap", "Traps other players", Category.COMBAT);
+        super("AutoTrap", "Traps other players in obsidian boxes.", Category.COMBAT);
     }
 
     @Override

@@ -64,7 +64,7 @@ public class Hud extends Module {
     public Setting<Integer> index = this.register(new Setting("Index", 30, 0, 100, v-> colorMode.getCurrentState() == ColorMode.ALPHASTEP));
     public Setting<Integer> countt = this.register(new Setting("Count", 25, 0, 30, v-> colorMode.getCurrentState() == ColorMode.ALPHASTEP));
     public Hud() {
-        super("Hud", "Displays strings on your screen", Category.CORE);
+        super("Hud", "Displays strings on your screen.", Category.CORE);
         this.setInstance();
     }
 
@@ -97,7 +97,7 @@ public class Hud extends Module {
             if(colorMode.getCurrentState() == ColorMode.NORMAL) {
                 for (int k = 0; k < Client.moduleManager.sortedModules.size(); k++) {
                     Module module = Client.moduleManager.sortedModules.get(k);
-                    String str = "|" + module.getDisplayName() + ((module.getDisplayInfo() != null) ? (ChatFormatting.WHITE + " [" + module.getDisplayInfo() + "]") : "");
+                    String str = module.getDisplayName() + ((module.getDisplayInfo() != null) ? (ChatFormatting.WHITE + " [" + module.getDisplayInfo() + "]") : "");
                     renderer.drawString(str, (width - 2 - renderer.getStringWidth(str)), (2 + j * 10), color, true);
                     j++;
                     counter1[0] = counter1[0] + 1;
@@ -105,7 +105,7 @@ public class Hud extends Module {
             } else if(colorMode.getCurrentState() == ColorMode.ALPHASTEP) {
                 for (int k = 0; k < Client.moduleManager.sortedModules.size(); k++) {
                     Module module = Client.moduleManager.sortedModules.get(k);
-                    String str = "|" + module.getDisplayName() + ((module.getDisplayInfo() != null) ? (ChatFormatting.WHITE + " [" + module.getDisplayInfo() + "]") : "");
+                    String str = module.getDisplayName() + ((module.getDisplayInfo() != null) ? (ChatFormatting.WHITE + " [" + module.getDisplayInfo() + "]") : "");
                     renderer.drawString(str, (width - 2 - renderer.getStringWidth(str)), (2 + j * 10), ColorUtil.alphaStep(new Color(color), index.getCurrentState(), (count + countt.getCurrentState())).getRGB(), true);
                     j++;
                     counter1[0] = counter1[0] + 1;
@@ -114,7 +114,7 @@ public class Hud extends Module {
             } else if(colorMode.getCurrentState() == ColorMode.RAINBOW) {
                 for (int k = 0; k < Client.moduleManager.sortedModules.size(); k++) {
                     Module module = Client.moduleManager.sortedModules.get(k);
-                    String str = "|" + module.getDisplayName() + ((module.getDisplayInfo() != null) ? (ChatFormatting.WHITE + " [" + module.getDisplayInfo() + "]") : "");
+                    String str = module.getDisplayName() + ((module.getDisplayInfo() != null) ? (ChatFormatting.WHITE + " [" + module.getDisplayInfo() + "]") : "");
                     renderer.drawString(str, (width - 2 - renderer.getStringWidth(str)), (2 + j * 10), ColorUtil.rainbowHud(counter1[0] * rainbowDelay.getCurrentState()).getRGB(), true);
                     j++;
                     counter1[0] = counter1[0] + 1;

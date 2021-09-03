@@ -30,7 +30,7 @@ public class ShulkerViewer extends Module {
     private int textRadarY = 0;
 
     public ShulkerViewer() {
-        super("ShulkerViewer", "Shows whats inside a shulker even when not opened.", Module.Category.MISC);
+        super("ShulkerViewer", "Shows the inside of a shulker box when hovered in a container.", Module.Category.MISC);
         this.setInstance();
     }
 

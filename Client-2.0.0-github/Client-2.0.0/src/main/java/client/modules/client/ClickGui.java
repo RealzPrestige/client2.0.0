@@ -84,7 +84,7 @@ public class ClickGui extends Module {
     public Setting<Float> rainbowSaturation = this.register(new Setting<Object>("Saturation", 150.0f , 1.0f , 255.0f , v -> this.rainbow.getCurrentState() && gui.getCurrentState() == Gui.OLD));
 
     public ClickGui() {
-        super("ClickGui", "Opens the ClickGui", Module.Category.CORE);
+        super("ClickGui", "Opens the ClickGui that contains all modules.", Module.Category.CORE);
         setBind(Keyboard.KEY_O);
         this.setInstance();
     }

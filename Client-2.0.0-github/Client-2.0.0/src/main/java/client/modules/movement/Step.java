@@ -18,7 +18,7 @@ public class Step extends Module {
     private static Step instance;
 
     public Step() {
-        super("Step", "Step up yo mam", Module.Category.MOVEMENT);
+        super("Step", "Allows you to travel up walls of 2 high.", Module.Category.MOVEMENT);
         instance = this;
     }
 

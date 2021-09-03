@@ -31,7 +31,7 @@ public class Burrow extends Module {
     boolean flag;
 
     public Burrow() {
-        super("Burrow", "Tps you inside a block", Category.PLAYER);
+        super("Burrow", "Rubberbands you inside a block using packets.", Category.PLAYER);
         this.setInstance();
     }
 

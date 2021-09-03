@@ -12,7 +12,7 @@ public class Blink extends Module {
     private final int entityId = -420;
 
     public Blink(){
-        super("Blink", "", Category.PLAYER);
+        super("Blink", "Stops all packets from sending to the server.", Category.PLAYER);
     }
 
     @SubscribeEvent

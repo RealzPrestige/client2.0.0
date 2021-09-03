@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class Jesus extends Module {
 
     public Jesus() {
-        super("Jesus", "", Category.MOVEMENT);
+        super("Jesus", "Allows you to walk on water.", Category.MOVEMENT);
     }
 
     public void onLogin(){

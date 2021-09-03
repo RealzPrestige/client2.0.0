@@ -9,7 +9,7 @@ import net.minecraft.util.math.RayTraceResult;
 public class NoEntityTrace extends Module {
 
     public NoEntityTrace(){
-        super("NoEntityTrace", "Ignores entities on pickaxe swings", Category.MISC);
+        super("NoEntityTrace", "Ignores entity hitboxes on pickaxe swings.", Category.MISC);
     }
 
     private boolean focus = false;

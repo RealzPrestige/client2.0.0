@@ -8,7 +8,7 @@ public class RPC extends Module {
     public static RPC INSTANCE;
 
     public RPC(){
-        super("RPC", "Displays client 2.0.0 as your Discord activity.", Category.CORE);
+        super("RPC", "Displays client 2.0.0 as your Discord Rich Presence.", Category.CORE);
         INSTANCE = this;
     }
 

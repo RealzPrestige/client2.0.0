@@ -21,7 +21,7 @@ import static org.lwjgl.opengl.GL11.*;
 public class PearlRender extends Module {
 
     public PearlRender(){
-        super("PearlRender", "Renders where pearls will go", Category.VISUAL);
+        super("PearlRender", "Renders tracers to pearls.", Category.VISUAL);
     }
 
     public double interpolate(double now, double then) {

@@ -19,7 +19,7 @@ public class AntiFog extends Module {
     private final Setting<Boolean> color;
 
     public AntiFog() {
-        super("AntiFog", "Removes fog and makes it colored", Category.VISUAL);
+        super("AntiFog", "Removes / colors fog.", Category.VISUAL);
         this.red = this.register( new Setting <> ( "Red" , 1.0f , 0.0f , 1.0f ));
         this.green = this.register( new Setting <> ( "Green" , 1.0f , 0.0f , 1.0f ));
         this.blue = this.register( new Setting <> ( "Blue" , 1.0f , 0.0f , 1.0f ));

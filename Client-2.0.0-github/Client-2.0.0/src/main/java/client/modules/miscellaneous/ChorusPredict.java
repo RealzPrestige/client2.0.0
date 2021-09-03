@@ -39,7 +39,7 @@ public class ChorusPredict extends Module {
     private double z;
 
     public ChorusPredict() {
-        super("ChorusPredict", "", Category.MISC);
+        super("ChorusPredict", "Predicts where a chorus goes and draws a box there.", Category.MISC);
     }
 
     @SubscribeEvent

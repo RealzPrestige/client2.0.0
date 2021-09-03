@@ -12,7 +12,7 @@ public class MiddleClickPearl extends Module {
     private boolean clicked = false;
 
     public MiddleClickPearl() {
-        super("MiddleClickPearl", "Throws a pearl when middle clicked", Category.MISC);
+        super("MiddleClickPearl", "Throws a pearl when middle clicked.", Category.MISC);
     }
 
     @Override

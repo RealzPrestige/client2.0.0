@@ -15,7 +15,7 @@ public class Interactions extends Module {
     public Setting<Float> reachAmount = this.register(new Setting<Object>("ReachAmount", 6.0f, 0.0f, 10.0f, v-> reach.getCurrentState()));
 
     public Interactions(){
-        super("Interactions", "Changes the way you interact with things", Category.PLAYER);
+        super("Interactions", "Changes the way you interact with things.", Category.PLAYER);
         this.setInstance();
     }
 

@@ -13,7 +13,7 @@ public class AntiCity extends Module {
     public Setting<Boolean> packet = register(new Setting( "Packet" , true));
     public Setting<Boolean> rotate = register(new Setting( "Rotate" , false));
     public AntiCity(){
-        super("AntiCity", "", Category.COMBAT);
+        super("AntiCity", "Prevents you from getting citied.", Category.COMBAT);
     }
 
     public void onUpdate(){

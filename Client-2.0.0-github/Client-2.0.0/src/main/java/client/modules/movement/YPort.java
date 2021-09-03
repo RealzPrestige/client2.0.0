@@ -12,7 +12,7 @@ public class YPort extends Module {
     private final Timer timer;
 
     public YPort() {
-        super("Longjump", "Terrible rip off longjump", Module.Category.MOVEMENT);
+        super("Longjump", "Removing soon.", Module.Category.MOVEMENT);
         this.speed = register(new Setting("Speed", 0.1, 0.0, 1.0D));
         this.futurePrefix = register(new Setting("FuturePrefix", "."));
         this.timer = new Timer();

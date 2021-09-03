@@ -10,7 +10,7 @@ public class ThirdPerson extends Module {
     public Setting<Boolean> onlyHold = this.register( new Setting <> ( "OnlyHoldBind" , false ));
     public Setting<Bind> bind = this.register(new Setting<Object>("Bind:", new Bind(-1)));
     public ThirdPerson() {
-        super("ThirdPerson","Third person camera but hold bind.", Category.VISUAL);
+        super("ThirdPerson","Third person but using a hold bind.", Category.VISUAL);
     }
     @Override
     public void onUpdate(){

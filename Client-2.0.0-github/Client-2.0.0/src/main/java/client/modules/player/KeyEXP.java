@@ -28,7 +28,7 @@ public class KeyEXP extends Module {
     public Setting<Integer> enemyRange = this.register(new Setting<>("EnemyRange", 0, 0, 20, v-> this.takeOff.getCurrentState()));
 
     public KeyEXP() {
-        super("KeyEXP", "", Category.PLAYER);
+        super("KeyEXP", "SilentSwaps to throw EXP rapidly and mend your armor efficiently.", Category.PLAYER);
     }
 
     @Override

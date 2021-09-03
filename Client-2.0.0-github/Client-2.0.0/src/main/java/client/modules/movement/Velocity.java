@@ -17,7 +17,7 @@ public class Velocity extends Module {
     public Setting<Boolean> blocks = this.register(new Setting("Blocks", false));
 
     public Velocity() {
-        super("Velocity", "Allows you to control your velocity", Category.MOVEMENT);
+        super("Velocity", "Allows you to control your velocity.", Category.MOVEMENT);
     }
 
     public void onLogin(){

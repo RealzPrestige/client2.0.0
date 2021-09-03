@@ -13,7 +13,7 @@ import net.minecraft.util.text.TextComponentString;
 public class AutoEnderChest extends Module {
 
     public AutoEnderChest() {
-        super("AutoEnderChest", "Farms enderschests automatically for you.", Category.PLAYER);
+        super("AutoEnderChest", "Mines enderschests automatically for you.", Category.PLAYER);
     }
 
     public void onEnable() {

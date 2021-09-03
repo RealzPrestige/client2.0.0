@@ -21,7 +21,7 @@ public class FontMod
     private boolean reloadFont = false;
 
     public FontMod() {
-        super("CustomFont", "CustomFont for all of the clients text. Use the font command.", Module.Category.CORE);
+        super("CustomFont", "Tweaks the way your font looks.", Module.Category.CORE);
         this.setInstance();
     }
 

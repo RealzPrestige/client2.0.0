@@ -26,7 +26,7 @@ public class NameTags extends Module {
     public Setting<Double> size = register(new Setting<>("Size", 0.3, 0.1, 20.0));
 
     public NameTags() {
-        super("NameTags", "", Category.VISUAL);
+        super("NameTags", "Shows information above entities.", Category.VISUAL);
         this.setInstance();
     }
 

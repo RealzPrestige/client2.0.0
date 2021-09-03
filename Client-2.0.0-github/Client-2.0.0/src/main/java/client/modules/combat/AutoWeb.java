@@ -58,7 +58,7 @@ public class AutoWeb extends Module {
     private BlockPos renderPos = null;
 
     public AutoWeb() {
-        super("AutoWeb", "Traps other players in webs", Module.Category.COMBAT);
+        super("AutoWeb", "Traps other players in webs.", Module.Category.COMBAT);
     }
 
     @Override

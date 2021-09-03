@@ -36,7 +36,7 @@ public class ChatModifications extends Module {
     public static GuiNewChat guiChat;
 
     public ChatModifications(){
-        super("ChatModifications", "Modifies your chat", Category.MISC);
+        super("ChatModifications", "Modifies your chat to look cleaner.", Category.MISC);
         this.setInstance();
     }
 

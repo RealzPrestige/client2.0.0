@@ -30,7 +30,7 @@ public class Speedmine extends Module {
     public IBlockState currentBlockState;
 
     public Speedmine() {
-        super("Speedmine", "Speeds up mining.", Category.PLAYER);
+        super("Speedmine", "Speeds up mining and tweaks.", Category.PLAYER);
         this.setInstance();
     }
 

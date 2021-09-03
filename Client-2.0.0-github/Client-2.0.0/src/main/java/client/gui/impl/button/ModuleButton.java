@@ -10,6 +10,7 @@ import client.modules.client.ClickGui;
 import client.gui.impl.setting.Bind;
 import client.gui.impl.setting.Setting;
 import client.util.ColorUtil;
+import client.util.RenderUtil;
 import client.util.Timer;
 import com.google.common.collect.Sets;
 import com.mojang.realmsclient.gui.ChatFormatting;
@@ -98,6 +99,9 @@ public class ModuleButton
                 }
             }
         }
+        if(isHovering(mouseX, mouseY)){
+            renderer.drawStringWithShadow(module.getDescription(), mouseX, mouseY, -1);
+        }
     }
 
 
@@ -111,11 +115,11 @@ public class ModuleButton
             }
             if (mouseButton == 2 && this.isHovering(mouseX, mouseY)) {
                 if(module.isDrawn()) {
-                    module.setDrawn(false);
-                    Command.sendMessage(module.getName() + " is now unDrawn!");
+                    module.setUndrawn();
+                    Command.sendMessage(module.getName() + " is no longer Drawn.");
                 } else {
-                    module.setDrawn(true);
-                    Command.sendMessage(module.getName() + " is now Drawn!");
+                    module.setDrawn();
+                    Command.sendMessage(module.getName() + " is now Drawn.");
                 }
                 mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0f));
             }

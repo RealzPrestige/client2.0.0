@@ -55,7 +55,7 @@ public class Offhand extends Module {
     private boolean switchedForHealthReason;
 
     public Offhand() {
-        super("Offhand", "Sets items in Offhand slot", Category.COMBAT);
+        super("Offhand", "Sets items in Offhand slot.", Category.COMBAT);
         this.taskList = new ConcurrentLinkedQueue <> ( );
         this.timer = new Timer();
         this.secondTimer = new Timer();

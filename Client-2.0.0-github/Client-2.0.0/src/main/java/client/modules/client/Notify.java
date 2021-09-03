@@ -10,14 +10,13 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class Notify extends Module {
     private static Notify INSTANCE = new Notify();
     public Setting<Boolean> chatMessages = register(new Setting("ToggleMessages", true));
-    public Setting<Boolean> rainbowPrefix = register(new Setting("RainbowPrefix", true));
     public Setting<String> command = register(new Setting("NotifyString", "Client 2.0.0"));
     public Setting<String> commandBracket = register(new Setting("Bracket", "<"));
     public Setting<String> commandBracket2 = register(new Setting("Bracket2", ">"));
     public Setting<TextUtil.Color> commandColor = register(new Setting("NameColor", TextUtil.Color.WHITE));
     public Setting<TextUtil.Color> bracketColor = register(new Setting("BracketColor", TextUtil.Color.WHITE));
     public Notify() {
-        super("Notify", "Notifies things in chat.", Module.Category.CORE);
+        super("Notify", "Notifies modules in chat.", Module.Category.CORE);
         setInstance();
     }
 

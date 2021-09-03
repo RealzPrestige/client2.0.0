@@ -21,7 +21,7 @@ public class Quiver extends Module {
     private int returnSlot = -1;
 
     public Quiver(){
-        super("Quiver", "Shoots arrows at yourself", Category.PLAYER);
+        super("Quiver", "Shoots arrows at yourself with positive effects.", Category.PLAYER);
     }
 
     @Override

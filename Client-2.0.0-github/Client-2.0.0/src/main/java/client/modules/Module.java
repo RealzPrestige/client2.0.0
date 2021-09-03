@@ -18,15 +18,11 @@ public class Module
     private final Category category;
     public Setting<Boolean> enabled = this.register( new Setting <> ( "Enabled" , false ));
     public Setting<Bind> bind = this.register( new Setting <> ( "Keybind" , new Bind ( - 1 ) ));
-    public Setting<Boolean> drawn = this.register( new Setting <> ( "Drawn" , true ));
+    boolean drawn = true;
     public Setting<String> displayName;
     public boolean hasListener;
     public boolean alwaysListening;
-    public boolean hidden;
-    public float arrayListOffset = 0.0f;
-    public float arrayListVOffset = 0.0f;
     public float offset;
-    public float vOffset;
     public boolean sliding;
 
     public Module(String name, String description, Category category) {
@@ -125,11 +121,14 @@ public class Module
     }
 
     public boolean isDrawn() {
-        return this.drawn.getCurrentState();
+        return this.drawn;
     }
 
-    public void setDrawn(boolean drawn) {
-        this.drawn.setValue(drawn);
+    public void setDrawn() {
+        this.drawn = true;
+    }
+    public void setUndrawn() {
+        this.drawn = false;
     }
 
     public boolean listening() {

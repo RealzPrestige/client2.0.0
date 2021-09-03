@@ -26,7 +26,7 @@ public class Strafe extends Module {
     public Setting<Bind> switchBind = register(new Setting<>("SwitchBind", new Bind(-1)));
     public enum Mode{STRAFE, INSTANT}
     public Strafe(){
-        super("Strafe", "", Category.MOVEMENT);
+        super("Strafe", "Increases and tweaks movement.", Category.MOVEMENT);
         this.setInstance();
     }
 

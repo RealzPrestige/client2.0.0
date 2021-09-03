@@ -74,7 +74,7 @@ public class ESP extends Module {
     public Setting<Integer> o_alpha = register(new Setting<>("OrbsAlpha", 150, 0, 255, v -> this.orbs.getCurrentState( ) ));
 
     public ESP() {
-    super("ESP", "", Category.VISUAL);
+    super("ESP", "Draws boxes on your screen.", Category.VISUAL);
     }
 
     public void onTick() {

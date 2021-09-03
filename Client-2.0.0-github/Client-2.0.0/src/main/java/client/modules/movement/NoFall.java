@@ -7,7 +7,7 @@ import net.minecraft.network.play.client.CPacketPlayer;
 
 public class NoFall extends Module {
     public NoFall() {
-        super("NoFall", "", Category.MOVEMENT);
+        super("NoFall", "Prevents taking fall damage.", Category.MOVEMENT);
     }
     Timer timer = new Timer();
     public void onUpdate() {

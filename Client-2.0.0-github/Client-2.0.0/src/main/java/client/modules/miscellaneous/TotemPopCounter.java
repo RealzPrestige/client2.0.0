@@ -12,7 +12,7 @@ public class TotemPopCounter extends Module {
     private static TotemPopCounter INSTANCE = new TotemPopCounter();
 
     public TotemPopCounter() {
-        super("TotemPopCounter", "Counts enemy pops", Category.MISC);
+        super("TotemPopCounter", "Counts enemy pops and announces in chat.", Category.MISC);
         this.setInstance();
     }
 

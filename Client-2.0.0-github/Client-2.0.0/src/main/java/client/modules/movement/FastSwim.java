@@ -6,7 +6,7 @@ import client.util.Timer;
 public class FastSwim extends Module {
     Timer timer = new Timer();
     public FastSwim() {
-        super("FastSwim", "", Category.MOVEMENT);
+        super("FastSwim", "Allows you to move faster through water.", Category.MOVEMENT);
     }
     public void onUpdate() {
         if (fullNullCheck()) {

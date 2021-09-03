@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class AntiRotate extends Module {
 
     public AntiRotate(){
-        super("AntiRotate", "", Category.PLAYER);
+        super("AntiRotate", "Prevents rotate packets.", Category.PLAYER);
     }
     @SubscribeEvent
     public void onPacket(PacketEvent.Receive event) {

@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class XCarry extends Module {
 
     public XCarry() {
-        super("XCarry", "", Category.PLAYER);
+        super("XCarry", "Allows you to carry stuff in your crafting slots.", Category.PLAYER);
     }
 
     @SubscribeEvent

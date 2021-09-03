@@ -7,7 +7,7 @@ public class ReverseStep extends Module {
     private final Setting<Integer> speed = this.register( new Setting <> ( "Speed" , 0 , 0 , 20 ));
 
     public ReverseStep() {
-        super("ReverseStep", "Speeds up downwards motion", Category.MOVEMENT);
+        super("ReverseStep", "Speeds up downwards motion.", Category.MOVEMENT);
     }
 
     @Override

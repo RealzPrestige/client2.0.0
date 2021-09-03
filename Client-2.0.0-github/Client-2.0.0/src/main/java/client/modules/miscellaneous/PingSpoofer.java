@@ -19,7 +19,7 @@ public class PingSpoofer extends Module {
     private boolean receive = true;
 
     public PingSpoofer() {
-        super("PingSpoofer", "Makes it look like you have higher ping than you really do.", Category.MISC);
+        super("PingSpoofer", "Allows you to change the amount if ping you have.", Category.MISC);
     }
 
     @Override

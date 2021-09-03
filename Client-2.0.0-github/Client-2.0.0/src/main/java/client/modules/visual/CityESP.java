@@ -24,7 +24,7 @@ public class CityESP extends Module {
     public Setting<Integer> selfalpha = register(new Setting("SelfAlpha", 120, 0, 255));
 
     public CityESP(){
-        super("CityESP", "", Category.VISUAL);
+        super("CityESP", "Shows spots where enemies are vulnerable.", Category.VISUAL);
     }
 
     public void onRender3D(Render3DEvent event){
