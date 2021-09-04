@@ -95,11 +95,9 @@ public class ModuleManager
 
         //VISUAL
         modules.add(new CrystalChanger());
-        modules.add(new FullBright());
         modules.add(new BurrowESP());
         modules.add(new ThirdPerson());
         modules.add(new Viewmodel());
-        modules.add(new AntiFog());
         modules.add(new SwingAnimations());
         modules.add(new ShulkerViewer());
         modules.add(new PearlRender());
@@ -108,6 +106,7 @@ public class ModuleManager
         modules.add(new CityESP());
         modules.add(new ESP());
         modules.add(new Chams());
+        modules.add(new ViewTweaks());
 
     }
 

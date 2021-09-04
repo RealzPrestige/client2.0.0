@@ -10,6 +10,7 @@
     "MixinContainerPlayer",
     "MixinEntityPlayer",
     "MixinEntityPlayerSP",
+    "MixinEntityRenderer",
     "MixinGuiNewChat",
     "MixinGuiScreen",
     "MixinItemRenderer",

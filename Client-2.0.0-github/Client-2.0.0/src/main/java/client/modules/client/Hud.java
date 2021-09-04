@@ -38,8 +38,6 @@ public class Hud extends Module {
     public Setting<Integer> rainbowDelay = this.register(new Setting<Object>("Delay", 200, 0, 600, v -> this.rainbow.getCurrentState()));
     public Setting<Float> rainbowBrightness = this.register(new Setting<Object>("Brightness ", 150.0f, 1.0f, 255.0f, v -> this.rainbow.getCurrentState()));
     public Setting<Float> rainbowSaturation = this.register(new Setting<Object>("Saturation", 150.0f, 1.0f, 255.0f, v -> this.rainbow.getCurrentState()));
-    public Setting<Boolean> fovSetting = this.register(new Setting("Fov", false));
-    public Setting<Float> fov = this.register(new Setting("FovValue", 150.0f, 0.0f, 180.0f));
     public Setting<Integer> red = this.register(new Setting("Red", 255, 0, 255));
     public Setting<Integer> green = this.register(new Setting("Green", 255, 0, 255));
     public Setting<Integer> blue = this.register(new Setting("Blue", 255, 0, 255));
@@ -79,12 +77,6 @@ public class Hud extends Module {
     }
 
 
-    @Override
-    public void onUpdate() {
-        if (fovSetting.getCurrentState()) {
-            mc.gameSettings.setOptionFloatValue(GameSettings.Options.FOV, this.fov.getCurrentState( ) );
-        }
-    }
     @SubscribeEvent
     public void onPacketSend(PacketEvent.Send event){
         ++packetsSent;
