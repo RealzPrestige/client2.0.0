@@ -1,4 +1,4 @@
-package client.mixin;
+package client.mixin.mixins;
 
 import client.events.CloseInventoryEvent;
 import net.minecraft.entity.player.EntityPlayer;

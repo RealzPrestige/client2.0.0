@@ -1,4 +1,4 @@
-package client.mixin.loader;
+package client.mixin;
 
 import client.Client;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;

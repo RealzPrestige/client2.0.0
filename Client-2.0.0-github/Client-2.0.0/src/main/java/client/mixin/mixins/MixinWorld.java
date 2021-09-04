@@ -1,4 +1,4 @@
-package client.mixin;
+package client.mixin.mixins;
 
 import com.google.common.base.Predicate;
 import net.minecraft.entity.Entity;

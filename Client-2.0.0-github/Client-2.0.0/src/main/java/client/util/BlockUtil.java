@@ -824,5 +824,27 @@ public class BlockUtil implements Util {
     public static boolean rayTracePlaceCheck(BlockPos pos, boolean shouldCheck, float height) {
         return !shouldCheck || mc.world.rayTraceBlocks(new Vec3d(mc.player.posX, mc.player.posY + (double) mc.player.getEyeHeight(), mc.player.posZ), new Vec3d(pos.getX(), (float) pos.getY() + height, pos.getZ()), false, true, false) == null;
     }
+    public static void placeBlock(BlockPos pos) {
+        Vec3d eyesPos = new Vec3d(mc.player.posX, mc.player.posY + mc.player.getEyeHeight(), mc.player.posZ);
+        for (EnumFacing side : EnumFacing.values()) {
+            BlockPos neighbor = pos.offset(side);
+            EnumFacing side2 = side.getOpposite();
+            if (canBeClicked(neighbor)) {
+                Vec3d hitVec = (new Vec3d(neighbor)).add(0.5D, 0.5D, 0.5D).add((new Vec3d(side2.getDirectionVec())).scale(0.5D));
+                if (eyesPos.squareDistanceTo(hitVec) <= 18.0625D) {
+                    faceVectorPacketInstant(hitVec);
+                    processRightClickBlock(neighbor, side2, hitVec);
+                    mc.player.swingArm(EnumHand.MAIN_HAND);
+                    mc.rightClickDelayTimer = 4;
+
+                    return;
+                }
+            }
+        }
+    }
+
+    private static void processRightClickBlock(BlockPos pos, EnumFacing side, Vec3d hitVec) {
+        mc.playerController.processRightClickBlock(mc.player, mc.world, pos, side, hitVec, EnumHand.MAIN_HAND);
+    }
 }
 

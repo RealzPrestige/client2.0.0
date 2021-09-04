@@ -1,4 +1,4 @@
-package client.mixin;
+package client.mixin.mixins;
 import client.events.JesusEvent;
 import client.modules.player.Interactions;
 import net.minecraft.block.Block;

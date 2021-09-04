@@ -13,6 +13,7 @@ public class Chams extends Module {
     public Setting<Mode> mode = register(new Setting<>("Mode", Mode.SOLID));
     public enum Mode {SOLID, WIREFRAME, BOTH}
     public Setting<Boolean> removeArmor = register(new Setting<>("RemoveArmor", false));
+    public Setting<Boolean> noLimbAnimation = register(new Setting<>("NoLimbAnimation", false));
     public Setting<Boolean> rainbow = register(new Setting<>("Rainbow", false, v-> (mode.getCurrentState() == Mode.SOLID || mode.getCurrentState() == Mode.BOTH)));
     public Setting<Integer> rainbowHue = register(new Setting<>("RainbowHue", 100, 0, 600, v -> rainbow.getCurrentState() && (mode.getCurrentState() == Mode.SOLID || mode.getCurrentState() == Mode.BOTH)));
     public Setting<Integer> red = register(new Setting<>("Red", 255, 0, 255, v-> (mode.getCurrentState() == Mode.SOLID || mode.getCurrentState() == Mode.BOTH)));
@@ -52,7 +53,10 @@ public class Chams extends Module {
         event.getEntityPlayer().hurtTime = 0;
     }
     public int enchantColor() {
-        return new Color(enchantColorRed.getCurrentState(), enchantColorGreen.getCurrentState(), enchantColorBlue.getCurrentState()).getRGB();
+        if (enchantColor.getCurrentState()) {
+            return new Color(enchantColorRed.getCurrentState(), enchantColorGreen.getCurrentState(), enchantColorBlue.getCurrentState()).getRGB();
+        }
+    return -1;
     }
     public String hudInfoString(){
         return mode.currentEnumName();

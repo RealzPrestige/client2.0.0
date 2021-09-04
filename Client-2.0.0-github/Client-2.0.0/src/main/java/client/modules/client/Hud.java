@@ -67,7 +67,7 @@ public class Hud extends Module {
     public Setting<Integer> index = this.register(new Setting("Index", 30, 0, 100, v-> colorMode.getCurrentState() == ColorMode.ALPHASTEP));
     public Setting<Integer> countt = this.register(new Setting("Count", 25, 0, 30, v-> colorMode.getCurrentState() == ColorMode.ALPHASTEP));
     public Hud() {
-        super("Hud", "Displays strings on your screen.  ,m", Category.CORE);
+        super("Hud", "Displays strings on your screen.", Category.CORE);
         this.setInstance();
     }
 

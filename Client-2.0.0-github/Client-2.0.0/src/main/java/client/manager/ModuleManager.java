@@ -49,6 +49,7 @@ public class ModuleManager
         modules.add(new Aura());
         modules.add(new Criticals());
         modules.add(new AntiCity());
+        modules.add(new ObiAssist());
 
         //MISCELLANEOUS
         modules.add(new FakePlayer());

@@ -1,4 +1,4 @@
-package client.mixin;
+package client.mixin.mixins;
 
 import client.Client;
 import client.modules.visual.Chams;
@@ -192,6 +192,10 @@ public abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends 
             GlStateManager.popMatrix();
             super.doRender(entity, x, y, z, entityYaw, partialTicks);
             MinecraftForge.EVENT_BUS.post(new RenderLivingEvent.Post(entity, RenderLivingBase.class.cast(this), partialTicks, x, y, z));
+        }
+        if (Chams.getInstance().noLimbAnimation.getCurrentState()) {
+            entity.limbSwing = 0;
+            entity.limbSwingAmount = 0;
         }
     }
 

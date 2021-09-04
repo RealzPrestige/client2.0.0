@@ -1,7 +1,7 @@
 {
   "required": true,
   "compatibilityLevel": "JAVA_8",
-  "package": "client.mixin",
+  "package": "client.mixin.mixins",
   "refmap": "mixins.client.refmap.json",
   "mixins": [
     "AccessorSPacketPlayerPosLook",
