@@ -74,6 +74,7 @@ public class AutoCrystal extends Module {
     public Setting<Boolean> cRainbow;
     public Setting<Boolean> silentSwitch;
     public Set<BlockPos> placeSet;
+    public  BlockPos placePos = null;
     public Timer clearTimer;
     public Timer breakTimer;
     public int predictedId;
@@ -199,8 +200,6 @@ public class AutoCrystal extends Module {
 
 
     private void doPlace() {
-        BlockPos placePos = null;
-
         float maxDamage = 0.5f;
         final List<BlockPos> sphere = BlockUtil.getSphere(this.placeRange.getCurrentState(), true);
         for (int size = sphere.size(), i = 0; i < size; ++i) {
