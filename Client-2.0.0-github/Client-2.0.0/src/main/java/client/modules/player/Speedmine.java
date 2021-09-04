@@ -1,15 +1,14 @@
 package client.modules.player;
 
-import client.Client;
 import client.events.BlockEvent;
 import client.events.Render3DEvent;
-import client.gui.impl.setting.Setting;
 import client.modules.Module;
-import client.util.*;
+import client.gui.impl.setting.Setting;
+import client.util.BlockUtil;
+import client.util.RenderUtil;
+import client.util.Timer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.network.play.client.CPacketHeldItemChange;
 import net.minecraft.network.play.client.CPacketPlayerDigging;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -18,56 +17,39 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import java.awt.*;
 
 public class Speedmine extends Module {
-    private static Speedmine INSTANCE = new Speedmine();
-    private final Timer timer = new Timer();
+    Timer timer = new Timer();
     public Setting<Mode> mode = this.register(new Setting("Mode", Mode.PACKET));
     public Setting<Boolean> render = this.register(new Setting("Render", false));
-    public Setting<Boolean> silentSwitch = this.register(new Setting("Silent", false));
-    public Setting<Boolean> box = this.register(new Setting("Box", false, v -> this.render.getCurrentState()));
-    private final Setting<Integer> range = this.register(new Setting("Range", 10, 1, 15));
-    private final Setting<Integer> boxAlpha = this.register(new Setting("BoxAlpha", 85, 0, 255, v -> box.getCurrentState() && render.getCurrentState()));
-    public Setting<Boolean> outline = this.register(new Setting("Outline", true, v -> this.render.getCurrentState()));
-    private final Setting<Float> lineWidth = this.register(new Setting("Width", 1.0f, 0.1f, 5.0f, v -> outline.getCurrentState() && render.getCurrentState()));
-    public BlockPos currentPos;
-    public IBlockState currentBlockState;
+    public Setting<Integer> red = register(new Setting("Red", 120, 0, 255, v-> render.getCurrentState()));
+    public Setting<Integer> green = register(new Setting("Green", 120, 0, 255, v-> render.getCurrentState()));
+    public Setting<Integer> blue = register(new Setting("Blue", 120, 0, 255, v-> render.getCurrentState()));
+    public Setting<Integer> alpha = register(new Setting("Alpha", 120, 0, 255, v-> render.getCurrentState()));
+
+    int currentAlpha;
+    BlockPos currentPos;
+    IBlockState currentBlockState;
 
     public Speedmine() {
         super("Speedmine", "Speeds up mining and tweaks.", Category.PLAYER);
-        this.setInstance();
-    }
-
-    public static Speedmine getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new Speedmine();
-        }
-        return INSTANCE;
-    }
-
-    private void setInstance() {
-        INSTANCE = this;
     }
 
     @Override
+    public void onLogin(){
+        if(this.isEnabled()) {
+            this.disable();
+            this.enable();
+        }
+    }
+    @Override
     public void onTick() {
         if (this.currentPos != null) {
-            if (Speedmine.mc.player != null && Speedmine.mc.player.getDistanceSq(this.currentPos) > MathUtil.square(this.range.getCurrentState())) {
-                this.currentPos = null;
-                this.currentBlockState = null;
-                return;
-            }
-            if (Speedmine.mc.player != null && this.silentSwitch.getCurrentState() && this.timer.passedMs((int) (2000.0f * Client.serverManager.getTpsFactor())) && this.getPickSlot() != -1) {
-                Speedmine.mc.player.connection.sendPacket(new CPacketHeldItemChange(this.getPickSlot()));
-            }
-            if (Speedmine.mc.player != null && this.silentSwitch.getCurrentState() && this.timer.passedMs((int) (2200.0f * Client.serverManager.getTpsFactor()))) {
-                int oldSlot = mc.player.inventory.currentItem;
-                Speedmine.mc.player.connection.sendPacket(new CPacketHeldItemChange(oldSlot));
-            }
-            if (fullNullCheck()) return;
-
             if (!Speedmine.mc.world.getBlockState(this.currentPos).equals(this.currentBlockState) || Speedmine.mc.world.getBlockState(this.currentPos).getBlock() == Blocks.AIR) {
                 this.currentPos = null;
                 this.currentBlockState = null;
             }
+        }
+        if(currentAlpha < (alpha.getCurrentState() - 2)){
+            currentAlpha = currentAlpha + 3;
         }
     }
 
@@ -82,8 +64,8 @@ public class Speedmine extends Module {
     @Override
     public void onRender3D(Render3DEvent event) {
         if (this.render.getCurrentState() && this.currentPos != null && this.currentBlockState.getBlock() == Blocks.OBSIDIAN) {
-            Color color = new Color(this.timer.passedMs((int) (2000.0f * Client.serverManager.getTpsFactor())) ? 0 : 255, this.timer.passedMs((int) (2000.0f * Client.serverManager.getTpsFactor())) ? 255 : 0, 0, 255);
-            RenderUtil.drawBoxESP(this.currentPos, color, false, color, this.lineWidth.getCurrentState(), this.outline.getCurrentState(), this.box.getCurrentState(), this.boxAlpha.getCurrentState(), false);
+            Color color = new Color(red.getCurrentState(), green.getCurrentState(), blue.getCurrentState(), currentAlpha);
+            RenderUtil.drawBoxESP(this.currentPos, color, true, color, 1, true,true, currentAlpha, false);
         }
     }
 
@@ -105,6 +87,7 @@ public class Speedmine extends Module {
                             this.currentBlockState = Speedmine.mc.world.getBlockState(this.currentPos);
                             this.timer.reset();
                         }
+                        currentAlpha = 0;
                         Speedmine.mc.player.swingArm(EnumHand.MAIN_HAND);
                         Speedmine.mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.START_DESTROY_BLOCK, event.pos, event.facing));
                         Speedmine.mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.STOP_DESTROY_BLOCK, event.pos, event.facing));
@@ -112,6 +95,7 @@ public class Speedmine extends Module {
                         break;
                     }
                     case INSTANT: {
+                        currentAlpha = 0;
                         Speedmine.mc.player.swingArm(EnumHand.MAIN_HAND);
                         Speedmine.mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.START_DESTROY_BLOCK, event.pos, event.facing));
                         Speedmine.mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.STOP_DESTROY_BLOCK, event.pos, event.facing));
@@ -132,14 +116,6 @@ public class Speedmine extends Module {
         PACKET,
         INSTANT
 
-    }
-
-    private int getPickSlot() {
-        for (int i = 0; i < 9; ++i) {
-            if (Speedmine.mc.player.inventory.getStackInSlot(i).getItem() != Items.DIAMOND_PICKAXE) continue;
-            return i;
-        }
-        return -1;
     }
 }
 

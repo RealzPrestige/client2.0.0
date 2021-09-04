@@ -16,6 +16,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.*;
+import net.minecraft.world.World;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -118,6 +119,7 @@ public class BlockUtil implements Util {
         Block block = blockState.getBlock();
         return block.getBlockHardness(blockState, BlockUtil.mc.world, pos) != -1.0f;
     }
+
 
     public static EntityPlayer getTarget(final float range) {
         EntityPlayer currentTarget = null;

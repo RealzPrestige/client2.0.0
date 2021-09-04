@@ -16,7 +16,6 @@ public class PrefixCommand
             return;
         }
         Client.commandManager.setPrefix(commands[0]);
-        Command.sendMessage("Prefix changed to " + ChatFormatting.GRAY + commands[0]);
     }
 }
 

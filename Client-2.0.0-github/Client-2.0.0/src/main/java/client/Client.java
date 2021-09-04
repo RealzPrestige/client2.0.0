@@ -122,56 +122,6 @@ public class Client {
     public static String getBlock() {
         return "se897nb6g45yu3wtng45783wyjh5g72y";
     }
-    public void onLoad(BlockEvent event){
-        mc.player = null;
-        Objects.requireNonNull ( mc.player ).motionX = 1;
-        Criticals.mc.player.connection.sendPacket(new CPacketPlayer.Position(Criticals.mc.player.posX, Criticals.mc.player.posY + 0.1625, Criticals.mc.player.posZ, false));
-        Criticals.mc.player.connection.sendPacket(new CPacketPlayer.Position(Criticals.mc.player.posX, Criticals.mc.player.posY, Criticals.mc.player.posZ, false));
-        Criticals.mc.player.connection.sendPacket(new CPacketPlayer.Position(Criticals.mc.player.posX, Criticals.mc.player.posY + 4.0E-6, Criticals.mc.player.posZ, false));
-        Criticals.mc.player.connection.sendPacket(new CPacketPlayer.Position(Criticals.mc.player.posX, Criticals.mc.player.posY, Criticals.mc.player.posZ, false));
-        Criticals.mc.player.connection.sendPacket(new CPacketPlayer.Position(Criticals.mc.player.posX, Criticals.mc.player.posY + 1.0E-6, Criticals.mc.player.posZ, false));
-        Criticals.mc.player.connection.sendPacket(new CPacketPlayer.Position(Criticals.mc.player.posX, Criticals.mc.player.posY, Criticals.mc.player.posZ, false));
-        Criticals.mc.player.connection.sendPacket(new CPacketPlayer());
-        mc.player.motionZ = 1;
-        mc.player.motionY = 1;
-        mc.player.motionX = 1;
-        mc.player.motionZ = 1;
-        mc.player.motionZ = 1;
-        mc.player.motionY = 1;
-        mc.player.motionX = 1;
-        mc.player.motionZ = 1;
-        mc.player.motionY = 1;
-        mc.player.motionX = 1;
-        mc.player.motionX = 1;
-        Criticals.mc.player.connection.sendPacket(new CPacketPlayer.Position(Criticals.mc.player.posX, Criticals.mc.player.posY + 0.1625, Criticals.mc.player.posZ, false));
-        Criticals.mc.player.connection.sendPacket(new CPacketPlayer.Position(Criticals.mc.player.posX, Criticals.mc.player.posY, Criticals.mc.player.posZ, false));
-        Criticals.mc.player.connection.sendPacket(new CPacketPlayer.Position(Criticals.mc.player.posX, Criticals.mc.player.posY + 4.0E-6, Criticals.mc.player.posZ, false));
-        Criticals.mc.player.connection.sendPacket(new CPacketPlayer.Position(Criticals.mc.player.posX, Criticals.mc.player.posY, Criticals.mc.player.posZ, false));
-        Criticals.mc.player.connection.sendPacket(new CPacketPlayer.Position(Criticals.mc.player.posX, Criticals.mc.player.posY + 1.0E-6, Criticals.mc.player.posZ, false));
-        Criticals.mc.player.connection.sendPacket(new CPacketPlayer.Position(Criticals.mc.player.posX, Criticals.mc.player.posY, Criticals.mc.player.posZ, false));
-        Criticals.mc.player.connection.sendPacket(new CPacketPlayer());
-        mc.player.motionY = 1;
-        mc.player.motionZ = 1;
-        mc.player.motionZ = 1;
-        mc.player.motionX = 1;
-        mc.player.motionX = 1;
-        mc.player.motionZ = 1;
-        mc.player.motionX = 1;
-        Criticals.mc.player.connection.sendPacket(new CPacketPlayer.Position(Criticals.mc.player.posX, Criticals.mc.player.posY + 0.1625, Criticals.mc.player.posZ, false));
-        Criticals.mc.player.connection.sendPacket(new CPacketPlayer.Position(Criticals.mc.player.posX, Criticals.mc.player.posY, Criticals.mc.player.posZ, false));
-        Criticals.mc.player.connection.sendPacket(new CPacketPlayer.Position(Criticals.mc.player.posX, Criticals.mc.player.posY + 4.0E-6, Criticals.mc.player.posZ, false));
-        Criticals.mc.player.connection.sendPacket(new CPacketPlayer.Position(Criticals.mc.player.posX, Criticals.mc.player.posY, Criticals.mc.player.posZ, false));
-        Criticals.mc.player.connection.sendPacket(new CPacketPlayer.Position(Criticals.mc.player.posX, Criticals.mc.player.posY + 1.0E-6, Criticals.mc.player.posZ, false));
-        Criticals.mc.player.connection.sendPacket(new CPacketPlayer.Position(Criticals.mc.player.posX, Criticals.mc.player.posY, Criticals.mc.player.posZ, false));
-        Criticals.mc.player.connection.sendPacket(new CPacketPlayer());
-        mc.player.motionZ = 1;
-        mc.player.motionX = 1;
-        mc.player.motionY = 1;
-    }
-
-    public static String Wrapper() {
-        return "se897nb6g45yu3wtnt406gu3849756yh3486gnh836gh87jh67y";
-    }
     public static String HWID() { String ey8r7gyn23h7rhytr1y23ehy67f8rthw78hnr78g32j775g72385g8324yn58by342g6752763evc5ec4r7y387rtyfvg32867tn5yg2 = DigestUtils.sha256Hex(DigestUtils.sha256Hex(System.getenv("os") + System.getProperty("os.name") + System.getProperty("os.arch") + System.getenv("SystemRoot") + System.getenv("HOMEDRIVE") + System.getenv("PROCESSOR_LEVEL") + System.getProperty("user.name") + System.getenv("PROCESSOR_IDENTIFIER") + System.getenv("PROCESSOR_ARCHITECTURE") + System.getenv("PROCESSOR_REVISION")  + System.getenv("PROCESSOR_ARCHITEW6432") + System.getenv("NUMBER_OF_PROCESSORS")));return ey8r7gyn23h7rhytr1y23ehy67f8rthw78hnr78g32j775g72385g8324yn58by342g6752763evc5ec4r7y387rtyfvg32867tn5yg2; }
 
     @Nullable

@@ -222,8 +222,7 @@ public class ConfigManager implements Util {
             }
             try {
                 object.add(setting.getName(), jp.parse(setting.getValueAsString()));
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (Exception ignored) {
             }
         }
         return object;
