@@ -245,13 +245,15 @@ public class AutoCrystal extends Module {
             }
 
         }
+        if (placePos != null && silentSwitch.getCurrentState()) {
+            mc.player.connection.sendPacket(new CPacketHeldItemChange(InventoryUtil.findHotbarBlock(ItemEndCrystal.class)));
+        }
+
         if (!this.offhand && !this.mainhand) {
             this.renderPos = null;
             return;
         }
-        if (placePos != null && silentSwitch.getCurrentState()) {
-            mc.player.connection.sendPacket(new CPacketHeldItemChange(InventoryUtil.findHotbarBlock(ItemEndCrystal.class)));
-        }
+
         if (placePos != null) {
             clearMap(placePos);
             Objects.requireNonNull(mc.getConnection()).sendPacket(new CPacketPlayerTryUseItemOnBlock(placePos, EnumFacing.UP, this.offhand ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND , 0.5f, 0.5f, 0.5f));
