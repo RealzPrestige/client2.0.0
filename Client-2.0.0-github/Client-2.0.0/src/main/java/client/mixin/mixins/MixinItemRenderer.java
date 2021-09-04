@@ -1,6 +1,7 @@
 package client.mixin.mixins;
 
 import client.modules.visual.Chams;
+import client.modules.visual.NoRender;
 import client.modules.visual.Viewmodel;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderItem;
@@ -14,8 +15,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin({ RenderItem.class })
+@Mixin(value = {RenderItem.class}, priority=0x7FFFFFFE)
 public abstract class MixinItemRenderer {
+
     @ModifyArg(method={"renderEffect"}, at=@At(value="INVOKE", target="net/minecraft/client/renderer/RenderItem.renderModel(Lnet/minecraft/client/renderer/block/model/IBakedModel;I)V"))
     private int renderEffect(int glintVal) {
         return Chams.getInstance().isEnabled() ? Chams.getInstance().enchantColor() : glintVal;
@@ -31,6 +33,13 @@ public abstract class MixinItemRenderer {
             else {
                 GL11.glTranslated( viewmodel.offsetX.getCurrentState() / 4.0f , viewmodel.offsetY.getCurrentState() / 4.0f , viewmodel.offsetZ.getCurrentState() / 4.0f );
             }
+        }
+    }
+
+    @Inject(method={"renderSuffocationOverlay"}, at={@At(value="HEAD")}, cancellable=true)
+    public void renderSuffocationOverlay(CallbackInfo ci) {
+        if (NoRender.getInstance().isOn() && NoRender.getInstance().insideBlocks.getCurrentState()) {
+            ci.cancel();
         }
     }
 }

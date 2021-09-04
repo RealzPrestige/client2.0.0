@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin({ PlayerControllerMP.class })
+@Mixin(value = {PlayerControllerMP.class}, priority=0x7FFFFFFE)
 public abstract class MixinPlayerControllerMP {
 
     @Inject(method = { "clickBlock" }, at = { @At("HEAD") }, cancellable = true)

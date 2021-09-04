@@ -24,7 +24,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import static org.lwjgl.opengl.GL11.GL_LIGHTING;
 import static org.lwjgl.opengl.GL11.glEnable;
 
-@Mixin({RenderLivingBase.class})
+@Mixin(value = {RenderLivingBase.class}, priority=0x7FFFFFFE)
 public abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends Render<T> {
 
     @Shadow

@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(ContainerPlayer.class)
+@Mixin(value = {ContainerPlayer.class}, priority=0x7FFFFFFE)
 public class MixinContainerPlayer {
     @Inject(method = "onContainerClosed", at = @At("HEAD"), cancellable = true)
     public void getPlayerName(EntityPlayer playerIn, CallbackInfo ci) {

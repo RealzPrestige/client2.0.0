@@ -13,6 +13,8 @@ public class ViewTweaks extends Module {
     public Setting<Float> fov = register(new Setting("FovValue", 140.0f, 0.0f, 180.0f, v-> fovSetting.getCurrentState()));
     public Setting<Boolean> antiFog = register(new Setting("AntiFog", false));
     public Setting<Boolean> noWeather = register(new Setting("NoWeather", false));
+    public Setting<Boolean> timeChanger  = register(new Setting("TimeChanger", false));
+    public Setting<Integer> time = register(new Setting<>("Time", 0, 0, 23000, v-> timeChanger.getCurrentState()));
     public Setting<Boolean> skyColor = register(new Setting("SkyColor", false));
     public Setting<Float> red = register(new Setting<>("SkyRed", 255.0f, 0.0f, 255.0f, v-> skyColor.getCurrentState()));
     public Setting<Float> green = register(new Setting<>("SkyGreen", 255.0f, 0.0f, 255.0f, v-> skyColor.getCurrentState()));
@@ -53,6 +55,9 @@ public class ViewTweaks extends Module {
         }
         if(noWeather.getCurrentState()){
             mc.world.setRainStrength(0);
+        }
+        if(timeChanger.getCurrentState()){
+            mc.world.setWorldTime((long) time.getCurrentState());
         }
     }
 

@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin({ EntityPlayer.class })
+@Mixin(value = {EntityPlayer.class}, priority=0x7FFFFFFE)
 public abstract class MixinEntityPlayer extends EntityLivingBase
 {
     public MixinEntityPlayer(final World worldIn) {

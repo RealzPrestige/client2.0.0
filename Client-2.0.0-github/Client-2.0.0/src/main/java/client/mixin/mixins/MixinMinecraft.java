@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import javax.annotation.Nullable;
 
-@Mixin(value = {Minecraft.class})
+@Mixin(value = {Minecraft.class}, priority=0x7FFFFFFE)
 public abstract class MixinMinecraft {
     @Inject(method = {"shutdownMinecraftApplet"}, at = {@At(value = "HEAD")})
     private void stopClient(CallbackInfo callbackInfo) {
