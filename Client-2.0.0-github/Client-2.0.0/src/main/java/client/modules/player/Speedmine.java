@@ -3,31 +3,35 @@ package client.modules.player;
 import client.Client;
 import client.events.BlockEvent;
 import client.events.Render3DEvent;
+import client.gui.impl.setting.Bind;
 import client.modules.Module;
 import client.gui.impl.setting.Setting;
+import client.modules.movement.Strafe;
 import client.util.BlockUtil;
 import client.util.MathUtil;
 import client.util.RenderUtil;
 import client.util.Timer;
+import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.network.play.client.CPacketHeldItemChange;
 import net.minecraft.network.play.client.CPacketPlayerDigging;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.lwjgl.input.Keyboard;
 
 import java.awt.*;
-
-import static client.util.BlockUtil.canBreak;
 
 public class Speedmine extends Module {
     Timer timer = new Timer();
     public Setting<Mode> mode = this.register(new Setting("Mode", Mode.PACKET));
     public Setting<Boolean> render = this.register(new Setting("Render", false));
-    public Setting<Boolean> silentSwitch = this.register(new Setting("Silent", false));
+    public Setting<Boolean> silentSwitch = this.register(new Setting("SilentSwitch", false));
+    public Setting<SwitchMode> switchMode = this.register(new Setting("SwitchMode", SwitchMode.AUTO, v-> silentSwitch.getCurrentState()));
+    public enum SwitchMode{AUTO, KEYBIND}
+    public Setting<Bind> switchBind = register(new Setting<>("SwitchBind", new Bind(-1), v-> switchMode.getCurrentState() == SwitchMode.KEYBIND));
     private final Setting<Integer> range = this.register(new Setting("Range", 10, 1, 15));
     public Setting<Integer> red = register(new Setting("Red", 120, 0, 255, v-> render.getCurrentState()));
     public Setting<Integer> green = register(new Setting("Green", 120, 0, 255, v-> render.getCurrentState()));
@@ -36,13 +40,7 @@ public class Speedmine extends Module {
     int currentAlpha;
     BlockPos currentPos;
     IBlockState currentBlockState;
-    private BlockPos blockAimed;
-    private BlockPos lastBlock;
-    private EnumFacing direction;
-
-
-    private EnumFacing last_facing = null;
-
+    int delay;
     public Speedmine() {
         super("Speedmine", "Speeds up mining and tweaks.", Category.PLAYER);
     }
@@ -56,13 +54,28 @@ public class Speedmine extends Module {
     }
     @Override
     public void onTick() {
-        if (Speedmine.mc.player != null && Speedmine.mc.player.getDistanceSq(this.currentPos) > MathUtil.square(this.range.getCurrentState())) {
-            this.currentPos = null;
-            this.currentBlockState = null;
-            return;
+        if(currentPos != null) {
+            if (Speedmine.mc.player != null && Speedmine.mc.player.getDistanceSq(this.currentPos) > MathUtil.square(this.range.getCurrentState())) {
+                this.currentPos = null;
+                this.currentBlockState = null;
+                return;
+            }
+        }
+        if(delay < 12) {
+            ++delay;
         }
         if (Speedmine.mc.player != null && this.silentSwitch.getCurrentState() && this.timer.passedMs((int) (2000.0f * Client.serverManager.getTpsFactor())) && this.getPickSlot() != -1) {
-            Speedmine.mc.player.connection.sendPacket(new CPacketHeldItemChange(this.getPickSlot()));
+           if(switchMode.getCurrentState() == SwitchMode.AUTO) {
+               Speedmine.mc.player.connection.sendPacket(new CPacketHeldItemChange(this.getPickSlot()));
+           } else if(switchMode.getCurrentState() == SwitchMode.KEYBIND) {
+               if (delay > 10) {
+                   if (switchBind.getCurrentState().getKey() > -1) {
+                       if (Keyboard.isKeyDown(switchBind.getCurrentState().getKey())) {
+                           Speedmine.mc.player.connection.sendPacket(new CPacketHeldItemChange(this.getPickSlot()));
+                       }
+                   }
+               }
+           }
         }
         if (Speedmine.mc.player != null && this.silentSwitch.getCurrentState() && this.timer.passedMs((int) (2200.0f * Client.serverManager.getTpsFactor()))) {
             int oldSlot = mc.player.inventory.currentItem;
@@ -107,7 +120,7 @@ public class Speedmine extends Module {
             Speedmine.mc.playerController.isHittingBlock = true;
         }
         if (event.getStage() == 4) {
-            if (canBreak(event.pos)) {
+            if (BlockUtil.canBreak(event.pos)) {
                 Speedmine.mc.playerController.isHittingBlock = false;
                 switch (this.mode.getCurrentState()) {
                     case PACKET: {
@@ -131,32 +144,6 @@ public class Speedmine extends Module {
                         Speedmine.mc.playerController.onPlayerDestroyBlock(event.pos);
                         Speedmine.mc.world.setBlockToAir(event.pos);
                     }
-                    case BREAKER: {
-                        /*
-					This is what i understood about this module:
-					First, it has to break the block normally with START_DESTROY_BLOCK and then STOP_DESTROY_BlOCK
-					the second block, it just spam STOP_DESTROY_BLOCK, making it insta.
-				 */
-                        blockAimed = event.pos;
-                        if (canBreak(event.pos)) {
-                            // If it's not the same block
-                            if (lastBlock == null || event.pos.getX() != lastBlock.getX() || event.pos.getY() != lastBlock.getY() || event.pos.getZ() != lastBlock.getZ()) {
-                                // Start destroying with START_DESTROY_BLOCK
-                                mc.player.swingArm(EnumHand.MAIN_HAND);
-                                mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.START_DESTROY_BLOCK,
-                                        event.pos, event.facing));
-                                // Save for preventing it doing again packet mine
-                                lastBlock = event.pos;
-                                direction = event.facing;
-                            }
-
-                            // Send STOP_DESTROY_BLOCK
-                            mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.STOP_DESTROY_BLOCK,
-                                    lastBlock, direction));
-                            // Cancel the normal mine
-                            event.setCanceled(true);
-                        }
-                    }
                 }
             }
         }
@@ -169,8 +156,7 @@ public class Speedmine extends Module {
 
     public enum Mode {
         PACKET,
-        INSTANT,
-        BREAKER
+        INSTANT
     }
 
         private int getPickSlot() {

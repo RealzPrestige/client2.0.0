@@ -201,14 +201,14 @@ public class Hud extends Module {
         i += 10;
         if ((ClickGui.getInstance()).rainbow.getCurrentState()) {
             String rainbowCoords = this.coords.getCurrentState() ? ("XYZ " + (inHell ? (posX + ", " + posY + ", " + posZ + " [" + hposX + ", " + hposZ + "]") : (posX + ", " + posY + ", " + posZ + " [" + hposX + ", " + hposZ + "]"))) : "";
-            if ((ClickGui.getInstance()).rainbowModeHud.getCurrentState() == ClickGui.rainbowMode.Static) {
-                this.renderer.drawString(rainbowCoords, 2.0F, (height - i), ColorUtil.rainbow( ( ClickGui.getInstance ( ) ).rainbowHue.getCurrentState( ) ).getRGB(), true);
+            if (!sideway.getCurrentState()) {
+                this.renderer.drawString(rainbowCoords, 2.0F, (height - i), ColorUtil.rainbowHud( (rainbowDelay.getCurrentState( ) )).getRGB(), true);
             } else {
                 int[] counter3 = {1};
                 char[] stringToCharArray2 = rainbowCoords.toCharArray();
                 float u = 0.0F;
                 for (char c : stringToCharArray2) {
-                    this.renderer.drawString(String.valueOf(c), 2.0F + u, (height - i), ColorUtil.rainbow(counter3[0] * ( ClickGui.getInstance ( ) ).rainbowHue.getCurrentState( ) ).getRGB(), true);
+                    this.renderer.drawString(String.valueOf(c), 2.0F + u, (height - i), ColorUtil.rainbowHud(counter3[0] * (rainbowDelay.getCurrentState())).getRGB(), true);
                     u += this.renderer.getStringWidth(String.valueOf(c));
                     counter3[0] = counter3[0] + 1;
                 }

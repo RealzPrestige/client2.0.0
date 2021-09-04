@@ -1,6 +1,5 @@
 package client.modules.visual;
 
-import client.events.PerspectiveEvent;
 import client.gui.impl.setting.Setting;
 import client.modules.Module;
 import net.minecraft.client.settings.GameSettings;
@@ -8,12 +7,10 @@ import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ViewTweaks extends Module {
-
+    private static ViewTweaks INSTANCE = new ViewTweaks();
     public Setting<Boolean> fullBright = register(new Setting("FullBright", false));
     public Setting<Boolean> fovSetting = register(new Setting("Fov", false));
     public Setting<Float> fov = register(new Setting("FovValue", 140.0f, 0.0f, 180.0f, v-> fovSetting.getCurrentState()));
-    public Setting<Boolean> aspectSetting = register(new Setting("Aspect", false));
-    public final Setting<Double> aspect = this.register(new Setting<>("Aspect", (double)mc.displayWidth / (double)mc.displayHeight, 0.0, 3.0, v-> aspectSetting.getCurrentState()));
     public Setting<Boolean> antiFog = register(new Setting("AntiFog", false));
     public Setting<Boolean> skyColor = register(new Setting("SkyColor", false));
     private final Setting<Float> red = this.register(new Setting<>("SkyRed", 255.0f, 0.0f, 255.0f, v-> skyColor.getCurrentState()));
@@ -23,6 +20,18 @@ public class ViewTweaks extends Module {
 
     public ViewTweaks(){
         super("ViewTweaks", "Tweaks the way stuff looks.", Category.VISUAL);
+        this.setInstance();
+    }
+
+    public static ViewTweaks getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new ViewTweaks();
+        }
+        return INSTANCE;
+    }
+
+    private void setInstance() {
+        INSTANCE = this;
     }
 
     @Override
@@ -64,8 +73,5 @@ public class ViewTweaks extends Module {
             event.setBlue(blue.getCurrentState() / 255.0f);
         }
     }
-    @SubscribeEvent
-    public void onPerspectiveEvent(PerspectiveEvent event) {
-        event.setAspect(aspect.getCurrentState().floatValue());
-    }
+
 }

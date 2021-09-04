@@ -27,15 +27,15 @@ import static client.util.EntityUtil.calculateDamage;
 public final class ObiAssist extends Module {
 
     private static ObiAssist instance;
-    private final Setting<Boolean> packet = register(new Setting<Boolean>("PacketSwitch", true));
-    private final Setting<Boolean> packethand = register(new Setting<Boolean>("PacketHand", true));
-    private final Setting<Boolean> render = register(new Setting<Boolean>("Render", true));
-    private final Setting<Double> range = register(new Setting<Double>("TargetMaxRange", 10.0, 5.0, 15.0));
-    private final Setting<Double> delay = register(new Setting<Double>("Delay (MS)", 200.0, 0.0, 500.0));
+    private final Setting<Boolean> packet = register(new Setting<>("PacketSwitch", true));
+    private final Setting<Boolean> packethand = register(new Setting<>("PacketHand", true));
+    private final Setting<Boolean> render = register(new Setting<>("Render", true));
+    private final Setting<Double> range = register(new Setting<>("TargetMaxRange", 10.0, 5.0, 15.0));
+    private final Setting<Double> delay = register(new Setting<>("Delay (MS)", 200.0, 0.0, 500.0));
     private final Timer delayTimer = new Timer( );
 
     public ObiAssist() {
-        super("ObiAssist", "place obsidian to support your autocrystal", Category.COMBAT);
+        super("ObiAssist", "Place obsidian to support your AutoCrystal in terrain duels.", Category.COMBAT);
         instance = this;
     }
 
