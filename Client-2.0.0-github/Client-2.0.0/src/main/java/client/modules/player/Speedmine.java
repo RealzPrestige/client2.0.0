@@ -22,8 +22,7 @@ public class Speedmine extends Module {
     public Setting<Boolean> render = this.register(new Setting("Render", false));
     public Setting<Integer> red = register(new Setting("Red", 120, 0, 255, v-> render.getCurrentState()));
     public Setting<Integer> green = register(new Setting("Green", 120, 0, 255, v-> render.getCurrentState()));
-    public Setting<Integer> blue = register(new Setting("Blue", 120, 0, 255, v-> render.getCurrentState()));
-    public Setting<Integer> alpha = register(new Setting("Alpha", 120, 0, 255, v-> render.getCurrentState()));
+    public Setting<Integer> blue = register(new Setting("Green", 120, 0, 255, v-> render.getCurrentState()));
 
     int currentAlpha;
     BlockPos currentPos;
@@ -48,7 +47,7 @@ public class Speedmine extends Module {
                 this.currentBlockState = null;
             }
         }
-        if(currentAlpha < (alpha.getCurrentState() - 2)){
+        if(currentAlpha < 253){
             currentAlpha = currentAlpha + 3;
         }
     }
