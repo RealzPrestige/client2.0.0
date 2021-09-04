@@ -1,4 +1,4 @@
-package client.mixin;
+package client.mixin.mixins;
 
 import client.modules.visual.Chams;
 import net.minecraft.client.model.ModelBiped;

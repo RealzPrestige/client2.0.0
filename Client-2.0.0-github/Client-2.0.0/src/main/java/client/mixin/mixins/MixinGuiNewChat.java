@@ -1,4 +1,4 @@
-package client.mixin;
+package client.mixin.mixins;
 
 import client.Client;
 import client.modules.client.ClickGui;

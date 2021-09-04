@@ -1,7 +1,7 @@
 package client.modules.player;
 
 import client.events.PacketEvent;
-import client.mixin.AccessorSPacketPlayerPosLook;
+import client.mixin.mixins.AccessorSPacketPlayerPosLook;
 import client.modules.Module;
 import net.minecraft.network.play.server.SPacketPlayerPosLook;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;

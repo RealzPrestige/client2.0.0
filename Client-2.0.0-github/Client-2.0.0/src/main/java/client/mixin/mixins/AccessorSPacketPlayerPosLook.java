@@ -1,4 +1,4 @@
-package client.mixin;
+package client.mixin.mixins;
 
 import net.minecraft.network.play.server.SPacketPlayerPosLook;
 import org.spongepowered.asm.mixin.Mixin;

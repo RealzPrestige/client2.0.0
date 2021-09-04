@@ -1,7 +1,7 @@
 package client.util;
 
 import client.Client;
-import client.mixin.IPlayerControllerMP;
+import client.mixin.mixins.IPlayerControllerMP;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.EnchantmentHelper;

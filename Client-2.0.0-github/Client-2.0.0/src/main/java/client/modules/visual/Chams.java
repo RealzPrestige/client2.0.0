@@ -53,7 +53,10 @@ public class Chams extends Module {
         event.getEntityPlayer().hurtTime = 0;
     }
     public int enchantColor() {
-        return new Color(enchantColorRed.getCurrentState(), enchantColorGreen.getCurrentState(), enchantColorBlue.getCurrentState()).getRGB();
+        if (enchantColor.getCurrentState()) {
+            return new Color(enchantColorRed.getCurrentState(), enchantColorGreen.getCurrentState(), enchantColorBlue.getCurrentState()).getRGB();
+        }
+    return -1;
     }
     public String hudInfoString(){
         return mode.currentEnumName();

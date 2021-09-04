@@ -1,4 +1,4 @@
-package client.mixin;
+package client.mixin.mixins;
 
 import client.events.PacketEvent;
 import io.netty.channel.ChannelHandlerContext;

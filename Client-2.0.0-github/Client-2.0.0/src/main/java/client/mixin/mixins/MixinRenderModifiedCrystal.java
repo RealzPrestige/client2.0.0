@@ -1,4 +1,4 @@
-package client.mixin;
+package client.mixin.mixins;
 
 import client.events.RenderEntityModelEvent;
 import client.modules.visual.CrystalChanger;

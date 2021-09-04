@@ -1,4 +1,4 @@
-package client.mixin;
+package client.mixin.mixins;
 
 import client.modules.miscellaneous.TabTweaks;
 import net.minecraft.client.gui.Gui;

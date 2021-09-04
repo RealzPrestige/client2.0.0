@@ -1,4 +1,4 @@
-package client.mixin;
+package client.mixin.mixins;
 
 import net.minecraft.client.multiplayer.PlayerControllerMP;
 import org.spongepowered.asm.mixin.Mixin;

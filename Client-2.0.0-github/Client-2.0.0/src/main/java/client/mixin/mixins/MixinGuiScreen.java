@@ -1,4 +1,4 @@
-package client.mixin;
+package client.mixin.mixins;
 import client.modules.visual.ShulkerViewer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
