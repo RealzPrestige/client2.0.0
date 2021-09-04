@@ -193,6 +193,10 @@ public abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends 
             super.doRender(entity, x, y, z, entityYaw, partialTicks);
             MinecraftForge.EVENT_BUS.post(new RenderLivingEvent.Post(entity, RenderLivingBase.class.cast(this), partialTicks, x, y, z));
         }
+        if (Chams.getInstance().noLimbAnimation.getCurrentState()) {
+            entity.limbSwing = 0;
+            entity.limbSwingAmount = 0;
+        }
     }
 
     @Shadow
