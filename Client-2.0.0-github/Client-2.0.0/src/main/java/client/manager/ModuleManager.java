@@ -106,6 +106,7 @@ public class ModuleManager
         modules.add(new CityESP());
         modules.add(new ESP());
         modules.add(new Chams());
+        modules.add(new ViewTweaks());
 
     }
 
