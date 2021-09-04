@@ -109,7 +109,7 @@ public class AutoCrystal extends Module {
         this.facePlaceHP = (Setting<Float>)this.register(new Setting("FaceplaceHP", 8.0f, 0.0f, 36.0f, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
         this.minDamage = (Setting<Float>)this.register(new Setting("MinDamage", 4.0f, 1.0f, 36.0f, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
         this.maxSelfDamage = (Setting<Float>)this.register(new Setting("MaxSelfDmg",8.0f, 1.0f, 36.0f, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
-        this.silentSwitch = (Setting<Boolean>)this.register(new Setting("MaxSelfDmg",true, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
+        this.silentSwitch = (Setting<Boolean>)this.register(new Setting("SilentSwitch",true, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
         this.swing = (Setting<Boolean>)this.register(new Setting("Swing", false, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
         this.announceOnly = (Setting<Boolean>)this.register(new Setting("AnnounceOnly", false, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
         this.renderMode = (Setting<RenderMode>)this.register(new Setting<>("RenderMode", RenderMode.NORMAL, v-> this.setting.getCurrentState() == Settings.RENDER));
