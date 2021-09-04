@@ -14,11 +14,14 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.network.play.client.CPacketHeldItemChange;
 import net.minecraft.network.play.client.CPacketPlayerDigging;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.awt.*;
+
+import static client.util.BlockUtil.canBreak;
 
 public class Speedmine extends Module {
     Timer timer = new Timer();
@@ -33,6 +36,12 @@ public class Speedmine extends Module {
     int currentAlpha;
     BlockPos currentPos;
     IBlockState currentBlockState;
+    private BlockPos blockAimed;
+    private BlockPos lastBlock;
+    private EnumFacing direction;
+
+
+    private EnumFacing last_facing = null;
 
     public Speedmine() {
         super("Speedmine", "Speeds up mining and tweaks.", Category.PLAYER);
@@ -98,7 +107,7 @@ public class Speedmine extends Module {
             Speedmine.mc.playerController.isHittingBlock = true;
         }
         if (event.getStage() == 4) {
-            if (BlockUtil.canBreak(event.pos)) {
+            if (canBreak(event.pos)) {
                 Speedmine.mc.playerController.isHittingBlock = false;
                 switch (this.mode.getCurrentState()) {
                     case PACKET: {
@@ -122,6 +131,32 @@ public class Speedmine extends Module {
                         Speedmine.mc.playerController.onPlayerDestroyBlock(event.pos);
                         Speedmine.mc.world.setBlockToAir(event.pos);
                     }
+                    case BREAKER: {
+                        /*
+					This is what i understood about this module:
+					First, it has to break the block normally with START_DESTROY_BLOCK and then STOP_DESTROY_BlOCK
+					the second block, it just spam STOP_DESTROY_BLOCK, making it insta.
+				 */
+                        blockAimed = event.pos;
+                        if (canBreak(event.pos)) {
+                            // If it's not the same block
+                            if (lastBlock == null || event.pos.getX() != lastBlock.getX() || event.pos.getY() != lastBlock.getY() || event.pos.getZ() != lastBlock.getZ()) {
+                                // Start destroying with START_DESTROY_BLOCK
+                                mc.player.swingArm(EnumHand.MAIN_HAND);
+                                mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.START_DESTROY_BLOCK,
+                                        event.pos, event.facing));
+                                // Save for preventing it doing again packet mine
+                                lastBlock = event.pos;
+                                direction = event.facing;
+                            }
+
+                            // Send STOP_DESTROY_BLOCK
+                            mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.STOP_DESTROY_BLOCK,
+                                    lastBlock, direction));
+                            // Cancel the normal mine
+                            event.setCanceled(true);
+                        }
+                    }
                 }
             }
         }
@@ -134,7 +169,8 @@ public class Speedmine extends Module {
 
     public enum Mode {
         PACKET,
-        INSTANT
+        INSTANT,
+        BREAKER
     }
 
         private int getPickSlot() {
