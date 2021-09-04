@@ -1,14 +1,18 @@
 package client.modules.player;
 
+import client.Client;
 import client.events.BlockEvent;
 import client.events.Render3DEvent;
 import client.modules.Module;
 import client.gui.impl.setting.Setting;
 import client.util.BlockUtil;
+import client.util.MathUtil;
 import client.util.RenderUtil;
 import client.util.Timer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.network.play.client.CPacketHeldItemChange;
 import net.minecraft.network.play.client.CPacketPlayerDigging;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -20,6 +24,8 @@ public class Speedmine extends Module {
     Timer timer = new Timer();
     public Setting<Mode> mode = this.register(new Setting("Mode", Mode.PACKET));
     public Setting<Boolean> render = this.register(new Setting("Render", false));
+    public Setting<Boolean> silentSwitch = this.register(new Setting("Silent", false));
+    private final Setting<Integer> range = this.register(new Setting("Range", 10, 1, 15));
     public Setting<Integer> red = register(new Setting("Red", 120, 0, 255, v-> render.getCurrentState()));
     public Setting<Integer> green = register(new Setting("Green", 120, 0, 255, v-> render.getCurrentState()));
     public Setting<Integer> blue = register(new Setting("Green", 120, 0, 255, v-> render.getCurrentState()));
@@ -41,6 +47,21 @@ public class Speedmine extends Module {
     }
     @Override
     public void onTick() {
+        if (Speedmine.mc.player != null && Speedmine.mc.player.getDistanceSq(this.currentPos) > MathUtil.square(this.range.getCurrentState())) {
+            this.currentPos = null;
+            this.currentBlockState = null;
+            return;
+        }
+        if (Speedmine.mc.player != null && this.silentSwitch.getCurrentState() && this.timer.passedMs((int) (2000.0f * Client.serverManager.getTpsFactor())) && this.getPickSlot() != -1) {
+            Speedmine.mc.player.connection.sendPacket(new CPacketHeldItemChange(this.getPickSlot()));
+        }
+        if (Speedmine.mc.player != null && this.silentSwitch.getCurrentState() && this.timer.passedMs((int) (2200.0f * Client.serverManager.getTpsFactor()))) {
+            int oldSlot = mc.player.inventory.currentItem;
+            Speedmine.mc.player.connection.sendPacket(new CPacketHeldItemChange(oldSlot));
+        }
+        if (fullNullCheck()) return;
+
+
         if (this.currentPos != null) {
             if (!Speedmine.mc.world.getBlockState(this.currentPos).equals(this.currentBlockState) || Speedmine.mc.world.getBlockState(this.currentPos).getBlock() == Blocks.AIR) {
                 this.currentPos = null;
@@ -114,7 +135,14 @@ public class Speedmine extends Module {
     public enum Mode {
         PACKET,
         INSTANT
-
     }
+
+        private int getPickSlot() {
+            for (int i = 0; i < 9; ++i) {
+                if (Speedmine.mc.player.inventory.getStackInSlot(i).getItem() != Items.DIAMOND_PICKAXE) continue;
+                return i;
+            }
+            return -1;
+        }
 }
 
