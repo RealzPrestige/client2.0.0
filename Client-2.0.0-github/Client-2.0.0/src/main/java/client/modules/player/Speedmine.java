@@ -6,12 +6,10 @@ import client.events.Render3DEvent;
 import client.gui.impl.setting.Bind;
 import client.modules.Module;
 import client.gui.impl.setting.Setting;
-import client.modules.movement.Strafe;
 import client.util.BlockUtil;
 import client.util.MathUtil;
 import client.util.RenderUtil;
 import client.util.Timer;
-import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -35,22 +33,26 @@ public class Speedmine extends Module {
     private final Setting<Integer> range = this.register(new Setting("Range", 10, 1, 15));
     public Setting<Integer> red = register(new Setting("Red", 120, 0, 255, v-> render.getCurrentState()));
     public Setting<Integer> green = register(new Setting("Green", 120, 0, 255, v-> render.getCurrentState()));
-    public Setting<Integer> blue = register(new Setting("Green", 120, 0, 255, v-> render.getCurrentState()));
+    public Setting<Integer> blue = register(new Setting("Blue", 120, 0, 255, v-> render.getCurrentState()));
 
     int currentAlpha;
     BlockPos currentPos;
     IBlockState currentBlockState;
-    int delay;
     public Speedmine() {
         super("Speedmine", "Speeds up mining and tweaks.", Category.PLAYER);
     }
 
     @Override
     public void onLogin(){
+        currentPos = null;
         if(this.isEnabled()) {
             this.disable();
             this.enable();
         }
+    }
+    @Override
+    public void onLogout(){
+        currentPos = null;
     }
     @Override
     public void onTick() {
@@ -61,25 +63,23 @@ public class Speedmine extends Module {
                 return;
             }
         }
-        if(delay < 12) {
-            ++delay;
-        }
         if (Speedmine.mc.player != null && this.silentSwitch.getCurrentState() && this.timer.passedMs((int) (2000.0f * Client.serverManager.getTpsFactor())) && this.getPickSlot() != -1) {
            if(switchMode.getCurrentState() == SwitchMode.AUTO) {
                Speedmine.mc.player.connection.sendPacket(new CPacketHeldItemChange(this.getPickSlot()));
-           } else if(switchMode.getCurrentState() == SwitchMode.KEYBIND) {
-               if (delay > 10) {
-                   if (switchBind.getCurrentState().getKey() > -1) {
-                       if (Keyboard.isKeyDown(switchBind.getCurrentState().getKey())) {
-                           Speedmine.mc.player.connection.sendPacket(new CPacketHeldItemChange(this.getPickSlot()));
-                       }
-                   }
+           }  else if(switchMode.getCurrentState() == SwitchMode.KEYBIND) {
+               if (Keyboard.isKeyDown(switchBind.getCurrentState().getKey())) {
+                   Speedmine.mc.player.connection.sendPacket(new CPacketHeldItemChange(this.getPickSlot()));
                }
            }
         }
-        if (Speedmine.mc.player != null && this.silentSwitch.getCurrentState() && this.timer.passedMs((int) (2200.0f * Client.serverManager.getTpsFactor()))) {
-            int oldSlot = mc.player.inventory.currentItem;
-            Speedmine.mc.player.connection.sendPacket(new CPacketHeldItemChange(oldSlot));
+        if(switchMode.getCurrentState() == SwitchMode.AUTO) {
+            if (Speedmine.mc.player != null && this.silentSwitch.getCurrentState() && this.timer.passedMs((int) (2200.0f * Client.serverManager.getTpsFactor()))) {
+                int oldSlot = mc.player.inventory.currentItem;
+                Speedmine.mc.player.connection.sendPacket(new CPacketHeldItemChange(oldSlot));
+            }
+        } else if(switchMode.getCurrentState() == SwitchMode.KEYBIND){
+                int oldSlot = mc.player.inventory.currentItem;
+                Speedmine.mc.player.connection.sendPacket(new CPacketHeldItemChange(oldSlot));
         }
         if (fullNullCheck()) return;
 
@@ -105,7 +105,7 @@ public class Speedmine extends Module {
 
     @Override
     public void onRender3D(Render3DEvent event) {
-        if (this.render.getCurrentState() && this.currentPos != null && this.currentBlockState.getBlock() == Blocks.OBSIDIAN) {
+        if (this.render.getCurrentState() && this.currentPos != null && (this.currentBlockState.getBlock() == Blocks.OBSIDIAN || this.currentBlockState.getBlock() == Blocks.ENDER_CHEST)) {
             Color color = new Color(red.getCurrentState(), green.getCurrentState(), blue.getCurrentState(), currentAlpha);
             RenderUtil.drawBoxESP(this.currentPos, color, true, color, 1, true,true, currentAlpha, false);
         }

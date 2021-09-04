@@ -2,6 +2,7 @@ package client.manager;
 
 import client.modules.Feature;
 import client.gui.impl.setting.Setting;
+import client.modules.client.Notify;
 import client.util.PlayerUtil;
 import net.minecraft.entity.player.EntityPlayer;
 
@@ -31,7 +32,9 @@ public class FriendManager
         Friend friend = this.getFriendByName(name);
         if (friend != null) {
             this.friends.add(friend);
-            mc.player.sendChatMessage("/msg " + friend.getUsername() + " You just got added my friend list on Client 2.0.0!");
+            if (Notify.getInstance().friendMessages.getCurrentState()) {
+                mc.player.sendChatMessage("/msg " + friend.getUsername() + " You just got added my friend list on Client 2.0.0!");
+            }
         }
         this.cleanFriends();
     }
@@ -41,8 +44,10 @@ public class FriendManager
         for (Friend friend : this.friends) {
             if (!friend.getUsername().equalsIgnoreCase(name)) continue;
             this.friends.remove(friend);
-            mc.player.sendChatMessage("/msg " + friend.getUsername() + " You just got remove my friend list on Client 2.0.0, Get ready to die!");
-            break;
+            if (Notify.getInstance().friendMessages.getCurrentState()) {
+                mc.player.sendChatMessage("/msg " + friend.getUsername() + " You just got remove my friend list on Client 2.0.0, Get ready to die!");
+            }
+           break;
         }
     }
 

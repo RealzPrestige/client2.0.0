@@ -208,7 +208,7 @@ public class AutoCrystal extends Module {
             if (BlockUtil.canPlaceCrystal(pos, true)) {
                 final float damage;
                 if (calcMode.getCurrentState() == CalcMode.NORMAL) {
-                    if (EntityUtil.getHealth(mc.player) > self + 0.5f && this.maxSelfDamage.getCurrentState() > self && (damage = this.calculate(pos, this.target)) > maxDamage && damage > self) {
+                    if (EntityUtil.getHealth(mc.player) > self + 0.5f && this.maxSelfDamage.getCurrentState() > self && (damage = this.calculate(pos, this.target)) > minDamage.getCurrentState() && self < maxSelfDamage.getCurrentState()) {
                         if (damage <= this.minDamage.getCurrentState()) {
                             if (this.facePlaceHP.getCurrentState() <= EntityUtil.getHealth(this.target) && !PlayerUtil.isArmorLow(this.target, this.armorPercent.getCurrentState())) {
                                 continue;
@@ -245,7 +245,7 @@ public class AutoCrystal extends Module {
             }
 
         }
-        if (placePos != null && silentSwitch.getCurrentState()) {
+        if (silentSwitch.getCurrentState() && (InventoryUtil.findHotbarBlock(ItemEndCrystal.class) > 1)) {
             mc.player.connection.sendPacket(new CPacketHeldItemChange(InventoryUtil.findHotbarBlock(ItemEndCrystal.class)));
         }
 

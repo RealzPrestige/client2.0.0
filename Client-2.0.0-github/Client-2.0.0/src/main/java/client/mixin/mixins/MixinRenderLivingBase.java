@@ -3,6 +3,7 @@ package client.mixin.mixins;
 import client.Client;
 import client.modules.visual.Chams;
 import client.util.ColorUtil;
+import client.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
@@ -25,6 +26,7 @@ import static org.lwjgl.opengl.GL11.glEnable;
 
 @Mixin({RenderLivingBase.class})
 public abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends Render<T> {
+
     @Shadow
     protected ModelBase mainModel;
     @Shadow
@@ -193,9 +195,28 @@ public abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends 
             super.doRender(entity, x, y, z, entityYaw, partialTicks);
             MinecraftForge.EVENT_BUS.post(new RenderLivingEvent.Post(entity, RenderLivingBase.class.cast(this), partialTicks, x, y, z));
         }
-        if (Chams.getInstance().noLimbAnimation.getCurrentState()) {
-            entity.limbSwing = 0;
-            entity.limbSwingAmount = 0;
+        if (Chams.getInstance().animationDisabler.getCurrentState()) {
+            if(Chams.getInstance().limbSwing.getCurrentState()) {
+                entity.limbSwing = 0;
+                entity.limbSwingAmount = 0;
+            }
+            if(Chams.getInstance().rotationPitch.getCurrentState()) {
+                entity.rotationPitch = 0;
+            }
+            if(Chams.getInstance().rotationYaw.getCurrentState() && !entity.getName().equals(Util.mc.getSession().getUsername())) {
+                entity.rotationYaw = 0;
+            }
+            if(Chams.getInstance().rotationYawHead.getCurrentState()) {
+                entity.rotationYawHead = 0;
+            }
+            if(Chams.getInstance().swingProgress.getCurrentState()) {
+                entity.swingProgressInt = 0;
+
+                entity.swingProgress = 0;
+            }
+            if(Chams.getInstance().cameraPitch.getCurrentState()) {
+                entity.cameraPitch = 0;
+            }
         }
     }
 

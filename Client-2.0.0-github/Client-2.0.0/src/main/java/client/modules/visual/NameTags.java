@@ -4,6 +4,7 @@ import client.Client;
 import client.events.Render3DEvent;
 import client.gui.impl.setting.Setting;
 import client.modules.Module;
+import client.util.ColorUtil;
 import client.util.EntityUtil;
 import client.util.PlayerUtil;
 import client.util.RenderUtil;
@@ -119,7 +120,7 @@ public class NameTags extends Module {
             }
             this.renderItemStack(renderMainHand, xOffset);
             GlStateManager.popMatrix();
-        this.renderer.drawStringWithShadow(displayTag, -width, -10, Client.friendManager.isFriend(player) ? 11157267 : -1);
+        this.renderer.drawStringWithShadow(displayTag, -width, -10, Client.friendManager.isFriend(player) ? ColorUtil.toRGBA(0, 191, 255) : -1);
         camera.posX = originalPositionX;
         camera.posY = originalPositionY;
         camera.posZ = originalPositionZ;

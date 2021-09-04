@@ -105,7 +105,6 @@ public class ClickGui extends Module {
         if (event.getStage() == 2 && event.getSetting().getFeature().equals(this)) {
             if (event.getSetting().equals(this.prefix)) {
                 Client.commandManager.setPrefix(this.prefix.getPlannedValue());
-                Command.sendMessage("Prefix set to " + ChatFormatting.DARK_GRAY + Client.commandManager.getPrefix());
             }
             Client.colorManager.setColor(this.red.getPlannedValue(), this.green.getPlannedValue(), this.blue.getPlannedValue(), this.alpha.getPlannedValue());
         }
@@ -136,12 +135,6 @@ public class ClickGui extends Module {
         if (!(ClickGui.mc.currentScreen instanceof ClientGui)) {
             this.disable();
         }
-    }
-
-    public enum rainbowModeArray {
-        Static,
-        Up
-
     }
 
     public enum rainbowMode {
