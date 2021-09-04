@@ -12,6 +12,8 @@ import net.minecraft.entity.item.EntityEnderCrystal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemEndCrystal;
+import net.minecraft.network.play.client.CPacketHeldItemChange;
 import net.minecraft.network.play.client.CPacketPlayerTryUseItemOnBlock;
 import net.minecraft.network.play.client.CPacketUseEntity;
 import net.minecraft.network.play.server.SPacketSoundEffect;
@@ -70,6 +72,7 @@ public class AutoCrystal extends Module {
     public Setting<Integer> cAlpha;
     public Setting<Integer> lineWidth;
     public Setting<Boolean> cRainbow;
+    public Setting<Boolean> silentSwitch;
     public Set<BlockPos> placeSet;
     public Timer clearTimer;
     public Timer breakTimer;
@@ -105,6 +108,7 @@ public class AutoCrystal extends Module {
         this.facePlaceHP = (Setting<Float>)this.register(new Setting("FaceplaceHP", 8.0f, 0.0f, 36.0f, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
         this.minDamage = (Setting<Float>)this.register(new Setting("MinDamage", 4.0f, 1.0f, 36.0f, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
         this.maxSelfDamage = (Setting<Float>)this.register(new Setting("MaxSelfDmg",8.0f, 1.0f, 36.0f, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
+        this.silentSwitch = (Setting<Boolean>)this.register(new Setting("MaxSelfDmg",true, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
         this.swing = (Setting<Boolean>)this.register(new Setting("Swing", false, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
         this.announceOnly = (Setting<Boolean>)this.register(new Setting("AnnounceOnly", false, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
         this.renderMode = (Setting<RenderMode>)this.register(new Setting<>("RenderMode", RenderMode.NORMAL, v-> this.setting.getCurrentState() == Settings.RENDER));
@@ -196,6 +200,7 @@ public class AutoCrystal extends Module {
 
     private void doPlace() {
         BlockPos placePos = null;
+
         float maxDamage = 0.5f;
         final List<BlockPos> sphere = BlockUtil.getSphere(this.placeRange.getCurrentState(), true);
         for (int size = sphere.size(), i = 0; i < size; ++i) {
@@ -245,6 +250,9 @@ public class AutoCrystal extends Module {
             this.renderPos = null;
             return;
         }
+        if (placePos != null && silentSwitch.getCurrentState()) {
+            mc.player.connection.sendPacket(new CPacketHeldItemChange(InventoryUtil.findHotbarBlock(ItemEndCrystal.class)));
+        }
         if (placePos != null) {
             clearMap(placePos);
             Objects.requireNonNull(mc.getConnection()).sendPacket(new CPacketPlayerTryUseItemOnBlock(placePos, EnumFacing.UP, this.offhand ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND , 0.5f, 0.5f, 0.5f));
@@ -253,6 +261,10 @@ public class AutoCrystal extends Module {
             this.renderPos = placePos;
         } else {
             this.renderPos = null;
+        }
+        if (silentSwitch.getCurrentState()) {
+            int oldSlot = mc.player.inventory.currentItem;
+            mc.player.connection.sendPacket(new CPacketHeldItemChange(oldSlot));
         }
     }
 
