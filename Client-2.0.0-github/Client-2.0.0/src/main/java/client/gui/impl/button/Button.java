@@ -26,11 +26,10 @@ public class Button
                 RenderUtil.drawRect(this.x, this.y, this.x + (float) this.width, this.y + (float) this.height - 0.5f, ColorUtil.toRGBA(ClickGui.getInstance().d_red.getCurrentState(), ClickGui.getInstance().d_green.getCurrentState(), ClickGui.getInstance().d_blue.getCurrentState(), ClickGui.getInstance().d_alpha.getCurrentState()));
             }
             Client.textManager.drawStringWithShadow(this.getName(), this.x + 2.3f, this.y - 2.0f - (float) ClientGui.getClickGui().getTextOffset(), this.getState() ? ClickGui.getInstance().rainbow.getCurrentState() ? ColorUtil.rainbow(ClickGui.getInstance().rainbowHue.getCurrentState()).getRGB() : ColorUtil.toRGBA(ClickGui.getInstance().topRed.getCurrentState(), ClickGui.getInstance().topGreen.getCurrentState(), ClickGui.getInstance().topBlue.getCurrentState(), 255) : -5592406);
-        } else {
+        } else if (ClickGui.getInstance().gui.getCurrentState() == ClickGui.Gui.NEW){
             int color = ColorUtil.toARGB(ClickGui.getInstance().newared.getCurrentState(), ClickGui.getInstance().newagreen.getCurrentState(), ClickGui.getInstance().newablue.getCurrentState(), ClickGui.getInstance().newaalpha.getCurrentState());
             RenderUtil.drawRect(this.x, this.y, this.x + (float) this.width, this.y + (float) this.height - 0.5f, this.getState() ? color : ColorUtil.toRGBA(10,10, 10,27));
             Client.textManager.drawStringWithShadow(this.getName(), this.x + 1, this.y - 2.0f - (float) ClientGui.getClickGui().getTextOffset(), this.getState() ? -1 : -5592406);
-
         }
     }
 

@@ -77,7 +77,7 @@ public class ModuleButton
                     }
                 }
             }
-        } else {
+        } else if (ClickGui.getInstance().gui.getCurrentState() == ClickGui.Gui.NEW){
             super.drawScreen(mouseX, mouseY, partialTicks);
             if (!this.items.isEmpty()) {
                 Client.textManager.drawString((this.subOpen ? "v" : ">"), this.x - 1.5f + (float) this.width - 7.4f, this.y - 2.0f - (float) ClientGui.getClickGui().getTextOffset(), -1, false);

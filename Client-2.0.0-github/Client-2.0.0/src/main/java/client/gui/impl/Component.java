@@ -20,12 +20,13 @@ public class Component
     public static int[] counter1 = new int[]{1};
     private final ArrayList items = new ArrayList();
     public boolean drag;
-    private int x;
-    private int y;
+    public int x;
+    public int y;
     private int x2;
     private int y2;
     private int width;
     private int height;
+
     private boolean open;
 
     public Component(String name, int x, int y, boolean open) {
@@ -114,7 +115,7 @@ public class Component
                     y += (float) item.getHeight() + 1.5f;
                 }
             }
-        }
+        } 
     }
 
     public void mouseClicked(int mouseX, int mouseY, int mouseButton) {

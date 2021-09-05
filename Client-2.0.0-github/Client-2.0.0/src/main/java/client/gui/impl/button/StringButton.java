@@ -6,6 +6,7 @@ import client.modules.client.ClickGui;
 import client.gui.impl.setting.Setting;
 import client.util.ColorUtil;
 import client.util.RenderUtil;
+import client.util.TextUtil;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.init.SoundEvents;
@@ -40,7 +41,7 @@ public class StringButton
             } else {
                 Client.textManager.drawStringWithShadow((this.setting.getName().equals("Buttons") ? "Buttons " : (this.setting.getName().equals("Prefix") ? "Prefix  " + ChatFormatting.GRAY : "")) + this.setting.getCurrentState(), this.x + 2.3f, this.y - 1.7f - (float) ClientGui.getClickGui().getTextOffset(), this.getState() ? -1 : -5592406);
             }
-        } else {
+        } else if (ClickGui.getInstance().gui.getCurrentState() == ClickGui.Gui.NEW) {
             int color = ColorUtil.toARGB(ClickGui.getInstance().newared.getCurrentState(), ClickGui.getInstance().newagreen.getCurrentState(), ClickGui.getInstance().newablue.getCurrentState(), ClickGui.getInstance().newaalpha.getCurrentState());
             RenderUtil.drawRect(this.x, this.y, this.x + (float) this.width + 7.4f, this.y + (float) this.height - 0.5f, this.getState() ? color : ColorUtil.toRGBA(0, 0, 0, 0));
             if (this.isListening) {
@@ -52,7 +53,7 @@ public class StringButton
             int ercolor = ColorUtil.toARGB(ClickGui.getInstance().newred.getCurrentState(), ClickGui.getInstance().newgreen.getCurrentState(), ClickGui.getInstance().newblue.getCurrentState(), ClickGui.getInstance().newtheAlpha.getCurrentState());
             RenderUtil.drawRect(this.x, this.y, this.x + 1, this.y + (float) this.height + 0.5f, ercolor);
         }
-        }
+    }
 
     @Override
     public void mouseClicked(int mouseX, int mouseY, int mouseButton) {

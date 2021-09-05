@@ -42,7 +42,6 @@ public class ClientGui extends GuiScreen {
     private static ClientGui INSTANCE;
     private final ArrayList<Snow> _snowList = new ArrayList<>();
     public ParticleSystem particleSystem;
-    EntityPlayer ent;
     static {
         INSTANCE = new ClientGui();
     }
@@ -89,7 +88,9 @@ public class ClientGui extends GuiScreen {
 
 
     private void load() {
+
         int x = -84;
+        int x2 = -109;
         Random random = new Random(); {
             for (int i = 0; i < 100; ++i) {
                 for (int y = 0; y < 3; ++y) {
@@ -100,14 +101,25 @@ public class ClientGui extends GuiScreen {
         }
 
         for (final Module.Category category : Client.moduleManager.getCategories()) {
-            this.components.add(new Component(category.getName(), x += 110, 10, true) {
+            if (ClickGui.getInstance().gui.getCurrentState() == ClickGui.Gui.PHOBOSNEWBASE) {
+                this.components.add(new Component(category.getName(), x2 += 111, 4, true) {
 
-                @Override
-                public void setupItems() {
-                    counter1 = new int[]{1};
-                    Client.moduleManager.getModulesByCategory(category).forEach(module -> this.addButton(new ModuleButton(module)));
-                }
-            });
+                    @Override
+                    public void setupItems() {
+                        counter1 = new int[]{1};
+                        Client.moduleManager.getModulesByCategory(category).forEach(module -> this.addButton(new ModuleButton(module)));
+                    }
+                });
+            } else {
+                this.components.add(new Component(category.getName(), x += 110, 10, true) {
+
+                    @Override
+                    public void setupItems() {
+                        counter1 = new int[]{1};
+                        Client.moduleManager.getModulesByCategory(category).forEach(module -> this.addButton(new ModuleButton(module)));
+                    }
+                });
+            }
         }
         this.components.forEach(components -> components.getItems().sort(Comparator.comparing(Feature::getName)));
 

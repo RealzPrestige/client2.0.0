@@ -7,6 +7,7 @@ import client.modules.client.ClickGui;
 import client.gui.impl.setting.Setting;
 import client.util.ColorUtil;
 import client.util.RenderUtil;
+import client.util.TextUtil;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import org.lwjgl.input.Mouse;
 
@@ -33,7 +34,7 @@ public class Slider
             RenderUtil.drawRect(this.x, this.y, this.x + (float) this.width + 8.0f, this.y + (float) this.height - 0.9999999f, ColorUtil.toRGBA(ClickGui.getInstance().d_red.getCurrentState(), ClickGui.getInstance().d_green.getCurrentState(), ClickGui.getInstance().d_blue.getCurrentState(), ClickGui.getInstance().d_alpha.getCurrentState()));
             RenderUtil.drawRect(this.x, this.y, ((Number) this.setting.getCurrentState()).floatValue() <= this.min.floatValue() ? this.x : this.x + ((float) this.width + 7.4f) * this.partialMultiplier(), this.y + (float) this.height - 0.5f, !this.isHovering(mouseX, mouseY) ? Client.colorManager.getColorWithAlpha(Client.moduleManager.getModuleByClass(ClickGui.class).alpha.getCurrentState()) : Client.colorManager.getColorWithAlpha(Client.moduleManager.getModuleByClass(ClickGui.class).alpha.getCurrentState()));
             Client.textManager.drawStringWithShadow(this.getName() + " " + ChatFormatting.GRAY + (this.setting.getCurrentState() instanceof Float ? this.setting.getCurrentState() : Double.valueOf(((Number) this.setting.getCurrentState()).doubleValue())), this.x + 2.3f, this.y - 1.7f - (float) ClientGui.getClickGui().getTextOffset(), -1);
-        } else {
+        } else if (ClickGui.getInstance().gui.getCurrentState() == ClickGui.Gui.NEW) {
             this.dragSetting(mouseX, mouseY);
             int ercolor = ColorUtil.toARGB(ClickGui.getInstance().newred.getCurrentState(), ClickGui.getInstance().newgreen.getCurrentState(), ClickGui.getInstance().newblue.getCurrentState(), ClickGui.getInstance().newtheAlpha.getCurrentState());
             int color = ColorUtil.toARGB(30, 30, 30, 80);
