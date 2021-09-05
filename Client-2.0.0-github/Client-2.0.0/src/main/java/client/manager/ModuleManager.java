@@ -93,6 +93,7 @@ public class ModuleManager
         modules.add(new Blink());
         modules.add(new XCarry());
         modules.add(new YawLock());
+        modules.add(new AutoMine());
 
         //VISUAL
         modules.add(new CrystalChanger());
