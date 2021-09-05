@@ -118,10 +118,6 @@ public class ClickGui extends Module {
 
     @Override
     public void onEnable() {
-        if (!MainMenuButton.grdnguyferht8gvy34y785g43ynb57gny34875nt34t5bv7n3t7634gny53674t5gv3487256g7826b5342n58gv341tb5763tgb567v32t55gt34()) {
-            Client.dsj8rtuf9ynwe87vyn587bw3gy857ybwebgidwuy58g7yw34875y3487yb5g873y583gty57834tyb857t3857t3g4875bt37();
-            throw new HoleUtil("Unexpected error occurred during Client launch whilst performing HoleUtil.onRender3D(Render3DEvent event) :: 71");
-        }
         Util.mc.displayGuiScreen(ClientGui.getClickGui());
     }
 

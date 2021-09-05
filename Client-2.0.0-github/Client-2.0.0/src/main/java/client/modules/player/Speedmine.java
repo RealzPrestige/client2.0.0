@@ -6,7 +6,6 @@ import client.events.Render3DEvent;
 import client.gui.impl.setting.Bind;
 import client.modules.Module;
 import client.gui.impl.setting.Setting;
-import client.modules.visual.PopChams;
 import client.util.BlockUtil;
 import client.util.MathUtil;
 import client.util.RenderUtil;

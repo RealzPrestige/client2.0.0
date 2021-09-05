@@ -49,7 +49,6 @@ public class Client {
     public static EventManager eventManager;
     public static TextManager textManager;
     public static MainMenuScreen mainMenuScreen;
-    public static TotemPopManager totemPopManager;
 
     @Mod.Instance
     public static Client INSTANCE;
@@ -80,7 +79,6 @@ public class Client {
         colorManager = new ColorManager();
         positionManager = new PositionManager();
         configManager = new ConfigManager();
-        totemPopManager = new TotemPopManager();
         moduleManager.init();
         configManager.init();
         eventManager.init();
@@ -108,7 +106,6 @@ public class Client {
         inventoryManager = null;
         moduleManager = null;
         textManager = null;
-        totemPopManager = null;
     }
 
     public static void onUnload() {

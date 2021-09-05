@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class CrystalChanger extends Module {
     private static CrystalChanger INSTANCE;
-
+    public int limbswinga;
 public CrystalChanger(){
     super("CrystalChanger", "Tweaks looks of End crystals.", Category.VISUAL);
     this.setInstance();
@@ -36,6 +36,7 @@ public CrystalChanger(){
     public Setting<Boolean> chams = register( new Setting <> ( "Chams" , true ));
     public Setting<Boolean> wireframe = register( new Setting <> ( "Wireframe" , true ));
     public Setting<Boolean> throughwalls = register( new Setting <> ( "Walls" , true ));
+    public Setting<Integer> animationSpeed = register( new Setting <> ( "AnimationSpeed" , 1 , 0 , 10 , v -> this.chams.getCurrentState( ) ));
 
     public Setting<Integer> red = register( new Setting <> ( "Red" , 255 , 0 , 255 , v -> this.chams.getCurrentState( ) ));
     public Setting<Integer> green = register( new Setting <> ( "Green" , 255 , 0 , 255 , v -> this.chams.getCurrentState( ) ));
@@ -49,7 +50,12 @@ public CrystalChanger(){
 
     public Setting<Double> width = register( new Setting <> ( "LineWidth" , 3.0 , 0.1 , 5.0 ));
     public Setting<Double> scale = register( new Setting <> ( "Scale" , 1.0 , 0.1 , 3.0 ));
+
     public Map<EntityEnderCrystal, Float> scaleMap = new ConcurrentHashMap<>();
+
+    public void onTick(){
+        limbswinga = limbswinga + animationSpeed.getCurrentState();
+    }
     @Override
     public void onUpdate() {
         for (Entity crystal : mc.world.loadedEntityList) {
