@@ -109,6 +109,7 @@ public class ModuleManager
         modules.add(new ViewTweaks());
         modules.add(new PearlRender());
         modules.add(new NoRender());
+        modules.add(new PopChams());
 
     }
 
