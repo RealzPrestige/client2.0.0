@@ -33,6 +33,7 @@ public abstract class MixinItemRenderer {
             else {
                 GL11.glTranslated( viewmodel.offsetX.getCurrentState() / 4.0f , viewmodel.offsetY.getCurrentState() / 4.0f , viewmodel.offsetZ.getCurrentState() / 4.0f );
             }
+            GL11.glColor4f(255, 255, 255, 50);
         }
     }
 

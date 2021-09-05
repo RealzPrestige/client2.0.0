@@ -1,9 +1,12 @@
 package client.modules.visual;
 
 
+import client.events.PacketEvent;
 import client.modules.Module;
 import client.gui.impl.setting.Setting;
+import net.minecraft.network.play.client.CPacketAnimation;
 import net.minecraft.util.EnumHand;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class Viewmodel extends Module {
     public Setting<Float> sizeX = register(new Setting("SizeX", 1f, 0f, 2f));
@@ -21,6 +24,17 @@ public class Viewmodel extends Module {
     public Viewmodel() {
         super("Viewmodel", "Tweaks the size and positions of items in your hand.", Category.VISUAL);
         setInstance();
+    }
+
+    @SubscribeEvent
+    public void onPacketReceive(PacketEvent.Send event){
+        if(event.getPacket() instanceof CPacketAnimation){
+
+        }
+    }
+
+    public void onTick(){
+
     }
 
     private void setInstance() {

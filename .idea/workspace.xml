@@ -23,6 +23,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="62a2de53-954f-4cc3-99ba-84bcf3ec3fbc" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/miscellaneous/AttackSound.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/resources/assets/minecraft/textures/checkmark.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/resources/assets/minecraft/textures/hit.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/resources/assets/minecraft/textures/osu.wav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/fileContent/annotation-processors.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/fileContent/annotation-processors.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/fileContent/fileContent.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/fileContent/fileContent.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/fileHashes/fileHashes.bin" afterDir="false" />
@@ -36,19 +41,12 @@
       <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/taskHistory/taskHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/gui/ClientGui.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/gui/ClientGui.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/gui/impl/Component.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/gui/impl/Component.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/gui/impl/button/BindButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/gui/impl/button/BindButton.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/gui/impl/button/BooleanButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/gui/impl/button/BooleanButton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/gui/impl/button/Button.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/gui/impl/button/Button.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/gui/impl/button/EnumButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/gui/impl/button/EnumButton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/gui/impl/button/ModuleButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/gui/impl/button/ModuleButton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/gui/impl/button/Slider.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/gui/impl/button/Slider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/gui/impl/button/StringButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/gui/impl/button/StringButton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/manager/ColorManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/manager/ColorManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/manager/TextManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/manager/TextManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/manager/ModuleManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/manager/ModuleManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/mixin/mixins/MixinItemRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/mixin/mixins/MixinItemRenderer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/client/ClickGui.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/client/ClickGui.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/combat/AutoCrystal.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/combat/AutoCrystal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/visual/PopChams.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/visual/PopChams.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/visual/Viewmodel.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/visual/Viewmodel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/util/EntityUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/util/EntityUtil.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -135,6 +133,7 @@
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\vikkn\Documents\ClientOfficialGit\Client-2.0.0-github\Client-2.0.0\src\main\resources\assets\minecraft\textures" />
+      <recent name="C:\Users\vikkn\Documents\ClientOfficialGit\Client-2.0.0-github\Client-2.0.0\src\main\java\client\csgogui" />
       <recent name="C:\Users\vikkn\Documents\ClientOfficialGit\Client-2.0.0-github\Client-2.0.0\src\main\resources\assets\minecraft\textures\gui" />
       <recent name="C:\Users\vikkn\Documents\ClientOfficialGit\Client-2.0.0-github\Client-2.0.0\src\main\resources\temp" />
     </key>
@@ -242,8 +241,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.Client-2.0.0 [runClient]" />
-        <item itemvalue="Gradle.Client-2.0.0 [runServer]" />
         <item itemvalue="Gradle.Client-2.0.0 [build]" />
+        <item itemvalue="Gradle.Client-2.0.0 [runServer]" />
         <item itemvalue="Gradle.Client-2.0.0 [genIntellijRuns]" />
         <item itemvalue="Gradle.Client-2.0.0 [assemble]" />
       </list>
@@ -454,7 +453,21 @@
       <option name="project" value="LOCAL" />
       <updated>1630828501965</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="aaa">
+      <created>1630847688503</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1630847688503</updated>
+    </task>
+    <task id="LOCAL-00030" summary="??">
+      <created>1630847696557</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1630847696557</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -470,8 +483,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="aa" />
-    <MESSAGE value="Strafe switchable modes&#10;added iteminfo to hud" />
     <MESSAGE value="test" />
     <MESSAGE value="roflerz xD" />
     <MESSAGE value="ChorusPredict (working)" />
@@ -495,13 +506,19 @@
     <MESSAGE value="NoRender &amp; Give all mixins MAX priority" />
     <MESSAGE value="Yawlock, Slider hover amount, ChamsViewer in clickgui" />
     <MESSAGE value="PopChams part 1" />
-    <option name="LAST_COMMIT_MESSAGE" value="PopChams part 1" />
+    <MESSAGE value="aaa" />
+    <MESSAGE value="??" />
+    <option name="LAST_COMMIT_MESSAGE" value="??" />
   </component>
   <component name="WindowStateProjectService">
     <state x="440" y="94" key="#Project_Structure" timestamp="1630691184277">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="440" y="94" key="#Project_Structure/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630691184277" />
+    <state x="726" y="322" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1630853081933">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="726" y="322" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630853081933" />
     <state x="743" y="414" width="433" height="217" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1630763631957">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -518,25 +535,25 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630787785696" />
-    <state width="1877" height="112" key="GridCell.Tab.0.bottom" timestamp="1630845830629">
+    <state width="1877" height="260" key="GridCell.Tab.0.bottom" timestamp="1630853745171">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="112" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630845830629" />
+    <state width="1877" height="260" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630853745171" />
     <state width="1877" height="167" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1630739921669" />
-    <state width="1877" height="112" key="GridCell.Tab.0.center" timestamp="1630845830629">
+    <state width="1877" height="260" key="GridCell.Tab.0.center" timestamp="1630853745171">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="112" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630845830629" />
+    <state width="1877" height="260" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630853745171" />
     <state width="1877" height="167" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1630739921669" />
-    <state width="1877" height="112" key="GridCell.Tab.0.left" timestamp="1630845830629">
+    <state width="1877" height="260" key="GridCell.Tab.0.left" timestamp="1630853745171">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="112" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630845830629" />
+    <state width="1877" height="260" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630853745171" />
     <state width="1877" height="167" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1630739921669" />
-    <state width="1877" height="112" key="GridCell.Tab.0.right" timestamp="1630845830629">
+    <state width="1877" height="260" key="GridCell.Tab.0.right" timestamp="1630853745171">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="112" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630845830629" />
+    <state width="1877" height="260" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630853745171" />
     <state width="1877" height="167" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1630739921669" />
     <state x="184" y="86" key="MergeDialog" timestamp="1630830032985">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -550,26 +567,26 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="165" key="SettingsEditor/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630797301167" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1630828506041">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1630847698483">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630828506041" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630847698483" />
     <state x="565" y="130" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1630765984971">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="565" y="130" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630765984971" />
-    <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1630830024382">
+    <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1630847748578">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630830024382" />
+    <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630847748578" />
     <state x="557" y="-15" width="1067" height="801" maximized="true" key="dock-window-1" timestamp="1630772876317">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="557" y="-15" width="1067" height="801" maximized="true" key="dock-window-1/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630772876317" />
-    <state x="709" y="401" width="645" height="534" key="find.popup" timestamp="1630839944261">
+    <state x="709" y="401" width="645" height="534" key="find.popup" timestamp="1630853674326">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="709" y="401" width="645" height="534" key="find.popup/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630839944261" />
+    <state x="709" y="401" width="645" height="534" key="find.popup/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630853674326" />
     <state x="660" y="277" key="refactoring.ChangeSignatureDialog" timestamp="1630796607250">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

@@ -7,7 +7,10 @@ import client.gui.impl.setting.Setting;
 import client.util.ColorUtil;
 import client.util.RenderUtil;
 import net.minecraft.client.audio.PositionedSoundRecord;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 
@@ -35,10 +38,39 @@ public class BooleanButton
         } else if (ClickGui.getInstance().gui.getCurrentState() == ClickGui.Gui.NEW){
             int acolor = ColorUtil.toARGB(ClickGui.getInstance().newared.getCurrentState(), ClickGui.getInstance().newagreen.getCurrentState(), ClickGui.getInstance().newablue.getCurrentState(), ClickGui.getInstance().newaalpha.getCurrentState());
             int ercolor = ColorUtil.toARGB(ClickGui.getInstance().newred.getCurrentState(), ClickGui.getInstance().newgreen.getCurrentState(), ClickGui.getInstance().newblue.getCurrentState(), ClickGui.getInstance().newtheAlpha.getCurrentState());
-            RenderUtil.drawRect(this.x, this.y, this.x + (float) this.width + 7.4f, this.y + (float) this.height - 0.5f, this.getState() ? acolor : ColorUtil.toRGBA(0, 0, 0, 0));
             RenderUtil.drawRect(this.x, this.y, this.x + 1, this.y + (float) this.height + 0.5f, ercolor);
             Client.textManager.drawStringWithShadow(this.getName(), this.x + 2.3f, this.y - 1.7f - (float) ClientGui.getClickGui().getTextOffset(), this.getState() ? -1 : -5592406);
+            if(this.getState()) {
+                this.drawImageLogo();
+            }
         }
+    }
+
+    public static void drawCompleteImage(float posX, float posY, float width, float height) {
+        GL11.glPushMatrix();
+        GL11.glTranslatef(posX, posY, 0.0f);
+        GL11.glBegin(7);
+        GL11.glTexCoord2f(0.0f, 0.0f);
+        GL11.glVertex3f(0.0f, 0.0f, 0.0f);
+        GL11.glTexCoord2f(0.0f, 1.0f);
+        GL11.glVertex3f(0.0f, height, 0.0f);
+        GL11.glTexCoord2f(1.0f, 1.0f);
+        GL11.glVertex3f(width, height, 0.0f);
+        GL11.glTexCoord2f(1.0f, 0.0f);
+        GL11.glVertex3f(width, 0.0f, 0.0f);
+        GL11.glEnd();
+        GL11.glPopMatrix();
+    }
+
+    public void drawImageLogo() {
+        ResourceLocation logo = new ResourceLocation("textures/checkmark.png");
+        GlStateManager.enableTexture2D();
+        GlStateManager.disableBlend();
+        mc.getTextureManager().bindTexture(logo);
+        drawCompleteImage(this.x + width - 7, this.y - 1, 20, 20);
+        mc.getTextureManager().deleteTexture(logo);
+        GlStateManager.enableBlend();
+        GlStateManager.disableTexture2D();
     }
 
     @Override

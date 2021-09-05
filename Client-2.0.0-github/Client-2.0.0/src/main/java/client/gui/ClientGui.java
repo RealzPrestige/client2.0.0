@@ -101,16 +101,6 @@ public class ClientGui extends GuiScreen {
         }
 
         for (final Module.Category category : Client.moduleManager.getCategories()) {
-            if (ClickGui.getInstance().gui.getCurrentState() == ClickGui.Gui.PHOBOSNEWBASE) {
-                this.components.add(new Component(category.getName(), x2 += 111, 4, true) {
-
-                    @Override
-                    public void setupItems() {
-                        counter1 = new int[]{1};
-                        Client.moduleManager.getModulesByCategory(category).forEach(module -> this.addButton(new ModuleButton(module)));
-                    }
-                });
-            } else {
                 this.components.add(new Component(category.getName(), x += 110, 10, true) {
 
                     @Override
@@ -119,7 +109,6 @@ public class ClientGui extends GuiScreen {
                         Client.moduleManager.getModulesByCategory(category).forEach(module -> this.addButton(new ModuleButton(module)));
                     }
                 });
-            }
         }
         this.components.forEach(components -> components.getItems().sort(Comparator.comparing(Feature::getName)));
 
@@ -175,7 +164,9 @@ public class ClientGui extends GuiScreen {
             this.particleSystem = new ParticleSystem(new ScaledResolution(mc));
         }
         this.checkMouseWheel();
-        this.drawImageLogo();
+        if(ClickGui.getInstance().logo.getCurrentState()) {
+            this.drawImageLogo();
+        }
         this.components.forEach(components -> components.drawScreen(mouseX, mouseY, partialTicks));
 
         if(ClickGui.getInstance().gui.getCurrentState() == ClickGui.Gui.NEW){

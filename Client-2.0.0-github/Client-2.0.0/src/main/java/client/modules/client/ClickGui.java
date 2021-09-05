@@ -17,19 +17,12 @@ public class ClickGui extends Module {
     private static ClickGui INSTANCE = new ClickGui();
     public int yaw;
     public Setting<Gui> gui = this.register(new Setting("Gui", Gui.OLD));
-    public enum Gui{NEW, OLD, PHOBOSNEWBASE}
-
-    //PHOBOSNEWBASE
-    public Setting<Integer> phobosred = this.register( new Setting <> ( "PhobosRed" , 255 , 0 , 255 , v -> gui.getCurrentState( ) == Gui.PHOBOSNEWBASE ));
-    public Setting<Integer> phobosgreen = this.register( new Setting <> ( "PhobosGreen" , 255 , 0 , 255 , v -> gui.getCurrentState( ) == Gui.PHOBOSNEWBASE ));
-    public Setting<Integer> phobosblue = this.register( new Setting <> ( "PhobosBlue" , 255 , 0 , 255 , v -> gui.getCurrentState( ) == Gui.PHOBOSNEWBASE ));
-    public Setting<Integer> phobosAlpha = this.register( new Setting <> ( "PhobosAlpha" , 120 , 0 , 255 , v -> gui.getCurrentState( ) == Gui.PHOBOSNEWBASE ));
-    public Setting<Integer> phobosHoverAlpha = this.register( new Setting <> ( "PhobosHoverAlpha" , 180 , 0 , 255 , v -> gui.getCurrentState( ) == Gui.PHOBOSNEWBASE ));
-    public Setting<Integer> width = this.register( new Setting <> ( "Width" , 0, 100, 120 , v -> gui.getCurrentState( ) == Gui.PHOBOSNEWBASE ));
-
+    public enum Gui{NEW, OLD}
 
     //NEW GUI
     public Setting<Boolean> chamsViewer = this.register( new Setting <> ( "ChamsViewer" , false , v -> gui.getCurrentState( ) == Gui.NEW ));
+    public Setting<Boolean> logo = this.register( new Setting <> ( "Logo" , true , v -> gui.getCurrentState( ) == Gui.NEW ));
+
     public Setting<Integer> newtopred = this.register( new Setting <> ( "TopRed" , 255 , 0 , 255 , v -> gui.getCurrentState( ) == Gui.NEW ));
     public Setting<Integer> newtopgreen = this.register( new Setting <> ( "TopGreen" , 0 , 0 , 255 , v -> gui.getCurrentState( ) == Gui.NEW ));
     public Setting<Integer> newtopblue = this.register( new Setting <> ( "TopBlue" , 0 , 0 , 255 , v -> gui.getCurrentState( ) == Gui.NEW ));
