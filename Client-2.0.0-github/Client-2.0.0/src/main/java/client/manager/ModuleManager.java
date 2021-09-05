@@ -92,6 +92,7 @@ public class ModuleManager
         modules.add(new AntiRotate());
         modules.add(new Blink());
         modules.add(new XCarry());
+        modules.add(new YawLock());
 
         //VISUAL
         modules.add(new CrystalChanger());
