@@ -23,27 +23,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="62a2de53-954f-4cc3-99ba-84bcf3ec3fbc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/visual/BreakESP.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/fileContent/annotation-processors.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/fileContent/annotation-processors.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/fileContent/fileContent.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/fileContent/fileContent.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/fileHashes/resourceHashesCache.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/javaCompile/classAnalysis.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/javaCompile/jarAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/javaCompile/jarAnalysis.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/javaCompile/javaCompile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/taskHistory/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/taskHistory/taskHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/events/NewPopEvent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/manager/ModuleManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/manager/ModuleManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/manager/TotemPopManager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/player/Speedmine.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/player/Speedmine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/visual/CrystalChanger.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/visual/CrystalChanger.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/visual/PopChams.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/visual/BreakESP.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/visual/BreakESP.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -139,7 +128,7 @@
       <recent name="C:\Users\vikkn\Documents\ClientOfficialGit\Client-2.0.0-github\Client-2.0.0\src\main\resources\assets\minecraft" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.Client-2.0.0 [runClient]">
+  <component name="RunManager" selected="Gradle.Client-2.0.0 [build]">
     <configuration name="Client-2.0.0 [assemble]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -237,8 +226,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.Client-2.0.0 [runClient]" />
         <item itemvalue="Gradle.Client-2.0.0 [build]" />
+        <item itemvalue="Gradle.Client-2.0.0 [runClient]" />
         <item itemvalue="Gradle.Client-2.0.0 [runServer]" />
         <item itemvalue="Gradle.Client-2.0.0 [genIntellijRuns]" />
         <item itemvalue="Gradle.Client-2.0.0 [assemble]" />
@@ -471,7 +460,14 @@
       <option name="project" value="LOCAL" />
       <updated>1630853889363</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="BreakESP">
+      <created>1630869716712</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1630869716712</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -487,7 +483,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="roflerz xD" />
     <MESSAGE value="ChorusPredict (working)" />
     <MESSAGE value="Ca Render.." />
     <MESSAGE value="Chams" />
@@ -512,7 +507,8 @@
     <MESSAGE value="aaa" />
     <MESSAGE value="??" />
     <MESSAGE value="boolean checkmark and attacksound" />
-    <option name="LAST_COMMIT_MESSAGE" value="boolean checkmark and attacksound" />
+    <MESSAGE value="BreakESP" />
+    <option name="LAST_COMMIT_MESSAGE" value="BreakESP" />
   </component>
   <component name="WindowStateProjectService">
     <state x="440" y="94" key="#Project_Structure" timestamp="1630691184277">
@@ -539,25 +535,25 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630787785696" />
-    <state width="1877" height="262" key="GridCell.Tab.0.bottom" timestamp="1630869326156">
+    <state width="1877" height="262" key="GridCell.Tab.0.bottom" timestamp="1630869739505">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="262" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630869326156" />
+    <state width="1877" height="262" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630869739505" />
     <state width="1877" height="167" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1630739921669" />
-    <state width="1877" height="262" key="GridCell.Tab.0.center" timestamp="1630869326156">
+    <state width="1877" height="262" key="GridCell.Tab.0.center" timestamp="1630869739505">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="262" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630869326156" />
+    <state width="1877" height="262" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630869739505" />
     <state width="1877" height="167" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1630739921669" />
-    <state width="1877" height="262" key="GridCell.Tab.0.left" timestamp="1630869326156">
+    <state width="1877" height="262" key="GridCell.Tab.0.left" timestamp="1630869739505">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="262" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630869326156" />
+    <state width="1877" height="262" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630869739505" />
     <state width="1877" height="167" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1630739921669" />
-    <state width="1877" height="262" key="GridCell.Tab.0.right" timestamp="1630869326156">
+    <state width="1877" height="262" key="GridCell.Tab.0.right" timestamp="1630869739505">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="262" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630869326156" />
+    <state width="1877" height="262" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630869739505" />
     <state width="1877" height="167" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1630739921669" />
     <state x="184" y="86" key="MergeDialog" timestamp="1630830032985">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -571,10 +567,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="165" key="SettingsEditor/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630797301167" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1630853890933">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1630869730864">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630853890933" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630869730864" />
     <state x="565" y="130" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1630765984971">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
