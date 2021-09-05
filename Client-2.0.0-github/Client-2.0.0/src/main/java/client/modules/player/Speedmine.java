@@ -6,6 +6,7 @@ import client.events.Render3DEvent;
 import client.gui.impl.setting.Bind;
 import client.modules.Module;
 import client.gui.impl.setting.Setting;
+import client.modules.visual.PopChams;
 import client.util.BlockUtil;
 import client.util.MathUtil;
 import client.util.RenderUtil;
@@ -23,6 +24,7 @@ import org.lwjgl.input.Keyboard;
 import java.awt.*;
 
 public class Speedmine extends Module {
+    public static Speedmine INSTANCE = new Speedmine();
     Timer timer = new Timer();
     public Setting<Mode> mode = this.register(new Setting("Mode", Mode.PACKET));
     public Setting<Boolean> render = this.register(new Setting("Render", false));
@@ -36,7 +38,7 @@ public class Speedmine extends Module {
     public Setting<Integer> blue = register(new Setting("Blue", 120, 0, 255, v-> render.getCurrentState()));
 
     int currentAlpha;
-    BlockPos currentPos;
+    public BlockPos currentPos;
     IBlockState currentBlockState;
     public Speedmine() {
         super("Speedmine", "Speeds up mining and tweaks.", Category.PLAYER);
