@@ -108,7 +108,7 @@ public class Hud extends Module {
                 for (int k = 0; k < Client.moduleManager.sortedModules.size(); k++) {
                     Module module = Client.moduleManager.sortedModules.get(k);
                     String str = module.getDisplayName() + ((module.hudInfoString() != null) ? (ChatFormatting.WHITE + " [" + module.hudInfoString() + "]") : "");
-                    renderer.drawString(str, (width - 2 - renderer.getStringWidth(str)), (2 + j * 10), ColorUtil.alphaStep(new Color(color), index.getCurrentState(), (count + countt.getCurrentState())).getRGB(), true);
+                    renderer.drawString(str, (width - 2 - renderer.getStringWidth(str)), (2 + j * 10), ColorUtil.alphaStep(new Color(color), index.getCurrentState(), (counter1[0] + countt.getCurrentState())).getRGB(), true);
                     j++;
                     counter1[0] = counter1[0] + 1;
                     count++;
