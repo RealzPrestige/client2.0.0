@@ -154,8 +154,6 @@ public class EventManager extends Feature {
         if (event.getPacket() instanceof net.minecraft.network.play.server.SPacketTimeUpdate) {
             Client.serverManager.update();
         } else if ( event.getPacket ( ) instanceof SPacketSoundEffect && ( (SPacketSoundEffect) event.getPacket ( ) ).getSound ( ) == SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT ) {
-            // chorus sends 2 sound packets, this is for ignoring the first one and also ignoring your own teleport,
-            // which sends one packet which would break something like a simple "2nd packet" flag
             if ( ! chorusTimer.passedMs ( 100 ) )
                 MinecraftForge.EVENT_BUS.post ( new ChorusEvent ( ( (SPacketSoundEffect) event.getPacket ( ) ).getX ( ) , ( (SPacketSoundEffect) event.getPacket ( ) ).getY ( ) , ( (SPacketSoundEffect) event.getPacket ( ) ).getZ ( ) ) );
             chorusTimer.reset ( );
