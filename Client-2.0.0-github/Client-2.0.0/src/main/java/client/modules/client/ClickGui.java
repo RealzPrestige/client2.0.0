@@ -15,10 +15,12 @@ import org.lwjgl.input.Keyboard;
 
 public class ClickGui extends Module {
     private static ClickGui INSTANCE = new ClickGui();
+    public int yaw;
     public Setting<Gui> gui = this.register(new Setting("Gui", Gui.OLD));
     public enum Gui{NEW, OLD}
 
     //NEW GUI
+    public Setting<Boolean> chamsViewer = this.register( new Setting <> ( "ChamsViewer" , false , v -> gui.getCurrentState( ) == Gui.NEW ));
     public Setting<Integer> newtopred = this.register( new Setting <> ( "TopRed" , 255 , 0 , 255 , v -> gui.getCurrentState( ) == Gui.NEW ));
     public Setting<Integer> newtopgreen = this.register( new Setting <> ( "TopGreen" , 0 , 0 , 255 , v -> gui.getCurrentState( ) == Gui.NEW ));
     public Setting<Integer> newtopblue = this.register( new Setting <> ( "TopBlue" , 0 , 0 , 255 , v -> gui.getCurrentState( ) == Gui.NEW ));
@@ -100,12 +102,13 @@ public class ClickGui extends Module {
         INSTANCE = this;
     }
 
+
+
     @SubscribeEvent
     public void onSettingChange(ClientEvent event) {
         if (event.getStage() == 2 && event.getSetting().getFeature().equals(this)) {
             if (event.getSetting().equals(this.prefix)) {
                 Client.commandManager.setPrefix(this.prefix.getPlannedValue());
-                Command.sendMessage("Prefix set to " + ChatFormatting.DARK_GRAY + Client.commandManager.getPrefix());
             }
             Client.colorManager.setColor(this.red.getPlannedValue(), this.green.getPlannedValue(), this.blue.getPlannedValue(), this.alpha.getPlannedValue());
         }
@@ -136,12 +139,7 @@ public class ClickGui extends Module {
         if (!(ClickGui.mc.currentScreen instanceof ClientGui)) {
             this.disable();
         }
-    }
-
-    public enum rainbowModeArray {
-        Static,
-        Up
-
+        ++yaw;
     }
 
     public enum rainbowMode {

@@ -1,18 +1,12 @@
 package client.mixin.mixins;
 
 import client.Client;
-import client.gui.ClientGui;
 import client.gui.impl.background.MainMenuScreen;
 import client.gui.impl.background.MenuToggler;
-import client.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.inventory.GuiInventory;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.crash.CrashReport;
-import net.minecraft.util.ResourceLocation;
-import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -22,8 +16,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import javax.annotation.Nullable;
 
-@Mixin(value = {Minecraft.class})
-public abstract class MixinMinecraft implements Util {
+@Mixin(value = {Minecraft.class}, priority=0x7FFFFFFE)
+public abstract class MixinMinecraft {
     @Inject(method = {"shutdownMinecraftApplet"}, at = {@At(value = "HEAD")})
     private void stopClient(CallbackInfo callbackInfo) {
         this.unload();

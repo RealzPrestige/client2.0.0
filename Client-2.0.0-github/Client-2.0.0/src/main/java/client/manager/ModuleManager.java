@@ -92,6 +92,7 @@ public class ModuleManager
         modules.add(new AntiRotate());
         modules.add(new Blink());
         modules.add(new XCarry());
+        modules.add(new YawLock());
 
         //VISUAL
         modules.add(new CrystalChanger());
@@ -100,13 +101,14 @@ public class ModuleManager
         modules.add(new Viewmodel());
         modules.add(new SwingAnimations());
         modules.add(new ShulkerViewer());
-        modules.add(new PearlRender());
         modules.add(new PrestigeChams());
         modules.add(new NameTags());
         modules.add(new CityESP());
         modules.add(new ESP());
         modules.add(new Chams());
         modules.add(new ViewTweaks());
+        modules.add(new PearlRender());
+        modules.add(new NoRender());
 
     }
 

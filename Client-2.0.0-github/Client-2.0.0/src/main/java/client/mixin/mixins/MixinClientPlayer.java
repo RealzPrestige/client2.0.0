@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import javax.annotation.Nullable;
 
-@Mixin(value={AbstractClientPlayer.class}, priority = 999999999)
+@Mixin(value={AbstractClientPlayer.class}, priority=0x7FFFFFFE)
 public abstract class MixinClientPlayer {
     @Shadow
     @Nullable

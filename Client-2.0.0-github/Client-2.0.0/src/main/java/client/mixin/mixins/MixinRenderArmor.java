@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
-@Mixin(value = {LayerBipedArmor.class})
+@Mixin(value = {LayerBipedArmor.class}, priority=0x7FFFFFFE)
 public abstract class MixinRenderArmor {
     @Shadow
     protected abstract void setModelVisible(ModelBiped var1);

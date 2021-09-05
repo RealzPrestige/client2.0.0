@@ -1,109 +1,92 @@
 package client.modules.visual;
 
 import client.events.Render3DEvent;
+import client.gui.impl.setting.Setting;
 import client.modules.Module;
-import client.util.EntityUtil;
-import client.util.MathUtil;
-import client.util.RenderUtil;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.RenderGlobal;
+import client.util.ColorUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityEnderPearl;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import org.lwjgl.opengl.GL11;
-
 import java.awt.*;
-
-import static org.lwjgl.opengl.GL11.*;
+import java.util.*;
+import java.util.List;
 
 public class PearlRender extends Module {
 
-    public PearlRender(){
-        super("PearlRender", "Renders tracers to pearls.", Category.VISUAL);
+    public HashMap<UUID, List<Vec3d>> pearlPos = new HashMap<>();
+    public HashMap<UUID, Double> removeWait = new HashMap<>();
+
+    public Setting<Integer> red = register(new Setting<>("Red", 255, 0, 255));
+    public Setting<Integer> green = register(new Setting<>("Green", 255, 0, 255));
+    public Setting<Integer> blue = register(new Setting<>("Blue", 255, 0, 255));
+    public Setting<Double> lineWidth = register(new Setting<>("LineWidth", 3.0, 0.0, 10.0));
+
+    public PearlRender() {
+        super("PearlRender", "Draws a line where pearls are thrown", Category.VISUAL);
     }
 
-    public double interpolate(double now, double then) {
-        return then + (now - then) * (double) mc.getRenderPartialTicks();
-    }
-
-    public double[] interpolate(Entity entity) {
-        double posX = this.interpolate(entity.posX, entity.lastTickPosX) -mc.getRenderManager().renderPosX;
-        double posY = this.interpolate(entity.posY, entity.lastTickPosY) -mc.getRenderManager().renderPosY;
-        double posZ = this.interpolate(entity.posZ, entity.lastTickPosZ) -mc.getRenderManager().renderPosZ;
-        return new double[]{posX, posY, posZ};
-    }
-
-    public void drawLineToEntity(Entity e, float red, float green, float blue, float opacity) {
-        double[] xyz = this.interpolate(e);
-        this.drawLine(xyz[0], xyz[1], xyz[2], red, green, blue, opacity);
-    }
-
-    public void drawLine(double posx, double posy, double posz, float red, float green, float blue, float opacity) {
-        Vec3d eyes = new Vec3d(0.0, 0.0, 1.0).rotatePitch(-((float) Math.toRadians(mc.player.rotationPitch))).rotateYaw(-((float) Math.toRadians(mc.player.rotationYaw)));
-        this.drawLineFromPosToPos(eyes.x, eyes.y + (double)mc.player.getEyeHeight(), eyes.z, posx, posy, posz, red, green, blue, opacity);
-    }
-
-    public void drawLineFromPosToPos(double posx, double posy, double posz, double posx2, double posy2, double posz2, float red, float green, float blue, float opacity) {
-        GL11.glBlendFunc(770, 771);
-        glEnable(GL11.GL_BLEND);
-        GL11.glLineWidth(1);
-        GL11.glDisable(GL11.GL_TEXTURE_2D);
-        GL11.glDisable(GL11.GL_DEPTH_TEST);
-        GL11.glDepthMask(false);
-        GL11.glColor4f(red, green, blue, opacity);
-        glEnable(GL_LINE_SMOOTH);
-        glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
-        GL11.glLoadIdentity();
-        final boolean bobbing = mc.gameSettings.viewBobbing;
-        mc.gameSettings.viewBobbing = false;
-        mc.entityRenderer.orientCamera(mc.getRenderPartialTicks());
-        GL11.glBegin(GL11.GL_LINES); {
-            GL11.glVertex3d(posx, posy, posz);
-            GL11.glVertex3d(posx2, posy2, posz2);
+    @Override
+    public void onUpdate(){
+        UUID pearlPos = null;
+        for(UUID uuid : removeWait.keySet()){
+            if(removeWait.get(uuid) <= 0){
+                this.pearlPos.remove(uuid);
+                pearlPos = uuid;
+            }else {
+                removeWait.replace(uuid, removeWait.get(uuid) - 0.05);
+            }
         }
-        GL11.glEnd();
-        glEnable(GL11.GL_TEXTURE_2D);
-        glEnable(GL11.GL_DEPTH_TEST);
-        GL11.glDepthMask(true);
-        GL11.glDisable(GL11.GL_BLEND);
-        glDisable(GL_LINE_SMOOTH);
-        GL11.glColor3d(1d, 1d, 1d);
-        mc.gameSettings.viewBobbing = bobbing;
+        if(pearlPos != null){
+            removeWait.remove(pearlPos);
+        }
+
+        for(Entity e : mc.world.getLoadedEntityList()){
+            if(!(e instanceof EntityEnderPearl))continue;
+            if(!this.pearlPos.containsKey(e.getUniqueID())){
+                this.pearlPos.put(e.getUniqueID(), new ArrayList<>(Collections.singletonList(e.getPositionVector())));
+                this.removeWait.put(e.getUniqueID(), 0.1);
+            }else {
+                this.removeWait.replace(e.getUniqueID(), 0.1);
+                List<Vec3d> v = this.pearlPos.get(e.getUniqueID());
+                v.add(e.getPositionVector());
+            }
+        }
+
     }
+
     @Override
     public void onRender3D(Render3DEvent event) {
-        AxisAlignedBB bb;
-        Vec3d interp;
-        int i;
-        i = 0;
-        for (Entity entity : mc.world.loadedEntityList) {
-            if (!(entity instanceof EntityEnderPearl) || !(mc.player.getDistanceSq(entity) < 2500.0)) continue;
-            interp = EntityUtil.getInterpolatedRenderPos(entity, mc.getRenderPartialTicks());
-            bb = new AxisAlignedBB(entity.getEntityBoundingBox().minX - 0.05 - entity.posX + interp.x, entity.getEntityBoundingBox().minY - 0.0 - entity.posY + interp.y, entity.getEntityBoundingBox().minZ - 0.05 - entity.posZ + interp.z, entity.getEntityBoundingBox().maxX + 0.05 - entity.posX + interp.x, entity.getEntityBoundingBox().maxY + 0.1 - entity.posY + interp.y, entity.getEntityBoundingBox().maxZ + 0.05 - entity.posZ + interp.z);
-            GlStateManager.pushMatrix();
-            GlStateManager.enableBlend();
-            GlStateManager.disableDepth();
-            GlStateManager.tryBlendFuncSeparate(770, 771, 0, 1);
-            GlStateManager.disableTexture2D();
-            GlStateManager.depthMask(false);
-            glEnable(2848);
-            glHint(3154, 4354);
-            GL11.glLineWidth(1.0f);
-            RenderGlobal.renderFilledBox(bb, 255, 255, 255, 255);
-            GL11.glDisable(2848);
-            GlStateManager.depthMask(true);
-            GlStateManager.enableDepth();
-            GlStateManager.enableTexture2D();
-            GlStateManager.disableBlend();
-            GlStateManager.popMatrix();
-            RenderUtil.drawBlockOutline(bb, new Color(255, 255, 255), 1.0f);
-            drawLineToEntity(entity, 255, 255, 255, 255);
-            BlockPos posEntity = entity.getPosition();
-            RenderUtil.drawText(posEntity, "X: " + MathUtil.round(entity.posX, 0) + " Y: " + MathUtil.round(entity.posY, 0) + " Z:" + MathUtil.round(entity.posZ, 2));
-            if (++i < 50) continue;
-            break;
+        if(pearlPos.isEmpty()){
+            return;
         }
+        GL11.glPushMatrix();
+        GL11.glBlendFunc(770, 771);
+        GL11.glEnable(3042);
+        GL11.glDisable(3553);
+        GL11.glDisable(2929);
+        GL11.glDepthMask(false);
+        GL11.glLineWidth(lineWidth.getCurrentState().floatValue());
+        for(UUID uuid : pearlPos.keySet()){
+            if(pearlPos.get(uuid).size() <= 2){
+                continue;
+            }
+            GL11.glBegin(1);
+            for (int i = 1; i < pearlPos.get(uuid).size(); ++i) {
+                Color color = new Color(ColorUtil.toARGB(red.getCurrentState(), green.getCurrentState(), blue.getCurrentState(), 255));
+                GL11.glColor3d(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f);
+
+                List<Vec3d> pos = pearlPos.get(uuid);
+                GL11.glVertex3d(pos.get(i).x - mc.getRenderManager().viewerPosX,pos.get(i).y - mc.getRenderManager().viewerPosY, pos.get(i).z - mc.getRenderManager().viewerPosZ);
+                GL11.glVertex3d(pos.get(i - 1).x - mc.getRenderManager().viewerPosX,pos.get(i - 1).y - mc.getRenderManager().viewerPosY, pos.get(i - 1).z - mc.getRenderManager().viewerPosZ);
+            }
+            GL11.glEnd();
+        }
+
+        GL11.glEnable(3553);
+        GL11.glEnable(2929);
+        GL11.glDepthMask(true);
+        GL11.glDisable(3042);
+        GL11.glPopMatrix();
     }
 }

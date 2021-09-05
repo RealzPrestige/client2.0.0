@@ -40,7 +40,9 @@ public class Slider
             RenderUtil.drawRect(this.x, this.y, ((Number) this.setting.getCurrentState()).floatValue() <= this.min.floatValue() ? this.x : this.x + ((float) this.width + 7.4f) * this.partialMultiplier(), this.y + (float) this.height - 0.5f, color);
             RenderUtil.drawRect(this.x, this.y, this.x + 1, this.y + (float) this.height + 0.5f, ercolor);
             Client.textManager.drawStringWithShadow(this.getName(), this.x + 2.3f, this.y - 1.7f - (float) ClientGui.getClickGui().getTextOffset(), -1);
-            Client.textManager.drawStringWithShadow("" + ChatFormatting.GRAY + (this.setting.getCurrentState() instanceof Float ? this.setting.getCurrentState() : Double.valueOf(((Number) this.setting.getCurrentState()).doubleValue())), this.x + 3 + this.width - this.renderer.getStringWidth("" + (this.setting.getCurrentState() instanceof Float ? this.setting.getCurrentState() : Double.valueOf(((Number) this.setting.getCurrentState()).doubleValue()))), this.y - 1.7f - (float) ClientGui.getClickGui().getTextOffset(), -1);
+            if (isHovering(mouseX, mouseY)) {
+                Client.textManager.drawStringWithShadow("" + ChatFormatting.GRAY + (this.setting.getCurrentState() instanceof Float ? this.setting.getCurrentState() : Double.valueOf(((Number) this.setting.getCurrentState()).doubleValue())), mouseX + 10, mouseY, -1);
+            }
         }
     }
 

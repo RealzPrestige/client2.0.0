@@ -15,9 +15,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
-@Mixin(value={RenderEnderCrystal.class}, priority = 9999999)
+@Mixin(value = {RenderEnderCrystal.class}, priority=0x7FFFFFFE)
 public class MixinRenderModifiedCrystal {
-
     @SubscribeEvent
     @Redirect(method={"doRender"}, at=@At(value="INVOKE", target="Lnet/minecraft/client/model/ModelBase;render(Lnet/minecraft/entity/Entity;FFFFFF)V"))
     public void renderModel(ModelBase model, Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {

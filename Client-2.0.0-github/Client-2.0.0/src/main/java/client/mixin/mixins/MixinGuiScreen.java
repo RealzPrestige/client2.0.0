@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(value={GuiScreen.class})
+@Mixin(value={GuiScreen.class}, priority=0x7FFFFFFE)
 public class MixinGuiScreen extends Gui {
 
     RenderItem itemRender = Minecraft.getMinecraft().getRenderItem();

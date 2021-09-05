@@ -27,6 +27,30 @@ public class RenderUtil
         RenderUtil.itemRender = mc.getRenderItem();
         RenderUtil.camera = new Frustum();
     }
+    public static void drawRectCol(final float x, final float y, final float width, final float height, final Color color) {
+        GL11.glPushMatrix();
+        GL11.glDisable(3553);
+        GL11.glEnable(3042);
+        GL11.glBlendFunc(770, 771);
+        GL11.glShadeModel(7425);
+        GL11.glBegin(7);
+        GL11.glColor4f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f, color.getAlpha() / 255.0f);
+        GL11.glVertex2f(x, y);
+        GL11.glVertex2f(x, y + height);
+        GL11.glVertex2f(x + width, y + height);
+        GL11.glVertex2f(x + width, y);
+        GL11.glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
+        GL11.glEnd();
+        GL11.glEnable(3553);
+        GL11.glDisable(3042);
+        GL11.glPopMatrix();
+    }
+    public static void drawBorder(float x, float y, float width, float height, Color color) {
+        RenderUtil.drawRectCol(x - 1, y - 1, 1, height + 2, color);
+        RenderUtil.drawRectCol(x + width, y - 1, 1, height + 2, color);
+        RenderUtil.drawRectCol(x, y - 1, width, 1, color);
+        RenderUtil.drawRectCol(x, y + height, width, 1, color);
+    }
     public static void drawFilledBox ( AxisAlignedBB bb , int color ) {
         GlStateManager.pushMatrix ( );
         GlStateManager.enableBlend ( );

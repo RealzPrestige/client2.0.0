@@ -13,7 +13,14 @@ public class Chams extends Module {
     public Setting<Mode> mode = register(new Setting<>("Mode", Mode.SOLID));
     public enum Mode {SOLID, WIREFRAME, BOTH}
     public Setting<Boolean> removeArmor = register(new Setting<>("RemoveArmor", false));
-    public Setting<Boolean> noLimbAnimation = register(new Setting<>("NoLimbAnimation", false));
+    public Setting<Boolean> animationDisabler = register(new Setting<>("AntimationDisabler", false));
+    public Setting<Boolean> limbSwing = register(new Setting<>("LimbsSwing", false, v-> animationDisabler.getCurrentState()));
+    public Setting<Boolean> rotationPitch = register(new Setting<>("RotationPitch", false, v-> animationDisabler.getCurrentState()));
+    public Setting<Boolean> rotationYaw = register(new Setting<>("RotationYaw", false, v-> animationDisabler.getCurrentState()));
+    public Setting<Boolean> rotationYawHead = register(new Setting<>("RotationYawHead", false, v-> animationDisabler.getCurrentState()));
+    public Setting<Boolean> swingProgress= register(new Setting<>("SwingProgress", false, v-> animationDisabler.getCurrentState()));
+    public Setting<Boolean> cameraPitch = register(new Setting<>("CameraPitch", false, v-> animationDisabler.getCurrentState()));
+
     public Setting<Boolean> rainbow = register(new Setting<>("Rainbow", false, v-> (mode.getCurrentState() == Mode.SOLID || mode.getCurrentState() == Mode.BOTH)));
     public Setting<Integer> rainbowHue = register(new Setting<>("RainbowHue", 100, 0, 600, v -> rainbow.getCurrentState() && (mode.getCurrentState() == Mode.SOLID || mode.getCurrentState() == Mode.BOTH)));
     public Setting<Integer> red = register(new Setting<>("Red", 255, 0, 255, v-> (mode.getCurrentState() == Mode.SOLID || mode.getCurrentState() == Mode.BOTH)));
@@ -52,6 +59,7 @@ public class Chams extends Module {
     public void onRenderPlayerEvent(RenderPlayerEvent.Pre event) {
         event.getEntityPlayer().hurtTime = 0;
     }
+
     public int enchantColor() {
         if (enchantColor.getCurrentState()) {
             return new Color(enchantColorRed.getCurrentState(), enchantColorGreen.getCurrentState(), enchantColorBlue.getCurrentState()).getRGB();

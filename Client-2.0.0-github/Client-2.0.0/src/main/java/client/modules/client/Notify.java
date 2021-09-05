@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class Notify extends Module {
     private static Notify INSTANCE = new Notify();
+    public Setting<Boolean> friendMessages = register(new Setting("FriendMessages", false));
     public Setting<Boolean> chatMessages = register(new Setting("ToggleMessages", true));
     public Setting<String> command = register(new Setting("NotifyString", "Client 2.0.0"));
     public Setting<String> commandBracket = register(new Setting("Bracket", "<"));

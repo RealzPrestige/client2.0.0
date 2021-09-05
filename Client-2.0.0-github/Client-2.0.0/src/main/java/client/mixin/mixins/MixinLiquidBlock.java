@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(value={BlockLiquid.class})
+@Mixin(value= {BlockLiquid.class}, priority=0x7FFFFFFE)
 public class MixinLiquidBlock
         extends Block {
     protected MixinLiquidBlock(Material materialIn) {

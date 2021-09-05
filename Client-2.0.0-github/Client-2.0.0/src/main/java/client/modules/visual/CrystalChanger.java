@@ -4,7 +4,6 @@ import client.events.PacketEvent;
 import client.events.RenderEntityModelEvent;
 import client.modules.Module;
 import client.gui.impl.setting.Setting;
-import client.util.ColorUtil;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityEnderCrystal;
@@ -16,7 +15,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class CrystalChanger extends Module {
-
     private static CrystalChanger INSTANCE;
 
 public CrystalChanger(){
@@ -35,22 +33,22 @@ public CrystalChanger(){
         return CrystalChanger.INSTANCE;
     }
 
-    public Setting<Boolean> chams = this.register( new Setting <> ( "Chams" , true ));
-    public Setting<Boolean> wireframe = this.register( new Setting <> ( "Wireframe" , true ));
-    public Setting<Boolean> throughwalls = this.register( new Setting <> ( "Walls" , true ));
+    public Setting<Boolean> chams = register( new Setting <> ( "Chams" , true ));
+    public Setting<Boolean> wireframe = register( new Setting <> ( "Wireframe" , true ));
+    public Setting<Boolean> throughwalls = register( new Setting <> ( "Walls" , true ));
 
-    public Setting<Integer> red = this.register( new Setting <> ( "Red" , 255 , 0 , 255 , v -> this.chams.getCurrentState( ) ));
-    public Setting<Integer> green = this.register( new Setting <> ( "Green" , 255 , 0 , 255 , v -> this.chams.getCurrentState( ) ));
-    public Setting<Integer> blue = this.register( new Setting <> ( "Blue" , 255 , 0 , 255 , v -> this.chams.getCurrentState( ) ));
-    public Setting<Integer> alpha = this.register( new Setting <> ( "Alpha" , 150 , 0 , 255 , v -> this.chams.getCurrentState( ) ));
+    public Setting<Integer> red = register( new Setting <> ( "Red" , 255 , 0 , 255 , v -> this.chams.getCurrentState( ) ));
+    public Setting<Integer> green = register( new Setting <> ( "Green" , 255 , 0 , 255 , v -> this.chams.getCurrentState( ) ));
+    public Setting<Integer> blue = register( new Setting <> ( "Blue" , 255 , 0 , 255 , v -> this.chams.getCurrentState( ) ));
+    public Setting<Integer> alpha = register( new Setting <> ( "Alpha" , 150 , 0 , 255 , v -> this.chams.getCurrentState( ) ));
 
-    public Setting<Integer> wallsRed = this.register( new Setting <> ( "WallsRed" , 255 , 0 , 255 , v -> this.throughwalls.getCurrentState( ) ));
-    public Setting<Integer> wallsGreen = this.register( new Setting <> ( "WallsGreen" , 255 , 0 , 255 , v -> this.throughwalls.getCurrentState( ) ));
-    public Setting<Integer> wallsBlue = this.register( new Setting <> ( "WallsBlue" , 255 , 0 , 255 , v -> this.throughwalls.getCurrentState( ) ));
-    public Setting<Integer> wallsAlpha = this.register( new Setting <> ( "WallsAlpha" , 150 , 0 , 255 , v -> this.throughwalls.getCurrentState( ) ));
+    public Setting<Integer> wallsRed = register( new Setting <> ( "WallsRed" , 255 , 0 , 255 , v -> this.throughwalls.getCurrentState( ) ));
+    public Setting<Integer> wallsGreen = register( new Setting <> ( "WallsGreen" , 255 , 0 , 255 , v -> this.throughwalls.getCurrentState( ) ));
+    public Setting<Integer> wallsBlue = register( new Setting <> ( "WallsBlue" , 255 , 0 , 255 , v -> this.throughwalls.getCurrentState( ) ));
+    public Setting<Integer> wallsAlpha = register( new Setting <> ( "WallsAlpha" , 150 , 0 , 255 , v -> this.throughwalls.getCurrentState( ) ));
 
-    public Setting<Double> width = this.register( new Setting <> ( "LineWidth" , 3.0 , 0.1 , 5.0 ));
-    public Setting<Double> scale = this.register( new Setting <> ( "Scale" , 1.0 , 0.1 , 3.0 ));
+    public Setting<Double> width = register( new Setting <> ( "LineWidth" , 3.0 , 0.1 , 5.0 ));
+    public Setting<Double> scale = register( new Setting <> ( "Scale" , 1.0 , 0.1 , 3.0 ));
     public Map<EntityEnderCrystal, Float> scaleMap = new ConcurrentHashMap<>();
     @Override
     public void onUpdate() {
@@ -67,20 +65,20 @@ public CrystalChanger(){
                 }
                 if (!(this.scaleMap.get(crystal) >= 0.0625f * this.scale.getCurrentState()))
                     continue;
-                this.scaleMap.remove(crystal);
+
+                    this.scaleMap.remove(crystal);
             }
         }
     }
-
     @SubscribeEvent
-    public void onPacket(PacketEvent.Receive event) {
+    public void onPacketReceive(PacketEvent.Receive event) {
         if (event.getPacket() instanceof SPacketDestroyEntities) {
             SPacketDestroyEntities packet = event.getPacket();
             for (int id : packet.getEntityIDs()) {
                 try {
                     Entity entity = mc.world.getEntityByID(id);
                     if (entity instanceof EntityEnderCrystal) {
-                        this.scaleMap.remove(entity);
+                            this.scaleMap.remove(entity);
                     }
                 } catch (Exception ignored) {}
             }

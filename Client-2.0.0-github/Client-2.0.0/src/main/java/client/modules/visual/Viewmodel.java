@@ -3,6 +3,7 @@ package client.modules.visual;
 
 import client.modules.Module;
 import client.gui.impl.setting.Setting;
+import net.minecraft.util.EnumHand;
 
 public class Viewmodel extends Module {
     public Setting<Float> sizeX = register(new Setting("SizeX", 1f, 0f, 2f));
@@ -14,6 +15,7 @@ public class Viewmodel extends Module {
     public Setting<Float> offhandX = register(new Setting("OffhandX", 0.0f, -1.0f, 1.0f));
     public Setting<Float> offhandY = register(new Setting("OffhandY", 0.0f, -1.0f, 1.0f));
     public Setting<Float> offhandZ = register(new Setting("OffhandZ", 0.0f, -1.0f, 1.0f));
+
     private static Viewmodel INSTANCE = new Viewmodel();
 
     public Viewmodel() {
@@ -24,11 +26,13 @@ public class Viewmodel extends Module {
     private void setInstance() {
         INSTANCE = this;
     }
+
     public static Viewmodel getINSTANCE() {
         if(INSTANCE == null) {
             INSTANCE = new Viewmodel();
         }
         return INSTANCE;
     }
+
 
 }

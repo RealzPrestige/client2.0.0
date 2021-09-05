@@ -200,7 +200,6 @@ public class AutoCrystal extends Module {
 
 
     private void doPlace() {
-        float maxDamage = 0.5f;
         final List<BlockPos> sphere = BlockUtil.getSphere(this.placeRange.getCurrentState(), true);
         for (int size = sphere.size(), i = 0; i < size; ++i) {
             final BlockPos pos = sphere.get(i);
@@ -208,7 +207,7 @@ public class AutoCrystal extends Module {
             if (BlockUtil.canPlaceCrystal(pos, true)) {
                 final float damage;
                 if (calcMode.getCurrentState() == CalcMode.NORMAL) {
-                    if (EntityUtil.getHealth(mc.player) > self + 0.5f && this.maxSelfDamage.getCurrentState() > self && (damage = this.calculate(pos, this.target)) > maxDamage && damage > self) {
+                    if (EntityUtil.getHealth(mc.player) > self + 0.5f && self < maxSelfDamage.getCurrentState() && (damage = this.calculate(pos, this.target)) > minDamage.getCurrentState()) {
                         if (damage <= this.minDamage.getCurrentState()) {
                             if (this.facePlaceHP.getCurrentState() <= EntityUtil.getHealth(this.target) && !PlayerUtil.isArmorLow(this.target, this.armorPercent.getCurrentState())) {
                                 continue;
@@ -217,7 +216,6 @@ public class AutoCrystal extends Module {
                                 continue;
                             }
                         }
-                        maxDamage = damage;
                         placePos = pos;
                         pos2 = placePos;
                         currentTargets.clear();
@@ -233,7 +231,6 @@ public class AutoCrystal extends Module {
                                 continue;
                             }
                         }
-                        maxDamage = damage;
                         placePos = pos;
                         pos2 = placePos;
                         currentTargets.clear();
@@ -245,7 +242,7 @@ public class AutoCrystal extends Module {
             }
 
         }
-        if (placePos != null && silentSwitch.getCurrentState()) {
+        if (silentSwitch.getCurrentState() && (InventoryUtil.findHotbarBlock(ItemEndCrystal.class) > 1)) {
             mc.player.connection.sendPacket(new CPacketHeldItemChange(InventoryUtil.findHotbarBlock(ItemEndCrystal.class)));
         }
 

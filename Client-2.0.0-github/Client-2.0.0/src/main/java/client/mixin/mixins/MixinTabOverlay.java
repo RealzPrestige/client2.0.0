@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
 
-@Mixin(value={GuiPlayerTabOverlay.class})
+@Mixin(value = {GuiPlayerTabOverlay.class}, priority=0x7FFFFFFE)
 public class MixinTabOverlay
         extends Gui {
     @Redirect(method={"renderPlayerlist"}, at=@At(value="INVOKE", target="Ljava/util/List;subList(II)Ljava/util/List;", remap=false))

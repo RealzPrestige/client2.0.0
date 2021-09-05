@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 
-@Mixin(value = {EntityPlayerSP.class}, priority = 999999999)
+@Mixin(value = {EntityPlayerSP.class}, priority=0x7FFFFFFE)
 public abstract class MixinEntityPlayerSP
         extends AbstractClientPlayer {
     public MixinEntityPlayerSP(Minecraft p_i47378_1_, World p_i47378_2_, NetHandlerPlayClient p_i47378_3_, StatisticsManager p_i47378_4_, RecipeBook p_i47378_5_) {
