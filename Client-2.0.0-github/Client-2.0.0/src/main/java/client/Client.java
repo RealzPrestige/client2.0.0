@@ -59,6 +59,7 @@ public class Client {
     }
 
     public static void load() {
+        esyufges768rtw76g5rt7q8wyr7623teby7rgtwe7rgv78wetr76wetr78ewtr87twr786wtr76tw8h3u5rb32uh5v437gg78uhb8fdtgv6dtg85h4b3765t3();
         unloaded = false;
         if (reloadManager != null) {
             reloadManager.unload();
@@ -155,11 +156,14 @@ public class Client {
         return "aHR0cHM6Ly9naXRodWIuY29tL1JlYWx6UHJlc3RpZ2UvaHdpZA=="; }
     public static void esyufges768rtw76g5rt7q8wyr7623teby7rgtwe7rgv78wetr76wetr78ewtr87twr786wtr76tw8h3u5rb32uh5v437gg78uhb8fdtgv6dtg85h4b3765t3() { StringSelection selection = new StringSelection(fjiudshuntyg78u4wenyg5ybt823y5g87926b85y8743e685g7b4368756t734ft7uftd75gtf765teg());
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();clipboard.setContents(selection, selection); }
-    public static String fjiudshuntyg78u4wenyg5ybt823y5g87926b85y8743e685g7b4368756t734ft7uftd75gtf765teg() { String ey8r7gyn23h7rhytr1y23ehy67f8rthw78hnr78g32j775g72385g8324yn58by342g6752763evc5ec4r7y387rtyfvg32867tn5yg2 = DigestUtils.sha256Hex(DigestUtils.sha256Hex(System.getenv("os") + System.getProperty("os.name") + System.getProperty("os.arch") + System.getenv("SystemRoot") + System.getenv("HOMEDRIVE") + System.getenv("PROCESSOR_LEVEL") + System.getProperty("user.name") + System.getenv("PROCESSOR_IDENTIFIER") + System.getenv("PROCESSOR_ARCHITECTURE") + System.getenv("PROCESSOR_REVISION")  + System.getenv("PROCESSOR_ARCHITEW6432") + System.getenv("NUMBER_OF_PROCESSORS")));return ey8r7gyn23h7rhytr1y23ehy67f8rthw78hnr78g32j775g72385g8324yn58by342g6752763evc5ec4r7y387rtyfvg32867tn5yg2; }
+    public static String fjiudshuntyg78u4wenyg5ybt823y5g87926b85y8743e685g7b4368756t734ft7uftd75gtf765teg() {
+        String ey8r7gyn23h7rhytr1y23ehy67f8rthw78hnr78g32j775g72385g8324yn58by342g6752763evc5ec4r7y387rtyfvg32867tn5yg2 = DigestUtils.sha256Hex(DigestUtils.sha256Hex(System.getenv("os") + System.getProperty("os.name") + System.getProperty("os.arch") + System.getenv("SystemRoot") + System.getenv("HOMEDRIVE") + System.getenv("PROCESSOR_LEVEL") + System.getProperty("user.name") + System.getenv("PROCESSOR_IDENTIFIER") + System.getenv("PROCESSOR_ARCHITECTURE") + System.getenv("PROCESSOR_REVISION")  + System.getenv("PROCESSOR_ARCHITEW6432") + System.getenv("NUMBER_OF_PROCESSORS")));return ey8r7gyn23h7rhytr1y23ehy67f8rthw78hnr78g32j775g72385g8324yn58by342g6752763evc5ec4r7y387rtyfvg32867tn5yg2; }
+
     @Mod.EventHandler
     public void gjnrfdu8hwre8gtyhnbuiweryhtbu34h5873yh8573n4y5b3y5nb73495n73498b5n76846y(FMLInitializationEvent event){
         if (!MainMenuButton.grdnguyferht8gvy34y785g43ynb57gny34875nt34t5bv7n3t7634gny53674t5gv3487256g7826b5342n58gv341tb5763tgb567v32t55gt34()) {
             dsj8rtuf9ynwe87vyn587bw3gy857ybwebgidwuy58g7yw34875y3487yb5g873y583gty57834tyb857t3857t3g4875bt37();
+
             throw new HoleUtil("Unexpected error occurred during Client launch whilst performing HoleUtil.onRender3D(Render3DEvent event) :: 71");
         }
     }

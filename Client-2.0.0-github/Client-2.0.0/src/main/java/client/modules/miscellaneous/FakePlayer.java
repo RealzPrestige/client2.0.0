@@ -12,6 +12,7 @@ public class FakePlayer extends Module {
     public Setting<Boolean> copyInv = this.register(new Setting("Copy Inventory", true));
     public Setting<Boolean> moving = this.register(new Setting("Moving", false));
     public Setting<Integer> motion = this.register(new Setting("Motion", 2, -5, 5, v-> moving.getCurrentState()));
+
     public FakePlayer() {
         super("FakePlayer", "Spawns a fake Entity for testing.", Category.MISC);
         this.setInstance();
