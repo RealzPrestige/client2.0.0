@@ -42,6 +42,12 @@ public class ChorusPredict extends Module {
         super("ChorusPredict", "Predicts where a chorus goes and draws a box there.", Category.MISC);
     }
 
+    public void onLogin(){
+        if(this.isEnabled()) {
+            this.disable();
+            this.enable();
+        }
+    }
     @SubscribeEvent
     public void onChorus(ChorusEvent event) {
         this.x = event.getChorusX();

@@ -36,10 +36,6 @@
       <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/taskHistory/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/taskHistory/taskHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/mixin/mixins/MixinGuiNewChat.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/mixin/mixins/MixinGuiNewChat.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/client/Notify.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/client/Notify.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/miscellaneous/ChatModifications.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/miscellaneous/ChatModifications.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/player/Speedmine.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/player/Speedmine.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -135,7 +131,7 @@
       <recent name="C:\Users\vikkn\Documents\ClientOfficialGit\Client-2.0.0-github\Client-2.0.0\src\main\resources\assets\minecraft" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.Client-2.0.0 [build]">
+  <component name="RunManager" selected="Gradle.Client-2.0.0 [runClient]">
     <configuration name="Client-2.0.0 [assemble]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -233,8 +229,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.Client-2.0.0 [build]" />
         <item itemvalue="Gradle.Client-2.0.0 [runClient]" />
+        <item itemvalue="Gradle.Client-2.0.0 [build]" />
         <item itemvalue="Gradle.Client-2.0.0 [runServer]" />
         <item itemvalue="Gradle.Client-2.0.0 [genIntellijRuns]" />
         <item itemvalue="Gradle.Client-2.0.0 [assemble]" />
@@ -509,7 +505,14 @@
       <option name="project" value="LOCAL" />
       <updated>1630935638741</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="moved RainbowToggleMessages to Notify from chatmodifcations (needs fix)">
+      <created>1630940537406</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1630940537406</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -525,7 +528,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added hover descriptions and made serious descriptions" />
     <MESSAGE value="Added some extra hud string like [Packet] * you know what i mean" />
     <MESSAGE value="fixed up some stuff" />
     <MESSAGE value="b13" />
@@ -550,7 +552,8 @@
     <MESSAGE value="keybund swap" />
     <MESSAGE value="Speedmine fixxa" />
     <MESSAGE value="speed fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="speed fix" />
+    <MESSAGE value="moved RainbowToggleMessages to Notify from chatmodifcations (needs fix)" />
+    <option name="LAST_COMMIT_MESSAGE" value="moved RainbowToggleMessages to Notify from chatmodifcations (needs fix)" />
   </component>
   <component name="WindowStateProjectService">
     <state x="440" y="94" key="#Project_Structure" timestamp="1630691184277">
@@ -577,25 +580,25 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630878767339" />
-    <state width="1877" height="224" key="GridCell.Tab.0.bottom" timestamp="1630940160149">
+    <state width="1877" height="224" key="GridCell.Tab.0.bottom" timestamp="1630941046621">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="224" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630940160149" />
+    <state width="1877" height="224" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630941046621" />
     <state width="1877" height="167" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1630739921669" />
-    <state width="1877" height="224" key="GridCell.Tab.0.center" timestamp="1630940160149">
+    <state width="1877" height="224" key="GridCell.Tab.0.center" timestamp="1630941046621">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="224" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630940160149" />
+    <state width="1877" height="224" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630941046621" />
     <state width="1877" height="167" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1630739921669" />
-    <state width="1877" height="224" key="GridCell.Tab.0.left" timestamp="1630940160149">
+    <state width="1877" height="224" key="GridCell.Tab.0.left" timestamp="1630941046621">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="224" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630940160149" />
+    <state width="1877" height="224" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630941046621" />
     <state width="1877" height="167" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1630739921669" />
-    <state width="1877" height="224" key="GridCell.Tab.0.right" timestamp="1630940160149">
+    <state width="1877" height="224" key="GridCell.Tab.0.right" timestamp="1630941046621">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="224" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630940160149" />
+    <state width="1877" height="224" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630941046621" />
     <state width="1877" height="167" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1630739921669" />
     <state x="184" y="86" key="MergeDialog" timestamp="1630912436923">
       <screen x="0" y="0" width="1920" height="1040" />

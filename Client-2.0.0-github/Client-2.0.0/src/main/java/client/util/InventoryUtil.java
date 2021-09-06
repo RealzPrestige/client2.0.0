@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class InventoryUtil implements Util {
+
     public static void switchToSlot(final int slot, final Switch2 switchMode) {
         if (slot != -1 && InventoryUtil.mc.player.inventory.currentItem != slot) {
             switch (switchMode) {

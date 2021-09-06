@@ -16,6 +16,7 @@ public abstract class MixinRenderArmor {
     @Overwrite
     protected void setModelSlotVisible(ModelBiped p_188359_1_, EntityEquipmentSlot slotIn) {
         this.setModelVisible(p_188359_1_);
+        if(Chams.getInstance().isOn()){
         switch (slotIn) {
             case HEAD: {
                 p_188359_1_.bipedHead.showModel = Chams.getInstance().isEnabled() && !Chams.getInstance().removeArmor.getCurrentState();
@@ -38,6 +39,7 @@ public abstract class MixinRenderArmor {
                 p_188359_1_.bipedRightLeg.showModel = Chams.getInstance().isEnabled() && !Chams.getInstance().removeArmor.getCurrentState();
                 p_188359_1_.bipedLeftLeg.showModel = Chams.getInstance().isEnabled() && !Chams.getInstance().removeArmor.getCurrentState();
             }
+        }
         }
     }
 }

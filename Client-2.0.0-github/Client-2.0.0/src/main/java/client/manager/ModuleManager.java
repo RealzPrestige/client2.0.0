@@ -96,6 +96,7 @@ public class ModuleManager
         modules.add(new XCarry());
         modules.add(new YawLock());
         modules.add(new AutoMine());
+        modules.add(new AutoSilentChorus());
 
         //VISUAL
         modules.add(new CrystalChanger());
@@ -112,7 +113,6 @@ public class ModuleManager
         modules.add(new ViewTweaks());
         modules.add(new PearlRender());
         modules.add(new NoRender());
-        modules.add(new BreakESP());
 
     }
 

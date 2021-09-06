@@ -12,6 +12,7 @@ public class Chams extends Module {
 
     public Setting<Mode> mode = register(new Setting<>("Mode", Mode.SOLID));
     public enum Mode {SOLID, WIREFRAME, BOTH}
+
     public Setting<Boolean> removeArmor = register(new Setting<>("RemoveArmor", false));
     public Setting<Boolean> animationDisabler = register(new Setting<>("AntimationDisabler", false));
     public Setting<Boolean> limbSwing = register(new Setting<>("LimbsSwing", false, v-> animationDisabler.getCurrentState()));
