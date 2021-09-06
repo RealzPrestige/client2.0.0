@@ -100,12 +100,6 @@ public class Speedmine extends Module {
                 this.currentBlockState = null;
             }
         }
-
-        if (!(mc.world.getBlockState(this.lastBlock).getBlock() == Blocks.AIR)) {
-            Speedmine.mc.player.connection.sendPacket(new CPacketHeldItemChange(this.getPickSlot()));
-            int oldSlot = mc.player.inventory.currentItem;
-            Speedmine.mc.player.connection.sendPacket(new CPacketHeldItemChange(oldSlot));
-        }
         if (currentAlpha < 253) {
             currentAlpha = currentAlpha + 3;
         }
