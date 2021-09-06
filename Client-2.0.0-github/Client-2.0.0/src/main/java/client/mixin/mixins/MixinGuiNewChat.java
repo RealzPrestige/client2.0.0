@@ -2,12 +2,15 @@ package client.mixin.mixins;
 
 import client.Client;
 import client.modules.client.ClickGui;
+import client.modules.client.Hud;
+import client.modules.miscellaneous.ChatModifications;
 import client.util.ColorUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ChatLine;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiNewChat;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -40,5 +43,17 @@ public class MixinGuiNewChat
         }
         return 0;
     }
+    //ozark
+    @Redirect(method = "drawChat", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/FontRenderer;drawStringWithShadow(Ljava/lang/String;FFI)I"))
+    private int drawStringWithShadowMaybe(FontRenderer fontRenderer, String text, float x, float y, int color) {
+        if (text.contains(Client.commandManager.getClientMessage()) && ChatModifications.getInstance().enabled.getCurrentState() && ChatModifications.getInstance().rainbow.getCurrentState()) {
+                Client.textManager.drawString(text,x,y,ColorUtil.rainbowHud(Hud.getInstance().rainbowDelay.getCurrentState()).getRGB(),true);
+        } else {
+            return fontRenderer.drawStringWithShadow(text, x, y, color);
+        }
+        return color;
+    }
+
+
 }
 

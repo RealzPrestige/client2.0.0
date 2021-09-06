@@ -22,6 +22,7 @@ import java.util.Date;
 public class ChatModifications extends Module {
     private static ChatModifications getInstance = new ChatModifications();
     public Setting<Boolean> suffix = this.register(new Setting("Suffix", true));
+    public Setting<Boolean> rainbow = this.register(new Setting("RainbowClientSuffix", true));
     public Setting<Boolean> customChat = this.register(new Setting("CustomChat", false));
     public Setting<Boolean> nameHighLight = this.register(new Setting("NameHighLight", false, v->customChat.getCurrentState()));
     public Setting<Boolean> smoothChat = this.register(new Setting("SmoothChat", false, v->customChat.getCurrentState()));
