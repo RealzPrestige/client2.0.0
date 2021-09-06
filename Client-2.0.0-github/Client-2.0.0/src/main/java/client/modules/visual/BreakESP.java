@@ -26,7 +26,7 @@ public class BreakESP extends Module {
     public void onRender3D(Render3DEvent event){
         mc.renderGlobal.damagedBlocks.forEach(((integer, destroyBlockProgress) -> {
             RenderUtil.drawBoxESP(destroyBlockProgress.getPosition(), new Color(red.getCurrentState(), green.getCurrentState(), blue.getCurrentState(), alpha.getCurrentState()), true, new Color(red.getCurrentState(), green.getCurrentState(), blue.getCurrentState(), alpha.getCurrentState()),1, outline.getCurrentState(), box.getCurrentState(), alpha.getCurrentState(), true);
-            RenderUtil.drawText(destroyBlockProgress.getPosition(), Objects.requireNonNull(mc.world.getEntityByID(integer)).getName() + " " + string + (destroyBlockProgress.getPartialBlockDamage() * 12.5) + "%");
+            RenderUtil.drawText(destroyBlockProgress.getPosition(), Objects.requireNonNull(mc.world.getEntityByID(integer)).getName() + "\n" + string + (destroyBlockProgress.getPartialBlockDamage() * 12.5) + "%");
         }));
     }
 
