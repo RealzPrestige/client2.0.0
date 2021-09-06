@@ -64,7 +64,6 @@ public class ModuleManager
         modules.add(new MiddleClickPearl());
         modules.add(new ChorusPredict());
         modules.add(new NoBreakAnimation());
-        modules.add(new AttackSound());
 
         //MOVEMENT
         modules.add(new ReverseStep());
