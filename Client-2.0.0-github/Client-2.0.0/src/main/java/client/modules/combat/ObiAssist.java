@@ -24,9 +24,7 @@ import static client.util.EntityUtil.calculateDamage;
  * credits: salhack for calcs
  */
 
-public final class ObiAssist extends Module {
-
-    private static ObiAssist instance;
+public class ObiAssist extends Module {
     private final Setting<Boolean> packet = register(new Setting<>("PacketSwitch", true));
     private final Setting<Boolean> packethand = register(new Setting<>("PacketHand", true));
     private final Setting<Boolean> render = register(new Setting<>("Render", true));
@@ -36,7 +34,6 @@ public final class ObiAssist extends Module {
 
     public ObiAssist() {
         super("ObiAssist", "Place obsidian to support your AutoCrystal in terrain duels.", Category.COMBAT);
-        instance = this;
     }
 
     public static boolean CanPlaceCrystalIfObbyWasAtPos(final BlockPos pos) {

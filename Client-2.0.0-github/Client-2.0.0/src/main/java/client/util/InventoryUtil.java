@@ -149,6 +149,7 @@ public class InventoryUtil implements Util {
         return -1;
     }
 
+
     public static int getItemHotbar(Item input) {
         for (int i = 0; i < 9; ++i) {
             Item item = mc.player.inventory.getStackInSlot(i).getItem();

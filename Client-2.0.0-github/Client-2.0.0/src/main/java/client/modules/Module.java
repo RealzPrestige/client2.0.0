@@ -15,12 +15,10 @@ public class Module
         extends Feature {
     private final String description;
     private final Category category;
-    public Setting<Boolean> enabled = this.register( new Setting <> ( "Enabled" , false ));
-    public Setting<Bind> bind = this.register( new Setting <> ( "Keybind" , new Bind ( - 1 ) ));
+    public Setting<Boolean> enabled = register( new Setting <> ( "Enabled" , false ));
+    public Setting<Bind> bind = register( new Setting <> ( "Keybind" , new Bind ( - 1 ) ));
     boolean drawn = true;
     public Setting<String> displayName;
-    public boolean hasListener;
-    public boolean alwaysListening;
     public float offset;
     public boolean sliding;
 

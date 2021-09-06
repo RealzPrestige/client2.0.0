@@ -43,19 +43,19 @@ public class AutoMine extends Module {
         if (fullNullCheck()) return;
 
         if (mode.getCurrentState() == Mode.COMBAT) {
-            if (Speedmine.INSTANCE.currentPos == null && findLookingPlayer(range.getCurrentState()) != null && !Client.friendManager.isFriend(findLookingPlayer(range.getCurrentState())) && isBurrowed(findLookingPlayer(range.getCurrentState())) && gayIdiots.getCurrentState()) {
+            if (Speedmine.getInstance().currentPos == null && findLookingPlayer(range.getCurrentState()) != null && !Client.friendManager.isFriend(findLookingPlayer(range.getCurrentState())) && isBurrowed(findLookingPlayer(range.getCurrentState())) && gayIdiots.getCurrentState()) {
                 target = findLookingPlayer(range.getCurrentState());
                 BlockPos gay = new BlockPos(target.posX, target.posY + 0.2, target.posZ);
                 if (!(mc.world.getBlockState(gay).getBlock() == Blocks.AIR)) {
-                    Speedmine.INSTANCE.currentPos = gay;
+                    Speedmine.getInstance().currentPos = gay;
                 }
 
             }
         }
         if (mode.getCurrentState() == Mode.COMBAT) {
-            if (Speedmine.INSTANCE.currentPos == null && findLookingPlayer(range.getCurrentState()) != null && !Client.friendManager.isFriend(findLookingPlayer(range.getCurrentState())) && surround.getCurrentState()) {
+            if (Speedmine.getInstance().currentPos == null && findLookingPlayer(range.getCurrentState()) != null && !Client.friendManager.isFriend(findLookingPlayer(range.getCurrentState())) && surround.getCurrentState()) {
                 if (isCityable(findLookingPlayer(range.getCurrentState()), endCrystal.getCurrentState()) != null) {
-                    Speedmine.INSTANCE.currentPos = isCityable(findLookingPlayer(range.getCurrentState()), endCrystal.getCurrentState());
+                    Speedmine.getInstance().currentPos = isCityable(findLookingPlayer(range.getCurrentState()), endCrystal.getCurrentState());
                 }
             }
         }
