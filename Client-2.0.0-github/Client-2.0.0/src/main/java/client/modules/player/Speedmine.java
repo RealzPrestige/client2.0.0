@@ -42,9 +42,6 @@ public class Speedmine extends Module {
     int currentAlpha;
     public BlockPos currentPos;
     IBlockState currentBlockState;
-    private BlockPos blockAimed;
-    private BlockPos lastBlock;
-    private EnumFacing direction;
 
     public Speedmine() {
         super("Speedmine", "Speeds up mining and tweaks.", Category.PLAYER);
@@ -100,12 +97,6 @@ public class Speedmine extends Module {
                 this.currentBlockState = null;
             }
         }
-
-        if (!(mc.world.getBlockState(this.lastBlock).getBlock() == Blocks.AIR)) {
-            Speedmine.mc.player.connection.sendPacket(new CPacketHeldItemChange(this.getPickSlot()));
-            int oldSlot = mc.player.inventory.currentItem;
-            Speedmine.mc.player.connection.sendPacket(new CPacketHeldItemChange(oldSlot));
-        }
         if (currentAlpha < 253) {
             currentAlpha = currentAlpha + 3;
         }
@@ -124,10 +115,6 @@ public class Speedmine extends Module {
         if (this.render.getCurrentState() && this.currentPos != null && (this.currentBlockState.getBlock() == Blocks.OBSIDIAN || this.currentBlockState.getBlock() == Blocks.ENDER_CHEST)) {
             Color color = new Color(red.getCurrentState(), green.getCurrentState(), blue.getCurrentState(), currentAlpha);
             RenderUtil.drawBoxESP(this.currentPos, color, true, color, 1, true, true, currentAlpha, false);
-        }
-        if (mode.getCurrentState() == Mode.BREAKER) {
-            Color color = new Color(red.getCurrentState(), green.getCurrentState(), blue.getCurrentState(), 255);
-            RenderUtil.drawBoxESP(this.lastBlock, color, true, color, 1, true, true, 100, false);
         }
     }
 
@@ -165,23 +152,11 @@ public class Speedmine extends Module {
                         Speedmine.mc.world.setBlockToAir(event.pos);
                         break;
                     }
-                    case BREAKER: {
-                        blockAimed = event.pos;
-                        if (BlockUtil.canBreak(event.pos)) {
-                            if (lastBlock == null || event.pos.getX() != lastBlock.getX() || event.pos.getY() != lastBlock.getY() || event.pos.getZ() != lastBlock.getZ()) {
-                                mc.player.swingArm(EnumHand.MAIN_HAND);
-                                mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.START_DESTROY_BLOCK, event.pos, event.facing));
-                                lastBlock = event.pos;
-                                direction = event.facing;
-                            }
-                            mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.STOP_DESTROY_BLOCK, lastBlock, direction));
-                            event.setCanceled(true);
-                        }
+
                     }
                 }
             }
         }
-    }
 
     @Override
     public String hudInfoString() {
@@ -190,8 +165,7 @@ public class Speedmine extends Module {
 
     public enum Mode {
         PACKET,
-        INSTANT,
-        BREAKER
+        INSTANT
     }
 
     private int getPickSlot() {
