@@ -78,6 +78,8 @@ public class ModuleManager
         modules.add(new Strafe());
         modules.add(new NoFall());
         modules.add(new FastSwim());
+        modules.add(new AntiAim());
+        modules.add(new AutoWalk());
 
         //PLAYER
         modules.add(new KeyEXP());
@@ -111,6 +113,7 @@ public class ModuleManager
         modules.add(new PearlRender());
         modules.add(new NoRender());
         modules.add(new BreakESP());
+
     }
 
     public Module getModuleByName(String name) {

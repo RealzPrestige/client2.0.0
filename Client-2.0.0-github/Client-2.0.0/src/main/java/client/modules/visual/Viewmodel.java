@@ -33,10 +33,6 @@ public class Viewmodel extends Module {
         }
     }
 
-    public void onTick(){
-
-    }
-
     private void setInstance() {
         INSTANCE = this;
     }
