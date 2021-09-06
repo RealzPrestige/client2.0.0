@@ -23,8 +23,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="62a2de53-954f-4cc3-99ba-84bcf3ec3fbc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/movement/AntiAim.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/movement/AutoWalk.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_04_09_2021_15_14__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_04_09_2021_15_14__Default_Changelist_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05_09_2021_10_20__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05_09_2021_10_20__Default_Changelist_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/fileContent/annotation-processors.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/fileContent/annotation-processors.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/fileContent/fileContent.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/fileContent/fileContent.lock" afterDir="false" />
@@ -38,10 +38,8 @@
       <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/taskHistory/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/taskHistory/taskHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/manager/ModuleManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/manager/ModuleManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/miscellaneous/FakePlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/miscellaneous/FakePlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/visual/Viewmodel.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/visual/Viewmodel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/player/AutoMine.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/player/AutoMine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/player/Speedmine.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/player/Speedmine.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -483,7 +481,14 @@
       <option name="project" value="LOCAL" />
       <updated>1630870656085</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="very useful modules (autowalk &amp; antiaim)">
+      <created>1630911269189</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1630911269189</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -499,7 +504,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Ca Render.." />
     <MESSAGE value="Chams" />
     <MESSAGE value="Middleclick drawn + XCarry (InventoryCloseEvent and MixinContainerPlayer)" />
     <MESSAGE value="added Chams and AlphaStep to activeModules. added ColorModes to activeModules" />
@@ -524,7 +528,8 @@
     <MESSAGE value="boolean checkmark and attacksound" />
     <MESSAGE value="BreakESP" />
     <MESSAGE value="woopsies" />
-    <option name="LAST_COMMIT_MESSAGE" value="woopsies" />
+    <MESSAGE value="very useful modules (autowalk &amp; antiaim)" />
+    <option name="LAST_COMMIT_MESSAGE" value="very useful modules (autowalk &amp; antiaim)" />
   </component>
   <component name="WindowStateProjectService">
     <state x="440" y="94" key="#Project_Structure" timestamp="1630691184277">
@@ -551,30 +556,30 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630878767339" />
-    <state width="1877" height="231" key="GridCell.Tab.0.bottom" timestamp="1630908339571">
+    <state width="1877" height="231" key="GridCell.Tab.0.bottom" timestamp="1630912077233">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="231" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630908339571" />
+    <state width="1877" height="231" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630912077233" />
     <state width="1877" height="167" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1630739921669" />
-    <state width="1877" height="231" key="GridCell.Tab.0.center" timestamp="1630908339571">
+    <state width="1877" height="231" key="GridCell.Tab.0.center" timestamp="1630912077233">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="231" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630908339571" />
+    <state width="1877" height="231" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630912077233" />
     <state width="1877" height="167" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1630739921669" />
-    <state width="1877" height="231" key="GridCell.Tab.0.left" timestamp="1630908339571">
+    <state width="1877" height="231" key="GridCell.Tab.0.left" timestamp="1630912077233">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="231" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630908339571" />
+    <state width="1877" height="231" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630912077233" />
     <state width="1877" height="167" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1630739921669" />
-    <state width="1877" height="231" key="GridCell.Tab.0.right" timestamp="1630908339571">
+    <state width="1877" height="231" key="GridCell.Tab.0.right" timestamp="1630912077233">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="231" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630908339571" />
+    <state width="1877" height="231" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630912077233" />
     <state width="1877" height="167" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1630739921669" />
-    <state x="184" y="86" key="MergeDialog" timestamp="1630830032985">
+    <state x="184" y="86" key="MergeDialog" timestamp="1630912436923">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="184" y="86" key="MergeDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630830032985" />
+    <state x="184" y="86" key="MergeDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630912436923" />
     <state x="610" y="222" key="RollbackChangesDialog" timestamp="1630782215923">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -583,18 +588,18 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="165" key="SettingsEditor/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630797301167" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1630870657263">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1630911273679">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630870657263" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630911273679" />
     <state x="565" y="130" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1630765984971">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="565" y="130" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630765984971" />
-    <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1630847748578">
+    <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1630913045828">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630847748578" />
+    <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630913045828" />
     <state x="557" y="-15" width="1067" height="801" maximized="true" key="dock-window-1" timestamp="1630772876317">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

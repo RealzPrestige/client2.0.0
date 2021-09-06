@@ -24,14 +24,14 @@ public class AutoMine extends Module {
      * @since 5/9/2021
      */
 
-    public Setting<Mode> mode = this.register(new Setting("Mode", Mode.COMBAT));
+    public Setting<Mode> mode = register(new Setting<>("Mode", Mode.COMBAT));
 
     private enum Mode {NORMAL, COMBAT}
 
-    public Setting<Boolean> gayIdiots = this.register(new Setting("Burrow", true, v -> mode.getCurrentState() == Mode.COMBAT));
-    public Setting<Boolean> surround = this.register(new Setting("Surrounds", true, v -> mode.getCurrentState() == Mode.COMBAT));
-    public Setting<Integer> range = this.register(new Setting("Range", 5, 1, 9, v -> mode.getCurrentState() == Mode.COMBAT));
-    public Setting<Boolean> endCrystal = this.register(new Setting("EndCrystal", true, v -> mode.getCurrentState() == Mode.COMBAT && surround.getCurrentState()));
+    public Setting<Boolean> gayIdiots = register(new Setting<>("Burrow", true, v -> mode.getCurrentState() == Mode.COMBAT));
+    public Setting<Boolean> surround = register(new Setting<>("Surrounds", true, v -> mode.getCurrentState() == Mode.COMBAT));
+    public Setting<Integer> range = register(new Setting<>("Range", 5, 1, 9, v -> mode.getCurrentState() == Mode.COMBAT));
+    public Setting<Boolean> endCrystal = register(new Setting<>("EndCrystal", true, v -> mode.getCurrentState() == Mode.COMBAT && surround.getCurrentState()));
 
 
     public AutoMine() {
