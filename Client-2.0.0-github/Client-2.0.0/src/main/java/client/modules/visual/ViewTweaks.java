@@ -10,7 +10,6 @@ public class ViewTweaks extends Module {
     private static ViewTweaks INSTANCE = new ViewTweaks();
 
     public Setting<Boolean> fullBright = register(new Setting("FullBright", false));
-    public Setting<Boolean> swordAnimation = register(new Setting("SwordAnimation", false));
     public Setting<Boolean> fovSetting = register(new Setting("Fov", false));
     public Setting<Float> fov = register(new Setting("FovValue", 140.0f, 0.0f, 180.0f, v-> fovSetting.getCurrentState()));
     public Setting<Boolean> antiFog = register(new Setting("AntiFog", false));
@@ -49,12 +48,6 @@ public class ViewTweaks extends Module {
     }
     @Override
     public void onUpdate() {
-        if (swordAnimation.getCurrentState()) {
-            if (mc.player.getHeldItemMainhand().getItem() instanceof ItemSword && mc.entityRenderer.itemRenderer.prevEquippedProgressMainHand >= 0.9) {
-                mc.entityRenderer.itemRenderer.equippedProgressMainHand = 1.0f;
-                mc.entityRenderer.itemRenderer.itemStackMainHand = mc.player.getHeldItemMainhand();
-            }
-        }
         if (fovSetting.getCurrentState()) {
             mc.gameSettings.setOptionFloatValue(GameSettings.Options.FOV, this.fov.getCurrentState( ) );
         }

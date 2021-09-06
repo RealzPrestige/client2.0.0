@@ -43,17 +43,6 @@ public class MixinGuiNewChat
         }
         return 0;
     }
-    //ozark
-    @Redirect(method = "drawChat", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/FontRenderer;drawStringWithShadow(Ljava/lang/String;FFI)I"))
-    private int drawStringWithShadowMaybe(FontRenderer fontRenderer, String text, float x, float y, int color) {
-        if (text.contains(Client.commandManager.getClientMessage()) && ChatModifications.getInstance().enabled.getCurrentState() && ChatModifications.getInstance().rainbow.getCurrentState()) {
-                Client.textManager.drawString(text,x,y,ColorUtil.rainbowHud(Hud.getInstance().rainbowDelay.getCurrentState()).getRGB(),true);
-        } else {
-            return fontRenderer.drawStringWithShadow(text, x, y, color);
-        }
-        return color;
-    }
-
 
 }
 

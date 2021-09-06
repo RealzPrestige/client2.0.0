@@ -38,11 +38,7 @@ public class Speedmine extends Module {
     public Setting<SilentSwitchMode> silentSwitchMode = register(new Setting<>("SilentSwitchMode", SilentSwitchMode.AUTO, v-> mode.getCurrentState() == Mode.PACKET && silentSwitch.getCurrentState()));
     public enum SilentSwitchMode{AUTO, KEYBIND}
     public Setting<Bind> switchBind = register(new Setting<>("SwitchBind", new Bind(-1), v ->  silentSwitch.getCurrentState() && silentSwitchMode.getCurrentState() == SilentSwitchMode.KEYBIND));
-
     public Setting<Boolean> render = register(new Setting<>("Render", false));
-    public Setting<Boolean> alphaRise = register(new Setting<>("AlphaIncrease", false,v -> render.getCurrentState()));
-    public Setting<Boolean> alphaRiseInvert = register(new Setting<>("InvertAlphaIncrease", false,v -> render.getCurrentState() && alphaRise.getCurrentState()));
-    public Setting<Integer> invertMinAlpha = register(new Setting<>("AlphaMinInvert", 10, 1, 40, v -> render.getCurrentState() && alphaRise.getCurrentState() && alphaRiseInvert.getCurrentState()));
     public Setting<Integer> red = register(new Setting<>("Red", 120, 0, 255, v -> render.getCurrentState()));
     public Setting<Integer> green = register(new Setting<>("Green", 120, 0, 255, v -> render.getCurrentState()));
     public Setting<Integer> blue = register(new Setting<>("Blue", 120, 0, 255, v -> render.getCurrentState()));
@@ -90,13 +86,8 @@ public class Speedmine extends Module {
                 this.currentBlockState = null;
             }
         }
-        if (currentAlpha < (alpha.getCurrentState() - 2) && alphaRise.getCurrentState()) {
+        if (currentAlpha < (alpha.getCurrentState() - 2)) {
             currentAlpha = currentAlpha + 3;
-        }else if (alphaRise.getCurrentState() && alphaRiseInvert.getCurrentState()) {
-            currentAlpha = alpha.getCurrentState() + 2;
-            if (currentAlpha > invertMinAlpha.getCurrentState()) {
-                currentAlpha = currentAlpha - 3;
-            }
         }
         int pickSlot = InventoryUtil.findHotbarBlock(ItemPickaxe.class);
          if (Speedmine.mc.player != null && this.silentSwitch.getCurrentState() && silentSwitchMode.getCurrentState() == SilentSwitchMode.AUTO && this.timer.passedMs((int) (2000.0f * Client.serverManager.getTpsFactor())) && this.getPickSlot() != -1) {
