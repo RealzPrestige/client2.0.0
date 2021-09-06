@@ -1,0 +1,44 @@
+<changelist name="Uncommitted_changes_before_Update_at_06_09_2021_16_09_[Default_Changelist]" date="1630937390888" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_06_09_2021_16_09_[Default_Changelist]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 06/09/2021 16:09 [Default Changelist]" />
+  <binary>
+    <option name="BEFORE_PATH" value="Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/fileHashes/fileHashes.lock" />
+    <option name="AFTER_PATH" value="Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/fileHashes/fileHashes.lock" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_06_09_2021_16_09_[Default_Changelist]/fileHashes.lock" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/fileHashes/fileHashes.bin" />
+    <option name="AFTER_PATH" value="Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/fileHashes/fileHashes.bin" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_06_09_2021_16_09_[Default_Changelist]/fileHashes.bin" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/taskHistory/taskHistory.lock" />
+    <option name="AFTER_PATH" value="Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/taskHistory/taskHistory.lock" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_06_09_2021_16_09_[Default_Changelist]/taskHistory.lock" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/fileContent/annotation-processors.bin" />
+    <option name="AFTER_PATH" value="Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/fileContent/annotation-processors.bin" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_06_09_2021_16_09_[Default_Changelist]/annotation-processors.bin" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="Client-2.0.0-github/Client-2.0.0/.gradle/buildOutputCleanup/buildOutputCleanup.lock" />
+    <option name="AFTER_PATH" value="Client-2.0.0-github/Client-2.0.0/.gradle/buildOutputCleanup/buildOutputCleanup.lock" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_06_09_2021_16_09_[Default_Changelist]/buildOutputCleanup.lock" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/taskHistory/taskHistory.bin" />
+    <option name="AFTER_PATH" value="Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/taskHistory/taskHistory.bin" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_06_09_2021_16_09_[Default_Changelist]/taskHistory.bin" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/fileContent/fileContent.lock" />
+    <option name="AFTER_PATH" value="Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/fileContent/fileContent.lock" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_06_09_2021_16_09_[Default_Changelist]/fileContent.lock" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/fileHashes/resourceHashesCache.bin" />
+    <option name="AFTER_PATH" value="Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/fileHashes/resourceHashesCache.bin" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_06_09_2021_16_09_[Default_Changelist]/resourceHashesCache.bin" />
+  </binary>
+</changelist>

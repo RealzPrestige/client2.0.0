@@ -9,8 +9,10 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class Notify extends Module {
     private static Notify INSTANCE = new Notify();
+
     public Setting<Boolean> friendMessages = register(new Setting("FriendMessages", false));
     public Setting<Boolean> chatMessages = register(new Setting("ToggleMessages", true));
+    public Setting<Boolean> rainbow = this.register(new Setting("RainbowToggleMessages", false, v -> chatMessages.getCurrentState()));
     public Setting<String> command = register(new Setting("NotifyString", "Client 2.0.0"));
     public Setting<String> commandBracket = register(new Setting("Bracket", "<"));
     public Setting<String> commandBracket2 = register(new Setting("Bracket2", ">"));
@@ -44,16 +46,5 @@ public class Notify extends Module {
     }
     public String getCommandMessage() {
         return TextUtil.coloredString(this.commandBracket.getPlannedValue(), this.bracketColor.getPlannedValue()) + TextUtil.coloredString(this.command.getPlannedValue(), this.commandColor.getPlannedValue()) + TextUtil.coloredString(this.commandBracket2.getPlannedValue(), this.bracketColor.getPlannedValue());
-    }
-
-    public String getRainbowCommandMessage() {
-        StringBuilder stringBuilder = new StringBuilder(this.getRawCommandMessage());
-        stringBuilder.insert(0, "\u00a7+");
-        stringBuilder.append("\u00a7r");
-        return stringBuilder.toString();
-    }
-
-    public String getRawCommandMessage() {
-        return this.commandBracket.getCurrentState() + this.command.getCurrentState() + this.commandBracket2.getCurrentState();
     }
 }

@@ -29,7 +29,6 @@ import java.awt.*;
 
 public class Speedmine extends Module {
     private static Speedmine INSTANCE = new Speedmine();
-    boolean delayer;
     int delay;
     Timer timer = new Timer();
     public Setting<Mode> mode = register(new Setting<>("Mode", Mode.PACKET));
@@ -79,7 +78,7 @@ public class Speedmine extends Module {
 
     @Override
     public void onTick() {
-        if(delay > 10){
+        if(delay > 5){
             delay = 0;
         } else {
             ++delay;
@@ -120,7 +119,7 @@ public class Speedmine extends Module {
                        } else {
                        Speedmine.mc.player.connection.sendPacket(new CPacketHeldItemChange(this.getPickSlot()));
 
-                       if(delay == 10) {
+                       if(delay == 5) {
                            int oldSlot = mc.player.inventory.currentItem;
                            Speedmine.mc.player.connection.sendPacket(new CPacketHeldItemChange(oldSlot));
                        }
