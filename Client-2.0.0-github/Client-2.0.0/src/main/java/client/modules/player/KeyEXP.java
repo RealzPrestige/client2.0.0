@@ -129,11 +129,11 @@ public class KeyEXP extends Module {
         mc.player.connection.sendPacket(new CPacketPlayerTryUseItem(EnumHand.MAIN_HAND));
         mc.player.inventory.currentItem = prvSlot;
         mc.player.connection.sendPacket(new CPacketHeldItemChange(prvSlot));
-        if (this.getClosestEnemy() == null){
+        if (getClosestEnemy() == null){
             takeArmorOff();
         }
-        if (this.getClosestEnemy() != null) {
-            if (takeOff.getCurrentState() && (int) this.getClosestEnemy().getDistance(mc.player) > this.enemyRange.getCurrentState()) {
+        if (getClosestEnemy() != null) {
+            if (takeOff.getCurrentState() && (int) getClosestEnemy().getDistance(mc.player) > this.enemyRange.getCurrentState()) {
                 takeArmorOff();
             }
         }
@@ -161,10 +161,6 @@ public class KeyEXP extends Module {
                 n++;
             }
         }
-        if (n >= 35) {
-
-            return false;
-        }
-        return true;
+        return n < 35;
     }
 }

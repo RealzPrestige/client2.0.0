@@ -8,6 +8,7 @@ import client.modules.Module;
 import client.util.*;
 import com.google.common.collect.Sets;
 import com.mojang.realmsclient.gui.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.entity.Entity;
@@ -208,7 +209,7 @@ public class ESP extends Module {
         }
     }
     public String hudInfoString(){
-        return updates + " | " + mc.getDebugFPS();
+        return updates + " | " + Minecraft.getDebugFPS();
     }
 }
 

@@ -166,7 +166,7 @@ public class PlayerUtil implements Util {
         double var1 = var0.posX - mc.player.posX;
         double var3 = var0.posZ - mc.player.posZ;
         double var5 = var0.posY - 1.6D + (double) var0.getEyeHeight() - mc.player.posY;
-        double var7 = (double) MathHelper.sqrt(var1 * var1 + var3 * var3);
+        double var7 = MathHelper.sqrt(var1 * var1 + var3 * var3);
         double var9 = -Math.toDegrees(Math.atan(var5 / var7));
         return -MathHelper.wrapDegrees(mc.player.rotationPitch - (float) var9);
     }

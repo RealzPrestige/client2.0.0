@@ -53,7 +53,7 @@ public class ColorUtil {
         return Color.getHSBColor(hue /= (float)speed, s, b).getRGB();
     }
     public static void setColor(Color color) {
-        GL11.glColor4d((double)((float)color.getRed() / 255.0f), (double)((float)color.getGreen() / 255.0f), (double)((float)color.getBlue() / 255.0f), (double)((float)color.getAlpha() / 255.0f));
+        GL11.glColor4d((float)color.getRed() / 255.0f, (float)color.getGreen() / 255.0f, (float)color.getBlue() / 255.0f, (float)color.getAlpha() / 255.0f);
     }
 }
 
