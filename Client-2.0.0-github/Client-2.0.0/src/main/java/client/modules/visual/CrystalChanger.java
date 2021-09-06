@@ -2,8 +2,8 @@ package client.modules.visual;
 
 import client.events.PacketEvent;
 import client.events.RenderEntityModelEvent;
-import client.modules.Module;
 import client.gui.impl.setting.Setting;
+import client.modules.Module;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityEnderCrystal;
@@ -17,10 +17,11 @@ import java.util.concurrent.ConcurrentHashMap;
 public class CrystalChanger extends Module {
     private static CrystalChanger INSTANCE;
     public int limbswinga;
-public CrystalChanger(){
-    super("CrystalChanger", "Tweaks looks of End crystals.", Category.VISUAL);
-    this.setInstance();
-}
+
+    public CrystalChanger() {
+        super("CrystalChanger", "Tweaks looks of End crystals.", Category.VISUAL);
+        this.setInstance();
+    }
 
     private void setInstance() {
         CrystalChanger.INSTANCE = this;
@@ -33,29 +34,31 @@ public CrystalChanger(){
         return CrystalChanger.INSTANCE;
     }
 
-    public Setting<Boolean> chams = register( new Setting <> ( "Chams" , true ));
-    public Setting<Boolean> wireframe = register( new Setting <> ( "Wireframe" , true ));
-    public Setting<Boolean> throughwalls = register( new Setting <> ( "Walls" , true ));
-    public Setting<Integer> animationSpeed = register( new Setting <> ( "AnimationSpeed" , 1 , 0 , 10 , v -> this.chams.getCurrentState( ) ));
+    public Setting<Boolean> chams = register(new Setting<>("Chams", true));
+    public Setting<Boolean> wireframe = register(new Setting<>("Wireframe", true));
+    public Setting<Boolean> throughwalls = register(new Setting<>("Walls", true));
+    public Setting<Boolean> glow = register(new Setting<>("Glow", false));
+    public Setting<Integer> animationSpeed = register(new Setting<>("AnimationSpeed", 1, 0, 10, v -> this.chams.getCurrentState()));
 
-    public Setting<Integer> red = register( new Setting <> ( "Red" , 255 , 0 , 255 , v -> this.chams.getCurrentState( ) ));
-    public Setting<Integer> green = register( new Setting <> ( "Green" , 255 , 0 , 255 , v -> this.chams.getCurrentState( ) ));
-    public Setting<Integer> blue = register( new Setting <> ( "Blue" , 255 , 0 , 255 , v -> this.chams.getCurrentState( ) ));
-    public Setting<Integer> alpha = register( new Setting <> ( "Alpha" , 150 , 0 , 255 , v -> this.chams.getCurrentState( ) ));
+    public Setting<Integer> red = register(new Setting<>("Red", 255, 0, 255, v -> this.chams.getCurrentState()));
+    public Setting<Integer> green = register(new Setting<>("Green", 255, 0, 255, v -> this.chams.getCurrentState()));
+    public Setting<Integer> blue = register(new Setting<>("Blue", 255, 0, 255, v -> this.chams.getCurrentState()));
+    public Setting<Integer> alpha = register(new Setting<>("Alpha", 150, 0, 255, v -> this.chams.getCurrentState()));
 
-    public Setting<Integer> wallsRed = register( new Setting <> ( "WallsRed" , 255 , 0 , 255 , v -> this.throughwalls.getCurrentState( ) ));
-    public Setting<Integer> wallsGreen = register( new Setting <> ( "WallsGreen" , 255 , 0 , 255 , v -> this.throughwalls.getCurrentState( ) ));
-    public Setting<Integer> wallsBlue = register( new Setting <> ( "WallsBlue" , 255 , 0 , 255 , v -> this.throughwalls.getCurrentState( ) ));
-    public Setting<Integer> wallsAlpha = register( new Setting <> ( "WallsAlpha" , 150 , 0 , 255 , v -> this.throughwalls.getCurrentState( ) ));
+    public Setting<Integer> wallsRed = register(new Setting<>("WallsRed", 255, 0, 255, v -> this.throughwalls.getCurrentState()));
+    public Setting<Integer> wallsGreen = register(new Setting<>("WallsGreen", 255, 0, 255, v -> this.throughwalls.getCurrentState()));
+    public Setting<Integer> wallsBlue = register(new Setting<>("WallsBlue", 255, 0, 255, v -> this.throughwalls.getCurrentState()));
+    public Setting<Integer> wallsAlpha = register(new Setting<>("WallsAlpha", 150, 0, 255, v -> this.throughwalls.getCurrentState()));
 
-    public Setting<Double> width = register( new Setting <> ( "LineWidth" , 3.0 , 0.1 , 5.0 ));
-    public Setting<Double> scale = register( new Setting <> ( "Scale" , 1.0 , 0.1 , 3.0 ));
+    public Setting<Double> width = register(new Setting<>("LineWidth", 3.0, 0.1, 5.0));
+    public Setting<Double> scale = register(new Setting<>("Scale", 1.0, 0.1, 3.0));
 
     public Map<EntityEnderCrystal, Float> scaleMap = new ConcurrentHashMap<>();
 
-    public void onTick(){
+    public void onTick() {
         limbswinga = limbswinga + animationSpeed.getCurrentState();
     }
+
     @Override
     public void onUpdate() {
         for (Entity crystal : mc.world.loadedEntityList) {
@@ -72,10 +75,11 @@ public CrystalChanger(){
                 if (!(this.scaleMap.get(crystal) >= 0.0625f * this.scale.getCurrentState()))
                     continue;
 
-                    this.scaleMap.remove(crystal);
+                this.scaleMap.remove(crystal);
             }
         }
     }
+
     @SubscribeEvent
     public void onPacketReceive(PacketEvent.Receive event) {
         if (event.getPacket() instanceof SPacketDestroyEntities) {
@@ -84,9 +88,10 @@ public CrystalChanger(){
                 try {
                     Entity entity = mc.world.getEntityByID(id);
                     if (entity instanceof EntityEnderCrystal) {
-                            this.scaleMap.remove(entity);
+                        this.scaleMap.remove(entity);
                     }
-                } catch (Exception ignored) {}
+                } catch (Exception ignored) {
+                }
             }
         }
     }

@@ -37,26 +37,26 @@ public class MixinRenderModifiedCrystal {
             GL11.glLineWidth(1.5f);
             GL11.glEnable(2960);
             if (CrystalChanger.getInstance().throughwalls.getCurrentState()) {
-                 if (CrystalChanger.getInstance().throughwalls.getCurrentState()) {
+                if (CrystalChanger.getInstance().throughwalls.getCurrentState()) {
                     GL11.glDisable(2929);
                     GL11.glDepthMask(false);
                 }
                 GL11.glEnable(10754);
-                GL11.glColor4f(((float)CrystalChanger.getInstance().wallsRed.getCurrentState() / 255.0f), ((float)CrystalChanger.getInstance().wallsGreen.getCurrentState() / 255.0f), (float)CrystalChanger.getInstance().wallsBlue.getCurrentState() / 255.0f, (float)CrystalChanger.getInstance().wallsAlpha.getCurrentState() / 255.0f);
+                GL11.glColor4f(((float) CrystalChanger.getInstance().wallsRed.getCurrentState() / 255.0f), ((float) CrystalChanger.getInstance().wallsGreen.getCurrentState() / 255.0f), (float) CrystalChanger.getInstance().wallsBlue.getCurrentState() / 255.0f, (float) CrystalChanger.getInstance().wallsAlpha.getCurrentState() / 255.0f);
                 model.render(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
                 if (CrystalChanger.getInstance().throughwalls.getCurrentState()) {
                     GL11.glEnable(2929);
                     GL11.glDepthMask(true);
                 }
-                GL11.glColor4f((float)CrystalChanger.getInstance().red.getCurrentState() / 255.0f, (float)CrystalChanger.getInstance().green.getCurrentState() / 255.0f, (float)CrystalChanger.getInstance().blue.getCurrentState() / 255.0f, (float)CrystalChanger.getInstance().alpha.getCurrentState() / 255.0f);
+                GL11.glColor4f((float) CrystalChanger.getInstance().red.getCurrentState() / 255.0f, (float) CrystalChanger.getInstance().green.getCurrentState() / 255.0f, (float) CrystalChanger.getInstance().blue.getCurrentState() / 255.0f, (float) CrystalChanger.getInstance().alpha.getCurrentState() / 255.0f);
                 model.render(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
             } else {
-                 if (CrystalChanger.getInstance().throughwalls.getCurrentState()) {
+                if (CrystalChanger.getInstance().throughwalls.getCurrentState()) {
                     GL11.glDisable(2929);
                     GL11.glDepthMask(false);
                 }
                 GL11.glEnable(10754);
-                GL11.glColor4f(((float)CrystalChanger.getInstance().red.getCurrentState() / 255.0f), ((float)CrystalChanger.getInstance().green.getCurrentState() / 255.0f), ((float)CrystalChanger.getInstance().blue.getCurrentState() / 255.0f), (float)CrystalChanger.getInstance().alpha.getCurrentState() / 255.0f);
+                GL11.glColor4f(((float) CrystalChanger.getInstance().red.getCurrentState() / 255.0f), ((float) CrystalChanger.getInstance().green.getCurrentState() / 255.0f), ((float) CrystalChanger.getInstance().blue.getCurrentState() / 255.0f), (float) CrystalChanger.getInstance().alpha.getCurrentState() / 255.0f);
                 model.render(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
                 if (CrystalChanger.getInstance().throughwalls.getCurrentState()) {
                     GL11.glEnable(2929);
@@ -73,6 +73,9 @@ public class MixinRenderModifiedCrystal {
         }
         if (CrystalChanger.getInstance().isEnabled()) {
             GlStateManager.scale((1.0f / CrystalChanger.getInstance().scale.getCurrentState().floatValue()), (1.0f / CrystalChanger.getInstance().scale.getCurrentState().floatValue()), 1.0f / CrystalChanger.getInstance().scale.getCurrentState().floatValue());
+        }
+        if (CrystalChanger.getInstance().glow.getCurrentState()) {
+            entity.glowing = true;
         }
     }
 }
