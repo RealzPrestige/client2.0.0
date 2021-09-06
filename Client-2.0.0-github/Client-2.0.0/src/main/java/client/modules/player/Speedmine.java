@@ -15,6 +15,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.network.play.client.CPacketHeldItemChange;
 import net.minecraft.network.play.client.CPacketPlayerDigging;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -28,36 +29,44 @@ public class Speedmine extends Module {
     public Setting<Mode> mode = this.register(new Setting("Mode", Mode.PACKET));
     public Setting<Boolean> render = this.register(new Setting("Render", false));
     public Setting<Boolean> silentSwitch = this.register(new Setting("SilentSwitch", false));
-    public Setting<SwitchMode> switchMode = this.register(new Setting("SwitchMode", SwitchMode.AUTO, v-> silentSwitch.getCurrentState()));
-    public enum SwitchMode{AUTO, KEYBIND}
-    public Setting<Bind> switchBind = register(new Setting<>("SwitchBind", new Bind(-1), v-> switchMode.getCurrentState() == SwitchMode.KEYBIND));
+    public Setting<SwitchMode> switchMode = this.register(new Setting("SwitchMode", SwitchMode.AUTO, v -> silentSwitch.getCurrentState()));
+
+    public enum SwitchMode {AUTO, KEYBIND}
+
+    public Setting<Bind> switchBind = register(new Setting<>("SwitchBind", new Bind(-1), v -> switchMode.getCurrentState() == SwitchMode.KEYBIND));
     private final Setting<Integer> range = this.register(new Setting("Range", 10, 1, 15));
-    public Setting<Integer> red = register(new Setting("Red", 120, 0, 255, v-> render.getCurrentState()));
-    public Setting<Integer> green = register(new Setting("Green", 120, 0, 255, v-> render.getCurrentState()));
-    public Setting<Integer> blue = register(new Setting("Blue", 120, 0, 255, v-> render.getCurrentState()));
+    public Setting<Integer> red = register(new Setting("Red", 120, 0, 255, v -> render.getCurrentState()));
+    public Setting<Integer> green = register(new Setting("Green", 120, 0, 255, v -> render.getCurrentState()));
+    public Setting<Integer> blue = register(new Setting("Blue", 120, 0, 255, v -> render.getCurrentState()));
 
     int currentAlpha;
     public BlockPos currentPos;
     IBlockState currentBlockState;
+    private BlockPos blockAimed;
+    private BlockPos lastBlock;
+    private EnumFacing direction;
+
     public Speedmine() {
         super("Speedmine", "Speeds up mining and tweaks.", Category.PLAYER);
     }
 
     @Override
-    public void onLogin(){
+    public void onLogin() {
         currentPos = null;
-        if(this.isEnabled()) {
+        if (this.isEnabled()) {
             this.disable();
             this.enable();
         }
     }
+
     @Override
-    public void onLogout(){
+    public void onLogout() {
         currentPos = null;
     }
+
     @Override
     public void onTick() {
-        if(currentPos != null) {
+        if (currentPos != null) {
             if (Speedmine.mc.player != null && Speedmine.mc.player.getDistanceSq(this.currentPos) > MathUtil.square(this.range.getCurrentState())) {
                 this.currentPos = null;
                 this.currentBlockState = null;
@@ -65,22 +74,22 @@ public class Speedmine extends Module {
             }
         }
         if (Speedmine.mc.player != null && this.silentSwitch.getCurrentState() && this.timer.passedMs((int) (2000.0f * Client.serverManager.getTpsFactor())) && this.getPickSlot() != -1) {
-           if(switchMode.getCurrentState() == SwitchMode.AUTO) {
-               Speedmine.mc.player.connection.sendPacket(new CPacketHeldItemChange(this.getPickSlot()));
-           }  else if(switchMode.getCurrentState() == SwitchMode.KEYBIND) {
-               if (Keyboard.isKeyDown(switchBind.getCurrentState().getKey())) {
-                   Speedmine.mc.player.connection.sendPacket(new CPacketHeldItemChange(this.getPickSlot()));
-               }
-           }
+            if (switchMode.getCurrentState() == SwitchMode.AUTO) {
+                Speedmine.mc.player.connection.sendPacket(new CPacketHeldItemChange(this.getPickSlot()));
+            } else if (switchMode.getCurrentState() == SwitchMode.KEYBIND) {
+                if (Keyboard.isKeyDown(switchBind.getCurrentState().getKey())) {
+                    Speedmine.mc.player.connection.sendPacket(new CPacketHeldItemChange(this.getPickSlot()));
+                }
+            }
         }
-        if(switchMode.getCurrentState() == SwitchMode.AUTO) {
+        if (switchMode.getCurrentState() == SwitchMode.AUTO) {
             if (Speedmine.mc.player != null && this.silentSwitch.getCurrentState() && this.timer.passedMs((int) (2200.0f * Client.serverManager.getTpsFactor()))) {
                 int oldSlot = mc.player.inventory.currentItem;
                 Speedmine.mc.player.connection.sendPacket(new CPacketHeldItemChange(oldSlot));
             }
-        } else if(switchMode.getCurrentState() == SwitchMode.KEYBIND){
-                int oldSlot = mc.player.inventory.currentItem;
-                Speedmine.mc.player.connection.sendPacket(new CPacketHeldItemChange(oldSlot));
+        } else if (switchMode.getCurrentState() == SwitchMode.KEYBIND) {
+            int oldSlot = mc.player.inventory.currentItem;
+            Speedmine.mc.player.connection.sendPacket(new CPacketHeldItemChange(oldSlot));
         }
         if (fullNullCheck()) return;
 
@@ -91,7 +100,7 @@ public class Speedmine extends Module {
                 this.currentBlockState = null;
             }
         }
-        if(currentAlpha < 253){
+        if (currentAlpha < 253) {
             currentAlpha = currentAlpha + 3;
         }
     }
@@ -108,7 +117,11 @@ public class Speedmine extends Module {
     public void onRender3D(Render3DEvent event) {
         if (this.render.getCurrentState() && this.currentPos != null && (this.currentBlockState.getBlock() == Blocks.OBSIDIAN || this.currentBlockState.getBlock() == Blocks.ENDER_CHEST)) {
             Color color = new Color(red.getCurrentState(), green.getCurrentState(), blue.getCurrentState(), currentAlpha);
-            RenderUtil.drawBoxESP(this.currentPos, color, true, color, 1, true,true, currentAlpha, false);
+            RenderUtil.drawBoxESP(this.currentPos, color, true, color, 1, true, true, currentAlpha, false);
+        }
+        if (mode.getCurrentState() == Mode.BREAKER) {
+            Color color = new Color(red.getCurrentState(), green.getCurrentState(), blue.getCurrentState(), 255);
+            RenderUtil.drawBoxESP(this.lastBlock, color, true, color, 1, true, true, 100, false);
         }
     }
 
@@ -144,6 +157,20 @@ public class Speedmine extends Module {
                         Speedmine.mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.STOP_DESTROY_BLOCK, event.pos, event.facing));
                         Speedmine.mc.playerController.onPlayerDestroyBlock(event.pos);
                         Speedmine.mc.world.setBlockToAir(event.pos);
+                        break;
+                    }
+                    case BREAKER: {
+                        blockAimed = event.pos;
+                        if (BlockUtil.canBreak(event.pos)) {
+                            if (lastBlock == null || event.pos.getX() != lastBlock.getX() || event.pos.getY() != lastBlock.getY() || event.pos.getZ() != lastBlock.getZ()) {
+                                mc.player.swingArm(EnumHand.MAIN_HAND);
+                                mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.START_DESTROY_BLOCK, event.pos, event.facing));
+                                lastBlock = event.pos;
+                                direction = event.facing;
+                            }
+                            mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.STOP_DESTROY_BLOCK, lastBlock, direction));
+                            event.setCanceled(true);
+                        }
                     }
                 }
             }
@@ -157,15 +184,17 @@ public class Speedmine extends Module {
 
     public enum Mode {
         PACKET,
-        INSTANT
+        INSTANT,
+        BREAKER
     }
 
-        private int getPickSlot() {
-            for (int i = 0; i < 9; ++i) {
-                if (Speedmine.mc.player.inventory.getStackInSlot(i).getItem() != Items.DIAMOND_PICKAXE) continue;
-                return i;
-            }
-            return -1;
+    private int getPickSlot() {
+        for (int i = 0; i < 9; ++i) {
+            if (Speedmine.mc.player.inventory.getStackInSlot(i).getItem() != Items.DIAMOND_PICKAXE) continue;
+            return i;
         }
+        return -1;
+    }
 }
+
 

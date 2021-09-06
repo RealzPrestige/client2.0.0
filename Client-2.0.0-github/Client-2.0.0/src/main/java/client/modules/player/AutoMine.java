@@ -53,8 +53,10 @@ public class AutoMine extends Module {
             }
         }
         if (mode.getCurrentState() == Mode.COMBAT) {
-            if (Speedmine.INSTANCE.currentPos == null && findLookingPlayer(range.getCurrentState()) != null && !Client.friendManager.isFriend(findLookingPlayer(range.getCurrentState())) && surround.getCurrentState() && isCityable(findLookingPlayer(range.getCurrentState()), endCrystal.getCurrentState()) != null) {
-                Speedmine.INSTANCE.currentPos = isCityable(findLookingPlayer(range.getCurrentState()), endCrystal.getCurrentState());
+            if (Speedmine.INSTANCE.currentPos == null && findLookingPlayer(range.getCurrentState()) != null && !Client.friendManager.isFriend(findLookingPlayer(range.getCurrentState())) && surround.getCurrentState()) {
+                if (isCityable(findLookingPlayer(range.getCurrentState()), endCrystal.getCurrentState()) != null) {
+                    Speedmine.INSTANCE.currentPos = isCityable(findLookingPlayer(range.getCurrentState()), endCrystal.getCurrentState());
+                }
             }
         }
         if (mode.getCurrentState() == Mode.NORMAL) {
