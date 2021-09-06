@@ -23,7 +23,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="62a2de53-954f-4cc3-99ba-84bcf3ec3fbc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/fileContent/annotation-processors.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/fileContent/annotation-processors.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/fileContent/fileContent.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/fileContent/fileContent.lock" afterDir="false" />
@@ -37,11 +36,8 @@
       <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/taskHistory/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/taskHistory/taskHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/Module.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/Module.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/combat/ObiAssist.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/combat/ObiAssist.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/player/AutoMine.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/player/AutoMine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/player/Speedmine.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/player/Speedmine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/util/InventoryUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/util/InventoryUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/visual/CrystalChanger.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/visual/CrystalChanger.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -497,7 +493,14 @@
       <option name="project" value="LOCAL" />
       <updated>1630913142393</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="Speedmine fixxa">
+      <created>1630929595928</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1630929595928</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -513,7 +516,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Middleclick drawn + XCarry (InventoryCloseEvent and MixinContainerPlayer)" />
     <MESSAGE value="added Chams and AlphaStep to activeModules. added ColorModes to activeModules" />
     <MESSAGE value="Added hover descriptions and made serious descriptions" />
     <MESSAGE value="Added some extra hud string like [Packet] * you know what i mean" />
@@ -538,7 +540,8 @@
     <MESSAGE value="woopsies" />
     <MESSAGE value="very useful modules (autowalk &amp; antiaim)" />
     <MESSAGE value="keybund swap" />
-    <option name="LAST_COMMIT_MESSAGE" value="keybund swap" />
+    <MESSAGE value="Speedmine fixxa" />
+    <option name="LAST_COMMIT_MESSAGE" value="Speedmine fixxa" />
   </component>
   <component name="WindowStateProjectService">
     <state x="440" y="94" key="#Project_Structure" timestamp="1630691184277">
@@ -565,25 +568,25 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630878767339" />
-    <state width="1877" height="223" key="GridCell.Tab.0.bottom" timestamp="1630928823396">
+    <state width="1877" height="223" key="GridCell.Tab.0.bottom" timestamp="1630934575968">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="223" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630928823396" />
+    <state width="1877" height="223" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630934575968" />
     <state width="1877" height="167" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1630739921669" />
-    <state width="1877" height="223" key="GridCell.Tab.0.center" timestamp="1630928823395">
+    <state width="1877" height="223" key="GridCell.Tab.0.center" timestamp="1630934575968">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="223" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630928823395" />
+    <state width="1877" height="223" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630934575968" />
     <state width="1877" height="167" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1630739921669" />
-    <state width="1877" height="223" key="GridCell.Tab.0.left" timestamp="1630928823395">
+    <state width="1877" height="223" key="GridCell.Tab.0.left" timestamp="1630934575968">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="223" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630928823395" />
+    <state width="1877" height="223" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630934575968" />
     <state width="1877" height="167" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1630739921669" />
-    <state width="1877" height="223" key="GridCell.Tab.0.right" timestamp="1630928823395">
+    <state width="1877" height="223" key="GridCell.Tab.0.right" timestamp="1630934575968">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="223" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630928823395" />
+    <state width="1877" height="223" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630934575968" />
     <state width="1877" height="167" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1630739921669" />
     <state x="184" y="86" key="MergeDialog" timestamp="1630912436923">
       <screen x="0" y="0" width="1920" height="1040" />

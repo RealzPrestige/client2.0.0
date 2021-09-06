@@ -38,8 +38,6 @@ public class CrystalChanger extends Module {
     public Setting<Boolean> wireframe = register(new Setting<>("Wireframe", true));
     public Setting<Boolean> throughwalls = register(new Setting<>("Walls", true));
     public Setting<Boolean> glow = register(new Setting<>("Glow", false));
-    public Setting<Integer> animationSpeed = register(new Setting<>("AnimationSpeed", 1, 0, 10, v -> this.chams.getCurrentState()));
-
     public Setting<Integer> red = register(new Setting<>("Red", 255, 0, 255, v -> this.chams.getCurrentState()));
     public Setting<Integer> green = register(new Setting<>("Green", 255, 0, 255, v -> this.chams.getCurrentState()));
     public Setting<Integer> blue = register(new Setting<>("Blue", 255, 0, 255, v -> this.chams.getCurrentState()));
@@ -55,9 +53,6 @@ public class CrystalChanger extends Module {
 
     public Map<EntityEnderCrystal, Float> scaleMap = new ConcurrentHashMap<>();
 
-    public void onTick() {
-        limbswinga = limbswinga + animationSpeed.getCurrentState();
-    }
 
     @Override
     public void onUpdate() {

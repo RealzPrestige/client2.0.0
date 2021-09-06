@@ -29,6 +29,7 @@ import java.awt.*;
 
 public class Speedmine extends Module {
     private static Speedmine INSTANCE = new Speedmine();
+    boolean delayer;
     int delay;
     Timer timer = new Timer();
     public Setting<Mode> mode = register(new Setting<>("Mode", Mode.PACKET));
@@ -74,6 +75,11 @@ public class Speedmine extends Module {
 
     @Override
     public void onTick() {
+        if(delay > 10){
+            delay = 0;
+        } else {
+            ++delay;
+        }
         if (this.currentPos != null) {
             if (!Speedmine.mc.world.getBlockState(this.currentPos).equals(this.currentBlockState) || Speedmine.mc.world.getBlockState(this.currentPos).getBlock() == Blocks.AIR) {
                 this.currentPos = null;
@@ -104,6 +110,12 @@ public class Speedmine extends Module {
                            Module.mc.ingameGUI.getChatGUI().printChatMessageWithOptionalDeletion(text, 1);
                        } else {
                        Speedmine.mc.player.connection.sendPacket(new CPacketHeldItemChange(this.getPickSlot()));
+
+                       if(delay == 10) {
+                           int oldSlot = mc.player.inventory.currentItem;
+                           Speedmine.mc.player.connection.sendPacket(new CPacketHeldItemChange(oldSlot));
+                       }
+
                    }
                }
            }
