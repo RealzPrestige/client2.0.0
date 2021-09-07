@@ -33,8 +33,8 @@ public class HoleUtil extends RuntimeException implements Util {
         HoleInfo output = new HoleInfo();
         HashMap<BlockOffset, BlockSafety> unsafeSides = HoleUtil.getUnsafeSides(centreBlock);
 
-        if (unsafeSides.containsKey(HoleUtil.BlockOffset.DOWN)) {
-            if (unsafeSides.remove(HoleUtil.BlockOffset.DOWN, HoleUtil.BlockSafety.BREAKABLE)) {
+        if (unsafeSides.containsKey(BlockOffset.DOWN)) {
+            if (unsafeSides.remove(BlockOffset.DOWN, BlockSafety.BREAKABLE)) {
                 if (!ignoreDown) {
                     output.setSafety(BlockSafety.BREAKABLE);
                     return output;
@@ -44,7 +44,7 @@ public class HoleUtil extends RuntimeException implements Util {
 
         int size = unsafeSides.size();
 
-        unsafeSides.entrySet().removeIf(entry -> entry.getValue() == HoleUtil.BlockSafety.RESISTANT);
+        unsafeSides.entrySet().removeIf(entry -> entry.getValue() == BlockSafety.RESISTANT);
 
         // size has changed so must have weak side
         if (unsafeSides.size() != size) {
@@ -75,16 +75,16 @@ public class HoleUtil extends RuntimeException implements Util {
 
         int size = unsafeSides.size();
 
-        unsafeSides.entrySet().removeIf(entry -> entry.getValue() == HoleUtil.BlockSafety.RESISTANT);
+        unsafeSides.entrySet().removeIf(entry -> entry.getValue() == BlockSafety.RESISTANT);
 
         // size has changed so must have weak side
         if (unsafeSides.size() != size) {
             info.setSafety(BlockSafety.RESISTANT);
         }
 
-        if (unsafeSides.containsKey(HoleUtil.BlockOffset.DOWN)) {
+        if (unsafeSides.containsKey(BlockOffset.DOWN)) {
             info.setType(HoleType.CUSTOM);
-            unsafeSides.remove(HoleUtil.BlockOffset.DOWN);
+            unsafeSides.remove(BlockOffset.DOWN);
         }
 
         // is it a safe hole

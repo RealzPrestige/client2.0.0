@@ -31,6 +31,7 @@ public class ColorManager {
         return ColorUtil.toRGBA(new Color(this.red, this.green, this.blue, (float) alpha / 255.0f));
     }
 
+
     public void updateColor() {
         this.setColor(new Color(this.red, this.green, this.blue, this.alpha));
     }

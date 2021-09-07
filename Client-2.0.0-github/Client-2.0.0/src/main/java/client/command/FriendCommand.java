@@ -20,7 +20,7 @@ public class FriendCommand
                 for (FriendManager.Friend friend : Client.friendManager.getFriends()) {
                     try {
                         f = f + friend.getUsername() + ", ";
-                    } catch (Exception ignored ) {
+                    } catch (Exception ignored) {
                     }
                 }
                 FriendCommand.sendMessage(f);

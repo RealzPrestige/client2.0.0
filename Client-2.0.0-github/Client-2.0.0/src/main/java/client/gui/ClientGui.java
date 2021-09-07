@@ -82,6 +82,7 @@ public class ClientGui extends GuiScreen {
     private void load() {
 
         int x = -84;
+        int x2 = -109;
         Random random = new Random(); {
             for (int i = 0; i < 100; ++i) {
                 for (int y = 0; y < 3; ++y) {

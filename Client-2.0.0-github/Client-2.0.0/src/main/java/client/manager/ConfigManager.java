@@ -52,7 +52,6 @@ public class ConfigManager implements Util {
                 }
                 return;
         }
-        Client.LOGGER.error("Unknown Setting type for: " + feature.getName() + " : " + setting.getName());
     }
 
     private static void loadFile(JsonObject input, Feature feature) {
@@ -157,6 +156,13 @@ public class ConfigManager implements Util {
         return name;
     }
 
+    public void resetConfig(boolean saveConfig, String name) {
+        for (Feature feature : this.features)
+            feature.reset();
+        if (saveConfig)
+            saveConfig(name);
+    }
+
     public void saveSettings(Feature feature) throws IOException {
         JsonObject object = new JsonObject();
         File directory = new File(this.config + getDirectory(feature));
@@ -178,7 +184,6 @@ public class ConfigManager implements Util {
         this.features.add(Client.friendManager);
         String name = loadCurrentConfig();
         loadConfig(name);
-        Client.LOGGER.info("Config loaded.");
     }
 
     private void loadSettings(Feature feature) throws IOException {
@@ -194,7 +199,6 @@ public class ConfigManager implements Util {
         try {
             loadFile((new JsonParser()).parse(new InputStreamReader(stream)).getAsJsonObject(), feature);
         } catch (IllegalStateException e) {
-            Client.LOGGER.error("Bad Config File for: " + feature.getName() + ". Resetting...");
             loadFile(new JsonObject(), feature);
         }
         stream.close();

@@ -29,9 +29,7 @@ public abstract class MixinMinecraft {
     }
 
     private void unload() {
-        Client.LOGGER.info("Initiated client shutdown.");
         Client.onUnload();
-        Client.LOGGER.info("Finished client shutdown.");
     }
 
     @Inject(method = {"runTick()V"}, at = {@At(value = "RETURN")})

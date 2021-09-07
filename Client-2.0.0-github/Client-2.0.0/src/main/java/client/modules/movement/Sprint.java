@@ -8,7 +8,7 @@ public class Sprint extends Module {
     private static Sprint INSTANCE = new Sprint();
 
     public Sprint() {
-        super("Sprint", "Makes it so you always sprint.", Module.Category.MOVEMENT);
+        super("Sprint", "Makes it so you always sprint.", Category.MOVEMENT);
         this.setInstance();
     }
 

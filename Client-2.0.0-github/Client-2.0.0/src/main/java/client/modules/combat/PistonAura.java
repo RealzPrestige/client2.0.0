@@ -27,6 +27,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+
 public class PistonAura extends Module {
     public Setting<Boolean> rotate;
     public Setting<Boolean> blockPlayer;

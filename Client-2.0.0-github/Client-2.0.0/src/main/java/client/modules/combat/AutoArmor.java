@@ -28,7 +28,7 @@ public class AutoArmor extends Module {
     Integer repair = 0;
     Integer actions = 3;
     public AutoArmor() {
-        super("AutoArmor", "Puts Armor on for you.", Module.Category.COMBAT);
+        super("AutoArmor", "Puts Armor on for you.", Category.COMBAT);
         this.setInstance();
     }
 

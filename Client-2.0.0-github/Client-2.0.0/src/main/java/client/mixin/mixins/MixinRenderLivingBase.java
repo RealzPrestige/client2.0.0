@@ -3,7 +3,6 @@ package client.mixin.mixins;
 import client.Client;
 import client.modules.core.Sync;
 import client.modules.visual.Chams;
-import client.modules.visual.CrystalChanger;
 import client.util.ColorUtil;
 import client.util.Util;
 import net.minecraft.client.Minecraft;

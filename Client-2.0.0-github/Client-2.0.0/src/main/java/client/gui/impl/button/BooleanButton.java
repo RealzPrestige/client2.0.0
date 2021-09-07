@@ -33,14 +33,24 @@ public class BooleanButton
             int booleancolor = ColorUtil.toARGB(0,0,0, 50);
             int sidecolor = ColorUtil.toARGB(ClickGui.getInstance().newred.getCurrentState(), ClickGui.getInstance().newgreen.getCurrentState(), ClickGui.getInstance().newblue.getCurrentState(), ClickGui.getInstance().newtheAlpha.getCurrentState());
             int color = ColorUtil.toARGB(ClickGui.getInstance().newared.getCurrentState(), ClickGui.getInstance().newagreen.getCurrentState(), ClickGui.getInstance().newablue.getCurrentState(), ClickGui.getInstance().newaalpha.getCurrentState());
+            int falseboolean = ColorUtil.toARGB(ClickGui.getInstance().stateFalseBooleanRed.getCurrentState(), ClickGui.getInstance().stateFalseBooleanGreen.getCurrentState(), ClickGui.getInstance().stateFalseBooleanBlue.getCurrentState(), ClickGui.getInstance().stateFalseBooleanAlpha.getCurrentState());
+            int trueboolean = ColorUtil.toARGB(ClickGui.getInstance().stateTrueBooleanRed.getCurrentState(), ClickGui.getInstance().stateTrueBooleanGreen.getCurrentState(), ClickGui.getInstance().stateTrueBooleanBlue.getCurrentState(), ClickGui.getInstance().stateTrueBooleanAlpha.getCurrentState());
 
             RenderUtil.drawRect(this.x, this.y, this.x + 1, this.y + (float) this.height + 0.5f, sidecolor);
             Client.textManager.drawStringWithShadow(this.getName(), this.x + 2.3f, this.y - 1.7f - (float) ClientGui.getClickGui().getTextOffset(), this.getState() ? -1 : -5592406);
            RenderUtil.drawRect(this.x + 74, this.y + 5, this.x + 95, this.y + 13, booleancolor);
-            if(getState()) {
-                RenderUtil.drawRect(this.x + 85, this.y + 6, this.x + 94, this.y + 12, color);
+            if(ClickGui.getInstance().seperateBooleanColors.getCurrentState()){
+                if(getState()) {
+                    RenderUtil.drawRect(this.x + 85, this.y + 6, this.x + 94, this.y + 12, trueboolean);
+                } else {
+                    RenderUtil.drawRect(this.x + 75, this.y + 6, this.x + 84, this.y + 12, falseboolean);
+                }
             } else {
-                RenderUtil.drawRect(this.x + 75, this.y + 6, this.x + 84, this.y + 12, -1);
+                if (getState()) {
+                    RenderUtil.drawRect(this.x + 85, this.y + 6, this.x + 94, this.y + 12, color);
+                } else {
+                    RenderUtil.drawRect(this.x + 75, this.y + 6, this.x + 84, this.y + 12, color);
+                }
             }
         }
     }

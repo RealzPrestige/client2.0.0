@@ -1,4 +1,4 @@
-package  client.events;
+package client.events;
 
 public final class WalkEvent extends EventProcessor {
     private double motionX;

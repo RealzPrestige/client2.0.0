@@ -398,8 +398,8 @@ public class BlockUtil implements Util {
         HoleInfo output = new HoleInfo();
         HashMap<BlockOffset, BlockSafety> unsafeSides = BlockUtil.getUnsafeSides(centreBlock);
 
-        if (unsafeSides.containsKey(BlockUtil.BlockOffset.DOWN)) {
-            if (unsafeSides.remove(BlockUtil.BlockOffset.DOWN, BlockUtil.BlockSafety.BREAKABLE)) {
+        if (unsafeSides.containsKey(BlockOffset.DOWN)) {
+            if (unsafeSides.remove(BlockOffset.DOWN, BlockSafety.BREAKABLE)) {
                 if (!ignoreDown) {
                     output.setSafety(BlockSafety.BREAKABLE);
                     return output;
@@ -409,7 +409,7 @@ public class BlockUtil implements Util {
 
         int size = unsafeSides.size();
 
-        unsafeSides.entrySet().removeIf(entry -> entry.getValue() == BlockUtil.BlockSafety.RESISTANT);
+        unsafeSides.entrySet().removeIf(entry -> entry.getValue() == BlockSafety.RESISTANT);
 
         // size has changed so must have weak side
         if (unsafeSides.size() != size) {
@@ -436,20 +436,20 @@ public class BlockUtil implements Util {
     private static HoleInfo isDoubleHole(HoleInfo info, BlockPos centreBlock, BlockOffset weakSide) {
         BlockPos unsafePos = weakSide.offset(centreBlock);
 
-        HashMap<BlockUtil.BlockOffset, BlockUtil.BlockSafety> unsafeSides = BlockUtil.getUnsafeSides(unsafePos);
+        HashMap<BlockOffset, BlockSafety> unsafeSides = BlockUtil.getUnsafeSides(unsafePos);
 
         int size = unsafeSides.size();
 
-        unsafeSides.entrySet().removeIf(entry -> entry.getValue() == BlockUtil.BlockSafety.RESISTANT);
+        unsafeSides.entrySet().removeIf(entry -> entry.getValue() == BlockSafety.RESISTANT);
 
         // size has changed so must have weak side
         if (unsafeSides.size() != size) {
             info.setSafety(BlockSafety.RESISTANT);
         }
 
-        if (unsafeSides.containsKey(BlockUtil.BlockOffset.DOWN)) {
+        if (unsafeSides.containsKey(BlockOffset.DOWN)) {
             info.setType(HoleType.CUSTOM);
-            unsafeSides.remove(BlockUtil.BlockOffset.DOWN);
+            unsafeSides.remove(BlockOffset.DOWN);
         }
 
         // is it a safe hole

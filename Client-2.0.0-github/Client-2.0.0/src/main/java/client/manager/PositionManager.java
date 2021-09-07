@@ -1,6 +1,7 @@
 package client.manager;
 
 import client.modules.Feature;
+import net.minecraft.network.play.client.CPacketPlayer;
 
 public class PositionManager
         extends Feature {
@@ -23,6 +24,28 @@ public class PositionManager
         PositionManager.mc.player.onGround = this.onground;
     }
 
+    public void setPlayerPosition(double x, double y, double z) {
+        PositionManager.mc.player.posX = x;
+        PositionManager.mc.player.posY = y;
+        PositionManager.mc.player.posZ = z;
+    }
+
+    public void setPlayerPosition(double x, double y, double z, boolean onground) {
+        PositionManager.mc.player.posX = x;
+        PositionManager.mc.player.posY = y;
+        PositionManager.mc.player.posZ = z;
+        PositionManager.mc.player.onGround = onground;
+    }
+
+    public void setPositionPacket(double x, double y, double z, boolean onGround, boolean setPos, boolean noLagBack) {
+        PositionManager.mc.player.connection.sendPacket(new CPacketPlayer.Position(x, y, z, onGround));
+        if (setPos) {
+            PositionManager.mc.player.setPosition(x, y, z);
+            if (noLagBack) {
+                this.updatePosition();
+            }
+        }
+    }
 
     public double getX() {
         return this.x;

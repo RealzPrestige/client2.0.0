@@ -705,7 +705,7 @@ public class EntityUtil implements Util {
         return pl.getName().equals(mc.player.getName()) || pl.isDead;
     }
 
-    public static java.util.List<BlockPos> getSphere(BlockPos loc, float r, int h, boolean hollow, boolean sphere, int plusY) {
+    public static List<BlockPos> getSphere(BlockPos loc, float r, int h, boolean hollow, boolean sphere, int plusY) {
         List<BlockPos> circleBlocks = new ArrayList<>();
         int cx = loc.getX();
         int cy = loc.getY();

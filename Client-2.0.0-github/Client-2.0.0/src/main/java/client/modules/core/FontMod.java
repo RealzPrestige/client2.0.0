@@ -20,7 +20,7 @@ public class FontMod
     public Setting<Integer> fontStyle = this.register( new Setting <> ( "Style" , 0 , 0 , 3 ));
     private boolean reloadFont = false;
     public FontMod() {
-        super("CustomFont", "Tweaks the way your font looks.", Module.Category.CORE);
+        super("CustomFont", "Tweaks the way your font looks.", Category.CORE);
         this.setInstance();
     }
 

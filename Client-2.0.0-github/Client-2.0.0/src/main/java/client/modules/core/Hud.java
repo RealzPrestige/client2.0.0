@@ -93,7 +93,7 @@ public class Hud extends Module {
         int width = this.renderer.scaledWidth;
         int height = this.renderer.scaledHeight;
         int[] counter1 = {1};
-        int j = (mc.currentScreen instanceof net.minecraft.client.gui.GuiChat && bottomAlign.getCurrentState()) ? 14 : 0;
+        int j = (mc.currentScreen instanceof GuiChat && bottomAlign.getCurrentState()) ? 14 : 0;
         if(activeModules.getCurrentState()) {
             if(colorMode.getCurrentState() == ColorMode.NORMAL) {
                 for (int k = 0; k < Client.moduleManager.sortedModules.size(); k++) {
@@ -136,7 +136,7 @@ public class Hud extends Module {
                     char[] stringToCharArray = string.toCharArray();
                     float f = 0.0F;
                     for (char c : stringToCharArray) {
-                         renderer.drawString(String.valueOf(c), watermarkX.getCurrentState() + f, watermarkY.getCurrentState(), ColorUtil.rainbowHud(arrayOfInt[0] * rainbowDelay.getCurrentState()).getRGB(), true);
+                        renderer.drawString(String.valueOf(c), watermarkX.getCurrentState() + f, watermarkY.getCurrentState(), ColorUtil.rainbowHud(arrayOfInt[0] * rainbowDelay.getCurrentState()).getRGB(), true);
                         f += renderer.getStringWidth(String.valueOf(c));
                         arrayOfInt[0] = arrayOfInt[0] + 1;
                     }

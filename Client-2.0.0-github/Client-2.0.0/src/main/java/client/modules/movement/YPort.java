@@ -11,7 +11,7 @@ public class YPort extends Module {
     private final Timer timer;
 
     public YPort() {
-        super("YPort", "Removing soon.", Module.Category.MOVEMENT);
+        super("YPort", "Removing soon.", Category.MOVEMENT);
         this.speed = register(new Setting("Speed", 0.1, 0.0, 1.0D));
         this.timer = new Timer();
     }

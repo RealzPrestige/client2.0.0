@@ -19,7 +19,7 @@ public class Notify extends Module {
     public Setting<TextUtil.Color> commandColor = register(new Setting("NameColor", TextUtil.Color.WHITE));
     public Setting<TextUtil.Color> bracketColor = register(new Setting("BracketColor", TextUtil.Color.WHITE));
     public Notify() {
-        super("Notify", "Notifies modules in chat.", Module.Category.CORE);
+        super("Notify", "Notifies modules in chat.", Category.CORE);
         setInstance();
     }
 

@@ -31,7 +31,7 @@ public class GuiAccountSelector extends GuiScreen {
   private int prevIndex = 0;
   private Throwable loginfailed;
   private ArrayList<ExtendedAccountData> queriedaccounts = convertData();
-  private GuiAccountSelector.List accountsgui;
+  private List accountsgui;
   //Buttons that can be disabled need to be here
   private GuiButton login;
   private GuiButton loginoffline;
@@ -45,7 +45,7 @@ public class GuiAccountSelector extends GuiScreen {
   @Override
   public void initGui() {
     Keyboard.enableRepeatEvents(true);
-    accountsgui = new GuiAccountSelector.List(this.mc);
+    accountsgui = new List(this.mc);
     accountsgui.registerScrollButtons(5, 6);
     query = I18n.format("Search");
     this.buttonList.clear();

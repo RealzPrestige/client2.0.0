@@ -36,20 +36,19 @@ public class ColorUtil {
         return Color.getHSBColor((float) ( rainbowState % 360.0 / 360.0), ClickGui.getInstance ( ).rainbowSaturation.getCurrentState( ) / 255.0f, ClickGui.getInstance ( ).rainbowBrightness.getCurrentState( ) / 255.0f);
     }
 
-    public static Color rainbowHud(int delay) {
-        double rainbowState = Math.ceil((double) (System.currentTimeMillis() + (long) delay) / 20.0);
-        return Color.getHSBColor((float) ( rainbowState % 360.0 / 360.0), Hud.getInstance ( ).rainbowSaturation.getCurrentState( ) / 255.0f, Hud.getInstance ( ).rainbowBrightness.getCurrentState( ) / 255.0f);
-    }
-
     public static Color rainbowSync(int delay) {
         double rainbowState = Math.ceil((double) (System.currentTimeMillis() + (long) delay) / 20.0);
         return Color.getHSBColor((float) ( rainbowState % 360.0 / 360.0), Sync.getInstance().rainbowSaturation.getCurrentState( ) / 255.0f, Sync.getInstance().rainbowBrightness.getCurrentState( ) / 255.0f);
     }
 
+
+    public static Color rainbowHud(int delay) {
+        double rainbowState = Math.ceil((double) (System.currentTimeMillis() + (long) delay) / 20.0);
+        return Color.getHSBColor((float) ( rainbowState % 360.0 / 360.0), Hud.getInstance ( ).rainbowSaturation.getCurrentState( ) / 255.0f, Hud.getInstance ( ).rainbowBrightness.getCurrentState( ) / 255.0f);
+    }
     public static int toRGBA(Color color) {
         return ColorUtil.toRGBA(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
     }
-
     public static void setColor(Color color) {
         GL11.glColor4d((float)color.getRed() / 255.0f, (float)color.getGreen() / 255.0f, (float)color.getBlue() / 255.0f, (float)color.getAlpha() / 255.0f);
     }

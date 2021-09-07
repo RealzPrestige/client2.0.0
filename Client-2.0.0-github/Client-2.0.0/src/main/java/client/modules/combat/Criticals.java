@@ -16,7 +16,7 @@ public class Criticals extends Module {
     private final Timer timer = new Timer();
 
     public Criticals() {
-        super("Criticals", "Converts regular hits into Critical hits.", Module.Category.COMBAT);
+        super("Criticals", "Converts regular hits into Critical hits.", Category.COMBAT);
     }
 
     @Override

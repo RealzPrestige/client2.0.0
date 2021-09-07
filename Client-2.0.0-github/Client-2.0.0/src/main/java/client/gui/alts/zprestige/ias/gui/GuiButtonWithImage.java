@@ -5,6 +5,7 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
+
 public class GuiButtonWithImage extends GuiButton {
 
 	private static final ResourceLocation customButtonTextures = new ResourceLocation("textures/gui/custombutton.png");

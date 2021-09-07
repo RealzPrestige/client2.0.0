@@ -41,6 +41,15 @@ public class ClickGui extends Module {
     public Setting<Integer> integerGreen = this.register(new Setting<>("IntegerGreen", 30, 0, 255, v -> gui.getCurrentState() == Gui.NEW));
     public Setting<Integer> integerBlue = this.register(new Setting<>("IntegerBlue", 30, 0, 255, v -> gui.getCurrentState() == Gui.NEW));
     public Setting<Integer> integerAlpha = this.register(new Setting<>("IntegerAlpha", 120, 0, 255, v -> gui.getCurrentState() == Gui.NEW));
+    public Setting<Boolean> seperateBooleanColors = this.register(new Setting<>("SeperateBooleanColors", false, v -> gui.getCurrentState() == Gui.NEW));
+    public Setting<Integer> stateFalseBooleanRed = this.register(new Setting<>("BooleanFalseRed", 30, 0, 255, v -> gui.getCurrentState() == Gui.NEW && seperateBooleanColors.getCurrentState()));
+    public Setting<Integer> stateFalseBooleanGreen = this.register(new Setting<>("BooleanFalseGreen", 30, 0, 255, v -> gui.getCurrentState() == Gui.NEW && seperateBooleanColors.getCurrentState()));
+    public Setting<Integer> stateFalseBooleanBlue = this.register(new Setting<>("BooleanFalseBlue", 30, 0, 255, v -> gui.getCurrentState() == Gui.NEW && seperateBooleanColors.getCurrentState()));
+    public Setting<Integer> stateFalseBooleanAlpha = this.register(new Setting<>("BooleanFalseAlpha", 120, 0, 255, v -> gui.getCurrentState() == Gui.NEW && seperateBooleanColors.getCurrentState()));
+    public Setting<Integer> stateTrueBooleanRed = this.register(new Setting<>("BooleanTrueRed", 30, 0, 255, v -> gui.getCurrentState() == Gui.NEW && seperateBooleanColors.getCurrentState()));
+    public Setting<Integer> stateTrueBooleanGreen = this.register(new Setting<>("BooleanTrueGreen", 30, 0, 255, v -> gui.getCurrentState() == Gui.NEW && seperateBooleanColors.getCurrentState()));
+    public Setting<Integer> stateTrueBooleanBlue = this.register(new Setting<>("BooleanTrueBlue", 30, 0, 255, v -> gui.getCurrentState() == Gui.NEW && seperateBooleanColors.getCurrentState()));
+    public Setting<Integer> stateTrueBooleanAlpha = this.register(new Setting<>("BooleanTrueAlpha", 120, 0, 255, v -> gui.getCurrentState() == Gui.NEW && seperateBooleanColors.getCurrentState()));
 
     //OLD GUI
     public Setting<Boolean> topRectTextBold = this.register(new Setting("TopRectTextBold", true, v -> gui.getCurrentState() == Gui.OLD));
@@ -78,13 +87,12 @@ public class ClickGui extends Module {
     public Setting<Boolean> button = this.register(new Setting("Button", true, v -> gui.getCurrentState() == Gui.OLD));
     public Setting<Button> buttonButton = this.register(new Setting("ButtonSort", Button.PLUS, v -> button.getCurrentState() && gui.getCurrentState() == Gui.OLD));
     public Setting<Boolean> rainbow = this.register(new Setting("Rainbow", false, v -> gui.getCurrentState() == Gui.OLD));
-    public Setting<rainbowMode> rainbowModeHud = this.register(new Setting<Object>("HRainbowMode", rainbowMode.Static, v -> this.rainbow.getCurrentState() && gui.getCurrentState() == Gui.OLD));
     public Setting<Integer> rainbowHue = this.register(new Setting<Object>("Delay", 240, 0, 600, v -> this.rainbow.getCurrentState() && gui.getCurrentState() == Gui.OLD));
     public Setting<Float> rainbowBrightness = this.register(new Setting<Object>("Brightness ", 150.0f, 1.0f, 255.0f, v -> this.rainbow.getCurrentState() && gui.getCurrentState() == Gui.OLD));
     public Setting<Float> rainbowSaturation = this.register(new Setting<Object>("Saturation", 150.0f, 1.0f, 255.0f, v -> this.rainbow.getCurrentState() && gui.getCurrentState() == Gui.OLD));
 
     public ClickGui() {
-        super("ClickGui", "Opens the ClickGui that contains all modules.", Module.Category.CORE);
+        super("ClickGui", "Opens the ClickGui that contains all modules.", Category.CORE);
         setBind(Keyboard.KEY_O);
         this.setInstance();
     }

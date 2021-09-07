@@ -20,8 +20,11 @@ public class Sync extends Module {
 
     public Sync(){
         super("Sync", "Syncs your colors everywhere.", Category.CORE);
+       this.setInstance();
+    }
+
+    public void onUpdate(){
         color = rainbow.getCurrentState() ? ColorUtil.rainbowSync(rainbowHue.getCurrentState()).getRGB() : ColorUtil.toRGBA(red.getCurrentState(), green.getCurrentState(), blue.getCurrentState(), alpha.getCurrentState());
-        this.setInstance();
     }
 
     public static Sync getInstance() {
