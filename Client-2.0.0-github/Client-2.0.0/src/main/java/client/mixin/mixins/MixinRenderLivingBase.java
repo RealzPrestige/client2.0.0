@@ -218,13 +218,6 @@ public abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends 
             if (Chams.getInstance().cameraPitch.getCurrentState()) {
                 entity.cameraPitch = 0;
             }
-            if (entity.getHealth() <= 0) {
-                Minecraft.getMinecraft().world.addEntityToWorld(entity.entityId, entity);
-                fade = fade - currentTimeMillis();
-            }
-            if (fade == 0) {
-                Minecraft.getMinecraft().world.removeEntityFromWorld(entity.entityId);
-            }
         }
     }
 
@@ -267,11 +260,4 @@ public abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends 
     @Shadow
     protected abstract boolean setDoRenderBrightness(T paramT, float paramFloat);
 
-    public static int currentTimeMillis() {
-        long millisLong = System.currentTimeMillis();
-        while (millisLong > Integer.MAX_VALUE) {
-            millisLong -= Integer.MAX_VALUE;
-        }
-        return (int) millisLong;
-    }
 }

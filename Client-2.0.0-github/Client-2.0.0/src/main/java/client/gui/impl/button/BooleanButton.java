@@ -45,7 +45,7 @@ public class BooleanButton
             if(getState()) {
                 RenderUtil.drawRect(this.x + 85, this.y + 6, this.x + 94, this.y + 12, color);
             } else {
-                RenderUtil.drawRect(this.x + 75, this.y + 6, this.x + 84, this.y + 12, color);
+                RenderUtil.drawRect(this.x + 75, this.y + 6, this.x + 84, this.y + 12, -1);
             }
         }
     }
