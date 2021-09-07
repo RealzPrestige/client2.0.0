@@ -23,6 +23,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="62a2de53-954f-4cc3-99ba-84bcf3ec3fbc" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/core/Sync.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/fileContent/annotation-processors.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/fileContent/annotation-processors.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/fileContent/fileContent.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/fileContent/fileContent.lock" afterDir="false" />
@@ -36,13 +37,38 @@
       <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/taskHistory/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/4.10.3/taskHistory/taskHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/command/ConfigCommand.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/command/FriendCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/command/FriendCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/command/HelpCommand.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/command/ModuleCommand.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/manager/ColorManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/manager/ColorManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/manager/CommandManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/manager/CommandManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/manager/PotionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/manager/PotionManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/command/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/command/Command.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/gui/ClientGui.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/gui/ClientGui.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/gui/impl/Component.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/gui/impl/Component.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/gui/impl/background/particles/Particle.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/gui/impl/background/particles/Particle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/gui/impl/background/particles/ParticleSystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/gui/impl/background/particles/ParticleSystem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/gui/impl/button/BindButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/gui/impl/button/BindButton.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/gui/impl/button/BooleanButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/gui/impl/button/BooleanButton.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/gui/impl/button/Button.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/gui/impl/button/Button.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/gui/impl/button/EnumButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/gui/impl/button/EnumButton.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/gui/impl/button/ModuleButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/gui/impl/button/ModuleButton.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/gui/impl/button/Slider.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/gui/impl/button/Slider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/gui/impl/button/StringButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/gui/impl/button/StringButton.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/manager/ConfigManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/manager/ConfigManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/manager/FriendManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/manager/FriendManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/manager/ModuleManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/manager/ModuleManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/manager/TextManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/manager/TextManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/mixin/mixins/MixinGuiNewChat.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/mixin/mixins/MixinGuiNewChat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/mixin/mixins/MixinRenderLivingBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/mixin/mixins/MixinRenderLivingBase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/mixin/mixins/MixinRenderModifiedCrystal.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/mixin/mixins/MixinRenderModifiedCrystal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/Module.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/Module.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/client/ClickGui.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/core/ClickGui.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/client/FontMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/core/FontMod.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/client/Hud.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/core/Hud.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/client/Notify.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/core/Notify.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/client/RPC.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/core/RPC.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/combat/AutoCrystal.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/combat/AutoCrystal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/combat/AutoWeb.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/combat/AutoWeb.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/miscellaneous/TotemPopCounter.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/miscellaneous/TotemPopCounter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/visual/Chams.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/visual/Chams.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/visual/CrystalChanger.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/visual/CrystalChanger.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/visual/ShulkerViewer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/modules/visual/ShulkerViewer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/util/ColorUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0/src/main/java/client/util/ColorUtil.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -533,7 +559,14 @@
       <option name="project" value="LOCAL" />
       <updated>1631009294630</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="useless stuff">
+      <created>1631015055458</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1631015055458</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -549,7 +582,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="b13" />
     <MESSAGE value="calcmode auto packet visualizer hud, rotationutil remove, iiv mode to prestigechams, nametags rewrite" />
     <MESSAGE value="some more tiny stuff" />
     <MESSAGE value="Speedmine render" />
@@ -574,7 +606,8 @@
     <MESSAGE value="moved RainbowToggleMessages to Notify from chatmodifcations (needs fix)" />
     <MESSAGE value="deleted breakEsp (too much crashes). AutoSilentChorus added" />
     <MESSAGE value="tons of clickgui stuff" />
-    <option name="LAST_COMMIT_MESSAGE" value="tons of clickgui stuff" />
+    <MESSAGE value="useless stuff" />
+    <option name="LAST_COMMIT_MESSAGE" value="useless stuff" />
   </component>
   <component name="WindowStateProjectService">
     <state x="586" y="198" key="#Inspections" timestamp="1631005532352">
@@ -593,10 +626,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="743" y="414" width="433" height="217" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630763631957" />
-    <state x="690" y="267" width="540" height="502" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1630876418730">
+    <state x="690" y="267" width="540" height="502" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1631014794910">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="690" y="267" width="540" height="502" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630876418730" />
+    <state x="690" y="267" width="540" height="502" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1631014794910" />
     <state x="690" y="267" key="#com.intellij.refactoring.typeMigration.ui.FailedConversionsDialog" timestamp="1630780137187">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -605,25 +638,25 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1631003425028" />
-    <state width="1877" height="124" key="GridCell.Tab.0.bottom" timestamp="1631009919978">
+    <state width="1877" height="132" key="GridCell.Tab.0.bottom" timestamp="1631018762314">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="124" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1631009919978" />
+    <state width="1877" height="132" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1631018762314" />
     <state width="1877" height="167" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1630739921669" />
-    <state width="1877" height="124" key="GridCell.Tab.0.center" timestamp="1631009919978">
+    <state width="1877" height="132" key="GridCell.Tab.0.center" timestamp="1631018762313">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="124" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1631009919978" />
+    <state width="1877" height="132" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1631018762313" />
     <state width="1877" height="167" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1630739921669" />
-    <state width="1877" height="124" key="GridCell.Tab.0.left" timestamp="1631009919977">
+    <state width="1877" height="132" key="GridCell.Tab.0.left" timestamp="1631018762313">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="124" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1631009919977" />
+    <state width="1877" height="132" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1631018762313" />
     <state width="1877" height="167" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1630739921669" />
-    <state width="1877" height="124" key="GridCell.Tab.0.right" timestamp="1631009919978">
+    <state width="1877" height="132" key="GridCell.Tab.0.right" timestamp="1631018762314">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="124" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1631009919978" />
+    <state width="1877" height="132" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1631018762314" />
     <state width="1877" height="167" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1630739921669" />
     <state x="184" y="86" key="MergeDialog" timestamp="1630941164966">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -641,10 +674,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="165" key="SettingsEditor/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630797301167" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1631009351198">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1631015080780">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1631009351198" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1631015080780" />
     <state x="565" y="130" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1630765984971">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -657,10 +690,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="557" y="-15" width="1067" height="801" maximized="true" key="dock-window-1/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1630772876317" />
-    <state x="709" y="401" width="645" height="558" key="find.popup" timestamp="1631014701909">
+    <state x="709" y="401" width="645" height="558" key="find.popup" timestamp="1631014853522">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="709" y="401" width="645" height="558" key="find.popup/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1631014701909" />
+    <state x="709" y="401" width="645" height="558" key="find.popup/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1631014853522" />
     <state x="660" y="277" key="refactoring.ChangeSignatureDialog" timestamp="1630796607250">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

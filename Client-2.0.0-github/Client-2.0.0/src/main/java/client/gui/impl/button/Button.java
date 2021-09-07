@@ -4,7 +4,7 @@ import client.Client;
 import client.gui.ClientGui;
 import client.gui.impl.Component;
 import client.gui.impl.Item;
-import client.modules.client.ClickGui;
+import client.modules.core.ClickGui;
 import client.util.ColorUtil;
 import client.util.RenderUtil;
 import net.minecraft.client.audio.PositionedSoundRecord;

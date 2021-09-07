@@ -2,7 +2,7 @@ package client.manager;
 
 import client.gui.impl.setting.Setting;
 import client.modules.Feature;
-import client.modules.client.Notify;
+import client.modules.core.Notify;
 import client.util.PlayerUtil;
 import net.minecraft.entity.player.EntityPlayer;
 

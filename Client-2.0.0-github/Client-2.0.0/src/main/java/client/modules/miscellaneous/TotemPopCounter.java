@@ -1,7 +1,7 @@
 package client.modules.miscellaneous;
 
 import client.modules.Module;
-import client.modules.client.Notify;
+import client.modules.core.Notify;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.text.TextComponentString;

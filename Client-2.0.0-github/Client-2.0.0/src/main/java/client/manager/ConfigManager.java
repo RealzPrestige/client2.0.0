@@ -157,13 +157,6 @@ public class ConfigManager implements Util {
         return name;
     }
 
-    public void resetConfig(boolean saveConfig, String name) {
-        for (Feature feature : this.features)
-            feature.reset();
-        if (saveConfig)
-            saveConfig(name);
-    }
-
     public void saveSettings(Feature feature) throws IOException {
         JsonObject object = new JsonObject();
         File directory = new File(this.config + getDirectory(feature));

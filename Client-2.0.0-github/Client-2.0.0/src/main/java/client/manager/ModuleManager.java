@@ -6,7 +6,7 @@ import client.gui.ClientGui;
 import client.gui.impl.background.MenuToggler;
 import client.modules.Feature;
 import client.modules.Module;
-import client.modules.client.*;
+import client.modules.core.*;
 import client.modules.combat.*;
 import client.modules.miscellaneous.*;
 import client.modules.movement.*;
@@ -35,6 +35,7 @@ public class ModuleManager
         moduleList.add(new Notify());
         moduleList.add(new RPC());
         moduleList.add(new MenuToggler());
+        moduleList.add(new Sync());
 
         //COMBAT
         moduleList.add(new AutoArmor());

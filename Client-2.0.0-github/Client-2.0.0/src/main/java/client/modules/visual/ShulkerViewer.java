@@ -1,7 +1,7 @@
 package client.modules.visual;
 import client.events.Render2DEvent;
 import client.modules.Module;
-import client.modules.client.ClickGui;
+import client.modules.core.ClickGui;
 import client.util.ColorUtil;
 import client.util.RenderUtil;
 import client.util.Timer;

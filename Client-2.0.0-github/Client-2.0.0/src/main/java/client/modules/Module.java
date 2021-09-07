@@ -6,7 +6,7 @@ import client.events.Render2DEvent;
 import client.events.Render3DEvent;
 import client.gui.impl.setting.Bind;
 import client.gui.impl.setting.Setting;
-import client.modules.client.Notify;
+import client.modules.core.Notify;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.common.MinecraftForge;

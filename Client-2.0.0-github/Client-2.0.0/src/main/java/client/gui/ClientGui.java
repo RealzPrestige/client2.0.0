@@ -8,7 +8,7 @@ import client.gui.impl.background.particles.ParticleSystem;
 import client.gui.impl.button.ModuleButton;
 import client.modules.Feature;
 import client.modules.Module;
-import client.modules.client.ClickGui;
+import client.modules.core.ClickGui;
 import client.modules.visual.Chams;
 import client.util.ColorUtil;
 import client.util.EntityUtil;
@@ -82,7 +82,6 @@ public class ClientGui extends GuiScreen {
     private void load() {
 
         int x = -84;
-        int x2 = -109;
         Random random = new Random(); {
             for (int i = 0; i < 100; ++i) {
                 for (int y = 0; y < 3; ++y) {

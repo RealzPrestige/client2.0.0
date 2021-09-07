@@ -8,7 +8,7 @@ import client.gui.impl.Item;
 import client.gui.impl.setting.Bind;
 import client.gui.impl.setting.Setting;
 import client.modules.Module;
-import client.modules.client.ClickGui;
+import client.modules.core.ClickGui;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.init.SoundEvents;
 

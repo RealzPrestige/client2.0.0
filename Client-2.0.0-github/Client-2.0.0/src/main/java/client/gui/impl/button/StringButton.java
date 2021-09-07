@@ -3,7 +3,7 @@ package client.gui.impl.button;
 import client.Client;
 import client.gui.ClientGui;
 import client.gui.impl.setting.Setting;
-import client.modules.client.ClickGui;
+import client.modules.core.ClickGui;
 import client.util.ColorUtil;
 import client.util.RenderUtil;
 import com.mojang.realmsclient.gui.ChatFormatting;

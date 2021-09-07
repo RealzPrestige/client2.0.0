@@ -1,7 +1,8 @@
 package client.util;
 
-import client.modules.client.ClickGui;
-import client.modules.client.Hud;
+import client.modules.core.ClickGui;
+import client.modules.core.Hud;
+import client.modules.core.Sync;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
@@ -35,23 +36,20 @@ public class ColorUtil {
         return Color.getHSBColor((float) ( rainbowState % 360.0 / 360.0), ClickGui.getInstance ( ).rainbowSaturation.getCurrentState( ) / 255.0f, ClickGui.getInstance ( ).rainbowBrightness.getCurrentState( ) / 255.0f);
     }
 
-    public static Color rainbowHighDelay(int delay) {
-        double rainbowState = Math.ceil((double) (System.currentTimeMillis() + (long) delay * 100) / 20.0);
-        return Color.getHSBColor((float) ( rainbowState % 360.0 / 360.0), ClickGui.getInstance ( ).rainbowSaturation.getCurrentState( ) / 255.0f, ClickGui.getInstance ( ).rainbowBrightness.getCurrentState( ) / 255.0f);
-    }
-
     public static Color rainbowHud(int delay) {
         double rainbowState = Math.ceil((double) (System.currentTimeMillis() + (long) delay) / 20.0);
         return Color.getHSBColor((float) ( rainbowState % 360.0 / 360.0), Hud.getInstance ( ).rainbowSaturation.getCurrentState( ) / 255.0f, Hud.getInstance ( ).rainbowBrightness.getCurrentState( ) / 255.0f);
     }
+
+    public static Color rainbowSync(int delay) {
+        double rainbowState = Math.ceil((double) (System.currentTimeMillis() + (long) delay) / 20.0);
+        return Color.getHSBColor((float) ( rainbowState % 360.0 / 360.0), Sync.getInstance().rainbowSaturation.getCurrentState( ) / 255.0f, Sync.getInstance().rainbowBrightness.getCurrentState( ) / 255.0f);
+    }
+
     public static int toRGBA(Color color) {
         return ColorUtil.toRGBA(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
     }
 
-    public static int getRainbow(int speed, int offset, float s, float b) {
-        float hue = (System.currentTimeMillis() + (long)offset) % (long)speed;
-        return Color.getHSBColor(hue /= (float)speed, s, b).getRGB();
-    }
     public static void setColor(Color color) {
         GL11.glColor4d((float)color.getRed() / 255.0f, (float)color.getGreen() / 255.0f, (float)color.getBlue() / 255.0f, (float)color.getAlpha() / 255.0f);
     }

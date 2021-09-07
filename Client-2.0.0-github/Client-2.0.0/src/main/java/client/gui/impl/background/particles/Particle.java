@@ -1,6 +1,6 @@
 package client.gui.impl.background.particles;
 
-import client.modules.client.ClickGui;
+import client.modules.core.ClickGui;
 import client.util.RenderUtil;
 import net.minecraft.client.gui.ScaledResolution;
 import org.lwjgl.input.Mouse;

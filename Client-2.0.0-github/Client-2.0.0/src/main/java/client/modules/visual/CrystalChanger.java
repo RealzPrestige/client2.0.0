@@ -4,6 +4,7 @@ import client.events.PacketEvent;
 import client.events.RenderEntityModelEvent;
 import client.gui.impl.setting.Setting;
 import client.modules.Module;
+import client.modules.core.Sync;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityEnderCrystal;
@@ -38,15 +39,16 @@ public class CrystalChanger extends Module {
     public Setting<Boolean> wireframe = register(new Setting<>("Wireframe", true));
     public Setting<Boolean> throughwalls = register(new Setting<>("Walls", true));
     public Setting<Boolean> glow = register(new Setting<>("Glow", false));
-    public Setting<Integer> red = register(new Setting<>("Red", 255, 0, 255, v -> this.chams.getCurrentState()));
-    public Setting<Integer> green = register(new Setting<>("Green", 255, 0, 255, v -> this.chams.getCurrentState()));
-    public Setting<Integer> blue = register(new Setting<>("Blue", 255, 0, 255, v -> this.chams.getCurrentState()));
-    public Setting<Integer> alpha = register(new Setting<>("Alpha", 150, 0, 255, v -> this.chams.getCurrentState()));
-
-    public Setting<Integer> wallsRed = register(new Setting<>("WallsRed", 255, 0, 255, v -> this.throughwalls.getCurrentState()));
-    public Setting<Integer> wallsGreen = register(new Setting<>("WallsGreen", 255, 0, 255, v -> this.throughwalls.getCurrentState()));
-    public Setting<Integer> wallsBlue = register(new Setting<>("WallsBlue", 255, 0, 255, v -> this.throughwalls.getCurrentState()));
-    public Setting<Integer> wallsAlpha = register(new Setting<>("WallsAlpha", 150, 0, 255, v -> this.throughwalls.getCurrentState()));
+    public Setting<Boolean> sync = register(new Setting("Sync", false));
+    public Setting<Integer> red = register(new Setting<>("Red", 255, 0, 255, v -> this.chams.getCurrentState() && !sync.getCurrentState()));
+    public Setting<Integer> green = register(new Setting<>("Green", 255, 0, 255, v -> this.chams.getCurrentState() && !sync.getCurrentState()));
+    public Setting<Integer> blue = register(new Setting<>("Blue", 255, 0, 255, v -> this.chams.getCurrentState() && !sync.getCurrentState()));
+    public Setting<Integer> alpha = register(new Setting<>("Alpha", 150, 0, 255, v -> this.chams.getCurrentState() && !sync.getCurrentState()));
+    public Setting<Boolean> wallsSync = register(new Setting("WallsSync", false));
+    public Setting<Integer> wallsRed = register(new Setting<>("WallsRed", 255, 0, 255, v -> this.throughwalls.getCurrentState() && !wallsSync.getCurrentState()));
+    public Setting<Integer> wallsGreen = register(new Setting<>("WallsGreen", 255, 0, 255, v -> this.throughwalls.getCurrentState() && !wallsSync.getCurrentState()));
+    public Setting<Integer> wallsBlue = register(new Setting<>("WallsBlue", 255, 0, 255, v -> this.throughwalls.getCurrentState() && !wallsSync.getCurrentState()));
+    public Setting<Integer> wallsAlpha = register(new Setting<>("WallsAlpha", 150, 0, 255, v -> this.throughwalls.getCurrentState() && !wallsSync.getCurrentState()));
 
     public Setting<Double> width = register(new Setting<>("LineWidth", 3.0, 0.1, 5.0));
     public Setting<Double> scale = register(new Setting<>("Scale", 1.0, 0.1, 3.0));
@@ -108,7 +110,7 @@ public class CrystalChanger extends Module {
         GL11.glEnable(2848);
         GL11.glEnable(3042);
         GlStateManager.blendFunc(770, 771);
-        GlStateManager.color((float) red.getCurrentState() / 255.0f, (float) green.getCurrentState() / 255.0f, (float) blue.getCurrentState() / 255.0f, (float) alpha.getCurrentState() / 255.0f);
+        GlStateManager.color(sync.getCurrentState() ? Sync.getInstance().color : (float) red.getCurrentState() / 255.0f, (float) green.getCurrentState() / 255.0f, (float) blue.getCurrentState() / 255.0f, (float) alpha.getCurrentState() / 255.0f);
         GlStateManager.glLineWidth(this.width.getCurrentState().floatValue());
         event.modelBase.render(event.entity, event.limbSwing, event.limbSwingAmount, event.age, event.headYaw, event.headPitch, event.scale);
         GL11.glPopAttrib();

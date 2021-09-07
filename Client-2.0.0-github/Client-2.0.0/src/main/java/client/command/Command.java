@@ -75,10 +75,6 @@ public abstract class Command
         public ITextComponent createCopy() {
             return null;
         }
-
-        public ITextComponent shallowCopy() {
-            return new ChatMessage(this.text);
-        }
     }
 }
 

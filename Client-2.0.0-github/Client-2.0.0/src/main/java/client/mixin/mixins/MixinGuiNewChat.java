@@ -1,7 +1,7 @@
 package client.mixin.mixins;
 
 import client.Client;
-import client.modules.client.ClickGui;
+import client.modules.core.ClickGui;
 import client.util.ColorUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ChatLine;
