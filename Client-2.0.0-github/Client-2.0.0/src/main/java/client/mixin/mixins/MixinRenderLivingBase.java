@@ -43,6 +43,9 @@ public abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends 
     float outlinegreen;
 
     float outlineblue;
+
+    public int fade = Chams.getInstance().alpha.getCurrentState().intValue();
+
     protected MixinRenderLivingBase(RenderManager renderManager) {
         super(renderManager);
         this.red = 0.0F;
@@ -114,7 +117,6 @@ public abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends 
                 } else {
 
 
-
                     if (Chams.getInstance().isOn() && entity instanceof EntityPlayer && ((Chams.getInstance()).mode.getCurrentState().equals(Chams.Mode.SOLID) || (Chams.getInstance()).mode.getCurrentState().equals(Chams.Mode.BOTH))) {
                         this.red = (Chams.getInstance()).red.getCurrentState() / 255.0F;
                         this.green = (Chams.getInstance()).green.getCurrentState() / 255.0F;
@@ -129,25 +131,24 @@ public abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends 
                         GL11.glDisable(2929);
                         GL11.glDepthMask(false);
                         if (Client.friendManager.isFriend(entity.getName()) || entity == (Minecraft.getMinecraft()).player) {
-                            GL11.glColor4f(0.0F, 191.0F, 255.0F, (Chams.getInstance()).alpha.getCurrentState() / 255.0F);
+                            GL11.glColor4f(0.0F, 191.0F, 255.0F, (fade / 255.0F));
                         } else {
-                            GL11.glColor4f((Chams.getInstance()).rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).rainbowHue.getCurrentState()).getRed() / 255.0F) : this.red, (Chams.getInstance()).rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).rainbowHue.getCurrentState()).getGreen() / 255.0F) : this.green, (Chams.getInstance()).rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).rainbowHue.getCurrentState()).getBlue() / 255.0F) : this.blue, (Chams.getInstance()).alpha.getCurrentState() / 255.0F);
+                            GL11.glColor4f((Chams.getInstance()).rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).rainbowHue.getCurrentState()).getRed() / 255.0F) : this.red, (Chams.getInstance()).rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).rainbowHue.getCurrentState()).getGreen() / 255.0F) : this.green, (Chams.getInstance()).rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).rainbowHue.getCurrentState()).getBlue() / 255.0F) : this.blue, (fade / 255.0F));
                         }
                         renderModel(entity, f6, f5, f8, f2, f7, f4);
                         GL11.glDisable(2896);
                         glEnable(2929);
                         GL11.glDepthMask(true);
                         if (Client.friendManager.isFriend(entity.getName()) || entity == (Minecraft.getMinecraft()).player) {
-                            GL11.glColor4f(0.0F, 191.0F, 255.0F, (Chams.getInstance()).alpha.getCurrentState() / 255.0F);
+                            GL11.glColor4f(0.0F, 191.0F, 255.0F, (fade / 255.0F));
                         } else {
-                            GL11.glColor4f((Chams.getInstance()).rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).rainbowHue.getCurrentState()).getRed() / 255.0F) : this.red, (Chams.getInstance()).rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).rainbowHue.getCurrentState()).getGreen() / 255.0F) : this.green, (Chams.getInstance()).rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).rainbowHue.getCurrentState()).getBlue() / 255.0F) : this.blue, (Chams.getInstance()).alpha.getCurrentState() / 255.0F);
+                            GL11.glColor4f((Chams.getInstance()).rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).rainbowHue.getCurrentState()).getRed() / 255.0F) : this.red, (Chams.getInstance()).rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).rainbowHue.getCurrentState()).getGreen() / 255.0F) : this.green, (Chams.getInstance()).rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).rainbowHue.getCurrentState()).getBlue() / 255.0F) : this.blue, (fade / 255.0F));
                         }
                         renderModel(entity, f6, f5, f8, f2, f7, f4);
                         glEnable(2896);
                         GlStateManager.popAttrib();
                         GlStateManager.popMatrix();
                     }
-
 
 
                     boolean flag1 = setDoRenderBrightness(entity, partialTicks);
@@ -196,26 +197,33 @@ public abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends 
             MinecraftForge.EVENT_BUS.post(new RenderLivingEvent.Post(entity, RenderLivingBase.class.cast(this), partialTicks, x, y, z));
         }
         if (Chams.getInstance().animationDisabler.getCurrentState()) {
-            if(Chams.getInstance().limbSwing.getCurrentState()) {
+            if (Chams.getInstance().limbSwing.getCurrentState()) {
                 entity.limbSwing = 0;
                 entity.limbSwingAmount = 0;
             }
-            if(Chams.getInstance().rotationPitch.getCurrentState()) {
+            if (Chams.getInstance().rotationPitch.getCurrentState()) {
                 entity.rotationPitch = 0;
             }
-            if(Chams.getInstance().rotationYaw.getCurrentState() && !entity.getName().equals(Util.mc.getSession().getUsername())) {
+            if (Chams.getInstance().rotationYaw.getCurrentState() && !entity.getName().equals(Util.mc.getSession().getUsername())) {
                 entity.rotationYaw = 0;
             }
-            if(Chams.getInstance().rotationYawHead.getCurrentState()) {
+            if (Chams.getInstance().rotationYawHead.getCurrentState()) {
                 entity.rotationYawHead = 0;
             }
-            if(Chams.getInstance().swingProgress.getCurrentState()) {
+            if (Chams.getInstance().swingProgress.getCurrentState()) {
                 entity.swingProgressInt = 0;
 
                 entity.swingProgress = 0;
             }
-            if(Chams.getInstance().cameraPitch.getCurrentState()) {
+            if (Chams.getInstance().cameraPitch.getCurrentState()) {
                 entity.cameraPitch = 0;
+            }
+            if (entity.getHealth() <= 0) {
+                Minecraft.getMinecraft().world.addEntityToWorld(entity.entityId, entity);
+                fade = fade - currentTimeMillis();
+            }
+            if (fade == 0) {
+                Minecraft.getMinecraft().world.removeEntityFromWorld(entity.entityId);
             }
         }
     }
@@ -258,4 +266,12 @@ public abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends 
 
     @Shadow
     protected abstract boolean setDoRenderBrightness(T paramT, float paramFloat);
+
+    public static int currentTimeMillis() {
+        long millisLong = System.currentTimeMillis();
+        while (millisLong > Integer.MAX_VALUE) {
+            millisLong -= Integer.MAX_VALUE;
+        }
+        return (int) millisLong;
+    }
 }

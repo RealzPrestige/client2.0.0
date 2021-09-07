@@ -7,6 +7,7 @@ import net.minecraft.client.gui.ScaledResolution;
 import org.lwjgl.input.Mouse;
 
 import javax.vecmath.Vector2f;
+import java.awt.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Particle {
@@ -68,7 +69,7 @@ public class Particle {
             }
         }
 
-        RenderUtil.drawRect(this.pos.x, this.pos.y, this.pos.x + this.size, this.pos.y + this.size, changeAlpha(ColorUtil.toRGBA(ClickGui.getInstance().particlered.getCurrentState(), ClickGui.getInstance().particlegreen.getCurrentState(), ClickGui.getInstance().particleblue.getCurrentState()), this.alpha));
+        RenderUtil.drawRoundedRect(this.pos.x, this.pos.y, this.pos.x + this.size, this.pos.y + this.size, 10, new Color(ClickGui.getInstance().particlered.getCurrentState(), ClickGui.getInstance().particlegreen.getCurrentState(), ClickGui.getInstance().particleblue.getCurrentState()));
     }
 
     public Vector2f getPos() {
