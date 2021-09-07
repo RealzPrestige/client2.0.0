@@ -23,101 +23,101 @@ import java.util.stream.Collectors;
 
 public class ModuleManager
         extends Feature {
-    public ArrayList<Module> modules = new ArrayList();
+    public ArrayList<Module> moduleList = new ArrayList();
     public List<Module> sortedModules = new ArrayList<>();
 
     public void init() {
 
         //CLIENT
-        modules.add(new ClickGui());
-        modules.add(new FontMod());
-        modules.add(new Hud());
-        modules.add(new Notify());
-        modules.add(new RPC());
-        modules.add(new MenuToggler());
+        moduleList.add(new ClickGui());
+        moduleList.add(new FontMod());
+        moduleList.add(new Hud());
+        moduleList.add(new Notify());
+        moduleList.add(new RPC());
+        moduleList.add(new MenuToggler());
 
         //COMBAT
-        modules.add(new AutoArmor());
-        modules.add(new Holefiller());
-        modules.add(new Offhand());
-        modules.add(new Surround());
-        modules.add(new AutoWeb());
-        modules.add(new Flatten());
-        modules.add(new AutoCrystal());
-        modules.add(new PistonAura());
-        modules.add(new AutoTrap());
-        modules.add(new Aura());
-        modules.add(new Criticals());
-        modules.add(new AntiCity());
-        modules.add(new ObiAssist());
+        moduleList.add(new AutoArmor());
+        moduleList.add(new Holefiller());
+        moduleList.add(new Offhand());
+        moduleList.add(new Surround());
+        moduleList.add(new AutoWeb());
+        moduleList.add(new Flatten());
+        moduleList.add(new AutoCrystal());
+        moduleList.add(new PistonAura());
+        moduleList.add(new AutoTrap());
+        moduleList.add(new Aura());
+        moduleList.add(new Criticals());
+        moduleList.add(new AntiCity());
+        moduleList.add(new ObiAssist());
 
         //MISCELLANEOUS
-        modules.add(new FakePlayer());
-        modules.add(new AutoRespawn());
-        modules.add(new NoEntityTrace());
-        modules.add(new MCFriends());
-        modules.add(new Spammer());
-        modules.add(new TotemPopCounter());
-        modules.add(new ChatModifications());
-        modules.add(new PingSpoofer());
-        modules.add(new TabTweaks());
-        modules.add(new MiddleClickPearl());
-        modules.add(new ChorusPredict());
-        modules.add(new NoBreakAnimation());
+        moduleList.add(new FakePlayer());
+        moduleList.add(new AutoRespawn());
+        moduleList.add(new NoEntityTrace());
+        moduleList.add(new MCFriends());
+        moduleList.add(new Spammer());
+        moduleList.add(new TotemPopCounter());
+        moduleList.add(new ChatModifications());
+        moduleList.add(new PingSpoofer());
+        moduleList.add(new TabTweaks());
+        moduleList.add(new MiddleClickPearl());
+        moduleList.add(new ChorusPredict());
+        moduleList.add(new NoBreakAnimation());
 
         //MOVEMENT
-        modules.add(new ReverseStep());
-        modules.add(new Sprint());
-        modules.add(new YPort());
-        modules.add(new Step());
-        modules.add(new Phase());
-        modules.add(new Velocity());
-        modules.add(new NoSlow());
-        modules.add(new ElytraFlight());
-        modules.add(new Jesus());
-        modules.add(new Strafe());
-        modules.add(new NoFall());
-        modules.add(new FastSwim());
-        modules.add(new AntiAim());
-        modules.add(new AutoWalk());
+        moduleList.add(new ReverseStep());
+        moduleList.add(new Sprint());
+        moduleList.add(new YPort());
+        moduleList.add(new Step());
+        moduleList.add(new Phase());
+        moduleList.add(new Velocity());
+        moduleList.add(new NoSlow());
+        moduleList.add(new ElytraFlight());
+        moduleList.add(new Jesus());
+        moduleList.add(new Strafe());
+        moduleList.add(new NoFall());
+        moduleList.add(new FastSwim());
+        moduleList.add(new AntiAim());
+        moduleList.add(new AutoWalk());
 
         //PLAYER
-        modules.add(new KeyEXP());
-        modules.add(new Burrow());
-        modules.add(new FastPlace());
-        modules.add(new HotbarRefill());
-        modules.add(new Quiver());
-        modules.add(new Speedmine());
-        modules.add(new AutoEnderChest());
-        modules.add(new Interactions());
-        modules.add(new Freecam());
-        modules.add(new AntiRotate());
-        modules.add(new Blink());
-        modules.add(new XCarry());
-        modules.add(new YawLock());
-        modules.add(new AutoMine());
-        modules.add(new AutoSilentChorus());
+        moduleList.add(new KeyEXP());
+        moduleList.add(new Burrow());
+        moduleList.add(new FastPlace());
+        moduleList.add(new HotbarRefill());
+        moduleList.add(new Quiver());
+        moduleList.add(new Speedmine());
+        moduleList.add(new AutoEnderChest());
+        moduleList.add(new Interactions());
+        moduleList.add(new Freecam());
+        moduleList.add(new AntiRotate());
+        moduleList.add(new Blink());
+        moduleList.add(new XCarry());
+        moduleList.add(new YawLock());
+        moduleList.add(new AutoMine());
+        moduleList.add(new AutoSilentChorus());
 
         //VISUAL
-        modules.add(new CrystalChanger());
-        modules.add(new BurrowESP());
-        modules.add(new ThirdPerson());
-        modules.add(new Viewmodel());
-        modules.add(new SwingAnimations());
-        modules.add(new ShulkerViewer());
-        modules.add(new PrestigeChams());
-        modules.add(new NameTags());
-        modules.add(new CityESP());
-        modules.add(new ESP());
-        modules.add(new Chams());
-        modules.add(new ViewTweaks());
-        modules.add(new PearlRender());
-        modules.add(new NoRender());
+        moduleList.add(new CrystalChanger());
+        moduleList.add(new BurrowESP());
+        moduleList.add(new ThirdPerson());
+        moduleList.add(new Viewmodel());
+        moduleList.add(new SwingAnimations());
+        moduleList.add(new ShulkerViewer());
+        moduleList.add(new PrestigeChams());
+        moduleList.add(new NameTags());
+        moduleList.add(new CityESP());
+        moduleList.add(new ESP());
+        moduleList.add(new Chams());
+        moduleList.add(new ViewTweaks());
+        moduleList.add(new PearlRender());
+        moduleList.add(new NoRender());
 
     }
 
     public Module getModuleByName(String name) {
-        for (Module module : this.modules) {
+        for (Module module : this.moduleList) {
             if (!module.getName().equalsIgnoreCase(name)) continue;
             return module;
         }
@@ -125,7 +125,7 @@ public class ModuleManager
     }
 
     public <T extends Module> T getModuleByClass(Class<T> clazz) {
-        for (Module module : this.modules) {
+        for (Module module : this.moduleList) {
             if (!clazz.isInstance(module)) continue;
             return (T) module;
         }
@@ -138,7 +138,7 @@ public class ModuleManager
     }
 
     public Module getModuleByDisplayName(String displayName) {
-        for (Module module : this.modules) {
+        for (Module module : this.moduleList) {
             if (!module.getDisplayName().equalsIgnoreCase(displayName)) continue;
             return module;
         }
@@ -147,7 +147,7 @@ public class ModuleManager
 
     public ArrayList<Module> getEnabledModules() {
         ArrayList<Module> enabledModules = new ArrayList <> ( );
-        for (Module module : this.modules) {
+        for (Module module : this.moduleList) {
             if (!module.isEnabled()) continue;
             enabledModules.add(module);
         }
@@ -155,7 +155,7 @@ public class ModuleManager
     }
     public ArrayList<Module> getModulesByCategory(Module.Category category) {
         ArrayList<Module> modulesCategory = new ArrayList <> ( );
-        this.modules.forEach(module -> {
+        this.moduleList.forEach(module -> {
             if (module.getCategory() == category) {
                 modulesCategory.add(module);
             }
@@ -168,23 +168,23 @@ public class ModuleManager
     }
 
     public void onLoad() {
-        this.modules.forEach(Module::onLoad);
+        this.moduleList.forEach(Module::onLoad);
     }
 
     public void onUpdate() {
-        this.modules.stream().filter(Feature::isEnabled).forEach(Module::onUpdate);
+        this.moduleList.stream().filter(Feature::isEnabled).forEach(Module::onUpdate);
     }
 
     public void onTick() {
-        this.modules.stream().filter(Feature::isEnabled).forEach(Module::onTick);
+        this.moduleList.stream().filter(Feature::isEnabled).forEach(Module::onTick);
     }
 
     public void onRender2D(Render2DEvent event) {
-        this.modules.stream().filter(Feature::isEnabled).forEach(module -> module.onRender2D(event));
+        this.moduleList.stream().filter(Feature::isEnabled).forEach(module -> module.onRender2D(event));
     }
 
     public void onRender3D(Render3DEvent event) {
-        this.modules.stream().filter(Feature::isEnabled).forEach(module -> module.onRender3D(event));
+        this.moduleList.stream().filter(Feature::isEnabled).forEach(module -> module.onRender3D(event));
     }
 
     public void sortModules(boolean reverse) {
@@ -192,20 +192,20 @@ public class ModuleManager
     }
 
     public void onLogout() {
-        this.modules.forEach(Module::onLogout);
+        this.moduleList.forEach(Module::onLogout);
     }
 
     public void onLogin() {
-        this.modules.forEach(Module::onLogin);
+        this.moduleList.forEach(Module::onLogin);
     }
 
     public void onUnload() {
-        this.modules.forEach(MinecraftForge.EVENT_BUS::unregister);
-        this.modules.forEach(Module::onUnload);
+        this.moduleList.forEach(MinecraftForge.EVENT_BUS::unregister);
+        this.moduleList.forEach(Module::onUnload);
     }
 
     public void onUnloadPost() {
-        for (Module module : this.modules) {
+        for (Module module : this.moduleList) {
             module.enabled.setValue(false);
         }
     }
@@ -214,7 +214,7 @@ public class ModuleManager
         if (eventKey == 0 || !Keyboard.getEventKeyState() || ModuleManager.mc.currentScreen instanceof ClientGui) {
             return;
         }
-        this.modules.forEach(module -> {
+        this.moduleList.forEach(module -> {
             if (module.getBind().getKey() == eventKey) {
                 module.toggle();
             }

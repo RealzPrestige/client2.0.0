@@ -16,6 +16,7 @@ public class ClickGui extends Module {
     //NEW GUI
     public Setting<Boolean> chamsViewer = this.register(new Setting<>("ChamsViewer", false, v -> gui.getCurrentState() == Gui.NEW));
     public Setting<Boolean> logo = this.register(new Setting<>("Logo", true, v -> gui.getCurrentState() == Gui.NEW));
+    public Setting<Boolean> newBlur = this.register(new Setting<>("Blur", true, v -> gui.getCurrentState() == Gui.NEW));
     public Setting<Integer> newtopred = this.register(new Setting<>("TopRed", 255, 0, 255, v -> gui.getCurrentState() == Gui.NEW));
     public Setting<Integer> newtopgreen = this.register(new Setting<>("TopGreen", 0, 0, 255, v -> gui.getCurrentState() == Gui.NEW));
     public Setting<Integer> newtopblue = this.register(new Setting<>("TopBlue", 0, 0, 255, v -> gui.getCurrentState() == Gui.NEW));
@@ -28,11 +29,19 @@ public class ClickGui extends Module {
     public Setting<Integer> newgreen = this.register(new Setting<>("SideGreen", 255, 0, 255, v -> gui.getCurrentState() == Gui.NEW));
     public Setting<Integer> newblue = this.register(new Setting<>("SideBlue", 255, 0, 255, v -> gui.getCurrentState() == Gui.NEW));
     public Setting<Integer> newtheAlpha = this.register(new Setting<>("SideAlpha", 255, 0, 255, v -> gui.getCurrentState() == Gui.NEW));
+    public Setting<Integer> newbgred = this.register(new Setting<>("BackGroundRed", 255, 0, 255, v -> gui.getCurrentState() == Gui.NEW));
+    public Setting<Integer> newbggreen = this.register(new Setting<>("BackGroundGreen", 255, 0, 255, v -> gui.getCurrentState() == Gui.NEW));
+    public Setting<Integer> newbgblue = this.register(new Setting<>("BackGroundBlue", 255, 0, 255, v -> gui.getCurrentState() == Gui.NEW));
     public Setting<Integer> newbgAlpha = this.register(new Setting<>("BackGroundAlpha", 27, 0, 255, v -> gui.getCurrentState() == Gui.NEW));
     public Setting<Integer> newthirdRed = this.register(new Setting<>("ThirdRed", 255, 0, 255, v -> gui.getCurrentState() == Gui.NEW));
     public Setting<Integer> newthirdGreen = this.register(new Setting<>("ThirdGreen", 255, 0, 255, v -> gui.getCurrentState() == Gui.NEW));
     public Setting<Integer> newthirdBlue = this.register(new Setting<>("ThirdBlue", 255, 0, 255, v -> gui.getCurrentState() == Gui.NEW));
     public Setting<Integer> newthirdAlpha = this.register(new Setting<>("ThirdAlpha", 255, 0, 255, v -> gui.getCurrentState() == Gui.NEW));
+    public Setting<Integer> integerRed = this.register(new Setting<>("IntegerRed", 30, 0, 255, v -> gui.getCurrentState() == Gui.NEW));
+    public Setting<Integer> integerGreen = this.register(new Setting<>("IntegerGreen", 30, 0, 255, v -> gui.getCurrentState() == Gui.NEW));
+    public Setting<Integer> integerBlue = this.register(new Setting<>("IntegerBlue", 30, 0, 255, v -> gui.getCurrentState() == Gui.NEW));
+    public Setting<Integer> integerAlpha = this.register(new Setting<>("IntegerAlpha", 120, 0, 255, v -> gui.getCurrentState() == Gui.NEW));
+
     //OLD GUI
     public Setting<Boolean> topRectTextBold = this.register(new Setting("TopRectTextBold", true, v -> gui.getCurrentState() == Gui.OLD));
     public Setting<Rect> topRect = this.register(new Setting("TopRectangle", Rect.ROUNDED, v -> gui.getCurrentState() == Gui.OLD));

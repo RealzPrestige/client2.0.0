@@ -1,11 +1,15 @@
 package client.modules.visual;
 
+import client.events.Render3DEvent;
 import client.gui.impl.setting.Setting;
 import client.modules.Module;
 import net.minecraft.client.settings.GameSettings;
-import net.minecraft.item.ItemSword;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
+import net.minecraftforge.client.event.RenderWorldLastEvent;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
 public class ViewTweaks extends Module {
     private static ViewTweaks INSTANCE = new ViewTweaks();
 
@@ -57,7 +61,12 @@ public class ViewTweaks extends Module {
         if(noWeather.getCurrentState()){
             mc.world.setRainStrength(0);
         }
-        if(timeChanger.getCurrentState()){
+    }
+
+    @SubscribeEvent
+    public void onWorld(EntityViewRenderEvent.RenderFogEvent event){
+        if(timeChanger.getCurrentState()) {
+            mc.world.setTotalWorldTime((long) time.getCurrentState());
             mc.world.setWorldTime((long) time.getCurrentState());
         }
     }

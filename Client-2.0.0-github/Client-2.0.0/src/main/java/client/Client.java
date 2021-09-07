@@ -88,6 +88,7 @@ public class Client {
     }
 
     public static void unload(boolean unload) {
+        DiscordPresence.stop();
         if (unload) {
             reloadManager = new ReloadManager();
             reloadManager.init(commandManager != null ? commandManager.getPrefix() : ".");

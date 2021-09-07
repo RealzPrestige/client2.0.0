@@ -181,7 +181,7 @@ public class ConfigManager implements Util {
     }
 
     public void init() {
-        this.features.addAll(Client.moduleManager.modules);
+        this.features.addAll(Client.moduleManager.moduleList);
         this.features.add(Client.friendManager);
         String name = loadCurrentConfig();
         loadConfig(name);

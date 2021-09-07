@@ -101,7 +101,7 @@ public class Component
             Gui.drawRect(this.x, this.y - 1, this.x + this.width, this.y + this.height - 6,  color);
             Gui.drawRect(this.x, this.y + 11, this.x + this.width, this.y + this.height - 6, thirdcolor);
             if (this.open) {
-                RenderUtil.drawRect(this.x, (float) this.y + 12.5f, this.x + this.width, (float) (this.y + this.height) + totalItemHeight, ColorUtil.toRGBA(10, 10, 10, ClickGui.getInstance().newbgAlpha.getCurrentState()));
+                RenderUtil.drawRect(this.x, (float) this.y + 12.5f, this.x + this.width, (float) (this.y + this.height) + totalItemHeight, ColorUtil.toRGBA(ClickGui.getInstance().newbgred.getCurrentState(), ClickGui.getInstance().newbggreen.getCurrentState(), ClickGui.getInstance().newbgblue.getCurrentState(), ClickGui.getInstance().newbgAlpha.getCurrentState()));
             }
             Client.textManager.drawStringWithShadow(this.getName(), (float) this.x + this.width / 2 - this.renderer.getStringWidth(this.getName()) / 2, (float) this.y - 4.0f - (float) ClientGui.getClickGui().getTextOffset(), -1);
             if (this.open) {

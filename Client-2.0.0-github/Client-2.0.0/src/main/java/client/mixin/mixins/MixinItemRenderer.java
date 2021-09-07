@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GLSync;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -29,10 +30,11 @@ public abstract class MixinItemRenderer {
             GlStateManager.scale( Viewmodel.getINSTANCE().sizeX.getCurrentState() , Viewmodel.getINSTANCE().sizeY.getCurrentState() , Viewmodel.getINSTANCE().sizeZ.getCurrentState() );
             if (transform.equals( ItemCameraTransforms.TransformType.FIRST_PERSON_LEFT_HAND )) {
                 GL11.glTranslated( viewmodel.offhandX.getCurrentState() / 4.0f , viewmodel.offhandY.getCurrentState() / 4.0f , viewmodel.offhandZ.getCurrentState() / 4.0f );
-            }
+           }
             else {
                 GL11.glTranslated( viewmodel.offsetX.getCurrentState() / 4.0f , viewmodel.offsetY.getCurrentState() / 4.0f , viewmodel.offsetZ.getCurrentState() / 4.0f );
             }
+            
             GL11.glColor4f(255, 255, 255, 50);
         }
     }

@@ -67,7 +67,7 @@ public class ClientGui extends GuiScreen {
                 }
                 mc.entityRenderer.loadShader(new ResourceLocation("shaders/post/blur.json"));
         }
-        if (OpenGlHelper.shadersSupported && mc.getRenderViewEntity() instanceof EntityPlayer &&  ClickGui.getInstance().gui.getCurrentState() == ClickGui.Gui.NEW) {
+        if (OpenGlHelper.shadersSupported && mc.getRenderViewEntity() instanceof EntityPlayer &&  ClickGui.getInstance().gui.getCurrentState() == ClickGui.Gui.NEW && ClickGui.getInstance().newBlur.getCurrentState()) {
             if (mc.entityRenderer.getShaderGroup() != null) {
                 mc.entityRenderer.getShaderGroup().deleteShaderGroup();
             }

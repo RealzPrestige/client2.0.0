@@ -17,7 +17,6 @@ import java.awt.*;
 public class BooleanButton
         extends Button {
     private final Setting setting;
-
     public BooleanButton(Setting setting) {
         super(setting.getName());
         this.setting = setting;
@@ -36,41 +35,19 @@ public class BooleanButton
             }
             Client.textManager.drawStringWithShadow(this.getName(), this.x + 2.3f, this.y - 1.7f - (float) ClientGui.getClickGui().getTextOffset(), -1);
         } else if (ClickGui.getInstance().gui.getCurrentState() == ClickGui.Gui.NEW){
-            int acolor = ColorUtil.toARGB(ClickGui.getInstance().newared.getCurrentState(), ClickGui.getInstance().newagreen.getCurrentState(), ClickGui.getInstance().newablue.getCurrentState(), ClickGui.getInstance().newaalpha.getCurrentState());
-            int ercolor = ColorUtil.toARGB(ClickGui.getInstance().newred.getCurrentState(), ClickGui.getInstance().newgreen.getCurrentState(), ClickGui.getInstance().newblue.getCurrentState(), ClickGui.getInstance().newtheAlpha.getCurrentState());
-            RenderUtil.drawRect(this.x, this.y, this.x + 1, this.y + (float) this.height + 0.5f, ercolor);
+            int booleancolor = ColorUtil.toARGB(0,0,0, 50);
+            int sidecolor = ColorUtil.toARGB(ClickGui.getInstance().newred.getCurrentState(), ClickGui.getInstance().newgreen.getCurrentState(), ClickGui.getInstance().newblue.getCurrentState(), ClickGui.getInstance().newtheAlpha.getCurrentState());
+            int color = ColorUtil.toARGB(ClickGui.getInstance().newared.getCurrentState(), ClickGui.getInstance().newagreen.getCurrentState(), ClickGui.getInstance().newablue.getCurrentState(), ClickGui.getInstance().newaalpha.getCurrentState());
+
+            RenderUtil.drawRect(this.x, this.y, this.x + 1, this.y + (float) this.height + 0.5f, sidecolor);
             Client.textManager.drawStringWithShadow(this.getName(), this.x + 2.3f, this.y - 1.7f - (float) ClientGui.getClickGui().getTextOffset(), this.getState() ? -1 : -5592406);
-            if(this.getState()) {
-                this.drawImageLogo();
+           RenderUtil.drawRect(this.x + 74, this.y + 5, this.x + 95, this.y + 13, booleancolor);
+            if(getState()) {
+                RenderUtil.drawRect(this.x + 85, this.y + 6, this.x + 94, this.y + 12, color);
+            } else {
+                RenderUtil.drawRect(this.x + 75, this.y + 6, this.x + 84, this.y + 12, color);
             }
         }
-    }
-
-    public static void drawCompleteImage(float posX, float posY, float width, float height) {
-        GL11.glPushMatrix();
-        GL11.glTranslatef(posX, posY, 0.0f);
-        GL11.glBegin(7);
-        GL11.glTexCoord2f(0.0f, 0.0f);
-        GL11.glVertex3f(0.0f, 0.0f, 0.0f);
-        GL11.glTexCoord2f(0.0f, 1.0f);
-        GL11.glVertex3f(0.0f, height, 0.0f);
-        GL11.glTexCoord2f(1.0f, 1.0f);
-        GL11.glVertex3f(width, height, 0.0f);
-        GL11.glTexCoord2f(1.0f, 0.0f);
-        GL11.glVertex3f(width, 0.0f, 0.0f);
-        GL11.glEnd();
-        GL11.glPopMatrix();
-    }
-
-    public void drawImageLogo() {
-        ResourceLocation logo = new ResourceLocation("textures/checkmark.png");
-        GlStateManager.enableTexture2D();
-        GlStateManager.disableBlend();
-        mc.getTextureManager().bindTexture(logo);
-        drawCompleteImage(this.x + width - 7, this.y - 1, 20, 20);
-        mc.getTextureManager().deleteTexture(logo);
-        GlStateManager.enableBlend();
-        GlStateManager.disableTexture2D();
     }
 
     @Override

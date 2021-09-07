@@ -131,7 +131,7 @@ public class Speedmine extends Module {
 
     @Override
     public void onRender3D(Render3DEvent event) {
-        if (this.render.getCurrentState() && this.currentPos != null && this.currentBlockState.getBlock() == Blocks.OBSIDIAN) {
+        if (this.render.getCurrentState() && this.currentPos != null && (currentBlockState.getBlock() == Blocks.OBSIDIAN || currentBlockState.getBlock() == Blocks.ENDER_CHEST)) {
             Color color = new Color(red.getCurrentState(), green.getCurrentState(), blue.getCurrentState(), currentAlpha);
             RenderUtil.drawBoxESP(this.currentPos, color, true, color, 1, true, true, currentAlpha, false);
         }
