@@ -1,10 +1,8 @@
 package client.gui.impl.background;
 
 import client.Client;
-import client.modules.client.Notify;
 import client.modules.miscellaneous.ChatModifications;
 import client.util.MathUtil;
-import client.util.TextUtil;
 import client.util.Timer;
 import client.util.Util;
 import com.google.common.collect.Lists;
@@ -20,8 +18,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nullable;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 

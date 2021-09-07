@@ -2,7 +2,9 @@ package client.modules.combat;
 
 import client.gui.impl.setting.Setting;
 import client.modules.Module;
-import client.util.*;
+import client.util.BlockUtil;
+import client.util.EntityUtil;
+import client.util.InventoryUtil;
 import net.minecraft.block.BlockObsidian;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumHand;

@@ -1,7 +1,6 @@
 package client.modules.movement;
 
 import client.Client;
-import client.events.ClientEvent;
 import client.events.MoveEvent;
 import client.events.WalkEvent;
 import client.gui.impl.setting.Bind;

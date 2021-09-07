@@ -5,20 +5,14 @@ import client.command.Command;
 import client.gui.ClientGui;
 import client.gui.impl.Component;
 import client.gui.impl.Item;
-import client.modules.Module;
-import client.modules.client.ClickGui;
 import client.gui.impl.setting.Bind;
 import client.gui.impl.setting.Setting;
-import client.util.ColorUtil;
-import client.util.RenderUtil;
-import client.util.Timer;
-import com.google.common.collect.Sets;
-import com.mojang.realmsclient.gui.ChatFormatting;
+import client.modules.Module;
+import client.modules.client.ClickGui;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.init.SoundEvents;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 public class ModuleButton

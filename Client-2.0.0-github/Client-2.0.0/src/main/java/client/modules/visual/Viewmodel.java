@@ -2,10 +2,9 @@ package client.modules.visual;
 
 
 import client.events.PacketEvent;
-import client.modules.Module;
 import client.gui.impl.setting.Setting;
+import client.modules.Module;
 import net.minecraft.network.play.client.CPacketAnimation;
-import net.minecraft.util.EnumHand;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class Viewmodel extends Module {

@@ -1,17 +1,14 @@
 package client;
 
-import client.events.BlockEvent;
 import client.gui.impl.background.MainMenuButton;
 import client.gui.impl.background.MainMenuScreen;
 import client.manager.*;
-import client.modules.combat.Criticals;
 import client.util.HoleUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.network.Packet;
-import net.minecraft.network.play.client.CPacketPlayer;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -23,8 +20,6 @@ import javax.annotation.Nullable;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
-import java.io.File;
-import java.util.Objects;
 
 @Mod(modid = "client", name = "Client", version = "2.0.0-b13")
 public class Client {
@@ -42,7 +37,6 @@ public class Client {
     public static RotationManager rotationManager;
     public static PositionManager positionManager;
     public static SpeedManager speedManager;
-    public static ReloadManager reloadManager;
     public static FileManager fileManager;
     public static ConfigManager configManager;
     public static ServerManager serverManager;
@@ -61,10 +55,6 @@ public class Client {
     public static void load() {
         esyufges768rtw76g5rt7q8wyr7623teby7rgtwe7rgv78wetr76wetr78ewtr87twr786wtr76tw8h3u5rb32uh5v437gg78uhb8fdtgv6dtg85h4b3765t3();
         unloaded = false;
-        if (reloadManager != null) {
-            reloadManager.unload();
-            reloadManager = null;
-        }
         textManager = new TextManager();
         commandManager = new CommandManager();
         friendManager = new FriendManager();
@@ -87,12 +77,8 @@ public class Client {
         moduleManager.onLoad();
     }
 
-    public static void unload(boolean unload) {
+    public static void unload() {
         DiscordPresence.stop();
-        if (unload) {
-            reloadManager = new ReloadManager();
-            reloadManager.init(commandManager != null ? commandManager.getPrefix() : ".");
-        }
         Client.onUnload();
         eventManager = null;
         friendManager = null;

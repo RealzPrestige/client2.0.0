@@ -7,7 +7,7 @@ import com.mojang.realmsclient.gui.ChatFormatting;
 public class FriendCommand
         extends Command {
     public FriendCommand() {
-        super("friend", new String[]{"<add/del/name/clear>", "<name>"});
+        super("friend", new String[]{"[add/del/name/clear]", "[name]"});
     }
 
     @Override
@@ -31,7 +31,7 @@ public class FriendCommand
             switch (commands[0]) {
                 case "reset": {
                     Client.friendManager.onLoad();
-                    FriendCommand.sendMessage("Friends got reset.");
+                    FriendCommand.sendMessage("Friends list has been reset.");
                     return;
                 }
             }
@@ -42,16 +42,16 @@ public class FriendCommand
             switch (commands[0]) {
                 case "add": {
                     Client.friendManager.addFriend(commands[1]);
-                    FriendCommand.sendMessage(ChatFormatting.GREEN + commands[1] + " has been friended");
+                    FriendCommand.sendMessage(ChatFormatting.GREEN + commands[1] + " has been friended to your Friend list.");
                     return;
                 }
                 case "del": {
                     Client.friendManager.removeFriend(commands[1]);
-                    FriendCommand.sendMessage(ChatFormatting.RED + commands[1] + " has been unfriended");
+                    FriendCommand.sendMessage(ChatFormatting.RED + commands[1] + " has been removed from your Friend list.");
                     return;
                 }
             }
-            FriendCommand.sendMessage("Unknown Command, try friend add/del (name)");
+            FriendCommand.sendMessage("Command not found, try [add/del/name/clear] + [name]");
         }
     }
 }

@@ -8,9 +8,10 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityEnderPearl;
 import net.minecraft.util.math.Vec3d;
 import org.lwjgl.opengl.GL11;
+
 import java.awt.*;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 
 public class PearlRender extends Module {
 

@@ -2,22 +2,16 @@ package client.modules.miscellaneous;
 
 import client.events.PacketEvent;
 import client.gui.impl.background.GuiChat;
-import client.modules.Module;
 import client.gui.impl.setting.Setting;
-import client.modules.client.Notify;
-import client.util.TextUtil;
+import client.modules.Module;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.client.gui.GuiIngame;
 import net.minecraft.client.gui.GuiNewChat;
 import net.minecraft.network.play.client.CPacketChatMessage;
 import net.minecraft.network.play.server.SPacketChat;
 import net.minecraft.util.text.ChatType;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class ChatModifications extends Module {
     private static ChatModifications getInstance = new ChatModifications();

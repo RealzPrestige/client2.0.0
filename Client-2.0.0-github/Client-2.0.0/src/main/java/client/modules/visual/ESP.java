@@ -1,13 +1,13 @@
 package client.modules.visual;
 
 import client.events.ClientEvent;
-import client.events.Render2DEvent;
 import client.events.Render3DEvent;
 import client.gui.impl.setting.Setting;
 import client.modules.Module;
-import client.util.*;
+import client.util.ColorUtil;
+import client.util.EntityUtil;
+import client.util.RenderUtil;
 import com.google.common.collect.Sets;
-import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderGlobal;

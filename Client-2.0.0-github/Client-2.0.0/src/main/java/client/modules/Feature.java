@@ -2,8 +2,8 @@ package client.modules;
 
 import client.Client;
 import client.gui.ClientGui;
-import client.manager.TextManager;
 import client.gui.impl.setting.Setting;
+import client.manager.TextManager;
 import client.util.Util;
 
 import java.util.ArrayList;

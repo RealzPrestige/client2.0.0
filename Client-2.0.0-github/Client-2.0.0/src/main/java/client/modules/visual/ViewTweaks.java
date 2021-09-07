@@ -1,13 +1,9 @@
 package client.modules.visual;
 
-import client.events.Render3DEvent;
 import client.gui.impl.setting.Setting;
 import client.modules.Module;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ViewTweaks extends Module {

@@ -1,8 +1,8 @@
 package client.modules.player;
 
 import client.events.PacketEvent;
-import client.modules.Module;
 import client.gui.impl.setting.Setting;
+import client.modules.Module;
 import net.minecraft.network.play.client.CPacketPlayerTryUseItemOnBlock;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;

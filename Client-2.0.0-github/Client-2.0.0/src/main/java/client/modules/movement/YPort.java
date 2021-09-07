@@ -1,8 +1,8 @@
 package client.modules.movement;
 
 import client.Client;
-import client.modules.Module;
 import client.gui.impl.setting.Setting;
+import client.modules.Module;
 import client.util.EntityUtil;
 import client.util.Timer;
 

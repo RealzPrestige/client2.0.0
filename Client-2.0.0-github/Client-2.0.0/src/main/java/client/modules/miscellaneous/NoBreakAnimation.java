@@ -1,20 +1,19 @@
 package client.modules.miscellaneous;
 
 import client.events.PacketEvent;
-import client.gui.impl.Item;
 import client.gui.impl.setting.Setting;
 import client.modules.Module;
-import java.util.Iterator;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityEnderCrystal;
-import net.minecraft.entity.Entity;
 import net.minecraft.init.Items;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.network.play.client.CPacketPlayerDigging;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+import java.util.Iterator;
 
 public class NoBreakAnimation extends Module {
     public Setting<Boolean> onlyPickaxe = this.register(new Setting("OnlyPickaxe", false));

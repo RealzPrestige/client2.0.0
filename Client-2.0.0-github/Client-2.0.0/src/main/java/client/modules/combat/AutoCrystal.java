@@ -2,9 +2,9 @@ package client.modules.combat;
 
 import client.events.PacketEvent;
 import client.events.Render3DEvent;
+import client.gui.impl.setting.Setting;
 import client.modules.Module;
 import client.modules.client.ClickGui;
-import client.gui.impl.setting.Setting;
 import client.util.Timer;
 import client.util.*;
 import net.minecraft.entity.Entity;

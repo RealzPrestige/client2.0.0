@@ -2,8 +2,8 @@ package client.modules.combat;
 
 
 import client.Client;
-import client.modules.Module;
 import client.gui.impl.setting.Setting;
+import client.modules.Module;
 import client.util.BlockUtil;
 import client.util.InventoryUtil;
 import net.minecraft.block.BlockObsidian;

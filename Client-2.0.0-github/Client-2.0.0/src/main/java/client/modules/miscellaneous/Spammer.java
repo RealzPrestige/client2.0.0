@@ -1,7 +1,7 @@
 package client.modules.miscellaneous;
 
-import client.modules.Module;
 import client.gui.impl.setting.Setting;
+import client.modules.Module;
 import client.util.FileUtil;
 import client.util.Timer;
 import net.minecraft.network.play.client.CPacketChatMessage;

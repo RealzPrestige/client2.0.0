@@ -2,7 +2,6 @@ package client.modules.visual;
 
 import client.Client;
 import client.events.Render3DEvent;
-import client.gui.impl.setting.Setting;
 import client.modules.Module;
 import client.util.ColorUtil;
 import client.util.EntityUtil;

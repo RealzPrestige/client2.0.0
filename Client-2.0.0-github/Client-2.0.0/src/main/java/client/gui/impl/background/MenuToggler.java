@@ -1,7 +1,7 @@
 package client.gui.impl.background;
 
-import client.modules.Module;
 import client.gui.impl.setting.Setting;
+import client.modules.Module;
 
 public class MenuToggler extends Module {
     private static MenuToggler INSTANCE = new MenuToggler();

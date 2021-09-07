@@ -1,12 +1,10 @@
 package client.modules.player;
 
 import client.Client;
-import client.modules.Module;
 import client.gui.impl.setting.Setting;
-import jdk.nashorn.internal.ir.Block;
+import client.modules.Module;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;

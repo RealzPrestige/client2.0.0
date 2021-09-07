@@ -1,14 +1,13 @@
 package client.modules.combat;
 
 import client.events.PacketEvent;
-import client.modules.Module;
 import client.gui.impl.setting.Setting;
+import client.modules.Module;
 import client.util.Timer;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.network.play.client.CPacketPlayer;
 import net.minecraft.network.play.client.CPacketUseEntity;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.spongepowered.asm.mixin.Overwrite;
 
 import java.util.Objects;
 

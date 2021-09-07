@@ -1,10 +1,8 @@
 package client.manager;
 
 import client.Client;
-import client.events.DeathEvent;
 import client.events.PacketEvent;
 import client.modules.Feature;
-import client.util.MathUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.CPacketUseEntity;

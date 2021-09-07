@@ -2,8 +2,8 @@ package client.modules.visual;
 
 import client.Client;
 import client.events.Render3DEvent;
-import client.modules.Module;
 import client.gui.impl.setting.Setting;
+import client.modules.Module;
 import client.util.EntityUtil;
 import client.util.RenderUtil;
 import net.minecraft.entity.player.EntityPlayer;

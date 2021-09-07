@@ -1,9 +1,12 @@
 package client.modules.combat;
 
 import client.events.Render3DEvent;
-import client.modules.Module;
 import client.gui.impl.setting.Setting;
-import client.util.*;
+import client.modules.Module;
+import client.util.BlockUtil;
+import client.util.EntityUtil;
+import client.util.InventoryUtil;
+import client.util.RenderUtil;
 import com.google.common.eventbus.Subscribe;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;

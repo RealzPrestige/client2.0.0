@@ -1,18 +1,16 @@
 package client.modules.player;
 
 import client.Client;
-import client.command.Command;
 import client.events.BlockEvent;
 import client.events.Render3DEvent;
 import client.gui.impl.setting.Bind;
-import client.modules.Module;
 import client.gui.impl.setting.Setting;
+import client.modules.Module;
 import client.util.BlockUtil;
 import client.util.InventoryUtil;
 import client.util.RenderUtil;
 import client.util.Timer;
 import com.mojang.realmsclient.gui.ChatFormatting;
-import net.minecraft.block.BlockObsidian;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;

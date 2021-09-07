@@ -1,7 +1,7 @@
 package client.modules.player;
 
-import client.modules.Module;
 import client.gui.impl.setting.Setting;
+import client.modules.Module;
 import client.util.InventoryUtil;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemEndCrystal;

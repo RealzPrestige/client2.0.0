@@ -2,9 +2,9 @@ package client.modules.combat;
 
 import client.events.PacketEvent;
 import client.events.ProcessRightClickBlockEvent;
+import client.gui.impl.setting.Setting;
 import client.modules.Feature;
 import client.modules.Module;
-import client.gui.impl.setting.Setting;
 import client.util.EntityUtil;
 import client.util.InventoryUtil;
 import client.util.Timer;

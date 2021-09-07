@@ -16,10 +16,6 @@ public class PotionManager
         extends Feature {
     private final Map<EntityPlayer, PotionList> potions = new ConcurrentHashMap <> ( );
 
-    public List<PotionEffect> getOwnPotions() {
-        return this.getPlayerPotions(PotionManager.mc.player);
-    }
-
     public List<PotionEffect> getPlayerPotions(EntityPlayer player) {
         PotionList list = this.potions.get(player);
         List<PotionEffect> potions = new ArrayList <> ( );

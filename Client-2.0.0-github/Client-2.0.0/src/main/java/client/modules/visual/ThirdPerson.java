@@ -1,9 +1,9 @@
 package client.modules.visual;
 
 
-import client.modules.Module;
 import client.gui.impl.setting.Bind;
 import client.gui.impl.setting.Setting;
+import client.modules.Module;
 import org.lwjgl.input.Keyboard;
 
 public class ThirdPerson extends Module {

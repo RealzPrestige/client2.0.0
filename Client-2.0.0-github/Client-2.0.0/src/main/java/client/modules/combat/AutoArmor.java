@@ -1,8 +1,8 @@
 package client.modules.combat;
 
 import client.Client;
-import client.modules.Module;
 import client.gui.impl.setting.Setting;
+import client.modules.Module;
 import client.util.InventoryUtil;
 import client.util.Timer;
 import net.minecraft.client.gui.inventory.GuiContainer;

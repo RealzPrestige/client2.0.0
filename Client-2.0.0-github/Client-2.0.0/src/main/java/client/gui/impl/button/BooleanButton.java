@@ -2,17 +2,12 @@ package client.gui.impl.button;
 
 import client.Client;
 import client.gui.ClientGui;
-import client.modules.client.ClickGui;
 import client.gui.impl.setting.Setting;
+import client.modules.client.ClickGui;
 import client.util.ColorUtil;
 import client.util.RenderUtil;
 import net.minecraft.client.audio.PositionedSoundRecord;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.util.ResourceLocation;
-import org.lwjgl.opengl.GL11;
-
-import java.awt.*;
 
 public class BooleanButton
         extends Button {

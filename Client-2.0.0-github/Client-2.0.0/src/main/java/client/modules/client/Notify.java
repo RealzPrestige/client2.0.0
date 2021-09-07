@@ -2,8 +2,8 @@ package client.modules.client;
 
 import client.Client;
 import client.events.ClientEvent;
-import client.modules.Module;
 import client.gui.impl.setting.Setting;
+import client.modules.Module;
 import client.util.TextUtil;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 

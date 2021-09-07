@@ -1,7 +1,5 @@
 package client.manager;
 
-import client.gui.impl.Component;
-import client.modules.client.ClickGui;
 import client.util.ColorUtil;
 
 import java.awt.*;
@@ -31,14 +29,6 @@ public class ColorManager {
 
     public int getColorWithAlpha(int alpha) {
         return ColorUtil.toRGBA(new Color(this.red, this.green, this.blue, (float) alpha / 255.0f));
-    }
-
-    public void setColor(float red, float green, float blue, float alpha) {
-        this.red = red;
-        this.green = green;
-        this.blue = blue;
-        this.alpha = alpha;
-        this.updateColor();
     }
 
     public void updateColor() {

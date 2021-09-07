@@ -31,16 +31,11 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.Explosion;
 
-import javax.annotation.Nullable;
 import java.awt.*;
-import java.lang.reflect.AccessibleObject;
-import java.lang.reflect.Field;
-import java.lang.reflect.Member;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import java.util.*;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.*;
 
 public class EntityUtil implements Util {
 

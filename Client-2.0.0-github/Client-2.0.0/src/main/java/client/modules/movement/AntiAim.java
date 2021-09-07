@@ -1,6 +1,7 @@
 package client.modules.movement;
 
 import client.modules.Module;
+
 import java.util.Random;
 
 public class AntiAim extends Module {

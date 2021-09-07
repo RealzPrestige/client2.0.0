@@ -1,4 +1,5 @@
 package client.modules.player;
+
 import client.Client;
 import client.gui.impl.setting.Bind;
 import client.gui.impl.setting.Setting;
@@ -11,11 +12,11 @@ import net.minecraft.inventory.ClickType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.CPacketHeldItemChange;
+import net.minecraft.network.play.client.CPacketPlayer.Rotation;
 import net.minecraft.network.play.client.CPacketPlayerTryUseItem;
 import net.minecraft.util.EnumHand;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
-import net.minecraft.network.play.client.CPacketPlayer.Rotation;
 
 public class KeyEXP extends Module {
     private int armorCheck = 0;

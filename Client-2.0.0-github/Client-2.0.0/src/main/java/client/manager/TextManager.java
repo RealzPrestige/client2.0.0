@@ -4,7 +4,6 @@ import client.Client;
 import client.gui.impl.font.CustomFont;
 import client.modules.Feature;
 import client.modules.client.FontMod;
-import client.util.MathUtil;
 import client.util.Timer;
 import net.minecraft.util.math.MathHelper;
 
