@@ -4,7 +4,6 @@ import client.events.PacketEvent;
 import client.events.RenderEntityModelEvent;
 import client.gui.impl.setting.Setting;
 import client.modules.Module;
-import client.modules.core.Sync;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityEnderCrystal;
@@ -110,7 +109,7 @@ public class CrystalChanger extends Module {
         GL11.glEnable(2848);
         GL11.glEnable(3042);
         GlStateManager.blendFunc(770, 771);
-        GlStateManager.color(sync.getCurrentState() ? Sync.getInstance().color : (float) red.getCurrentState() / 255.0f, (float) green.getCurrentState() / 255.0f, (float) blue.getCurrentState() / 255.0f, (float) alpha.getCurrentState() / 255.0f);
+        GlStateManager.color((float) red.getCurrentState() / 255.0f, (float) green.getCurrentState() / 255.0f, (float) blue.getCurrentState() / 255.0f, (float) alpha.getCurrentState() / 255.0f);
         GlStateManager.glLineWidth(this.width.getCurrentState().floatValue());
         event.modelBase.render(event.entity, event.limbSwing, event.limbSwingAmount, event.age, event.headYaw, event.headPitch, event.scale);
         GL11.glPopAttrib();

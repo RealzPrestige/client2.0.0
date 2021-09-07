@@ -99,9 +99,17 @@ public class Component
             int color = ColorUtil.toARGB(ClickGui.getInstance().newtopred.getCurrentState(), ClickGui.getInstance().newtopgreen.getCurrentState(), ClickGui.getInstance().newtopblue.getCurrentState(), ClickGui.getInstance().newtopalpha.getCurrentState());
             int thirdcolor = ColorUtil.toARGB(ClickGui.getInstance().newthirdRed.getCurrentState(), ClickGui.getInstance().newthirdGreen.getCurrentState(), ClickGui.getInstance().newthirdBlue.getCurrentState(), ClickGui.getInstance().newthirdAlpha.getCurrentState());
             Gui.drawRect(this.x, this.y - 1, this.x + this.width, this.y + this.height - 6,  color);
-            Gui.drawRect(this.x, this.y + 11, this.x + this.width, this.y + this.height - 6, thirdcolor);
+            if(!ClickGui.getInstance().categoryComponentOutline.getCurrentState()) {
+                Gui.drawRect(this.x, this.y + 11, this.x + this.width, this.y + this.height - 6, thirdcolor);
+            }
             if (this.open) {
                 RenderUtil.drawRect(this.x, (float) this.y + 12.5f, this.x + this.width, (float) (this.y + this.height) + totalItemHeight, ColorUtil.toRGBA(ClickGui.getInstance().newbgred.getCurrentState(), ClickGui.getInstance().newbggreen.getCurrentState(), ClickGui.getInstance().newbgblue.getCurrentState(), ClickGui.getInstance().newbgAlpha.getCurrentState()));
+                if(ClickGui.getInstance().categoryOutline.getCurrentState()) {
+                      RenderUtil.drawBorder(this.x + 1, this.y + 12.2F, this.width - 2, height + getTotalItemHeight() - 15, new Color(ClickGui.getInstance().categoryOutlineRed.getCurrentState(), ClickGui.getInstance().categoryOutlineGreen.getCurrentState(), ClickGui.getInstance().categoryOutlineBlue.getCurrentState(), ClickGui.getInstance().categoryOutlineAlpha.getCurrentState()));
+                }
+            }
+            if(ClickGui.getInstance().categoryComponentOutline.getCurrentState()){
+                RenderUtil.drawBorder(this.x + 1, this.y - 1, this.width - 2, 12,new Color(ClickGui.getInstance().categoryComponentRed.getCurrentState(), ClickGui.getInstance().categoryComponentGreen.getCurrentState(), ClickGui.getInstance().categoryComponentBlue.getCurrentState(), ClickGui.getInstance().categoryComponentAlpha.getCurrentState()));
             }
             Client.textManager.drawStringWithShadow(this.getName(), (float) this.x + this.width / 2 - this.renderer.getStringWidth(this.getName()) / 2, (float) this.y - 4.0f - (float) ClientGui.getClickGui().getTextOffset(), -1);
             if (this.open) {

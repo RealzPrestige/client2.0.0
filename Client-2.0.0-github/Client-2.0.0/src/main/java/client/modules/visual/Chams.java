@@ -21,14 +21,12 @@ public class Chams extends Module {
     public Setting<Boolean> rotationYawHead = register(new Setting<>("RotationYawHead", false, v-> animationDisabler.getCurrentState()));
     public Setting<Boolean> swingProgress= register(new Setting<>("SwingProgress", false, v-> animationDisabler.getCurrentState()));
     public Setting<Boolean> cameraPitch = register(new Setting<>("CameraPitch", false, v-> animationDisabler.getCurrentState()));
-    public Setting<Boolean> sync = register(new Setting("Sync", false));
-    public Setting<Boolean> rainbow = register(new Setting<>("Rainbow", false, v-> (mode.getCurrentState() == Mode.SOLID || mode.getCurrentState() == Mode.BOTH)));
+     public Setting<Boolean> rainbow = register(new Setting<>("Rainbow", false, v-> (mode.getCurrentState() == Mode.SOLID || mode.getCurrentState() == Mode.BOTH)));
     public Setting<Integer> rainbowHue = register(new Setting<>("RainbowHue", 100, 0, 600, v -> rainbow.getCurrentState() && (mode.getCurrentState() == Mode.SOLID || mode.getCurrentState() == Mode.BOTH)));
     public Setting<Integer> red = register(new Setting<>("Red", 255, 0, 255, v-> (mode.getCurrentState() == Mode.SOLID || mode.getCurrentState() == Mode.BOTH)));
     public Setting<Integer> green = register(new Setting<>("Green", 255, 0, 255, v-> (mode.getCurrentState() == Mode.SOLID || mode.getCurrentState() == Mode.BOTH)));
     public Setting<Integer> blue = register(new Setting<>("Blue", 255, 0, 255, v-> (mode.getCurrentState() == Mode.SOLID || mode.getCurrentState() == Mode.BOTH)));
     public final Setting<Float> alpha = register(new Setting<>("Alpha", 50.0f, 0.1f, 255.0f, v-> (mode.getCurrentState() == Mode.SOLID || mode.getCurrentState() == Mode.BOTH)));
-    public Setting<Boolean> o_sync = register(new Setting("OutlineSync", false));
     public Setting<Boolean> o_rainbow = register(new Setting<>("OutlineRainbow", false, v-> (mode.getCurrentState() == Mode.WIREFRAME || mode.getCurrentState() == Mode.BOTH)));
     public Setting<Integer> o_rainbowHue = register(new Setting<>("OutlineRainbowHue", 100, 0, 600, v -> rainbow.getCurrentState() && (mode.getCurrentState() == Mode.WIREFRAME || mode.getCurrentState() == Mode.BOTH)));
     public Setting<Integer> o_red = register(new Setting<>("OutlineRed", 255, 0, 255, v-> (mode.getCurrentState() == Mode.WIREFRAME || mode.getCurrentState() == Mode.BOTH)));

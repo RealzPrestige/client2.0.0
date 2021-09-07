@@ -2,7 +2,6 @@ package client.util;
 
 import client.modules.core.ClickGui;
 import client.modules.core.Hud;
-import client.modules.core.Sync;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
@@ -35,12 +34,6 @@ public class ColorUtil {
         double rainbowState = Math.ceil((double) (System.currentTimeMillis() + (long) delay) / 20.0);
         return Color.getHSBColor((float) ( rainbowState % 360.0 / 360.0), ClickGui.getInstance ( ).rainbowSaturation.getCurrentState( ) / 255.0f, ClickGui.getInstance ( ).rainbowBrightness.getCurrentState( ) / 255.0f);
     }
-
-    public static Color rainbowSync(int delay) {
-        double rainbowState = Math.ceil((double) (System.currentTimeMillis() + (long) delay) / 20.0);
-        return Color.getHSBColor((float) ( rainbowState % 360.0 / 360.0), Sync.getInstance().rainbowSaturation.getCurrentState( ) / 255.0f, Sync.getInstance().rainbowBrightness.getCurrentState( ) / 255.0f);
-    }
-
 
     public static Color rainbowHud(int delay) {
         double rainbowState = Math.ceil((double) (System.currentTimeMillis() + (long) delay) / 20.0);

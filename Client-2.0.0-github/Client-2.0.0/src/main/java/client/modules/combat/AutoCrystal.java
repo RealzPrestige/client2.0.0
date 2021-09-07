@@ -5,7 +5,6 @@ import client.events.Render3DEvent;
 import client.gui.impl.setting.Setting;
 import client.modules.Module;
 import client.modules.core.ClickGui;
-import client.modules.core.Sync;
 import client.util.Timer;
 import client.util.*;
 import net.minecraft.entity.Entity;
@@ -61,14 +60,12 @@ public class AutoCrystal extends Module {
     public Setting<Float> moveSpeed;
     public Setting<Enum> fade;
     public enum Enum{FAST, MEDIUM, SLOW}
-    public Setting<Boolean> sync;
     public Setting<Integer> red;
     public Setting<Integer> green;
     public Setting<Integer> blue;
     public Setting<Integer> alpha;
     public Setting<Boolean> rainbow;
     public Setting<Boolean> outline;
-    public Setting<Boolean> cSync;
     public Setting<Integer> cRed;
     public Setting<Integer> cGreen;
     public Setting<Integer> cBlue;
@@ -120,20 +117,18 @@ public class AutoCrystal extends Module {
         this.fade = (Setting<Enum>)this.register(new Setting<>("Fade", Enum.FAST, v-> this.setting.getCurrentState() == Settings.RENDER && renderMode.getCurrentState() == RenderMode.FADE));
         this.accel = (Setting<Float>) this.register(new Setting<>("Deceleration" , 0.8f , 0.0f, 1.0f, v-> this.setting.getCurrentState() == Settings.RENDER && renderMode.getCurrentState() == RenderMode.GLIDE));
         this.moveSpeed = (Setting<Float>) this.register(new Setting<>("Speed" , 900.0f , 0.0f, 1500.0f, v-> this.setting.getCurrentState() == Settings.RENDER && renderMode.getCurrentState() == RenderMode.GLIDE));
-        this.sync = (Setting<Boolean>)this.register(new Setting<>("BoxSync", false, v-> this.setting.getCurrentState() == Settings.RENDER));
-        this.red = (Setting<Integer>)this.register(new Setting<>("BoxRed", 255, 0, 255, v-> this.setting.getCurrentState() == Settings.RENDER && !sync.getCurrentState()));
-        this.green = (Setting<Integer>)this.register(new Setting<>("BoxGreen", 255, 0, 255, v-> this.setting.getCurrentState() == Settings.RENDER && !sync.getCurrentState()));
-        this.blue = (Setting<Integer>)this.register(new Setting<>("BoxBlue", 255, 0, 255, v-> this.setting.getCurrentState() == Settings.RENDER && !sync.getCurrentState()));
-        this.alpha = (Setting<Integer>)this.register(new Setting<>("BoxAlpha", 120, 0, 255, v-> this.setting.getCurrentState() == Settings.RENDER && !sync.getCurrentState()));
-        this.rainbow = (Setting<Boolean>)this.register(new Setting<>("BoxRainbow", true, v-> this.setting.getCurrentState() == Settings.RENDER && !sync.getCurrentState()));
-        this.cSync = (Setting<Boolean>)this.register(new Setting<>("OutlineSync", false, v-> this.setting.getCurrentState() == Settings.RENDER));
+        this.red = (Setting<Integer>)this.register(new Setting<>("BoxRed", 255, 0, 255, v-> this.setting.getCurrentState() == Settings.RENDER));
+        this.green = (Setting<Integer>)this.register(new Setting<>("BoxGreen", 255, 0, 255, v-> this.setting.getCurrentState() == Settings.RENDER));
+        this.blue = (Setting<Integer>)this.register(new Setting<>("BoxBlue", 255, 0, 255, v-> this.setting.getCurrentState() == Settings.RENDER));
+        this.alpha = (Setting<Integer>)this.register(new Setting<>("BoxAlpha", 120, 0, 255, v-> this.setting.getCurrentState() == Settings.RENDER));
+        this.rainbow = (Setting<Boolean>)this.register(new Setting<>("BoxRainbow", true, v-> this.setting.getCurrentState() == Settings.RENDER));
         this.outline = (Setting<Boolean>)this.register(new Setting<>("Outline", true, v-> this.setting.getCurrentState() == Settings.RENDER));
-        this.cRed = (Setting<Integer>)this.register(new Setting<>("OutlineRed", 255, 0, 255, v-> this.setting.getCurrentState() == Settings.RENDER && !cSync.getCurrentState()));
-        this.cGreen = (Setting<Integer>)this.register(new Setting<>("OutlineGreen", 255, 0, 255, v-> this.setting.getCurrentState() == Settings.RENDER && !cSync.getCurrentState()));
-        this.cBlue = (Setting<Integer>)this.register(new Setting<>("OutlineBlue", 255, 0, 255, v-> this.setting.getCurrentState() == Settings.RENDER && !cSync.getCurrentState()));
-        this.cAlpha = (Setting<Integer>)this.register(new Setting<>("OutlineAlpha", 255, 0, 255, v-> this.setting.getCurrentState() == Settings.RENDER && !cSync.getCurrentState()));
+        this.cRed = (Setting<Integer>)this.register(new Setting<>("OutlineRed", 255, 0, 255, v-> this.setting.getCurrentState() == Settings.RENDER));
+        this.cGreen = (Setting<Integer>)this.register(new Setting<>("OutlineGreen", 255, 0, 255, v-> this.setting.getCurrentState() == Settings.RENDER));
+        this.cBlue = (Setting<Integer>)this.register(new Setting<>("OutlineBlue", 255, 0, 255, v-> this.setting.getCurrentState() == Settings.RENDER));
+        this.cAlpha = (Setting<Integer>)this.register(new Setting<>("OutlineAlpha", 255, 0, 255, v-> this.setting.getCurrentState() == Settings.RENDER));
         this.lineWidth = (Setting<Integer>)this.register(new Setting<>("OutlineWidth", 1, 0, 5, v-> this.setting.getCurrentState() == Settings.RENDER));
-        this.cRainbow = (Setting<Boolean>)this.register(new Setting<>("OutlineRainbow", true, v-> this.setting.getCurrentState() == Settings.RENDER && !cSync.getCurrentState()));
+        this.cRainbow = (Setting<Boolean>)this.register(new Setting<>("OutlineRainbow", true, v-> this.setting.getCurrentState() == Settings.RENDER));
         this.placeSet = new HashSet<>();
         this.clearTimer = new Timer();
         this.breakTimer = new Timer();
@@ -364,8 +359,8 @@ public class AutoCrystal extends Module {
             RenderPos renderPos = it.next();
             Color color;
             Color color2;
-            color = sync.getCurrentState() ? new Color(Sync.getInstance().color) : new Color(red.getCurrentState(), green.getCurrentState(), blue.getCurrentState(), (int) Math.max(alpha.getCurrentState() - renderPos.alpha, 0));
-            color2 = cSync.getCurrentState() ? new Color(Sync.getInstance().color) : new Color(cRed.getCurrentState(), cGreen.getCurrentState(), cBlue.getCurrentState(), (int) Math.max(cAlpha.getCurrentState() - renderPos.alpha, 0));
+            color = new Color(red.getCurrentState(), green.getCurrentState(), blue.getCurrentState(), (int) Math.max(alpha.getCurrentState() - renderPos.alpha, 0));
+            color2 = new Color(cRed.getCurrentState(), cGreen.getCurrentState(), cBlue.getCurrentState(), (int) Math.max(cAlpha.getCurrentState() - renderPos.alpha, 0));
             if(renderMode.getCurrentState() == RenderMode.NORMAL || renderMode.getCurrentState() == RenderMode.FADE) {
                 RenderUtil.drawBoxESP(renderPos.pos, rainbow.getCurrentState() ? ColorUtil.rainbow(ClickGui.getInstance().rainbowHue.getCurrentState()) : color, this.outline.getCurrentState(), cRainbow.getCurrentState() ? ColorUtil.rainbow(ClickGui.getInstance().rainbowHue.getCurrentState()) : color2, this.lineWidth.getCurrentState(), this.outline.getCurrentState(), this.box.getCurrentState(), (int) Math.max(cAlpha.getCurrentState() - renderPos.alpha, 0), true);
             }
@@ -381,8 +376,8 @@ public class AutoCrystal extends Module {
         renderMap.removeAll(toRemove);
 
         if (renderMode.getCurrentState() == RenderMode.GLIDE && renderPos != null) {
-            Color color2 = cSync.getCurrentState() ? new Color(Sync.getInstance().color) : new Color(cRed.getCurrentState(), cGreen.getCurrentState(), cBlue.getCurrentState(), cAlpha.getCurrentState());
-            Color color = sync.getCurrentState() ? new Color(Sync.getInstance().color) : new Color(red.getCurrentState(), green.getCurrentState(), blue.getCurrentState(), alpha.getCurrentState());
+            Color color2 = new Color(cRed.getCurrentState(), cGreen.getCurrentState(), cBlue.getCurrentState(), cAlpha.getCurrentState());
+            Color color = new Color(red.getCurrentState(), green.getCurrentState(), blue.getCurrentState(), alpha.getCurrentState());
             if ( this.lastRenderPos == null || AutoCrystal.mc.player.getDistance (this.renderBB.minX , this.renderBB.minY , this.renderBB.minZ ) > this.placeRange.getCurrentState() ) {
                 this.lastRenderPos = this.renderPos;
                 this.renderBB = new AxisAlignedBB( this.renderPos );

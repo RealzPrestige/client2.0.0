@@ -14,9 +14,22 @@ public class ClickGui extends Module {
     public int yaw;
     public Setting<Gui> gui = this.register(new Setting("Gui", Gui.OLD));
     //NEW GUI
+    public Setting<Integer> height = this.register(new Setting("Height", 0, -60, 60, v -> gui.getCurrentState() == Gui.NEW));
     public Setting<Boolean> chamsViewer = this.register(new Setting<>("ChamsViewer", false, v -> gui.getCurrentState() == Gui.NEW));
     public Setting<Boolean> logo = this.register(new Setting<>("Logo", true, v -> gui.getCurrentState() == Gui.NEW));
     public Setting<Boolean> newBlur = this.register(new Setting<>("Blur", true, v -> gui.getCurrentState() == Gui.NEW));
+    public Setting<Boolean> categoryOutline = this.register(new Setting<>("CategoryOutline", false, v -> gui.getCurrentState() == Gui.NEW));
+    public Setting<Integer> categoryOutlineRed = this.register(new Setting("CategoryOutlineRed", 0, 0, 255, v -> categoryOutline.getCurrentState() && gui.getCurrentState() == Gui.NEW));
+    public Setting<Integer> categoryOutlineGreen = this.register(new Setting("CategoryOutlineGreen", 0, 0, 255, v -> categoryOutline.getCurrentState() && gui.getCurrentState() == Gui.NEW));
+    public Setting<Integer> categoryOutlineBlue = this.register(new Setting("CategoryOutlineBlue", 150, 0, 255, v -> categoryOutline.getCurrentState() && gui.getCurrentState() == Gui.NEW));
+    public Setting<Integer> categoryOutlineAlpha = this.register(new Setting("CategoryOutlineAlpha", 255, 0, 255, v -> categoryOutline.getCurrentState() && gui.getCurrentState() == Gui.NEW));
+
+    public Setting<Boolean> categoryComponentOutline = this.register(new Setting<>("ComponentOutline", false, v -> gui.getCurrentState() == Gui.NEW));
+    public Setting<Integer> categoryComponentRed = this.register(new Setting("ComponentOutlineRed", 0, 0, 255, v -> categoryComponentOutline.getCurrentState() && gui.getCurrentState() == Gui.NEW));
+    public Setting<Integer> categoryComponentGreen = this.register(new Setting("ComponentOutlineGreen", 0, 0, 255, v -> categoryComponentOutline.getCurrentState() && gui.getCurrentState() == Gui.NEW));
+    public Setting<Integer> categoryComponentBlue = this.register(new Setting("ComponentOutlineBlue", 150, 0, 255, v -> categoryComponentOutline.getCurrentState() && gui.getCurrentState() == Gui.NEW));
+    public Setting<Integer> categoryComponentAlpha = this.register(new Setting("ComponentOutlineAlpha", 255, 0, 255, v -> categoryComponentOutline.getCurrentState() && gui.getCurrentState() == Gui.NEW));
+
     public Setting<Integer> newtopred = this.register(new Setting<>("TopRed", 255, 0, 255, v -> gui.getCurrentState() == Gui.NEW));
     public Setting<Integer> newtopgreen = this.register(new Setting<>("TopGreen", 0, 0, 255, v -> gui.getCurrentState() == Gui.NEW));
     public Setting<Integer> newtopblue = this.register(new Setting<>("TopBlue", 0, 0, 255, v -> gui.getCurrentState() == Gui.NEW));
