@@ -14,7 +14,6 @@ public class ClickGui extends Module {
     public int yaw;
     public Setting<Gui> gui = this.register(new Setting("Gui", Gui.OLD));
     //NEW GUI
-    public Setting<Integer> height = this.register(new Setting("Height", 0, -60, 60, v -> gui.getCurrentState() == Gui.NEW));
     public Setting<Boolean> chamsViewer = this.register(new Setting<>("ChamsViewer", false, v -> gui.getCurrentState() == Gui.NEW));
     public Setting<Boolean> logo = this.register(new Setting<>("Logo", true, v -> gui.getCurrentState() == Gui.NEW));
     public Setting<Boolean> newBlur = this.register(new Setting<>("Blur", true, v -> gui.getCurrentState() == Gui.NEW));

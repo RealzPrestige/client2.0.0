@@ -55,7 +55,6 @@ public class Setting<T> {
         this.description = "";
         this.hasRestriction = true;
     }
-
     public Setting(String name, T defaultValue, T min, T max, Predicate<T> visibility, String description) {
         this.name = name;
         this.defaultValue = defaultValue;

@@ -1,10 +1,16 @@
 package client.modules.miscellaneous;
 
+import client.events.TotemPopEvent;
 import client.gui.impl.setting.Setting;
 import client.modules.Module;
+import com.google.common.collect.Sets;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import java.util.HashSet;
 import java.util.UUID;
 
 public class FakePlayer extends Module {
@@ -34,6 +40,7 @@ public class FakePlayer extends Module {
         if (fullNullCheck()) return;
         mc.world.removeEntityFromWorld(entityId);
     }
+
     
     public void onUpdate() {
         if (moving.getCurrentState()) {

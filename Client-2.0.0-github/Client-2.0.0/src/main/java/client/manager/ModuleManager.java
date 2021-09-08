@@ -113,6 +113,7 @@ public class ModuleManager
         moduleList.add(new ViewTweaks());
         moduleList.add(new PearlRender());
         moduleList.add(new NoRender());
+        moduleList.add(new poo());
 
     }
 

@@ -17,7 +17,9 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.awt.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Hud extends Module {
@@ -31,17 +33,18 @@ public class Hud extends Module {
     private static final ItemStack crystals = new ItemStack(Items.END_CRYSTAL);
     private static final ItemStack gapples = new ItemStack(Items.GOLDEN_APPLE);
     private static final ItemStack exp = new ItemStack(Items.EXPERIENCE_BOTTLE);
-    public Setting<Boolean> rainbow = register(new Setting("Rainbow", true));
-    public Setting<Boolean> sideway = register(new Setting("RainbowSideway", true, v -> this.rainbow.getCurrentState()));
+    public Setting<Boolean> rainbow = register(new Setting("Rainbow", false));
+    public Setting<Boolean> sideway = register(new Setting("RainbowSideway", false, v -> this.rainbow.getCurrentState()));
     public Setting<Integer> rainbowDelay = this.register(new Setting<Object>("Delay", 200, 0, 600, v -> this.rainbow.getCurrentState()));
     public Setting<Float> rainbowBrightness = this.register(new Setting<Object>("Brightness ", 150.0f, 1.0f, 255.0f, v -> this.rainbow.getCurrentState()));
     public Setting<Float> rainbowSaturation = this.register(new Setting<Object>("Saturation", 150.0f, 1.0f, 255.0f, v -> this.rainbow.getCurrentState()));
     public Setting<Boolean> sync = register(new Setting("Sync", false));
-    public Setting<Integer> red = this.register(new Setting("Red", 255, 0, 255, v-> !sync.getCurrentState()));
-    public Setting<Integer> green = this.register(new Setting("Green", 255, 0, 255, v-> !sync.getCurrentState()));
-    public Setting<Integer> blue = this.register(new Setting("Blue", 255, 0, 255, v-> !sync.getCurrentState()));
-    public Setting<Integer> alpha = this.register(new Setting("Alpha", 255, 0, 255, v-> !sync.getCurrentState()));
+    public Setting<Integer> red = this.register(new Setting("Red", 255, 0, 255, v -> !sync.getCurrentState()));
+    public Setting<Integer> green = this.register(new Setting("Green", 255, 0, 255, v -> !sync.getCurrentState()));
+    public Setting<Integer> blue = this.register(new Setting("Blue", 255, 0, 255, v -> !sync.getCurrentState()));
+    public Setting<Integer> alpha = this.register(new Setting("Alpha", 255, 0, 255, v -> !sync.getCurrentState()));
     public Setting<Boolean> watermark = register(new Setting("Watermark", false));
+    public Setting<Boolean> alphaStepWatermark = register(new Setting("AlphaStepWatermark", false));
     public Setting<Integer> watermarkX = register(new Setting("WatermarkX", 0, 0, 900, v -> watermark.getCurrentState()));
     public Setting<Integer> watermarkY = register(new Setting("WatermarkY", 0, 0, 530, v -> watermark.getCurrentState()));
     public Setting<Boolean> packets = register(new Setting("Packets", false));
@@ -51,18 +54,20 @@ public class Hud extends Module {
     public Setting<Boolean> welcomerAlign = register(new Setting("WelcomerAlign", false, v -> welcomer.getCurrentState()));
     public Setting<Boolean> nameHider = register(new Setting("NameHider", false));
     public Setting<String> name = register(new Setting("Name...", "popbob"));
-    private final Setting<Boolean> potionEffects = register(new Setting("PotionEffects", false));
-    private final Setting<Boolean> bottomAlign = register(new Setting("BottomAlign", false,v-> this.potionEffects.getCurrentState()));
+
     private final Setting<Boolean> coords = register(new Setting("Coords", false, "Your current coordinates"));
-    private final Setting<Boolean> armor = this.register( new Setting <> ( "Armor" , false , "ArmorHUD" ));
-    private final Setting<Boolean> percent = this.register(new Setting<Object>("Percent", true, v -> this.armor.getCurrentState()));
-    private final Setting<Boolean> itemInfo = this.register(new Setting<Object>("ItemInfo", true));
+    private final Setting<Boolean> armor = this.register(new Setting<>("Armor", false, "ArmorHUD"));
+    private final Setting<Boolean> percent = this.register(new Setting<Object>("Percent", false, v -> this.armor.getCurrentState()));
+    private final Setting<Boolean> itemInfo = this.register(new Setting<Object>("ItemInfo", false));
     private final Setting<Integer> itemInfoY = this.register(new Setting<>("ItemInfoY", 10, 0, 400));
     private final Setting<Boolean> activeModules = register(new Setting("ActiveModules", false));
-    private final Setting<ColorMode> colorMode = register(new Setting("ColorMode", ColorMode.NORMAL, v-> activeModules.getCurrentState()));
-    public enum ColorMode{NORMAL, ALPHASTEP, RAINBOW}
-    public Setting<Integer> index = this.register(new Setting("Index", 30, 0, 100, v-> colorMode.getCurrentState() == ColorMode.ALPHASTEP));
-    public Setting<Integer> countt = this.register(new Setting("Count", 25, 0, 30, v-> colorMode.getCurrentState() == ColorMode.ALPHASTEP));
+    private final Setting<ColorMode> colorMode = register(new Setting("ColorMode", ColorMode.NORMAL, v -> activeModules.getCurrentState()));
+
+    public enum ColorMode {NORMAL, ALPHASTEP, RAINBOW}
+
+    public Setting<Integer> index = this.register(new Setting("Index", 30, 0, 100, v -> colorMode.getCurrentState() == ColorMode.ALPHASTEP));
+    public Setting<Integer> countt = this.register(new Setting("Count", 25, 0, 30, v -> colorMode.getCurrentState() == ColorMode.ALPHASTEP));
+
     public Hud() {
         super("Hud", "Displays strings on your screen.", Category.CORE);
         this.setInstance();
@@ -77,25 +82,30 @@ public class Hud extends Module {
 
 
     @SubscribeEvent
-    public void onPacketSend(PacketEvent.Send event){
+    public void onPacketSend(PacketEvent.Send event) {
         ++packetsSent;
     }
+
     @SubscribeEvent
-    public void onPacketReceive(PacketEvent.Receive event){
+    public void onPacketReceive(PacketEvent.Receive event) {
         ++packetsReceived;
     }
+
     private void setInstance() {
         INSTANCE = this;
     }
+
     public void onRender2D(Render2DEvent event) {
         if (fullNullCheck())
             return;
         int width = this.renderer.scaledWidth;
         int height = this.renderer.scaledHeight;
         int[] counter1 = {1};
-        int j = (mc.currentScreen instanceof GuiChat && bottomAlign.getCurrentState()) ? 14 : 0;
-        if(activeModules.getCurrentState()) {
-            if(colorMode.getCurrentState() == ColorMode.NORMAL) {
+        int[] counter2 = {1};
+        int[] counter69 = {1};
+        int j = 0;
+        if (activeModules.getCurrentState()) {
+            if (colorMode.getCurrentState() == ColorMode.NORMAL) {
                 for (int k = 0; k < Client.moduleManager.sortedModules.size(); k++) {
                     Module module = Client.moduleManager.sortedModules.get(k);
                     String str = module.getDisplayName() + ((module.hudInfoString() != null) ? (ChatFormatting.WHITE + " [" + module.hudInfoString() + "]") : "");
@@ -103,7 +113,7 @@ public class Hud extends Module {
                     j++;
                     counter1[0] = counter1[0] + 1;
                 }
-            } else if(colorMode.getCurrentState() == ColorMode.ALPHASTEP) {
+            } else if (colorMode.getCurrentState() == ColorMode.ALPHASTEP) {
                 for (int k = 0; k < Client.moduleManager.sortedModules.size(); k++) {
                     Module module = Client.moduleManager.sortedModules.get(k);
                     String str = module.getDisplayName() + ((module.hudInfoString() != null) ? (ChatFormatting.WHITE + " [" + module.hudInfoString() + "]") : "");
@@ -112,7 +122,7 @@ public class Hud extends Module {
                     counter1[0] = counter1[0] + 1;
                     count++;
                 }
-            } else if(colorMode.getCurrentState() == ColorMode.RAINBOW) {
+            } else if (colorMode.getCurrentState() == ColorMode.RAINBOW) {
                 for (int k = 0; k < Client.moduleManager.sortedModules.size(); k++) {
                     Module module = Client.moduleManager.sortedModules.get(k);
                     String str = module.getDisplayName() + ((module.hudInfoString() != null) ? (ChatFormatting.WHITE + " [" + module.hudInfoString() + "]") : "");
@@ -142,11 +152,12 @@ public class Hud extends Module {
                     }
                 }
             } else {
-                if(packets.getCurrentState()) {
-                    renderer.drawString("PacketsSent: " + ChatFormatting.WHITE + Client.eventManager.sendingpackets, watermarkX.getCurrentState(), watermarkY.getCurrentState() + 10, this.color, true);
-                    renderer.drawString("PacketsReceived: " + ChatFormatting.WHITE + Client.eventManager.incomingpackets, watermarkX.getCurrentState(), watermarkY.getCurrentState() + 20, this.color, true);
+                if (packets.getCurrentState()) {
+                    renderer.drawString("PacketsSent: " + ChatFormatting.WHITE + Client.eventManager.sendingpackets, watermarkX.getCurrentState(), watermarkY.getCurrentState() + 10, alphaStepWatermark.getCurrentState() ? ColorUtil.alphaStep(new Color(color), index.getCurrentState(), (counter2[0] + countt.getCurrentState())).getRGB() : this.color, true);
+                    renderer.drawString("PacketsReceived: " + ChatFormatting.WHITE + Client.eventManager.incomingpackets, watermarkX.getCurrentState(), watermarkY.getCurrentState() + 20, alphaStepWatermark.getCurrentState() ? ColorUtil.alphaStep(new Color(color), index.getCurrentState(), (counter2[0] + countt.getCurrentState())).getRGB() : this.color, true);
                 }
-                renderer.drawString(string, watermarkX.getCurrentState(), watermarkY.getCurrentState(), this.color, true);
+                renderer.drawString(string, watermarkX.getCurrentState(), watermarkY.getCurrentState(), alphaStepWatermark.getCurrentState() ? ColorUtil.alphaStep(new Color(color), index.getCurrentState(), (counter2[0] + countt.getCurrentState())).getRGB() : this.color, true);
+                counter2[0] = counter2[0] + 3;
             }
         }
 
@@ -167,25 +178,11 @@ public class Hud extends Module {
             } else {
                 renderer.drawString(welcome, welcomerAlign.getCurrentState() ? 400 + f : welcomerX.getCurrentState() + f, welcomerY.getCurrentState(), this.color, true);
             }
+
+            int i = (mc.currentScreen instanceof net.minecraft.client.gui.GuiChat) ? 13 : -2;
         }
-        if (this.potionEffects.getCurrentState()) {
-            if (fullNullCheck()) return;
-            this.color = ColorUtil.toRGBA(red.getCurrentState(), green.getCurrentState(), blue.getCurrentState(), alpha.getCurrentState());
-            int i = (mc.currentScreen instanceof GuiChat && this.bottomAlign.getCurrentState()) ? 13 : (this.bottomAlign.getCurrentState() ? -3 : 0);
-            List<PotionEffect> effects = new ArrayList<>((Minecraft.getMinecraft()).player.getActivePotionEffects());
-            if (this.bottomAlign.getCurrentState()) {
-                for (PotionEffect potionEffect : effects) {
-                    String str = Client.potionManager.getColoredPotionString(potionEffect);
-                    i += 10;
-                    this.renderer.drawString(str, (width - this.renderer.getStringWidth(str) - 2), (height - 2 - i), potionEffect.getPotion().getLiquidColor(), true);
-                }
-            } else {
-                for (PotionEffect potionEffect : effects) {
-                    String str = Client.potionManager.getColoredPotionString(potionEffect);
-                    this.renderer.drawString(str, (width - this.renderer.getStringWidth(str) - 2), (2 + i++ * 10), potionEffect.getPotion().getLiquidColor(), true);
-                }
-            }
-        }
+
+
         boolean inHell = mc.world.getBiome(mc.player.getPosition()).getBiomeName().equals("Hell");
         int i;
         i = (mc.currentScreen instanceof GuiChat) ? 14 : 0;
@@ -196,12 +193,12 @@ public class Hud extends Module {
         int hposX = (int) (mc.player.posX * nether);
         int hposZ = (int) (mc.player.posZ * nether);
         String coordinates = ChatFormatting.WHITE + "XYZ " + ChatFormatting.RESET + (inHell ? (posX + ", " + posY + ", " + posZ + ChatFormatting.WHITE + " [" + ChatFormatting.RESET + hposX + ", " + hposZ + ChatFormatting.WHITE + "]" + ChatFormatting.RESET) : (posX + ", " + posY + ", " + posZ + ChatFormatting.WHITE + " [" + ChatFormatting.RESET + hposX + ", " + hposZ + ChatFormatting.WHITE + "]"));
-        String coords = this.coords.getCurrentState( ) ? coordinates : "";
+        String coords = this.coords.getCurrentState() ? coordinates : "";
         i += 10;
         if ((ClickGui.getInstance()).rainbow.getCurrentState()) {
             String rainbowCoords = this.coords.getCurrentState() ? ("XYZ " + (inHell ? (posX + ", " + posY + ", " + posZ + " [" + hposX + ", " + hposZ + "]") : (posX + ", " + posY + ", " + posZ + " [" + hposX + ", " + hposZ + "]"))) : "";
             if (!sideway.getCurrentState()) {
-                this.renderer.drawString(rainbowCoords, 2.0F, (height - i), ColorUtil.rainbowHud( (rainbowDelay.getCurrentState( ) )).getRGB(), true);
+                this.renderer.drawString(rainbowCoords, 2.0F, (height - i), ColorUtil.rainbowHud((rainbowDelay.getCurrentState())).getRGB(), true);
             } else {
                 int[] counter3 = {1};
                 char[] stringToCharArray2 = rainbowCoords.toCharArray();
@@ -218,13 +215,14 @@ public class Hud extends Module {
         if (this.armor.getCurrentState()) {
             this.renderArmorHUD(this.percent.getCurrentState());
         }
-        if(itemInfo.getCurrentState()){
+        if (itemInfo.getCurrentState()) {
             renderTotemHUD();
             renderCrystalHud();
             renderExpHud();
             renderGapsHud();
         }
     }
+
     public void renderArmorHUD(final boolean percent) {
         final int width = this.renderer.scaledWidth;
         final int height = this.renderer.scaledHeight;
