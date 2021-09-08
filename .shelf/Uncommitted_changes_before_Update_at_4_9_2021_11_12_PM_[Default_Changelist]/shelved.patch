@@ -1,0 +1,32 @@
+Index: src/main/resources/mixins.client.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>{\r\n  \"required\": true,\r\n  \"compatibilityLevel\": \"JAVA_8\",\r\n  \"package\": \"client.mixin.mixins\",\r\n  \"refmap\": \"mixins.client.refmap.json\",\r\n  \"mixins\": [\r\n    \"AccessorSPacketPlayerPosLook\",\r\n    \"IPlayerControllerMP\",\r\n    \"MixinClientPlayer\",\r\n    \"MixinContainerPlayer\",\r\n    \"MixinEntityPlayer\",\r\n    \"MixinEntityPlayerSP\",\r\n    \"MixinEntityRenderer\",\r\n    \"MixinGuiNewChat\",\r\n    \"MixinGuiScreen\",\r\n    \"MixinItemRenderer\",\r\n    \"MixinKey\",\r\n    \"MixinLiquidBlock\",\r\n    \"MixinMinecraft\",\r\n    \"MixinNetworkManager\",\r\n    \"MixinPlayerControllerMP\",\r\n    \"MixinRenderArmor\",\r\n    \"MixinRenderGlobal\",\r\n    \"MixinRenderLivingBase\",\r\n    \"MixinRenderModifiedCrystal\",\r\n    \"MixinRenderPlayer\",\r\n    \"MixinTabOverlay\",\r\n    \"MixinWorld\"\r\n  ]\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/mixins.client.json b/src/main/resources/mixins.client.json
+--- a/src/main/resources/mixins.client.json	(revision 55529d6f90da654fc11ca1bb520f0177bdcd9fa9)
++++ b/src/main/resources/mixins.client.json	(date 1630766230720)
+@@ -10,7 +10,6 @@
+     "MixinContainerPlayer",
+     "MixinEntityPlayer",
+     "MixinEntityPlayerSP",
+-    "MixinEntityRenderer",
+     "MixinGuiNewChat",
+     "MixinGuiScreen",
+     "MixinItemRenderer",
+Index: src/main/java/client/modules/visual/PopChams.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/client/modules/visual/PopChams.java b/src/main/java/client/modules/visual/PopChams.java
+new file mode 100644
+--- /dev/null	(date 1630766230769)
++++ b/src/main/java/client/modules/visual/PopChams.java	(date 1630766230769)
+@@ -0,0 +1,4 @@
++package client.modules.visual;
++
++public class PopChams   {
++}

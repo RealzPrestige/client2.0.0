@@ -1,0 +1,560 @@
+Index: src/main/resources/mixins.client.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>{\r\n  \"required\": true,\r\n  \"compatibilityLevel\": \"JAVA_8\",\r\n  \"package\": \"client.mixin.mixins\",\r\n  \"refmap\": \"mixins.client.refmap.json\",\r\n  \"mixins\": [\r\n    \"AccessorSPacketPlayerPosLook\",\r\n    \"IPlayerControllerMP\",\r\n    \"MixinClientPlayer\",\r\n    \"MixinContainerPlayer\",\r\n    \"MixinEntityPlayer\",\r\n    \"MixinEntityPlayerSP\",\r\n    \"MixinGuiNewChat\",\r\n    \"MixinGuiScreen\",\r\n    \"MixinItemRenderer\",\r\n    \"MixinKey\",\r\n    \"MixinLiquidBlock\",\r\n    \"MixinMinecraft\",\r\n    \"MixinNetworkManager\",\r\n    \"MixinPlayerControllerMP\",\r\n    \"MixinRenderArmor\",\r\n    \"MixinRenderGlobal\",\r\n    \"MixinRenderLivingBase\",\r\n    \"MixinRenderModifiedCrystal\",\r\n    \"MixinRenderPlayer\",\r\n    \"MixinTabOverlay\",\r\n    \"MixinWorld\"\r\n  ]\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/mixins.client.json b/src/main/resources/mixins.client.json
+--- a/src/main/resources/mixins.client.json	
++++ b/src/main/resources/mixins.client.json	
+@@ -6,7 +6,6 @@
+   "mixins": [
+     "AccessorSPacketPlayerPosLook",
+     "IPlayerControllerMP",
+-    "MixinClientPlayer",
+     "MixinContainerPlayer",
+     "MixinEntityPlayer",
+     "MixinEntityPlayerSP",
+Index: src/main/java/client/mixin/mixins/MixinRenderModifiedCrystal.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package client.mixin.mixins;\r\n\r\nimport client.events.RenderEntityModelEvent;\r\nimport client.modules.visual.CrystalChanger;\r\nimport client.util.ColorUtil;\r\nimport net.minecraft.client.model.ModelBase;\r\nimport net.minecraft.client.renderer.GlStateManager;\r\nimport net.minecraft.client.renderer.entity.RenderEnderCrystal;\r\nimport net.minecraft.entity.Entity;\r\nimport net.minecraft.util.ResourceLocation;\r\nimport net.minecraftforge.fml.common.eventhandler.SubscribeEvent;\r\nimport org.lwjgl.opengl.GL11;\r\nimport org.spongepowered.asm.mixin.Final;\r\nimport org.spongepowered.asm.mixin.Mixin;\r\nimport org.spongepowered.asm.mixin.Shadow;\r\nimport org.spongepowered.asm.mixin.injection.At;\r\nimport org.spongepowered.asm.mixin.injection.Redirect;\r\n@Mixin(value={RenderEnderCrystal.class}, priority = 9999999)\r\npublic class MixinRenderModifiedCrystal {\r\n\r\n    @SubscribeEvent\r\n    @Redirect(method={\"doRender\"}, at=@At(value=\"INVOKE\", target=\"Lnet/minecraft/client/model/ModelBase;render(Lnet/minecraft/entity/Entity;FFFFFF)V\"))\r\n    public void renderModel(ModelBase model, Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {\r\n        if (CrystalChanger.getInstance().isEnabled()) {\r\n            GlStateManager.scale(CrystalChanger.getInstance().scale.getCurrentState().floatValue(), CrystalChanger.getInstance().scale.getCurrentState().floatValue(), CrystalChanger.getInstance().scale.getCurrentState().floatValue());\r\n        }\r\n        if (CrystalChanger.getInstance().isEnabled() && CrystalChanger.getInstance().wireframe.getCurrentState()) {\r\n            RenderEntityModelEvent event = new RenderEntityModelEvent(0, model, entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);\r\n            CrystalChanger.getInstance().onRenderModel(event);\r\n        }\r\n        if (CrystalChanger.getInstance().isEnabled() && CrystalChanger.getInstance().chams.getCurrentState()) {\r\n            GL11.glPushAttrib(1048575);\r\n            GL11.glDisable(3008);\r\n            GL11.glDisable(3553);\r\n            GL11.glDisable(2896);\r\n            GL11.glEnable(3042);\r\n            GL11.glBlendFunc(770, 771);\r\n            GL11.glLineWidth(1.5f);\r\n            GL11.glEnable(2960);\r\n            if (CrystalChanger.getInstance().throughwalls.getCurrentState()) {\r\n                 if (CrystalChanger.getInstance().throughwalls.getCurrentState()) {\r\n                    GL11.glDisable(2929);\r\n                    GL11.glDepthMask(false);\r\n                }\r\n                GL11.glEnable(10754);\r\n                GL11.glColor4f(((float)CrystalChanger.getInstance().wallsRed.getCurrentState() / 255.0f), ((float)CrystalChanger.getInstance().wallsGreen.getCurrentState() / 255.0f), (float)CrystalChanger.getInstance().wallsBlue.getCurrentState() / 255.0f, (float)CrystalChanger.getInstance().wallsAlpha.getCurrentState() / 255.0f);\r\n                model.render(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);\r\n                if (CrystalChanger.getInstance().throughwalls.getCurrentState()) {\r\n                    GL11.glEnable(2929);\r\n                    GL11.glDepthMask(true);\r\n                }\r\n                GL11.glColor4f((float)CrystalChanger.getInstance().red.getCurrentState() / 255.0f, (float)CrystalChanger.getInstance().green.getCurrentState() / 255.0f, (float)CrystalChanger.getInstance().blue.getCurrentState() / 255.0f, (float)CrystalChanger.getInstance().alpha.getCurrentState() / 255.0f);\r\n                model.render(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);\r\n            } else {\r\n                 if (CrystalChanger.getInstance().throughwalls.getCurrentState()) {\r\n                    GL11.glDisable(2929);\r\n                    GL11.glDepthMask(false);\r\n                }\r\n                GL11.glEnable(10754);\r\n                GL11.glColor4f(((float)CrystalChanger.getInstance().red.getCurrentState() / 255.0f), ((float)CrystalChanger.getInstance().green.getCurrentState() / 255.0f), ((float)CrystalChanger.getInstance().blue.getCurrentState() / 255.0f), (float)CrystalChanger.getInstance().alpha.getCurrentState() / 255.0f);\r\n                model.render(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);\r\n                if (CrystalChanger.getInstance().throughwalls.getCurrentState()) {\r\n                    GL11.glEnable(2929);\r\n                    GL11.glDepthMask(true);\r\n                }\r\n            }\r\n            GL11.glEnable(3042);\r\n            GL11.glEnable(2896);\r\n            GL11.glEnable(3553);\r\n            GL11.glEnable(3008);\r\n            GL11.glPopAttrib();\r\n        } else {\r\n            model.render(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);\r\n        }\r\n        if (CrystalChanger.getInstance().isEnabled()) {\r\n            GlStateManager.scale((1.0f / CrystalChanger.getInstance().scale.getCurrentState().floatValue()), (1.0f / CrystalChanger.getInstance().scale.getCurrentState().floatValue()), 1.0f / CrystalChanger.getInstance().scale.getCurrentState().floatValue());\r\n        }\r\n    }\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/client/mixin/mixins/MixinRenderModifiedCrystal.java b/src/main/java/client/mixin/mixins/MixinRenderModifiedCrystal.java
+--- a/src/main/java/client/mixin/mixins/MixinRenderModifiedCrystal.java	
++++ b/src/main/java/client/mixin/mixins/MixinRenderModifiedCrystal.java	
+@@ -15,7 +15,7 @@
+ import org.spongepowered.asm.mixin.Shadow;
+ import org.spongepowered.asm.mixin.injection.At;
+ import org.spongepowered.asm.mixin.injection.Redirect;
+-@Mixin(value={RenderEnderCrystal.class}, priority = 9999999)
++@Mixin(value={RenderEnderCrystal.class})
+ public class MixinRenderModifiedCrystal {
+ 
+     @SubscribeEvent
+Index: ../../.idea/vcs.xml
+===================================================================
+diff --git a/../../.idea/vcs.xml b/../../.idea/vcs.xml
+deleted file mode 100644
+--- a/../../.idea/vcs.xml	
++++ /dev/null	
+@@ -1,6 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="VcsDirectoryMappings">
+-    <mapping directory="" vcs="Git" />
+-  </component>
+-</project>
+\ No newline at end of file
+Index: ../../.idea/gradle.xml
+===================================================================
+diff --git a/../../.idea/gradle.xml b/../../.idea/gradle.xml
+deleted file mode 100644
+--- a/../../.idea/gradle.xml	
++++ /dev/null	
+@@ -1,18 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="GradleMigrationSettings" migrationVersion="1" />
+-  <component name="GradleSettings">
+-    <option name="linkedExternalProjectsSettings">
+-      <GradleProjectSettings>
+-        <option name="distributionType" value="DEFAULT_WRAPPED" />
+-        <option name="externalProjectPath" value="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0" />
+-        <option name="gradleJvm" value="1.8" />
+-        <option name="modules">
+-          <set>
+-            <option value="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0" />
+-          </set>
+-        </option>
+-      </GradleProjectSettings>
+-    </option>
+-  </component>
+-</project>
+\ No newline at end of file
+Index: ../../.idea/clientgithub.iml
+===================================================================
+diff --git a/../../.idea/clientgithub.iml b/../../.idea/clientgithub.iml
+deleted file mode 100644
+--- a/../../.idea/clientgithub.iml	
++++ /dev/null	
+@@ -1,9 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<module type="JAVA_MODULE" version="4">
+-  <component name="NewModuleRootManager" inherit-compiler-output="true">
+-    <exclude-output />
+-    <content url="file://$MODULE_DIR$" />
+-    <orderEntry type="inheritedJdk" />
+-    <orderEntry type="sourceFolder" forTests="false" />
+-  </component>
+-</module>
+\ No newline at end of file
+Index: ../../.idea/jarRepositories.xml
+===================================================================
+diff --git a/../../.idea/jarRepositories.xml b/../../.idea/jarRepositories.xml
+deleted file mode 100644
+--- a/../../.idea/jarRepositories.xml	
++++ /dev/null	
+@@ -1,45 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="RemoteRepositoriesConfiguration">
+-    <remote-repository>
+-      <option name="id" value="central" />
+-      <option name="name" value="Maven Central repository" />
+-      <option name="url" value="https://repo1.maven.org/maven2" />
+-    </remote-repository>
+-    <remote-repository>
+-      <option name="id" value="jboss.community" />
+-      <option name="name" value="JBoss Community repository" />
+-      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
+-    </remote-repository>
+-    <remote-repository>
+-      <option name="id" value="deobfDeps" />
+-      <option name="name" value="deobfDeps" />
+-      <option name="url" value="file:/$USER_HOME$/.gradle/caches/minecraft/deobfedDeps/" />
+-    </remote-repository>
+-    <remote-repository>
+-      <option name="id" value="spongepowered-repo" />
+-      <option name="name" value="spongepowered-repo" />
+-      <option name="url" value="https://repo.spongepowered.org/maven/" />
+-    </remote-repository>
+-    <remote-repository>
+-      <option name="id" value="MavenRepo" />
+-      <option name="name" value="MavenRepo" />
+-      <option name="url" value="https://repo.maven.apache.org/maven2/" />
+-    </remote-repository>
+-    <remote-repository>
+-      <option name="id" value="BintrayJCenter" />
+-      <option name="name" value="BintrayJCenter" />
+-      <option name="url" value="https://jcenter.bintray.com/" />
+-    </remote-repository>
+-    <remote-repository>
+-      <option name="id" value="minecraft" />
+-      <option name="name" value="minecraft" />
+-      <option name="url" value="https://libraries.minecraft.net/" />
+-    </remote-repository>
+-    <remote-repository>
+-      <option name="id" value="forge" />
+-      <option name="name" value="forge" />
+-      <option name="url" value="https://maven.minecraftforge.net" />
+-    </remote-repository>
+-  </component>
+-</project>
+\ No newline at end of file
+Index: ../../.idea/.gitignore
+===================================================================
+diff --git a/../../.idea/.gitignore b/../../.idea/.gitignore
+deleted file mode 100644
+--- a/../../.idea/.gitignore	
++++ /dev/null	
+@@ -1,3 +0,0 @@
+-# Default ignored files
+-/shelf/
+-/workspace.xml
+Index: ../../.idea/discord.xml
+===================================================================
+diff --git a/../../.idea/discord.xml b/../../.idea/discord.xml
+deleted file mode 100644
+--- a/../../.idea/discord.xml	
++++ /dev/null	
+@@ -1,6 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="DiscordProjectSettings">
+-    <option name="show" value="PROJECT_FILES" />
+-  </component>
+-</project>
+\ No newline at end of file
+Index: ../../.idea/modules.xml
+===================================================================
+diff --git a/../../.idea/modules.xml b/../../.idea/modules.xml
+deleted file mode 100644
+--- a/../../.idea/modules.xml	
++++ /dev/null	
+@@ -1,8 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="ProjectModuleManager">
+-    <modules>
+-      <module fileurl="file://$PROJECT_DIR$/.idea/clientgithub.iml" filepath="$PROJECT_DIR$/.idea/clientgithub.iml" />
+-    </modules>
+-  </component>
+-</project>
+\ No newline at end of file
+Index: ../../.idea/misc.xml
+===================================================================
+diff --git a/../../.idea/misc.xml b/../../.idea/misc.xml
+deleted file mode 100644
+--- a/../../.idea/misc.xml	
++++ /dev/null	
+@@ -1,5 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="ExternalStorageConfigurationManager" enabled="true" />
+-  <component name="ProjectRootManager" version="2" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
+-</project>
+\ No newline at end of file
+Index: ../../.idea/uiDesigner.xml
+===================================================================
+diff --git a/../../.idea/uiDesigner.xml b/../../.idea/uiDesigner.xml
+deleted file mode 100644
+--- a/../../.idea/uiDesigner.xml	
++++ /dev/null	
+@@ -1,124 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="Palette2">
+-    <group name="Swing">
+-      <item class="com.intellij.uiDesigner.HSpacer" tooltip-text="Horizontal Spacer" icon="/com/intellij/uiDesigner/icons/hspacer.png" removable="false" auto-create-binding="false" can-attach-label="false">
+-        <default-constraints vsize-policy="1" hsize-policy="6" anchor="0" fill="1" />
+-      </item>
+-      <item class="com.intellij.uiDesigner.VSpacer" tooltip-text="Vertical Spacer" icon="/com/intellij/uiDesigner/icons/vspacer.png" removable="false" auto-create-binding="false" can-attach-label="false">
+-        <default-constraints vsize-policy="6" hsize-policy="1" anchor="0" fill="2" />
+-      </item>
+-      <item class="javax.swing.JPanel" icon="/com/intellij/uiDesigner/icons/panel.png" removable="false" auto-create-binding="false" can-attach-label="false">
+-        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="3" />
+-      </item>
+-      <item class="javax.swing.JScrollPane" icon="/com/intellij/uiDesigner/icons/scrollPane.png" removable="false" auto-create-binding="false" can-attach-label="true">
+-        <default-constraints vsize-policy="7" hsize-policy="7" anchor="0" fill="3" />
+-      </item>
+-      <item class="javax.swing.JButton" icon="/com/intellij/uiDesigner/icons/button.png" removable="false" auto-create-binding="true" can-attach-label="false">
+-        <default-constraints vsize-policy="0" hsize-policy="3" anchor="0" fill="1" />
+-        <initial-values>
+-          <property name="text" value="Button" />
+-        </initial-values>
+-      </item>
+-      <item class="javax.swing.JRadioButton" icon="/com/intellij/uiDesigner/icons/radioButton.png" removable="false" auto-create-binding="true" can-attach-label="false">
+-        <default-constraints vsize-policy="0" hsize-policy="3" anchor="8" fill="0" />
+-        <initial-values>
+-          <property name="text" value="RadioButton" />
+-        </initial-values>
+-      </item>
+-      <item class="javax.swing.JCheckBox" icon="/com/intellij/uiDesigner/icons/checkBox.png" removable="false" auto-create-binding="true" can-attach-label="false">
+-        <default-constraints vsize-policy="0" hsize-policy="3" anchor="8" fill="0" />
+-        <initial-values>
+-          <property name="text" value="CheckBox" />
+-        </initial-values>
+-      </item>
+-      <item class="javax.swing.JLabel" icon="/com/intellij/uiDesigner/icons/label.png" removable="false" auto-create-binding="false" can-attach-label="false">
+-        <default-constraints vsize-policy="0" hsize-policy="0" anchor="8" fill="0" />
+-        <initial-values>
+-          <property name="text" value="Label" />
+-        </initial-values>
+-      </item>
+-      <item class="javax.swing.JTextField" icon="/com/intellij/uiDesigner/icons/textField.png" removable="false" auto-create-binding="true" can-attach-label="true">
+-        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1">
+-          <preferred-size width="150" height="-1" />
+-        </default-constraints>
+-      </item>
+-      <item class="javax.swing.JPasswordField" icon="/com/intellij/uiDesigner/icons/passwordField.png" removable="false" auto-create-binding="true" can-attach-label="true">
+-        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1">
+-          <preferred-size width="150" height="-1" />
+-        </default-constraints>
+-      </item>
+-      <item class="javax.swing.JFormattedTextField" icon="/com/intellij/uiDesigner/icons/formattedTextField.png" removable="false" auto-create-binding="true" can-attach-label="true">
+-        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1">
+-          <preferred-size width="150" height="-1" />
+-        </default-constraints>
+-      </item>
+-      <item class="javax.swing.JTextArea" icon="/com/intellij/uiDesigner/icons/textArea.png" removable="false" auto-create-binding="true" can-attach-label="true">
+-        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
+-          <preferred-size width="150" height="50" />
+-        </default-constraints>
+-      </item>
+-      <item class="javax.swing.JTextPane" icon="/com/intellij/uiDesigner/icons/textPane.png" removable="false" auto-create-binding="true" can-attach-label="true">
+-        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
+-          <preferred-size width="150" height="50" />
+-        </default-constraints>
+-      </item>
+-      <item class="javax.swing.JEditorPane" icon="/com/intellij/uiDesigner/icons/editorPane.png" removable="false" auto-create-binding="true" can-attach-label="true">
+-        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
+-          <preferred-size width="150" height="50" />
+-        </default-constraints>
+-      </item>
+-      <item class="javax.swing.JComboBox" icon="/com/intellij/uiDesigner/icons/comboBox.png" removable="false" auto-create-binding="true" can-attach-label="true">
+-        <default-constraints vsize-policy="0" hsize-policy="2" anchor="8" fill="1" />
+-      </item>
+-      <item class="javax.swing.JTable" icon="/com/intellij/uiDesigner/icons/table.png" removable="false" auto-create-binding="true" can-attach-label="false">
+-        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
+-          <preferred-size width="150" height="50" />
+-        </default-constraints>
+-      </item>
+-      <item class="javax.swing.JList" icon="/com/intellij/uiDesigner/icons/list.png" removable="false" auto-create-binding="true" can-attach-label="false">
+-        <default-constraints vsize-policy="6" hsize-policy="2" anchor="0" fill="3">
+-          <preferred-size width="150" height="50" />
+-        </default-constraints>
+-      </item>
+-      <item class="javax.swing.JTree" icon="/com/intellij/uiDesigner/icons/tree.png" removable="false" auto-create-binding="true" can-attach-label="false">
+-        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
+-          <preferred-size width="150" height="50" />
+-        </default-constraints>
+-      </item>
+-      <item class="javax.swing.JTabbedPane" icon="/com/intellij/uiDesigner/icons/tabbedPane.png" removable="false" auto-create-binding="true" can-attach-label="false">
+-        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="3">
+-          <preferred-size width="200" height="200" />
+-        </default-constraints>
+-      </item>
+-      <item class="javax.swing.JSplitPane" icon="/com/intellij/uiDesigner/icons/splitPane.png" removable="false" auto-create-binding="false" can-attach-label="false">
+-        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="3">
+-          <preferred-size width="200" height="200" />
+-        </default-constraints>
+-      </item>
+-      <item class="javax.swing.JSpinner" icon="/com/intellij/uiDesigner/icons/spinner.png" removable="false" auto-create-binding="true" can-attach-label="true">
+-        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1" />
+-      </item>
+-      <item class="javax.swing.JSlider" icon="/com/intellij/uiDesigner/icons/slider.png" removable="false" auto-create-binding="true" can-attach-label="false">
+-        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1" />
+-      </item>
+-      <item class="javax.swing.JSeparator" icon="/com/intellij/uiDesigner/icons/separator.png" removable="false" auto-create-binding="false" can-attach-label="false">
+-        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3" />
+-      </item>
+-      <item class="javax.swing.JProgressBar" icon="/com/intellij/uiDesigner/icons/progressbar.png" removable="false" auto-create-binding="true" can-attach-label="false">
+-        <default-constraints vsize-policy="0" hsize-policy="6" anchor="0" fill="1" />
+-      </item>
+-      <item class="javax.swing.JToolBar" icon="/com/intellij/uiDesigner/icons/toolbar.png" removable="false" auto-create-binding="false" can-attach-label="false">
+-        <default-constraints vsize-policy="0" hsize-policy="6" anchor="0" fill="1">
+-          <preferred-size width="-1" height="20" />
+-        </default-constraints>
+-      </item>
+-      <item class="javax.swing.JToolBar$Separator" icon="/com/intellij/uiDesigner/icons/toolbarSeparator.png" removable="false" auto-create-binding="false" can-attach-label="false">
+-        <default-constraints vsize-policy="0" hsize-policy="0" anchor="0" fill="1" />
+-      </item>
+-      <item class="javax.swing.JScrollBar" icon="/com/intellij/uiDesigner/icons/scrollbar.png" removable="false" auto-create-binding="true" can-attach-label="false">
+-        <default-constraints vsize-policy="6" hsize-policy="0" anchor="0" fill="2" />
+-      </item>
+-    </group>
+-  </component>
+-</project>
+\ No newline at end of file
+Index: src/main/java/client/mixin/mixins/MixinGuiNewChat.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package client.mixin.mixins;\r\n\r\nimport client.Client;\r\nimport client.modules.client.ClickGui;\r\nimport client.util.ColorUtil;\r\nimport net.minecraft.client.Minecraft;\r\nimport net.minecraft.client.gui.ChatLine;\r\nimport net.minecraft.client.gui.FontRenderer;\r\nimport net.minecraft.client.gui.Gui;\r\nimport net.minecraft.client.gui.GuiNewChat;\r\nimport org.spongepowered.asm.mixin.Final;\r\nimport org.spongepowered.asm.mixin.Mixin;\r\nimport org.spongepowered.asm.mixin.Shadow;\r\nimport org.spongepowered.asm.mixin.injection.At;\r\nimport org.spongepowered.asm.mixin.injection.Redirect;\r\n\r\nimport java.util.List;\r\n\r\n@Mixin(value={GuiNewChat.class}, priority = 999999999)\r\npublic class MixinGuiNewChat\r\n        extends Gui {\r\n    @Shadow\r\n    @Final\r\n    public List<ChatLine> drawnChatLines;\r\n    private ChatLine chatLine;\r\n\r\n    @Redirect(method={\"drawChat\"}, at=@At(value=\"INVOKE\", target=\"Lnet/minecraft/client/gui/FontRenderer;drawStringWithShadow(Ljava/lang/String;FFI)I\"))\r\n    private int drawStringWithShadow(FontRenderer fontRenderer, String text, float x, float y, int color) {\r\n        if (text.contains(\"\\u00a7+\")) {\r\n            int[] arrayOfInt = {1};\r\n            char[] stringToCharArray = text.toCharArray();\r\n            float f = 0.0F;\r\n            for (char c : stringToCharArray) {\r\n                Client.textManager.drawString(String.valueOf(c), x + f,y, ColorUtil.rainbowHud(arrayOfInt[0] * ClickGui.getInstance().rainbowHue.getCurrentState()).getRGB(), true);\r\n                f += Client.textManager.getStringWidth(String.valueOf(c));\r\n                arrayOfInt[0] = arrayOfInt[0] + 1;\r\n            }\r\n            } else {\r\n                Minecraft.getMinecraft().fontRenderer.drawStringWithShadow(text, x, y, color);\r\n        }\r\n        return 0;\r\n    }\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/client/mixin/mixins/MixinGuiNewChat.java b/src/main/java/client/mixin/mixins/MixinGuiNewChat.java
+--- a/src/main/java/client/mixin/mixins/MixinGuiNewChat.java	
++++ b/src/main/java/client/mixin/mixins/MixinGuiNewChat.java	
+@@ -16,7 +16,7 @@
+ 
+ import java.util.List;
+ 
+-@Mixin(value={GuiNewChat.class}, priority = 999999999)
++@Mixin(value={GuiNewChat.class})
+ public class MixinGuiNewChat
+         extends Gui {
+     @Shadow
+Index: src/main/java/client/mixin/mixins/MixinEntityPlayerSP.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package client.mixin.mixins;\r\n\r\nimport client.events.*;\r\nimport client.modules.movement.Strafe;\r\nimport net.minecraft.client.Minecraft;\r\nimport net.minecraft.client.entity.AbstractClientPlayer;\r\nimport net.minecraft.client.entity.EntityPlayerSP;\r\nimport net.minecraft.client.network.NetHandlerPlayClient;\r\nimport net.minecraft.entity.MoverType;\r\nimport net.minecraft.stats.RecipeBook;\r\nimport net.minecraft.stats.StatisticsManager;\r\nimport net.minecraft.util.math.AxisAlignedBB;\r\nimport net.minecraft.world.World;\r\nimport net.minecraftforge.common.MinecraftForge;\r\nimport org.spongepowered.asm.mixin.Mixin;\r\nimport org.spongepowered.asm.mixin.injection.At;\r\nimport org.spongepowered.asm.mixin.injection.Inject;\r\nimport org.spongepowered.asm.mixin.injection.Redirect;\r\nimport org.spongepowered.asm.mixin.injection.callback.CallbackInfo;\r\nimport org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;\r\n\r\n\r\n@Mixin(value = {EntityPlayerSP.class}, priority = 999999999)\r\npublic abstract class MixinEntityPlayerSP\r\n        extends AbstractClientPlayer {\r\n    public MixinEntityPlayerSP(Minecraft p_i47378_1_, World p_i47378_2_, NetHandlerPlayClient p_i47378_3_, StatisticsManager p_i47378_4_, RecipeBook p_i47378_5_) {\r\n        super(p_i47378_2_, p_i47378_3_.getGameProfile());\r\n    }\r\n    @Redirect(method={\"onUpdateWalkingPlayer\"}, at=@At(value=\"FIELD\", target=\"net/minecraft/util/math/AxisAlignedBB.minY:D\"))\r\n    private double minYHook(AxisAlignedBB bb) {\r\n        if (Strafe.getInstance().isOn() && Strafe.getInstance().changeY && Strafe.getInstance().mode.getCurrentState() == Strafe.Mode.INSTANT) {\r\n            Strafe.getInstance().changeY = false;\r\n            return Strafe.getInstance().minY;\r\n        }\r\n        return bb.minY;\r\n    }\r\n\r\n    @Inject(method = { \"pushOutOfBlocks\" }, at = { @At(\"HEAD\") }, cancellable = true)\r\n    private void pushOutOfBlocksHook(final double x, final double y, final double z, final CallbackInfoReturnable<Boolean> info) {\r\n        final PushEvent event = new PushEvent(1);\r\n        MinecraftForge.EVENT_BUS.post(event);\r\n        if (event.isCanceled()) {\r\n            info.setReturnValue(false);\r\n        }\r\n    }\r\n\r\n        @Inject(method = {\"sendChatMessage\"}, at = {@At(value = \"HEAD\")}, cancellable = true)\r\n        public void sendChatMessage(String message, CallbackInfo callback) {\r\n            final ChatEvent event = new ChatEvent(message);\r\n            MinecraftForge.EVENT_BUS.post(event);\r\n        }\r\n\r\n    @Inject(method = {\"onUpdateWalkingPlayer\"}, at = {@At(value = \"HEAD\")})\r\n    private void preMotion(CallbackInfo info) {\r\n        UpdateWalkingPlayerEvent event = new UpdateWalkingPlayerEvent(0);\r\n        MinecraftForge.EVENT_BUS.post(event);\r\n    }\r\n\r\n    @Inject(method = {\"onUpdateWalkingPlayer\"}, at = {@At(value = \"RETURN\")}, cancellable = true)\r\n    private void postMotion(CallbackInfo info) {\r\n        UpdateWalkingPlayerEvent event = new UpdateWalkingPlayerEvent(1);\r\n        MinecraftForge.EVENT_BUS.post(event);\r\n        if (event.isCanceled()) {\r\n            info.cancel();\r\n        }\r\n    }\r\n    @Redirect(method={\"onLivingUpdate\"}, at=@At(value=\"INVOKE\", target=\"Lnet/minecraft/client/entity/EntityPlayerSP;setSprinting(Z)V\", ordinal=2))\r\n    public void onLivingUpdate(EntityPlayerSP entityPlayerSP, boolean sprinting) {\r\n        entityPlayerSP.setSprinting(sprinting);\r\n    }\r\n\r\n    public void move(MoverType type, double x, double y, double z) {\r\n        WalkEvent event = new WalkEvent(x, y, z);\r\n        MinecraftForge.EVENT_BUS.post(event);\r\n        super.move(type, event.getMotionX(), event.getMotionY(), event.getMotionZ());\r\n    }\r\n\r\n    @Inject(method=\"move\", at=@At(value=\"HEAD\"), cancellable = true)\r\n    public void move(MoverType type, double x, double y, double z, CallbackInfo ci){\r\n        MoveEvent event = new MoveEvent(0, type, x, y, z);\r\n        MinecraftForge.EVENT_BUS.post(event);\r\n        if (event.getX() != x || event.getY() != y || event.getZ() != z){\r\n            super.move(type, event.getX(), event.getY(), event.getZ());\r\n            ci.cancel();\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/client/mixin/mixins/MixinEntityPlayerSP.java b/src/main/java/client/mixin/mixins/MixinEntityPlayerSP.java
+--- a/src/main/java/client/mixin/mixins/MixinEntityPlayerSP.java	
++++ b/src/main/java/client/mixin/mixins/MixinEntityPlayerSP.java	
+@@ -20,7 +20,7 @@
+ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+ 
+ 
+-@Mixin(value = {EntityPlayerSP.class}, priority = 999999999)
++@Mixin(value = {EntityPlayerSP.class})
+ public abstract class MixinEntityPlayerSP
+         extends AbstractClientPlayer {
+     public MixinEntityPlayerSP(Minecraft p_i47378_1_, World p_i47378_2_, NetHandlerPlayClient p_i47378_3_, StatisticsManager p_i47378_4_, RecipeBook p_i47378_5_) {
+Index: src/main/java/client/modules/visual/PopChams.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/client/modules/visual/PopChams.java b/src/main/java/client/modules/visual/PopChams.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/client/modules/visual/PopChams.java	
+@@ -0,0 +1,124 @@
++package client.modules.visual;
++
++import client.Client;
++import client.events.TotemPopEvent;
++import client.gui.impl.setting.Setting;
++import client.modules.Module;
++import client.util.ColorUtil;
++import net.minecraft.client.Minecraft;
++import net.minecraft.client.entity.EntityOtherPlayerMP;
++import net.minecraft.client.renderer.GlStateManager;
++import net.minecraft.client.renderer.OpenGlHelper;
++import net.minecraft.entity.Entity;
++import net.minecraft.entity.player.EntityPlayer;
++import net.minecraftforge.client.event.RenderWorldLastEvent;
++import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
++import org.lwjgl.opengl.GL11;
++
++import java.awt.*;
++import java.util.HashMap;
++import java.util.Map;
++
++import static org.lwjgl.opengl.GL11.glEnable;
++
++public class PopChams extends Module {
++    private static PopChams INSTANCE = new PopChams();
++
++    //from notorious(added fade)
++
++    public Setting<Integer> red = register(new Setting<>("Red", 255, 0, 255));
++    public Setting<Integer> green = register(new Setting<>("Green", 255, 0, 255));
++    public Setting<Integer> blue = register(new Setting<>("Blue", 255, 0, 255));
++    public final Setting<Float> alpha = register(new Setting<>("Alpha", 50.0f, 0.1f, 255.0f));
++    public final Setting<Float> fadeTime = register(new Setting<>("FadeTime", 300.0f, 1.0f, 3000.0f));
++
++    public PopChams() {
++        super("PopChams", "popchangs.", Category.VISUAL);
++        setInstance();
++    }
++
++    public static PopChams getInstance() {
++        if (INSTANCE == null) {
++            INSTANCE = new PopChams();
++        }
++        return INSTANCE;
++    }
++
++
++    private final HashMap<EntityOtherPlayerMP, Long> popFakePlayerMap = new HashMap();
++
++    final float progress = (1 - ((System.currentTimeMillis()) / fadeTime.getCurrentState().floatValue())) ;
++
++    private void setInstance() {
++        INSTANCE = this;
++    }
++
++    @SubscribeEvent
++    public void onRenderLast(RenderWorldLastEvent event) {
++        for (Map.Entry<EntityOtherPlayerMP, Long> entry : new HashMap<EntityOtherPlayerMP, Long>(this.popFakePlayerMap).entrySet()) {
++            if (System.currentTimeMillis() - entry.getValue() > (long) this.fadeTime.getCurrentState().longValue()) {
++                this.popFakePlayerMap.remove(entry.getKey());
++                continue;
++            }
++            GlStateManager.pushMatrix();
++            GL11.glPushAttrib(1048575);
++            GL11.glPolygonMode(1032, 6913);
++            GL11.glDisable(3553);
++            GL11.glDisable(2896);
++            GL11.glDisable(2929);
++            glEnable(2848);
++            glEnable(3042);
++            GL11.glBlendFunc(770, 771);
++            GL11.glLineWidth(1);
++            this.renderEntity(entry.getKey(), event.getPartialTicks(), false);
++            glEnable(2896);
++            GlStateManager.popAttrib();
++            GlStateManager.popMatrix();
++        }
++    }
++
++    @SubscribeEvent
++    public void onTotemPopEvent(TotemPopEvent event) {
++        Entity entity;
++        if (mc.world.getEntityByID(event.getEntity().entityId) != null && (entity = mc.world.getEntityByID(event.getEntity().entityId)) instanceof EntityPlayer) {
++            EntityPlayer player = (EntityPlayer)entity;
++            EntityOtherPlayerMP fakeEntity = new EntityOtherPlayerMP(mc.world, player.getGameProfile());
++            fakeEntity.copyLocationAndAnglesFrom(player);
++            fakeEntity.rotationYawHead = player.rotationYawHead;
++            fakeEntity.prevRotationYawHead = player.rotationYawHead;
++            fakeEntity.rotationYaw = player.rotationYaw;
++            fakeEntity.prevRotationYaw = player.rotationYaw;
++            fakeEntity.rotationPitch = player.rotationPitch;
++            fakeEntity.prevRotationPitch = player.rotationPitch;
++            fakeEntity.cameraYaw = fakeEntity.rotationYaw;
++            fakeEntity.cameraPitch = fakeEntity.rotationPitch;
++            this.popFakePlayerMap.put(fakeEntity, System.currentTimeMillis());
++        }
++    }
++
++    public void renderEntity(Entity entityIn, float partialTicks, boolean p_188388_3_) {
++        if (entityIn.ticksExisted == 0) {
++            entityIn.lastTickPosX = entityIn.posX;
++            entityIn.lastTickPosY = entityIn.posY;
++            entityIn.lastTickPosZ = entityIn.posZ;
++        }
++        double d0 = entityIn.lastTickPosX + (entityIn.posX - entityIn.lastTickPosX) * (double) partialTicks;
++        double d1 = entityIn.lastTickPosY + (entityIn.posY - entityIn.lastTickPosY) * (double) partialTicks;
++        double d2 = entityIn.lastTickPosZ + (entityIn.posZ - entityIn.lastTickPosZ) * (double) partialTicks;
++        float f = entityIn.prevRotationYaw + (entityIn.rotationYaw - entityIn.prevRotationYaw) * partialTicks;
++        int i = entityIn.getBrightnessForRender();
++        if (entityIn.isBurning()) {
++            i = 0xF000F0;
++        }
++        int j = i % 65536;
++        int k = i / 65536;
++        OpenGlHelper.setLightmapTextureCoords((int) OpenGlHelper.lightmapTexUnit, (float) j, (float) k);
++        this.glColor();
++        mc.getRenderManager().renderEntity(entityIn, d0 - mc.getRenderManager().viewerPosX, d1 - mc.getRenderManager().viewerPosY, d2 - mc.getRenderManager().viewerPosZ, f, partialTicks, p_188388_3_);
++    }
++
++    private void glColor() {
++        GL11.glColor4f((float) red.getCurrentState() / 255.0f, (float) green.getCurrentState() / 255.0f, (float) blue.getCurrentState() / 255.0f, alpha.getCurrentState() - progress);
++    }
++}
++
+Index: src/main/java/client/gui/impl/setting/Setting.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package client.gui.impl.setting;\r\n\r\nimport client.events.ClientEvent;\r\nimport client.modules.Feature;\r\nimport net.minecraftforge.common.MinecraftForge;\r\n\r\nimport java.util.function.Predicate;\r\n\r\npublic class Setting<T> {\r\n    private final String name;\r\n    private final T defaultValue;\r\n    private T value;\r\n    private T plannedValue;\r\n    private T min;\r\n    private T max;\r\n    private boolean hasRestriction;\r\n    private Predicate<T> visibility;\r\n    private String description;\r\n    private Feature feature;\r\n\r\n    public Setting(String name, T defaultValue) {\r\n        this.name = name;\r\n        this.defaultValue = defaultValue;\r\n        this.value = defaultValue;\r\n        this.plannedValue = defaultValue;\r\n        this.description = \"\";\r\n    }\r\n\r\n    public Setting(String name, T defaultValue, String description) {\r\n        this.name = name;\r\n        this.defaultValue = defaultValue;\r\n        this.value = defaultValue;\r\n        this.plannedValue = defaultValue;\r\n        this.description = description;\r\n    }\r\n\r\n    public Setting(String name, T defaultValue, T min, T max, String description) {\r\n        this.name = name;\r\n        this.defaultValue = defaultValue;\r\n        this.value = defaultValue;\r\n        this.min = min;\r\n        this.max = max;\r\n        this.plannedValue = defaultValue;\r\n        this.description = description;\r\n        this.hasRestriction = true;\r\n    }\r\n\r\n    public Setting(String name, T defaultValue, T min, T max) {\r\n        this.name = name;\r\n        this.defaultValue = defaultValue;\r\n        this.value = defaultValue;\r\n        this.min = min;\r\n        this.max = max;\r\n        this.plannedValue = defaultValue;\r\n        this.description = \"\";\r\n        this.hasRestriction = true;\r\n    }\r\n\r\n    public Setting(String name, T defaultValue, T min, T max, Predicate<T> visibility, String description) {\r\n        this.name = name;\r\n        this.defaultValue = defaultValue;\r\n        this.value = defaultValue;\r\n        this.min = min;\r\n        this.max = max;\r\n        this.plannedValue = defaultValue;\r\n        this.visibility = visibility;\r\n        this.description = description;\r\n        this.hasRestriction = true;\r\n    }\r\n\r\n    public Setting(String name, T defaultValue, T min, T max, Predicate<T> visibility) {\r\n        this.name = name;\r\n        this.defaultValue = defaultValue;\r\n        this.value = defaultValue;\r\n        this.min = min;\r\n        this.max = max;\r\n        this.plannedValue = defaultValue;\r\n        this.visibility = visibility;\r\n        this.description = \"\";\r\n        this.hasRestriction = true;\r\n    }\r\n\r\n    public Setting(String name, T defaultValue, Predicate<T> visibility) {\r\n        this.name = name;\r\n        this.defaultValue = defaultValue;\r\n        this.value = defaultValue;\r\n        this.visibility = visibility;\r\n        this.plannedValue = defaultValue;\r\n    }\r\n\r\n    public String getName() {\r\n        return this.name;\r\n    }\r\n\r\n    public T getCurrentState() {\r\n        return this.value;\r\n    }\r\n\r\n    public void setValue(T value) {\r\n        this.setPlannedValue(value);\r\n        if (this.hasRestriction) {\r\n            if (((Number) this.min).floatValue() > ((Number) value).floatValue()) {\r\n                this.setPlannedValue(this.min);\r\n            }\r\n            if (((Number) this.max).floatValue() < ((Number) value).floatValue()) {\r\n                this.setPlannedValue(this.max);\r\n            }\r\n        }\r\n        ClientEvent event = new ClientEvent(this);\r\n        MinecraftForge.EVENT_BUS.post(event);\r\n        if (!event.isCanceled()) {\r\n            this.value = this.plannedValue;\r\n        } else {\r\n            this.plannedValue = this.value;\r\n        }\r\n    }\r\n\r\n    public T getPlannedValue() {\r\n        return this.plannedValue;\r\n    }\r\n\r\n    public void setPlannedValue(T value) {\r\n        this.plannedValue = value;\r\n    }\r\n\r\n    public T getMin() {\r\n        return this.min;\r\n    }\r\n\r\n    public void setMin(T min) {\r\n        this.min = min;\r\n    }\r\n\r\n    public T getMax() {\r\n        return this.max;\r\n    }\r\n\r\n    public void setMax(T max) {\r\n        this.max = max;\r\n    }\r\n\r\n    public void setValueNoEvent(T value) {\r\n        this.setPlannedValue(value);\r\n        if (this.hasRestriction) {\r\n            if (((Number) this.min).floatValue() > ((Number) value).floatValue()) {\r\n                this.setPlannedValue(this.min);\r\n            }\r\n            if (((Number) this.max).floatValue() < ((Number) value).floatValue()) {\r\n                this.setPlannedValue(this.max);\r\n            }\r\n        }\r\n        this.value = this.plannedValue;\r\n    }\r\n\r\n    public Feature getFeature() {\r\n        return this.feature;\r\n    }\r\n\r\n    public void setFeature(Feature feature) {\r\n        this.feature = feature;\r\n    }\r\n\r\n    public int getEnum(String input) {\r\n        for (int i = 0; i < this.value.getClass().getEnumConstants().length; ++i) {\r\n            Enum e = (Enum) this.value.getClass().getEnumConstants()[i];\r\n            if (!e.name().equalsIgnoreCase(input)) continue;\r\n            return i;\r\n        }\r\n        return -1;\r\n    }\r\n\r\n    public void setEnumValue(String value) {\r\n        for (Enum e : ((Enum) this.value).getClass().getEnumConstants()) {\r\n            if (!e.name().equalsIgnoreCase(value)) continue;\r\n            this.value = (T) e;\r\n        }\r\n    }\r\n\r\n    public String currentEnumName() {\r\n        return EnumConverter.getProperName((Enum) this.value);\r\n    }\r\n\r\n    public int currentEnum() {\r\n        return EnumConverter.currentEnum((Enum) this.value);\r\n    }\r\n\r\n    public void increaseEnum() {\r\n        this.plannedValue = (T) EnumConverter.increaseEnum((Enum) this.value);\r\n        ClientEvent event = new ClientEvent(this);\r\n        MinecraftForge.EVENT_BUS.post(event);\r\n        if (!event.isCanceled()) {\r\n            this.value = this.plannedValue;\r\n        } else {\r\n            this.plannedValue = this.value;\r\n        }\r\n    }\r\n\r\n    public void increaseEnumNoEvent() {\r\n        this.value = (T) EnumConverter.increaseEnum((Enum) this.value);\r\n    }\r\n\r\n    public String getType() {\r\n        if (this.isEnumSetting()) {\r\n            return \"Enum\";\r\n        }\r\n        return this.getClassName(this.defaultValue);\r\n    }\r\n\r\n    public <T> String getClassName(T value) {\r\n        return value.getClass().getSimpleName();\r\n    }\r\n\r\n    public String getDescription() {\r\n        if (this.description == null) {\r\n            return \"\";\r\n        }\r\n        return this.description;\r\n    }\r\n\r\n    public boolean isNumberSetting() {\r\n        return this.value instanceof Double || this.value instanceof Integer || this.value instanceof Short || this.value instanceof Long || this.value instanceof Float;\r\n    }\r\n\r\n    public boolean isEnumSetting() {\r\n        return !this.isNumberSetting() && !(this.value instanceof String) && !(this.value instanceof Bind) && !(this.value instanceof Character) && !(this.value instanceof Boolean);\r\n    }\r\n\r\n    public boolean isStringSetting() {\r\n        return this.value instanceof String;\r\n    }\r\n\r\n    public T getDefaultValue() {\r\n        return this.defaultValue;\r\n    }\r\n\r\n    public String getValueAsString() {\r\n        return this.value.toString();\r\n    }\r\n\r\n    public boolean hasRestriction() {\r\n        return this.hasRestriction;\r\n    }\r\n\r\n    public void setVisibility(Predicate<T> visibility) {\r\n        this.visibility = visibility;\r\n    }\r\n\r\n    public boolean isVisible() {\r\n        if (this.visibility == null) {\r\n            return true;\r\n        }\r\n        return this.visibility.test(this.getCurrentState());\r\n    }\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/client/gui/impl/setting/Setting.java b/src/main/java/client/gui/impl/setting/Setting.java
+--- a/src/main/java/client/gui/impl/setting/Setting.java	
++++ b/src/main/java/client/gui/impl/setting/Setting.java	
+@@ -251,5 +251,8 @@
+         }
+         return this.visibility.test(this.getCurrentState());
+     }
++    public T getValue() {
++        return this.getCurrentState();
++    }
+ }
+ 
+Index: src/main/java/client/mixin/mixins/MixinClientPlayer.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package client.mixin.mixins;\r\n\r\nimport client.modules.visual.PrestigeChams;\r\nimport net.minecraft.client.entity.AbstractClientPlayer;\r\nimport net.minecraft.client.network.NetworkPlayerInfo;\r\nimport net.minecraft.util.ResourceLocation;\r\nimport org.spongepowered.asm.mixin.Mixin;\r\nimport org.spongepowered.asm.mixin.Shadow;\r\nimport org.spongepowered.asm.mixin.injection.At;\r\nimport org.spongepowered.asm.mixin.injection.Inject;\r\nimport org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;\r\nimport javax.annotation.Nullable;\r\n\r\n@Mixin(value={AbstractClientPlayer.class}, priority = 999999999)\r\npublic abstract class MixinClientPlayer {\r\n    @Shadow\r\n    @Nullable\r\n    protected abstract NetworkPlayerInfo getPlayerInfo();\r\n\r\n    @Inject(method={\"getLocationSkin()Lnet/minecraft/util/ResourceLocation;\"}, at={@At(value=\"HEAD\")}, cancellable=true)\r\n    public void getLocationSkin(CallbackInfoReturnable<ResourceLocation> callbackInfoReturnable) {\r\n        if (PrestigeChams.getInstance().isEnabled() && PrestigeChams.getInstance().mode.getCurrentState() == PrestigeChams.Mode.ZPRESTIGE) {\r\n            callbackInfoReturnable.setReturnValue(new ResourceLocation(\"textures/prestigeskin.png\"));\r\n        } else if(PrestigeChams.getInstance().isEnabled() && PrestigeChams.getInstance().mode.getCurrentState() == PrestigeChams.Mode.IIV){\r\n            callbackInfoReturnable.setReturnValue(new ResourceLocation(\"textures/iiv.png\"));\r\n        }\r\n    }\r\n\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/client/mixin/mixins/MixinClientPlayer.java b/src/main/java/client/mixin/mixins/MixinClientPlayer.java
+--- a/src/main/java/client/mixin/mixins/MixinClientPlayer.java	
++++ b/src/main/java/client/mixin/mixins/MixinClientPlayer.java	
+@@ -11,7 +11,7 @@
+ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+ import javax.annotation.Nullable;
+ 
+-@Mixin(value={AbstractClientPlayer.class}, priority = 999999999)
++@Mixin(value={AbstractClientPlayer.class})
+ public abstract class MixinClientPlayer {
+     @Shadow
+     @Nullable
+Index: src/main/java/client/manager/ModuleManager.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package client.manager;\r\n\r\nimport client.events.Render2DEvent;\r\nimport client.events.Render3DEvent;\r\nimport client.gui.ClientGui;\r\nimport client.gui.impl.background.MenuToggler;\r\nimport client.modules.Feature;\r\nimport client.modules.Module;\r\nimport client.modules.client.*;\r\nimport client.modules.combat.*;\r\nimport client.modules.miscellaneous.*;\r\nimport client.modules.movement.*;\r\nimport client.modules.player.*;\r\nimport client.modules.visual.*;\r\nimport net.minecraftforge.common.MinecraftForge;\r\nimport org.lwjgl.input.Keyboard;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.Arrays;\r\nimport java.util.Comparator;\r\nimport java.util.List;\r\nimport java.util.stream.Collectors;\r\n\r\npublic class ModuleManager\r\n        extends Feature {\r\n    public ArrayList<Module> modules = new ArrayList();\r\n    public List<Module> sortedModules = new ArrayList<>();\r\n\r\n    public void init() {\r\n\r\n        //CLIENT\r\n        modules.add(new ClickGui());\r\n        modules.add(new FontMod());\r\n        modules.add(new Hud());\r\n        modules.add(new Notify());\r\n        modules.add(new RPC());\r\n        modules.add(new MenuToggler());\r\n\r\n        //COMBAT\r\n        modules.add(new AutoArmor());\r\n        modules.add(new Holefiller());\r\n        modules.add(new Offhand());\r\n        modules.add(new Surround());\r\n        modules.add(new AutoWeb());\r\n        modules.add(new Flatten());\r\n        modules.add(new AutoCrystal());\r\n        modules.add(new PistonAura());\r\n        modules.add(new AutoTrap());\r\n        modules.add(new Aura());\r\n        modules.add(new Criticals());\r\n        modules.add(new AntiCity());\r\n        modules.add(new ObiAssist());\r\n\r\n        //MISCELLANEOUS\r\n        modules.add(new FakePlayer());\r\n        modules.add(new AutoRespawn());\r\n        modules.add(new NoEntityTrace());\r\n        modules.add(new MCFriends());\r\n        modules.add(new Spammer());\r\n        modules.add(new TotemPopCounter());\r\n        modules.add(new ChatModifications());\r\n        modules.add(new PingSpoofer());\r\n        modules.add(new TabTweaks());\r\n        modules.add(new MiddleClickPearl());\r\n        modules.add(new ChorusPredict());\r\n        modules.add(new NoBreakAnimation());\r\n\r\n        //MOVEMENT\r\n        modules.add(new ReverseStep());\r\n        modules.add(new Sprint());\r\n        modules.add(new YPort());\r\n        modules.add(new Step());\r\n        modules.add(new Phase());\r\n        modules.add(new Velocity());\r\n        modules.add(new NoSlow());\r\n        modules.add(new ElytraFlight());\r\n        modules.add(new Jesus());\r\n        modules.add(new Strafe());\r\n        modules.add(new NoFall());\r\n        modules.add(new FastSwim());\r\n\r\n        //PLAYER\r\n        modules.add(new KeyEXP());\r\n        modules.add(new Burrow());\r\n        modules.add(new FastPlace());\r\n        modules.add(new HotbarRefill());\r\n        modules.add(new Quiver());\r\n        modules.add(new Speedmine());\r\n        modules.add(new AutoEnderChest());\r\n        modules.add(new Interactions());\r\n        modules.add(new Freecam());\r\n        modules.add(new AntiRotate());\r\n        modules.add(new Blink());\r\n        modules.add(new XCarry());\r\n\r\n        //VISUAL\r\n        modules.add(new CrystalChanger());\r\n        modules.add(new BurrowESP());\r\n        modules.add(new ThirdPerson());\r\n        modules.add(new Viewmodel());\r\n        modules.add(new SwingAnimations());\r\n        modules.add(new ShulkerViewer());\r\n        modules.add(new PearlRender());\r\n        modules.add(new PrestigeChams());\r\n        modules.add(new NameTags());\r\n        modules.add(new CityESP());\r\n        modules.add(new ESP());\r\n        modules.add(new Chams());\r\n        modules.add(new ViewTweaks());\r\n\r\n    }\r\n\r\n    public Module getModuleByName(String name) {\r\n        for (Module module : this.modules) {\r\n            if (!module.getName().equalsIgnoreCase(name)) continue;\r\n            return module;\r\n        }\r\n        return null;\r\n    }\r\n\r\n    public <T extends Module> T getModuleByClass(Class<T> clazz) {\r\n        for (Module module : this.modules) {\r\n            if (!clazz.isInstance(module)) continue;\r\n            return (T) module;\r\n        }\r\n        return null;\r\n    }\r\n\r\n    public boolean isModuleEnabled(String name) {\r\n        Module module = this.getModuleByName(name);\r\n        return module != null && module.isOn();\r\n    }\r\n\r\n    public Module getModuleByDisplayName(String displayName) {\r\n        for (Module module : this.modules) {\r\n            if (!module.getDisplayName().equalsIgnoreCase(displayName)) continue;\r\n            return module;\r\n        }\r\n        return null;\r\n    }\r\n\r\n    public ArrayList<Module> getEnabledModules() {\r\n        ArrayList<Module> enabledModules = new ArrayList <> ( );\r\n        for (Module module : this.modules) {\r\n            if (!module.isEnabled()) continue;\r\n            enabledModules.add(module);\r\n        }\r\n        return enabledModules;\r\n    }\r\n    public ArrayList<Module> getModulesByCategory(Module.Category category) {\r\n        ArrayList<Module> modulesCategory = new ArrayList <> ( );\r\n        this.modules.forEach(module -> {\r\n            if (module.getCategory() == category) {\r\n                modulesCategory.add(module);\r\n            }\r\n        });\r\n        return modulesCategory;\r\n    }\r\n\r\n    public List<Module.Category> getCategories() {\r\n        return Arrays.asList(Module.Category.values());\r\n    }\r\n\r\n    public void onLoad() {\r\n        this.modules.forEach(Module::onLoad);\r\n    }\r\n\r\n    public void onUpdate() {\r\n        this.modules.stream().filter(Feature::isEnabled).forEach(Module::onUpdate);\r\n    }\r\n\r\n    public void onTick() {\r\n        this.modules.stream().filter(Feature::isEnabled).forEach(Module::onTick);\r\n    }\r\n\r\n    public void onRender2D(Render2DEvent event) {\r\n        this.modules.stream().filter(Feature::isEnabled).forEach(module -> module.onRender2D(event));\r\n    }\r\n\r\n    public void onRender3D(Render3DEvent event) {\r\n        this.modules.stream().filter(Feature::isEnabled).forEach(module -> module.onRender3D(event));\r\n    }\r\n\r\n    public void sortModules(boolean reverse) {\r\n        this.sortedModules = this.getEnabledModules().stream().filter(Module::isDrawn).sorted(Comparator.comparing(module -> this.renderer.getStringWidth(module.getFullArrayString()) * (reverse ? -1 : 1))).collect(Collectors.toList());\r\n    }\r\n\r\n    public void onLogout() {\r\n        this.modules.forEach(Module::onLogout);\r\n    }\r\n\r\n    public void onLogin() {\r\n        this.modules.forEach(Module::onLogin);\r\n    }\r\n\r\n    public void onUnload() {\r\n        this.modules.forEach(MinecraftForge.EVENT_BUS::unregister);\r\n        this.modules.forEach(Module::onUnload);\r\n    }\r\n\r\n    public void onUnloadPost() {\r\n        for (Module module : this.modules) {\r\n            module.enabled.setValue(false);\r\n        }\r\n    }\r\n\r\n    public void onKeyPressed(int eventKey) {\r\n        if (eventKey == 0 || !Keyboard.getEventKeyState() || ModuleManager.mc.currentScreen instanceof ClientGui) {\r\n            return;\r\n        }\r\n        this.modules.forEach(module -> {\r\n            if (module.getBind().getKey() == eventKey) {\r\n                module.toggle();\r\n            }\r\n        });\r\n    }\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/client/manager/ModuleManager.java b/src/main/java/client/manager/ModuleManager.java
+--- a/src/main/java/client/manager/ModuleManager.java	
++++ b/src/main/java/client/manager/ModuleManager.java	
+@@ -107,6 +107,7 @@
+         modules.add(new ESP());
+         modules.add(new Chams());
+         modules.add(new ViewTweaks());
++        modules.add(new PopChams());
+ 
+     }
+ 

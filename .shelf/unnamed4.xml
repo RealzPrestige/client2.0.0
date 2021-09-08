@@ -1,0 +1,9 @@
+<changelist name="unnamed4" date="1630745876998" recycled="false">
+  <option name="PATH" value="$PROJECT_DIR$/.shelf/unnamed4/shelved.patch" />
+  <option name="DESCRIPTION" value="" />
+  <binary>
+    <option name="BEFORE_PATH" value=".gradle/minecraft/forge-1.12.2-14.23.5.2768-PROJECT(client)-patched.jar" />
+    <option name="AFTER_PATH" value=".gradle/minecraft/forge-1.12.2-14.23.5.2768-PROJECT(client)-patched.jar" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.shelf/unnamed4/forge-1.12.2-14.23.5.2768-PROJECT(client)-patched.jar" />
+  </binary>
+</changelist>

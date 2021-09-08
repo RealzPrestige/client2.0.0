@@ -1,0 +1,367 @@
+Index: src/main/java/client/mixin/mixins/MixinRenderLivingBase.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package client.mixin.mixins;\r\n\r\nimport client.Client;\r\nimport client.modules.visual.Chams;\r\nimport client.util.ColorUtil;\r\nimport client.util.Util;\r\nimport net.minecraft.client.Minecraft;\r\nimport net.minecraft.client.model.ModelBase;\r\nimport net.minecraft.client.renderer.GlStateManager;\r\nimport net.minecraft.client.renderer.OpenGlHelper;\r\nimport net.minecraft.client.renderer.entity.Render;\r\nimport net.minecraft.client.renderer.entity.RenderLivingBase;\r\nimport net.minecraft.client.renderer.entity.RenderManager;\r\nimport net.minecraft.entity.EntityLivingBase;\r\nimport net.minecraft.entity.player.EntityPlayer;\r\nimport net.minecraft.util.math.MathHelper;\r\nimport net.minecraftforge.client.event.RenderLivingEvent;\r\nimport net.minecraftforge.common.MinecraftForge;\r\nimport org.lwjgl.opengl.GL11;\r\nimport org.spongepowered.asm.mixin.Mixin;\r\nimport org.spongepowered.asm.mixin.Overwrite;\r\nimport org.spongepowered.asm.mixin.Shadow;\r\n\r\nimport static org.lwjgl.opengl.GL11.GL_LIGHTING;\r\nimport static org.lwjgl.opengl.GL11.glEnable;\r\n\r\n@Mixin(value = {RenderLivingBase.class}, priority=0x7FFFFFFE)\r\npublic abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends Render<T> {\r\n\r\n    @Shadow\r\n    protected ModelBase mainModel;\r\n    @Shadow\r\n    protected boolean renderMarker;\r\n\r\n    float red;\r\n\r\n    float green;\r\n\r\n    float blue;\r\n\r\n    float outlinered;\r\n\r\n    float outlinegreen;\r\n\r\n    float outlineblue;\r\n    protected MixinRenderLivingBase(RenderManager renderManager) {\r\n        super(renderManager);\r\n        this.red = 0.0F;\r\n        this.green = 0.0F;\r\n        this.blue = 0.0F;\r\n        this.outlinered = 0.0F;\r\n        this.outlinegreen = 0.0F;\r\n        this.outlineblue = 0.0F;\r\n    }\r\n\r\n    @Overwrite\r\n    public void doRender(T entity, double x, double y, double z, float entityYaw, float partialTicks) {\r\n        if (!MinecraftForge.EVENT_BUS.post(new RenderLivingEvent.Pre(entity, RenderLivingBase.class.cast(this), partialTicks, x, y, z))) {\r\n            GlStateManager.pushMatrix();\r\n            GlStateManager.disableCull();\r\n            this.mainModel.swingProgress = getSwingProgress(entity, partialTicks);\r\n            boolean shouldSit = (entity.isRiding() && entity.getRidingEntity() != null && entity.getRidingEntity().shouldRiderSit());\r\n            this.mainModel.isRiding = shouldSit;\r\n            this.mainModel.isChild = entity.isChild();\r\n            try {\r\n                float f = interpolateRotation(entity.prevRenderYawOffset, entity.renderYawOffset, partialTicks);\r\n                float f1 = interpolateRotation(entity.prevRotationYawHead, entity.rotationYawHead, partialTicks);\r\n                float f2 = f1 - f;\r\n                if (shouldSit && entity.getRidingEntity() instanceof EntityLivingBase) {\r\n                    EntityLivingBase entitylivingbase = (EntityLivingBase) entity.getRidingEntity();\r\n                    f = interpolateRotation(entitylivingbase.prevRenderYawOffset, entitylivingbase.renderYawOffset, partialTicks);\r\n                    f2 = f1 - f;\r\n                    float f3 = MathHelper.wrapDegrees(f2);\r\n                    if (f3 < -85.0F)\r\n                        f3 = -85.0F;\r\n                    if (f3 >= 85.0F)\r\n                        f3 = 85.0F;\r\n                    f = f1 - f3;\r\n                    if (f3 * f3 > 2500.0F)\r\n                        f += f3 * 0.2F;\r\n                    f2 = f1 - f;\r\n                }\r\n                float f7 = entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks;\r\n                renderLivingAt(entity, x, y, z);\r\n                float f8 = handleRotationFloat(entity, partialTicks);\r\n                applyRotations(entity, f8, f, partialTicks);\r\n                float f4 = prepareScale(entity, partialTicks);\r\n                float f5 = 0.0F;\r\n                float f6 = 0.0F;\r\n                if (!entity.isRiding()) {\r\n                    f5 = entity.prevLimbSwingAmount + (entity.limbSwingAmount - entity.prevLimbSwingAmount) * partialTicks;\r\n                    f6 = entity.limbSwing - entity.limbSwingAmount * (1.0F - partialTicks);\r\n                    if (entity.isChild())\r\n                        f6 *= 3.0F;\r\n                    if (f5 > 1.0F)\r\n                        f5 = 1.0F;\r\n                    f2 = f1 - f;\r\n                }\r\n                GlStateManager.enableAlpha();\r\n                this.mainModel.setLivingAnimations(entity, f6, f5, partialTicks);\r\n                this.mainModel.setRotationAngles(f6, f5, f8, f2, f7, f4, entity);\r\n                if (this.renderOutlines) {\r\n                    boolean flag1 = setScoreTeamColor(entity);\r\n                    GlStateManager.enableColorMaterial();\r\n                    GlStateManager.enableOutlineMode(getTeamColor(entity));\r\n                    if (!this.renderMarker)\r\n                        renderModel(entity, f6, f5, f8, f2, f7, f4);\r\n                    if (!(entity instanceof EntityPlayer) || !((EntityPlayer) entity).isSpectator())\r\n                        renderLayers(entity, f6, f5, partialTicks, f8, f2, f7, f4);\r\n                    GlStateManager.disableOutlineMode();\r\n                    GlStateManager.disableColorMaterial();\r\n                    if (flag1)\r\n                        unsetScoreTeamColor();\r\n                } else {\r\n\r\n\r\n\r\n                    if (Chams.getInstance().isOn() && entity instanceof EntityPlayer && ((Chams.getInstance()).mode.getCurrentState().equals(Chams.Mode.SOLID) || (Chams.getInstance()).mode.getCurrentState().equals(Chams.Mode.BOTH))) {\r\n                        this.red = (Chams.getInstance()).red.getCurrentState() / 255.0F;\r\n                        this.green = (Chams.getInstance()).green.getCurrentState() / 255.0F;\r\n                        this.blue = (Chams.getInstance()).blue.getCurrentState() / 255.0F;\r\n                        GlStateManager.pushMatrix();\r\n                        GL11.glPushAttrib(1048575);\r\n                        GL11.glDisable(3553);\r\n                        GL11.glDisable(2896);\r\n                        glEnable(2848);\r\n                        glEnable(3042);\r\n                        GL11.glBlendFunc(770, 771);\r\n                        GL11.glDisable(2929);\r\n                        GL11.glDepthMask(false);\r\n                        if (Client.friendManager.isFriend(entity.getName()) || entity == (Minecraft.getMinecraft()).player) {\r\n                            GL11.glColor4f(0.0F, 191.0F, 255.0F, (Chams.getInstance()).alpha.getCurrentState() / 255.0F);\r\n                        } else {\r\n                            GL11.glColor4f((Chams.getInstance()).rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).rainbowHue.getCurrentState()).getRed() / 255.0F) : this.red, (Chams.getInstance()).rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).rainbowHue.getCurrentState()).getGreen() / 255.0F) : this.green, (Chams.getInstance()).rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).rainbowHue.getCurrentState()).getBlue() / 255.0F) : this.blue, (Chams.getInstance()).alpha.getCurrentState() / 255.0F);\r\n                        }\r\n                        renderModel(entity, f6, f5, f8, f2, f7, f4);\r\n                        GL11.glDisable(2896);\r\n                        glEnable(2929);\r\n                        GL11.glDepthMask(true);\r\n                        if (Client.friendManager.isFriend(entity.getName()) || entity == (Minecraft.getMinecraft()).player) {\r\n                            GL11.glColor4f(0.0F, 191.0F, 255.0F, (Chams.getInstance()).alpha.getCurrentState() / 255.0F);\r\n                        } else {\r\n                            GL11.glColor4f((Chams.getInstance()).rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).rainbowHue.getCurrentState()).getRed() / 255.0F) : this.red, (Chams.getInstance()).rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).rainbowHue.getCurrentState()).getGreen() / 255.0F) : this.green, (Chams.getInstance()).rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).rainbowHue.getCurrentState()).getBlue() / 255.0F) : this.blue, (Chams.getInstance()).alpha.getCurrentState() / 255.0F);\r\n                        }\r\n                        renderModel(entity, f6, f5, f8, f2, f7, f4);\r\n                        glEnable(2896);\r\n                        GlStateManager.popAttrib();\r\n                        GlStateManager.popMatrix();\r\n                    }\r\n\r\n\r\n\r\n                    boolean flag1 = setDoRenderBrightness(entity, partialTicks);\r\n                    if (entity instanceof EntityPlayer && Chams.getInstance().isOff()) {\r\n                        renderModel(entity, f6, f5, f8, f2, f7, f4);\r\n                    }\r\n                    if (flag1)\r\n                        unsetBrightness();\r\n                    GlStateManager.depthMask(true);\r\n                    if (!(entity instanceof EntityPlayer) || !((EntityPlayer) entity).isSpectator())\r\n                        renderLayers(entity, f6, f5, partialTicks, f8, f2, f7, f4);\r\n                    if (Chams.getInstance().isOn() && entity instanceof EntityPlayer && ((Chams.getInstance()).mode.getCurrentState().equals(Chams.Mode.WIREFRAME) || (Chams.getInstance()).mode.getCurrentState().equals(Chams.Mode.BOTH))) {\r\n                        this.outlinered = (Chams.getInstance()).o_red.getCurrentState() / 255.0F;\r\n                        this.outlinegreen = (Chams.getInstance()).o_green.getCurrentState() / 255.0F;\r\n                        this.outlineblue = (Chams.getInstance()).o_blue.getCurrentState() / 255.0F;\r\n                        GlStateManager.pushMatrix();\r\n                        GL11.glPushAttrib(1048575);\r\n                        GL11.glPolygonMode(1032, 6913);\r\n                        GL11.glDisable(3553);\r\n                        GL11.glDisable(2896);\r\n                        GL11.glDisable(2929);\r\n                        glEnable(2848);\r\n                        glEnable(3042);\r\n                        GL11.glBlendFunc(770, 771);\r\n                        if (Client.friendManager.isFriend(entity.getName()) || entity == (Minecraft.getMinecraft()).player) {\r\n                            GL11.glColor4f(0.0F, 191.0F, 255.0F, (Chams.getInstance()).o_alpha.getCurrentState() / 255.0F);\r\n                        } else {\r\n                            GL11.glColor4f((Chams.getInstance()).o_rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).o_rainbowHue.getCurrentState()).getRed() / 255.0F) : this.outlinered, (Chams.getInstance()).o_rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).o_rainbowHue.getCurrentState()).getGreen() / 255.0F) : outlinegreen, (Chams.getInstance()).o_rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).o_rainbowHue.getCurrentState()).getBlue() / 255.0F) : outlineblue, (Chams.getInstance()).o_alpha.getCurrentState() / 255.0F);\r\n                        }\r\n                        GL11.glLineWidth((Chams.getInstance()).lineWidth.getCurrentState());\r\n                        renderModel(entity, f6, f5, f8, f2, f7, f4);\r\n                        glEnable(2896);\r\n                        GlStateManager.popAttrib();\r\n                        GlStateManager.popMatrix();\r\n                    }\r\n                }\r\n                GlStateManager.disableRescaleNormal();\r\n            } catch (Exception ignored) {\r\n            }\r\n            GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit);\r\n            GlStateManager.enableTexture2D();\r\n            GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);\r\n            GlStateManager.enableCull();\r\n            GlStateManager.popMatrix();\r\n            super.doRender(entity, x, y, z, entityYaw, partialTicks);\r\n            MinecraftForge.EVENT_BUS.post(new RenderLivingEvent.Post(entity, RenderLivingBase.class.cast(this), partialTicks, x, y, z));\r\n        }\r\n        if (Chams.getInstance().animationDisabler.getCurrentState()) {\r\n            if(Chams.getInstance().limbSwing.getCurrentState()) {\r\n                entity.limbSwing = 0;\r\n                entity.limbSwingAmount = 0;\r\n            }\r\n            if(Chams.getInstance().rotationPitch.getCurrentState()) {\r\n                entity.rotationPitch = 0;\r\n            }\r\n            if(Chams.getInstance().rotationYaw.getCurrentState() && !entity.getName().equals(Util.mc.getSession().getUsername())) {\r\n                entity.rotationYaw = 0;\r\n            }\r\n            if(Chams.getInstance().rotationYawHead.getCurrentState()) {\r\n                entity.rotationYawHead = 0;\r\n            }\r\n            if(Chams.getInstance().swingProgress.getCurrentState()) {\r\n                entity.swingProgressInt = 0;\r\n\r\n                entity.swingProgress = 0;\r\n            }\r\n            if(Chams.getInstance().cameraPitch.getCurrentState()) {\r\n                entity.cameraPitch = 0;\r\n            }\r\n        }\r\n    }\r\n\r\n    @Shadow\r\n    protected abstract boolean isVisible(EntityLivingBase paramEntityLivingBase);\r\n\r\n    @Shadow\r\n    protected abstract float getSwingProgress(T paramT, float paramFloat);\r\n\r\n    @Shadow\r\n    protected abstract float interpolateRotation(float paramFloat1, float paramFloat2, float paramFloat3);\r\n\r\n    @Shadow\r\n    protected abstract float handleRotationFloat(T paramT, float paramFloat);\r\n\r\n    @Shadow\r\n    protected abstract void applyRotations(T paramT, float paramFloat1, float paramFloat2, float paramFloat3);\r\n\r\n    @Shadow\r\n    public abstract float prepareScale(T paramT, float paramFloat);\r\n\r\n    @Shadow\r\n    protected abstract void unsetScoreTeamColor();\r\n\r\n    @Shadow\r\n    protected abstract boolean setScoreTeamColor(T paramT);\r\n\r\n    @Shadow\r\n    protected abstract void renderLivingAt(T paramT, double paramDouble1, double paramDouble2, double paramDouble3);\r\n\r\n    @Shadow\r\n    protected abstract void unsetBrightness();\r\n\r\n    @Shadow\r\n    protected abstract void renderModel(T paramT, float paramFloat1, float paramFloat2, float paramFloat3, float paramFloat4, float paramFloat5, float paramFloat6);\r\n\r\n    @Shadow\r\n    protected abstract void renderLayers(T paramT, float paramFloat1, float paramFloat2, float paramFloat3, float paramFloat4, float paramFloat5, float paramFloat6, float paramFloat7);\r\n\r\n    @Shadow\r\n    protected abstract boolean setDoRenderBrightness(T paramT, float paramFloat);\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/client/mixin/mixins/MixinRenderLivingBase.java b/src/main/java/client/mixin/mixins/MixinRenderLivingBase.java
+--- a/src/main/java/client/mixin/mixins/MixinRenderLivingBase.java	(revision 5dd5b38e461b5a3acf378b15d8d524a34797855b)
++++ b/src/main/java/client/mixin/mixins/MixinRenderLivingBase.java	(date 1630829099192)
+@@ -2,6 +2,7 @@
+ 
+ import client.Client;
+ import client.modules.visual.Chams;
++import client.modules.visual.PopChams;
+ import client.util.ColorUtil;
+ import client.util.Util;
+ import net.minecraft.client.Minecraft;
+Index: ../../.idea/vcs.xml
+===================================================================
+diff --git a/../../.idea/vcs.xml b/../../.idea/vcs.xml
+deleted file mode 100644
+--- a/../../.idea/vcs.xml	(revision 5dd5b38e461b5a3acf378b15d8d524a34797855b)
++++ /dev/null	(revision 5dd5b38e461b5a3acf378b15d8d524a34797855b)
+@@ -1,6 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="VcsDirectoryMappings">
+-    <mapping directory="" vcs="Git" />
+-  </component>
+-</project>
+\ No newline at end of file
+Index: ../../.idea/gradle.xml
+===================================================================
+diff --git a/../../.idea/gradle.xml b/../../.idea/gradle.xml
+deleted file mode 100644
+--- a/../../.idea/gradle.xml	(revision 5dd5b38e461b5a3acf378b15d8d524a34797855b)
++++ /dev/null	(revision 5dd5b38e461b5a3acf378b15d8d524a34797855b)
+@@ -1,18 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="GradleMigrationSettings" migrationVersion="1" />
+-  <component name="GradleSettings">
+-    <option name="linkedExternalProjectsSettings">
+-      <GradleProjectSettings>
+-        <option name="distributionType" value="DEFAULT_WRAPPED" />
+-        <option name="externalProjectPath" value="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0" />
+-        <option name="gradleJvm" value="1.8" />
+-        <option name="modules">
+-          <set>
+-            <option value="$PROJECT_DIR$/Client-2.0.0-github/Client-2.0.0" />
+-          </set>
+-        </option>
+-      </GradleProjectSettings>
+-    </option>
+-  </component>
+-</project>
+\ No newline at end of file
+Index: ../../.idea/clientgithub.iml
+===================================================================
+diff --git a/../../.idea/clientgithub.iml b/../../.idea/clientgithub.iml
+deleted file mode 100644
+--- a/../../.idea/clientgithub.iml	(revision 5dd5b38e461b5a3acf378b15d8d524a34797855b)
++++ /dev/null	(revision 5dd5b38e461b5a3acf378b15d8d524a34797855b)
+@@ -1,9 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<module type="JAVA_MODULE" version="4">
+-  <component name="NewModuleRootManager" inherit-compiler-output="true">
+-    <exclude-output />
+-    <content url="file://$MODULE_DIR$" />
+-    <orderEntry type="inheritedJdk" />
+-    <orderEntry type="sourceFolder" forTests="false" />
+-  </component>
+-</module>
+\ No newline at end of file
+Index: ../../.idea/jarRepositories.xml
+===================================================================
+diff --git a/../../.idea/jarRepositories.xml b/../../.idea/jarRepositories.xml
+deleted file mode 100644
+--- a/../../.idea/jarRepositories.xml	(revision 5dd5b38e461b5a3acf378b15d8d524a34797855b)
++++ /dev/null	(revision 5dd5b38e461b5a3acf378b15d8d524a34797855b)
+@@ -1,45 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="RemoteRepositoriesConfiguration">
+-    <remote-repository>
+-      <option name="id" value="central" />
+-      <option name="name" value="Maven Central repository" />
+-      <option name="url" value="https://repo1.maven.org/maven2" />
+-    </remote-repository>
+-    <remote-repository>
+-      <option name="id" value="jboss.community" />
+-      <option name="name" value="JBoss Community repository" />
+-      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
+-    </remote-repository>
+-    <remote-repository>
+-      <option name="id" value="deobfDeps" />
+-      <option name="name" value="deobfDeps" />
+-      <option name="url" value="file:/$USER_HOME$/.gradle/caches/minecraft/deobfedDeps/" />
+-    </remote-repository>
+-    <remote-repository>
+-      <option name="id" value="spongepowered-repo" />
+-      <option name="name" value="spongepowered-repo" />
+-      <option name="url" value="https://repo.spongepowered.org/maven/" />
+-    </remote-repository>
+-    <remote-repository>
+-      <option name="id" value="MavenRepo" />
+-      <option name="name" value="MavenRepo" />
+-      <option name="url" value="https://repo.maven.apache.org/maven2/" />
+-    </remote-repository>
+-    <remote-repository>
+-      <option name="id" value="BintrayJCenter" />
+-      <option name="name" value="BintrayJCenter" />
+-      <option name="url" value="https://jcenter.bintray.com/" />
+-    </remote-repository>
+-    <remote-repository>
+-      <option name="id" value="minecraft" />
+-      <option name="name" value="minecraft" />
+-      <option name="url" value="https://libraries.minecraft.net/" />
+-    </remote-repository>
+-    <remote-repository>
+-      <option name="id" value="forge" />
+-      <option name="name" value="forge" />
+-      <option name="url" value="https://maven.minecraftforge.net" />
+-    </remote-repository>
+-  </component>
+-</project>
+\ No newline at end of file
+Index: ../../.idea/discord.xml
+===================================================================
+diff --git a/../../.idea/discord.xml b/../../.idea/discord.xml
+deleted file mode 100644
+--- a/../../.idea/discord.xml	(revision 5dd5b38e461b5a3acf378b15d8d524a34797855b)
++++ /dev/null	(revision 5dd5b38e461b5a3acf378b15d8d524a34797855b)
+@@ -1,6 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="DiscordProjectSettings">
+-    <option name="show" value="PROJECT_FILES" />
+-  </component>
+-</project>
+\ No newline at end of file
+Index: ../../.idea/modules.xml
+===================================================================
+diff --git a/../../.idea/modules.xml b/../../.idea/modules.xml
+deleted file mode 100644
+--- a/../../.idea/modules.xml	(revision 5dd5b38e461b5a3acf378b15d8d524a34797855b)
++++ /dev/null	(revision 5dd5b38e461b5a3acf378b15d8d524a34797855b)
+@@ -1,8 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="ProjectModuleManager">
+-    <modules>
+-      <module fileurl="file://$PROJECT_DIR$/.idea/clientgithub.iml" filepath="$PROJECT_DIR$/.idea/clientgithub.iml" />
+-    </modules>
+-  </component>
+-</project>
+\ No newline at end of file
+Index: ../../.idea/misc.xml
+===================================================================
+diff --git a/../../.idea/misc.xml b/../../.idea/misc.xml
+deleted file mode 100644
+--- a/../../.idea/misc.xml	(revision 5dd5b38e461b5a3acf378b15d8d524a34797855b)
++++ /dev/null	(revision 5dd5b38e461b5a3acf378b15d8d524a34797855b)
+@@ -1,5 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="ExternalStorageConfigurationManager" enabled="true" />
+-  <component name="ProjectRootManager" version="2" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
+-</project>
+\ No newline at end of file
+Index: ../../.idea/uiDesigner.xml
+===================================================================
+diff --git a/../../.idea/uiDesigner.xml b/../../.idea/uiDesigner.xml
+deleted file mode 100644
+--- a/../../.idea/uiDesigner.xml	(revision 5dd5b38e461b5a3acf378b15d8d524a34797855b)
++++ /dev/null	(revision 5dd5b38e461b5a3acf378b15d8d524a34797855b)
+@@ -1,124 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="Palette2">
+-    <group name="Swing">
+-      <item class="com.intellij.uiDesigner.HSpacer" tooltip-text="Horizontal Spacer" icon="/com/intellij/uiDesigner/icons/hspacer.png" removable="false" auto-create-binding="false" can-attach-label="false">
+-        <default-constraints vsize-policy="1" hsize-policy="6" anchor="0" fill="1" />
+-      </item>
+-      <item class="com.intellij.uiDesigner.VSpacer" tooltip-text="Vertical Spacer" icon="/com/intellij/uiDesigner/icons/vspacer.png" removable="false" auto-create-binding="false" can-attach-label="false">
+-        <default-constraints vsize-policy="6" hsize-policy="1" anchor="0" fill="2" />
+-      </item>
+-      <item class="javax.swing.JPanel" icon="/com/intellij/uiDesigner/icons/panel.png" removable="false" auto-create-binding="false" can-attach-label="false">
+-        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="3" />
+-      </item>
+-      <item class="javax.swing.JScrollPane" icon="/com/intellij/uiDesigner/icons/scrollPane.png" removable="false" auto-create-binding="false" can-attach-label="true">
+-        <default-constraints vsize-policy="7" hsize-policy="7" anchor="0" fill="3" />
+-      </item>
+-      <item class="javax.swing.JButton" icon="/com/intellij/uiDesigner/icons/button.png" removable="false" auto-create-binding="true" can-attach-label="false">
+-        <default-constraints vsize-policy="0" hsize-policy="3" anchor="0" fill="1" />
+-        <initial-values>
+-          <property name="text" value="Button" />
+-        </initial-values>
+-      </item>
+-      <item class="javax.swing.JRadioButton" icon="/com/intellij/uiDesigner/icons/radioButton.png" removable="false" auto-create-binding="true" can-attach-label="false">
+-        <default-constraints vsize-policy="0" hsize-policy="3" anchor="8" fill="0" />
+-        <initial-values>
+-          <property name="text" value="RadioButton" />
+-        </initial-values>
+-      </item>
+-      <item class="javax.swing.JCheckBox" icon="/com/intellij/uiDesigner/icons/checkBox.png" removable="false" auto-create-binding="true" can-attach-label="false">
+-        <default-constraints vsize-policy="0" hsize-policy="3" anchor="8" fill="0" />
+-        <initial-values>
+-          <property name="text" value="CheckBox" />
+-        </initial-values>
+-      </item>
+-      <item class="javax.swing.JLabel" icon="/com/intellij/uiDesigner/icons/label.png" removable="false" auto-create-binding="false" can-attach-label="false">
+-        <default-constraints vsize-policy="0" hsize-policy="0" anchor="8" fill="0" />
+-        <initial-values>
+-          <property name="text" value="Label" />
+-        </initial-values>
+-      </item>
+-      <item class="javax.swing.JTextField" icon="/com/intellij/uiDesigner/icons/textField.png" removable="false" auto-create-binding="true" can-attach-label="true">
+-        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1">
+-          <preferred-size width="150" height="-1" />
+-        </default-constraints>
+-      </item>
+-      <item class="javax.swing.JPasswordField" icon="/com/intellij/uiDesigner/icons/passwordField.png" removable="false" auto-create-binding="true" can-attach-label="true">
+-        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1">
+-          <preferred-size width="150" height="-1" />
+-        </default-constraints>
+-      </item>
+-      <item class="javax.swing.JFormattedTextField" icon="/com/intellij/uiDesigner/icons/formattedTextField.png" removable="false" auto-create-binding="true" can-attach-label="true">
+-        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1">
+-          <preferred-size width="150" height="-1" />
+-        </default-constraints>
+-      </item>
+-      <item class="javax.swing.JTextArea" icon="/com/intellij/uiDesigner/icons/textArea.png" removable="false" auto-create-binding="true" can-attach-label="true">
+-        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
+-          <preferred-size width="150" height="50" />
+-        </default-constraints>
+-      </item>
+-      <item class="javax.swing.JTextPane" icon="/com/intellij/uiDesigner/icons/textPane.png" removable="false" auto-create-binding="true" can-attach-label="true">
+-        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
+-          <preferred-size width="150" height="50" />
+-        </default-constraints>
+-      </item>
+-      <item class="javax.swing.JEditorPane" icon="/com/intellij/uiDesigner/icons/editorPane.png" removable="false" auto-create-binding="true" can-attach-label="true">
+-        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
+-          <preferred-size width="150" height="50" />
+-        </default-constraints>
+-      </item>
+-      <item class="javax.swing.JComboBox" icon="/com/intellij/uiDesigner/icons/comboBox.png" removable="false" auto-create-binding="true" can-attach-label="true">
+-        <default-constraints vsize-policy="0" hsize-policy="2" anchor="8" fill="1" />
+-      </item>
+-      <item class="javax.swing.JTable" icon="/com/intellij/uiDesigner/icons/table.png" removable="false" auto-create-binding="true" can-attach-label="false">
+-        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
+-          <preferred-size width="150" height="50" />
+-        </default-constraints>
+-      </item>
+-      <item class="javax.swing.JList" icon="/com/intellij/uiDesigner/icons/list.png" removable="false" auto-create-binding="true" can-attach-label="false">
+-        <default-constraints vsize-policy="6" hsize-policy="2" anchor="0" fill="3">
+-          <preferred-size width="150" height="50" />
+-        </default-constraints>
+-      </item>
+-      <item class="javax.swing.JTree" icon="/com/intellij/uiDesigner/icons/tree.png" removable="false" auto-create-binding="true" can-attach-label="false">
+-        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
+-          <preferred-size width="150" height="50" />
+-        </default-constraints>
+-      </item>
+-      <item class="javax.swing.JTabbedPane" icon="/com/intellij/uiDesigner/icons/tabbedPane.png" removable="false" auto-create-binding="true" can-attach-label="false">
+-        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="3">
+-          <preferred-size width="200" height="200" />
+-        </default-constraints>
+-      </item>
+-      <item class="javax.swing.JSplitPane" icon="/com/intellij/uiDesigner/icons/splitPane.png" removable="false" auto-create-binding="false" can-attach-label="false">
+-        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="3">
+-          <preferred-size width="200" height="200" />
+-        </default-constraints>
+-      </item>
+-      <item class="javax.swing.JSpinner" icon="/com/intellij/uiDesigner/icons/spinner.png" removable="false" auto-create-binding="true" can-attach-label="true">
+-        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1" />
+-      </item>
+-      <item class="javax.swing.JSlider" icon="/com/intellij/uiDesigner/icons/slider.png" removable="false" auto-create-binding="true" can-attach-label="false">
+-        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1" />
+-      </item>
+-      <item class="javax.swing.JSeparator" icon="/com/intellij/uiDesigner/icons/separator.png" removable="false" auto-create-binding="false" can-attach-label="false">
+-        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3" />
+-      </item>
+-      <item class="javax.swing.JProgressBar" icon="/com/intellij/uiDesigner/icons/progressbar.png" removable="false" auto-create-binding="true" can-attach-label="false">
+-        <default-constraints vsize-policy="0" hsize-policy="6" anchor="0" fill="1" />
+-      </item>
+-      <item class="javax.swing.JToolBar" icon="/com/intellij/uiDesigner/icons/toolbar.png" removable="false" auto-create-binding="false" can-attach-label="false">
+-        <default-constraints vsize-policy="0" hsize-policy="6" anchor="0" fill="1">
+-          <preferred-size width="-1" height="20" />
+-        </default-constraints>
+-      </item>
+-      <item class="javax.swing.JToolBar$Separator" icon="/com/intellij/uiDesigner/icons/toolbarSeparator.png" removable="false" auto-create-binding="false" can-attach-label="false">
+-        <default-constraints vsize-policy="0" hsize-policy="0" anchor="0" fill="1" />
+-      </item>
+-      <item class="javax.swing.JScrollBar" icon="/com/intellij/uiDesigner/icons/scrollbar.png" removable="false" auto-create-binding="true" can-attach-label="false">
+-        <default-constraints vsize-policy="6" hsize-policy="0" anchor="0" fill="2" />
+-      </item>
+-    </group>
+-  </component>
+-</project>
+\ No newline at end of file
+Index: src/main/java/client/util/ClientColor.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/client/util/ClientColor.java b/src/main/java/client/util/ClientColor.java
+new file mode 100644
+--- /dev/null	(date 1630828550311)
++++ b/src/main/java/client/util/ClientColor.java	(date 1630828550311)
+@@ -0,0 +1,53 @@
++package client.util;
++
++import net.minecraft.client.renderer.GlStateManager;
++
++import java.awt.*;
++
++public class ClientColor extends Color {
++
++    public ClientColor(int r, int g, int b) {
++        super(r, g, b);
++    }
++
++    public ClientColor(int rgb) {
++        super(rgb);
++    }
++
++    public ClientColor(int rgba, boolean hasalpha) {
++        super(rgba, hasalpha);
++    }
++
++    public ClientColor(int r, int g, int b, int a) {
++        super(r, g, b, a);
++    }
++
++    public ClientColor(Color color) {
++        super(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
++    }
++
++    public ClientColor(ClientColor color, int a) {
++        super(color.getRed(), color.getGreen(), color.getBlue(), a);
++    }
++
++    public static ClientColor fromHSB(float hue, float saturation, float brightness) {
++        return new ClientColor(Color.getHSBColor(hue, saturation, brightness));
++    }
++
++    public float getHue() {
++        return RGBtoHSB(getRed(), getGreen(), getBlue(), null)[0];
++    }
++
++    public float getSaturation() {
++        return RGBtoHSB(getRed(), getGreen(), getBlue(), null)[1];
++    }
++
++    public float getBrightness() {
++        return RGBtoHSB(getRed(), getGreen(), getBlue(), null)[2];
++    }
++
++    public void glColor() {
++        GlStateManager.color(getRed() / 255.0f, getGreen() / 255.0f, getBlue() / 255.0f, getAlpha() / 255.0f);
++    }
++
++}
+\ No newline at end of file

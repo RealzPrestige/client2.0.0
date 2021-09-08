@@ -1,0 +1,64 @@
+<changelist name="fix" date="1630935737725" recycled="false">
+  <option name="PATH" value="$PROJECT_DIR$/.shelf/fix/shelved.patch" />
+  <option name="DESCRIPTION" value="fix" />
+  <binary>
+    <option name="BEFORE_PATH" value=".gradle/4.10.3/fileContent/annotation-processors.bin" />
+    <option name="AFTER_PATH" value=".gradle/4.10.3/fileContent/annotation-processors.bin" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.shelf/fix/annotation-processors.bin" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value=".gradle/4.10.3/fileContent/fileContent.lock" />
+    <option name="AFTER_PATH" value=".gradle/4.10.3/fileContent/fileContent.lock" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.shelf/fix/fileContent.lock" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value=".gradle/4.10.3/fileHashes/fileHashes.bin" />
+    <option name="AFTER_PATH" value=".gradle/4.10.3/fileHashes/fileHashes.bin" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.shelf/fix/fileHashes.bin" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value=".gradle/4.10.3/fileHashes/fileHashes.lock" />
+    <option name="AFTER_PATH" value=".gradle/4.10.3/fileHashes/fileHashes.lock" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.shelf/fix/fileHashes.lock" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value=".gradle/4.10.3/fileHashes/resourceHashesCache.bin" />
+    <option name="AFTER_PATH" value=".gradle/4.10.3/fileHashes/resourceHashesCache.bin" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.shelf/fix/resourceHashesCache.bin" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value=".gradle/4.10.3/javaCompile/jarAnalysis.bin" />
+    <option name="AFTER_PATH" value=".gradle/4.10.3/javaCompile/jarAnalysis.bin" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.shelf/fix/jarAnalysis.bin" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value=".gradle/4.10.3/javaCompile/javaCompile.lock" />
+    <option name="AFTER_PATH" value=".gradle/4.10.3/javaCompile/javaCompile.lock" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.shelf/fix/javaCompile.lock" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value=".gradle/4.10.3/javaCompile/taskHistory.bin" />
+    <option name="AFTER_PATH" value=".gradle/4.10.3/javaCompile/taskHistory.bin" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.shelf/fix/taskHistory.bin" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value=".gradle/4.10.3/taskHistory/taskHistory.bin" />
+    <option name="AFTER_PATH" value=".gradle/4.10.3/taskHistory/taskHistory.bin" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.shelf/fix/taskHistory1.bin" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value=".gradle/4.10.3/taskHistory/taskHistory.lock" />
+    <option name="AFTER_PATH" value=".gradle/4.10.3/taskHistory/taskHistory.lock" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.shelf/fix/taskHistory.lock" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value=".gradle/buildOutputCleanup/buildOutputCleanup.lock" />
+    <option name="AFTER_PATH" value=".gradle/buildOutputCleanup/buildOutputCleanup.lock" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.shelf/fix/buildOutputCleanup.lock" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value=".gradle/buildOutputCleanup/outputFiles.bin" />
+    <option name="AFTER_PATH" value=".gradle/buildOutputCleanup/outputFiles.bin" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.shelf/fix/outputFiles.bin" />
+  </binary>
+</changelist>

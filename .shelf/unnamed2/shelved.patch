@@ -1,0 +1,66 @@
+Index: .gradle/minecraft/forgeSrc-1.12.2-14.23.5.2768-PROJECT(client)-sources.jar.md5
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>5140568bf73b6825d71dff4fc77ed4bd\r\n8f5154fe9256db1bd3bad0e39a8ef832\r\nb326b5062b2f0e69046810717534cb09\r\n50c2c03a64b50643324a3c7554d6b225\r\n1fdc9d87d594bee435cf0c6ec119733b\r\n4abfd71face0c73930cf060dc6a43170
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.gradle/minecraft/forgeSrc-1.12.2-14.23.5.2768-PROJECT(client)-sources.jar.md5 b/.gradle/minecraft/forgeSrc-1.12.2-14.23.5.2768-PROJECT(client)-sources.jar.md5
+--- a/.gradle/minecraft/forgeSrc-1.12.2-14.23.5.2768-PROJECT(client)-sources.jar.md5	(revision d5e01b9f86315d990f376d2158c78eefea46bdca)
++++ b/.gradle/minecraft/forgeSrc-1.12.2-14.23.5.2768-PROJECT(client)-sources.jar.md5	(date 1630742037555)
+@@ -1,6 +1,6 @@
+ 5140568bf73b6825d71dff4fc77ed4bd
+-8f5154fe9256db1bd3bad0e39a8ef832
+ b326b5062b2f0e69046810717534cb09
+-50c2c03a64b50643324a3c7554d6b225
++8f5154fe9256db1bd3bad0e39a8ef832
+ 1fdc9d87d594bee435cf0c6ec119733b
++50c2c03a64b50643324a3c7554d6b225
+ 4abfd71face0c73930cf060dc6a43170
+\ No newline at end of file
+Index: .gradle/minecraft/forge-1.12.2-14.23.5.2768-PROJECT(client)-patched.jar.md5
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>4abfd71face0c73930cf060dc6a43170\r\nf6cf8dc153bbb3d42103d7716e594265\r\na0598e42613ebc0644394a9dc03f7e9f\r\n68934a3e9455fa72420237eb05902327\r\ncfcd208495d565ef66e7dff9f98764da\r\nc4ca4238a0b923820dcc509a6f75849b\r\nnull\r\nae1b4e69950f20d97252f4a61cce3d49\r\nb326b5062b2f0e69046810717534cb09\r\nb6b6d27578a2b7c89f47157fa7dc4b92
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.gradle/minecraft/forge-1.12.2-14.23.5.2768-PROJECT(client)-patched.jar.md5 b/.gradle/minecraft/forge-1.12.2-14.23.5.2768-PROJECT(client)-patched.jar.md5
+--- a/.gradle/minecraft/forge-1.12.2-14.23.5.2768-PROJECT(client)-patched.jar.md5	(revision d5e01b9f86315d990f376d2158c78eefea46bdca)
++++ b/.gradle/minecraft/forge-1.12.2-14.23.5.2768-PROJECT(client)-patched.jar.md5	(date 1630742031288)
+@@ -1,9 +1,9 @@
+ 4abfd71face0c73930cf060dc6a43170
+ f6cf8dc153bbb3d42103d7716e594265
+ a0598e42613ebc0644394a9dc03f7e9f
++c4ca4238a0b923820dcc509a6f75849b
+ 68934a3e9455fa72420237eb05902327
+ cfcd208495d565ef66e7dff9f98764da
+-c4ca4238a0b923820dcc509a6f75849b
+ null
+ ae1b4e69950f20d97252f4a61cce3d49
+ b326b5062b2f0e69046810717534cb09
+Index: .gradle/minecraft/forge-1.12.2-14.23.5.2768-PROJECT(client)-decompFixed.jar.md5
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>b6b6d27578a2b7c89f47157fa7dc4b92\r\n93428df0ff035ea8a019ced9237eeb9e\r\n7ad3c97771e468f733c2202d535033df\r\na796fa5fb1324b09ca6944b6b2b692c5\r\n4dbab1b957f9b0a2a3ce2d55fe89578a\r\n1394e60d7420c8b7ebabdba772ccce6a\r\n9ebb14743820e84b204a8c5f4a451268\r\nd1bd04b4fd9ba188f767b7b1f5eceed6\r\ncbb2da6e2094ef4d3972c94a27319245\r\nb7f4e1624cce68fec0395dbdd92fe95b\r\n82964f569c3db5adc9e5b8022e813c9e\r\n18c43f3893a48c7360c91b74f5d12407\r\ne77fcf76c6a2515fe183e836bb055e56\r\nf0e9887965af93f50fb0c8aff576dd0d\r\n0b74ca3d921b58b6c50624bc97875328\r\n162e1540af1ea744efedf9fa4725ea17\r\n5940f713b98e14dbef673c9c358a89e7\r\naed38ac00ee8af5c3302d5d9312c6a4a\r\n77f39d8ca3a32ca5fd6c0a04ac1a887d\r\ncbb4e44e2a52920894674c262a95feeb\r\n7a5f5dcff92146489b58ad41f5d1532e\r\nf2ddaf7b9bea007e9605d486542f6acb\r\nb7f1934eefa8d08a0825bfbe41c5bd96\r\n993fb202cf624c98709c8d1244e85864\r\n19e4219fd6549c85901df3a34cb72088\r\n46265ab20f98c4511ee4f120688ac9c5\r\n2e442a1f4f55253b5a8cc7c114f910d0\r\n661981434569ee7fa71981cba6641b36\r\neb23c60413bbd01385f2e5cf70721e7c\r\na8a6abfa2aa4b17541ecfc40c6551753\r\nb23514a8330082545565b807c7a0abf7\r\n70779a09a14771f3a8b1d6ed93a1ecb9\r\n63eb197e4c53015be072bdac83f243c5\r\n909ebd0471a57549b8ee5648c339babd\r\n65948958fc81134e784ef807bc1325ef\r\nd1ac0549ddce30e88d4795b2f7000fab\r\n5042c1ae32963c05d60c984975d1fcd7\r\n4394fdf0c874a8af704b55cbbee265af\r\nbf713d51b90ea2532b840d89598f2a05\r\n032aa7274ba149b67d8c411b380e291d\r\nadfbf0ebc7428f61056fbee7b441b006\r\n05ba550776059818ef90bf90b1d94a7e\r\n85031b22015be949bc9e1d9c10ad4c21\r\n5d95125525b41d1318e46da1a8ae2137\r\nb3a7dd598f4de3ed0dc5b4168758adb0\r\n44296879890f8441ae03ef975dfbea10\r\n72865036902990192094b007a1bcaeab\r\n548b2415e92120943a4ea4dc137f1599\r\n830818505477a0e848efc3160b67f322\r\n5b4ff64526b696a2c00e81cac25b0c19\r\nc38370d0f4f715ddb59a6f8cb7652ca7\r\ne26b149d4207540215779346ac222137\r\nf02f74ea291336d579a515e3e1dc0375\r\nafefbae495463b038b82590f10f348a4\r\n69eec415c6d5d59eb74fc63cb2424fd3\r\n37d56f858d356d288ccd04fd2f26f22a\r\n45226328d685dde37cdd8bc518a65dd1\r\n9bf822a790f91165c4f4e8fd51e22897\r\n0bf547aafb4d8597978a66b08a757ad4\r\n1241f6d5ce52f46066545fa628146247\r\n949ed220639e95a26a70e5de8c9012a7\r\n0dd56e09882704fe4727553393f8feb8\r\n60cc6297913b45e878d5199e20bc662b\r\n027f22beb45ec4470916dfc2bc986c2e\r\nc26dfffa77b55c87f618509641d33993\r\n72a30197f2f918d0276f755e8709a03b\r\n368cdaa27f8adb1ab11f21b7e2d710d2\r\ne68492c30084e22f59392dec16049f2f\r\n71c1a831ae78ead03b977b400f0c2ae8\r\n278dd48379f05b8966689e8db258b2e5\r\n5a435bc56b1db3f8d4657ae3359ca1d5\r\nf4d5b95717304c7296fc6350d6a54388\r\n722a1764b62a3f21a617d9747e110eb4\r\n6fc47351dfb5347df2dd3b75b485a1eb\r\nd414040855ee41d9bf4377134b38314b\r\nc0f50e8c762de4993bfd237ca7401d0a\r\n5cd4dc19336e10b7831c9e8fca9145e6\r\n139f9b546a7bf10470edf0b17a0f51e2\r\n6b1204a554d40f8776391cadcabb360b\r\n85cb312957ceaa1cde9ed68e449af7ac\r\n983cee8b456b140259b4e9574d83b7e2\r\n414f9262da0406896bcca3b5d986ea5d\r\n1f95e4f29ffdb6f5e2e125668f73e1d8\r\n2f25424703ddd35f4e8a877bf6146963\r\ncbe04d1da486f4d5f05eaf90fdd5088e\r\nef1a68ff834d55186eaa199f8e215d48\r\n438fab1762f41ba6e3977d54f8b8f74e\r\nb35566032ae6400050b13e0fc523e25d\r\n769f310c24a01d2f1abaaeb8d71e652d\r\nd9da587545ce1d79d214e9c9638032ee\r\ncf7310c683ae92d39722855b054ea769\r\n90ef08c8812630045b694c4abe196589\r\n07d9f0a335589c133f1d74822c9524b6
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.gradle/minecraft/forge-1.12.2-14.23.5.2768-PROJECT(client)-decompFixed.jar.md5 b/.gradle/minecraft/forge-1.12.2-14.23.5.2768-PROJECT(client)-decompFixed.jar.md5
+--- a/.gradle/minecraft/forge-1.12.2-14.23.5.2768-PROJECT(client)-decompFixed.jar.md5	(revision d5e01b9f86315d990f376d2158c78eefea46bdca)
++++ b/.gradle/minecraft/forge-1.12.2-14.23.5.2768-PROJECT(client)-decompFixed.jar.md5	(date 1630742027769)
+@@ -1,6 +1,4 @@
+ b6b6d27578a2b7c89f47157fa7dc4b92
+-93428df0ff035ea8a019ced9237eeb9e
+-7ad3c97771e468f733c2202d535033df
+ a796fa5fb1324b09ca6944b6b2b692c5
+ 4dbab1b957f9b0a2a3ce2d55fe89578a
+ 1394e60d7420c8b7ebabdba772ccce6a
+@@ -90,4 +88,6 @@
+ d9da587545ce1d79d214e9c9638032ee
+ cf7310c683ae92d39722855b054ea769
+ 90ef08c8812630045b694c4abe196589
++93428df0ff035ea8a019ced9237eeb9e
++7ad3c97771e468f733c2202d535033df
+ 07d9f0a335589c133f1d74822c9524b6
+\ No newline at end of file
