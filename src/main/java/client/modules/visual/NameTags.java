@@ -40,7 +40,7 @@ public class NameTags extends Module {
     @Override
     public void onRender3D(Render3DEvent event) {
         if (!NameTags.fullNullCheck()) {
-            for (EntityPlayer player : NameTags.mc.world.playerEntities) {
+            for (EntityPlayer player : mc.world.playerEntities) {
                 if (player == null || player.equals(NameTags.mc.player) || !player.isEntityAlive() || player.isInvisible() && !EntityUtil.isInFov(player))
                     continue;
                 double x = this.interpolate(player.lastTickPosX, player.posX, event.getPartialTicks()) - NameTags.mc.getRenderManager().renderPosX;

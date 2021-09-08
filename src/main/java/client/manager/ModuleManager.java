@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 public class ModuleManager
         extends Feature {
-    public ArrayList<Module> moduleList = new ArrayList();
+    public static ArrayList<Module> moduleList = new ArrayList();
     public List<Module> sortedModules = new ArrayList<>();
 
     public void init() {
@@ -113,7 +113,6 @@ public class ModuleManager
         moduleList.add(new ViewTweaks());
         moduleList.add(new PearlRender());
         moduleList.add(new NoRender());
-        moduleList.add(new poo());
 
     }
 
@@ -221,5 +220,10 @@ public class ModuleManager
             }
         });
     }
+
+    public static ArrayList<Module> getModules() {
+        return moduleList;
+    }
+
 }
 

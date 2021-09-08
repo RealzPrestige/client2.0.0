@@ -3,10 +3,13 @@ package client.util;
 import client.Client;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.culling.ICamera;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -27,6 +30,7 @@ public class RenderUtil
         RenderUtil.itemRender = mc.getRenderItem();
         RenderUtil.camera = new Frustum();
     }
+
     public static void drawRectCol(final float x, final float y, final float width, final float height, final Color color) {
         GL11.glPushMatrix();
         GL11.glDisable(3553);
