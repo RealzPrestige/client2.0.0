@@ -2,6 +2,7 @@ package client.mixin.mixins;
 
 import client.Client;
 import client.modules.visual.Chams;
+import client.modules.visual.PopChams;
 import client.util.ColorUtil;
 import client.util.Util;
 import net.minecraft.client.Minecraft;
@@ -136,9 +137,17 @@ public abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends 
                         glEnable(2929);
                         GL11.glDepthMask(true);
                         if (Client.friendManager.isFriend(entity.getName()) || entity == (Minecraft.getMinecraft()).player) {
-                            GL11.glColor4f(0.0F, 191.0F, 255.0F, Chams.getInstance().alpha.getCurrentState() / 255.0f);
-                        } else {
-                            GL11.glColor4f((Chams.getInstance()).rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).rainbowHue.getCurrentState()).getRed() / 255.0F) : this.red, (Chams.getInstance()).rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).rainbowHue.getCurrentState()).getGreen() / 255.0F) : this.green, (Chams.getInstance()).rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).rainbowHue.getCurrentState()).getBlue() / 255.0F) : this.blue, Chams.getInstance().alpha.getCurrentState() / 255.0f);
+                            if (entity.getName().equals("FakePlayer")) {
+                                GL11.glColor4f(0.0F, 191.0F, 255.0F, PopChams.INSTANCE.fade / 255.0f);
+                            } else {
+                                GL11.glColor4f(0.0F, 191.0F, 255.0F, Chams.getInstance().alpha.getCurrentState() / 255.0f);
+                            }
+                        }else {
+                            if (entity.getName().equals("FakePlayer")) {
+                                GL11.glColor4f((Chams.getInstance()).rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).rainbowHue.getCurrentState()).getRed() / 255.0F) : this.red, (Chams.getInstance()).rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).rainbowHue.getCurrentState()).getGreen() / 255.0F) : this.green, (Chams.getInstance()).rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).rainbowHue.getCurrentState()).getBlue() / 255.0F) : this.blue, PopChams.INSTANCE.fade / 255.0f);
+                            } else {
+                                GL11.glColor4f((Chams.getInstance()).rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).rainbowHue.getCurrentState()).getRed() / 255.0F) : this.red, (Chams.getInstance()).rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).rainbowHue.getCurrentState()).getGreen() / 255.0F) : this.green, (Chams.getInstance()).rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).rainbowHue.getCurrentState()).getBlue() / 255.0F) : this.blue, Chams.getInstance().alpha.getCurrentState() / 255.0f);
+                            }
                         }
                         renderModel(entity, f6, f5, f8, f2, f7, f4);
                         glEnable(2896);
@@ -170,9 +179,17 @@ public abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends 
                         glEnable(3042);
                         GL11.glBlendFunc(770, 771);
                         if (Client.friendManager.isFriend(entity.getName()) || entity == (Minecraft.getMinecraft()).player) {
-                            GL11.glColor4f(0.0F, 191.0F, 255.0F, (Chams.getInstance()).o_alpha.getCurrentState() / 255.0F);
-                        } else {
-                            GL11.glColor4f((Chams.getInstance()).o_rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).o_rainbowHue.getCurrentState()).getRed() / 255.0F) : this.outlinered, (Chams.getInstance()).o_rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).o_rainbowHue.getCurrentState()).getGreen() / 255.0F) : outlinegreen, (Chams.getInstance()).o_rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).o_rainbowHue.getCurrentState()).getBlue() / 255.0F) : outlineblue, (Chams.getInstance()).o_alpha.getCurrentState() / 255.0F);
+                            if (entity.getName().equals("FakePlayer")) {
+                                GL11.glColor4f(0.0F, 191.0F, 255.0F, PopChams.INSTANCE.fade / 255.0F);
+                            } else {
+                                GL11.glColor4f(0.0F, 191.0F, 255.0F, (Chams.getInstance()).o_alpha.getCurrentState() / 255.0F);
+                            }
+                        }else {
+                            if (entity.getName().equals("FakePlayer")) {
+                                GL11.glColor4f((Chams.getInstance()).o_rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).o_rainbowHue.getCurrentState()).getRed() / 255.0F) : this.outlinered, (Chams.getInstance()).o_rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).o_rainbowHue.getCurrentState()).getGreen() / 255.0F) : outlinegreen, (Chams.getInstance()).o_rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).o_rainbowHue.getCurrentState()).getBlue() / 255.0F) : outlineblue, PopChams.INSTANCE.fade / 255.0F);
+                            } else {
+                                GL11.glColor4f((Chams.getInstance()).o_rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).o_rainbowHue.getCurrentState()).getRed() / 255.0F) : this.outlinered, (Chams.getInstance()).o_rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).o_rainbowHue.getCurrentState()).getGreen() / 255.0F) : outlinegreen, (Chams.getInstance()).o_rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).o_rainbowHue.getCurrentState()).getBlue() / 255.0F) : outlineblue, (Chams.getInstance()).o_alpha.getCurrentState() / 255.0F);
+                            }
                         }
                         GL11.glLineWidth((Chams.getInstance()).lineWidth.getCurrentState());
                         renderModel(entity, f6, f5, f8, f2, f7, f4);

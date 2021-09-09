@@ -58,8 +58,7 @@ public class AutoCrystal extends Module {
     public enum RenderMode{NORMAL, FADE, GLIDE}
     public Setting<Float> accel;
     public Setting<Float> moveSpeed;
-    public Setting<Enum> fade;
-    public enum Enum{FAST, MEDIUM, SLOW}
+    public Setting<Integer> fadeSpeed;
     public Setting<Integer> red;
     public Setting<Integer> green;
     public Setting<Integer> blue;
@@ -114,7 +113,7 @@ public class AutoCrystal extends Module {
         this.announceOnly = (Setting<Boolean>)this.register(new Setting("AnnounceOnly", false, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
         this.renderMode = (Setting<RenderMode>)this.register(new Setting<>("RenderMode", RenderMode.NORMAL, v-> this.setting.getCurrentState() == Settings.RENDER));
         this.box = (Setting<Boolean>)this.register(new Setting<>("Box", true, v-> this.setting.getCurrentState() == Settings.RENDER));
-        this.fade = (Setting<Enum>)this.register(new Setting<>("Fade", Enum.FAST, v-> this.setting.getCurrentState() == Settings.RENDER && renderMode.getCurrentState() == RenderMode.FADE));
+        this.fadeSpeed = (Setting<Integer>)this.register(new Setting<>("FadeSpeed", 100, 0, 500, v-> this.setting.getCurrentState() == Settings.RENDER && renderMode.getCurrentState() == RenderMode.FADE));
         this.accel = (Setting<Float>) this.register(new Setting<>("Deceleration" , 0.8f , 0.0f, 1.0f, v-> this.setting.getCurrentState() == Settings.RENDER && renderMode.getCurrentState() == RenderMode.GLIDE));
         this.moveSpeed = (Setting<Float>) this.register(new Setting<>("Speed" , 900.0f , 0.0f, 1500.0f, v-> this.setting.getCurrentState() == Settings.RENDER && renderMode.getCurrentState() == RenderMode.GLIDE));
         this.red = (Setting<Integer>)this.register(new Setting<>("BoxRed", 255, 0, 255, v-> this.setting.getCurrentState() == Settings.RENDER));
@@ -366,7 +365,7 @@ public class AutoCrystal extends Module {
             }
             if (renderPos.alpha > Math.max(alpha.getCurrentState(), rainbow.getCurrentState() ? ColorUtil.rainbow(ClickGui.getInstance().rainbowHue.getCurrentState()).getRGB() : ColorUtil.toRGBA(red.getCurrentState(), green.getCurrentState(), blue.getCurrentState())))
                 toRemove.add(renderPos);
-            renderPos.alpha = renderPos.alpha + (fade.getCurrentState() == Enum.FAST ? 1.5 : fade.getCurrentState() == Enum.SLOW ? 0.5 : 1);
+            renderPos.alpha = renderPos.alpha + (fadeSpeed.getCurrentState() / 100);
             if (currentTargets.contains(renderPos.pos)) {
                 renderPos.alpha = 0;
             } else if (renderMode.getCurrentState() != RenderMode.FADE) {
@@ -393,7 +392,7 @@ public class AutoCrystal extends Module {
             float multiplier = this.timePassed / this.moveSpeed.getCurrentState ( ) * this.accel.getCurrentState ( );
             if ( multiplier > 1 ) multiplier = 1;
             this.renderBB = this.renderBB.offset ( xDiff * multiplier , yDiff * multiplier , zDiff * multiplier );
-                RenderUtil.drawPerryESP(this.renderBB, color, color2, lineWidth.getCurrentState(), outline.getCurrentState(), box.getCurrentState(), 1.0f, 1.0f, 1.0f);
+            RenderUtil.drawPerryESP(this.renderBB, color, color2, lineWidth.getCurrentState(), outline.getCurrentState(), box.getCurrentState(), 1.0f, 1.0f, 1.0f);
             if ( this.renderBB.equals ( new AxisAlignedBB ( this.renderPos ) ) ) {
                 this.timePassed = 0;
             } else this.timePassed += 50.0f;

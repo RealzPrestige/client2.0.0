@@ -53,7 +53,7 @@ public class NameTags extends Module {
 
 
     private void renderNameTag(EntityPlayer player, double x, double y, double z, float delta) {
-        if(player.getName().equals("FakePlayer")){
+        if(player.getName().equals("FakePlayer") || player.getName().equals("PopCham")){
             return;
         }
         double tempY = y;
