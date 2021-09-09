@@ -62,9 +62,9 @@ Thumbs.db
 .checkstyle
 .classpath
 .externalToolBuilders
-../.gradle
+.gradle
 .nb-gradle
-../.idea
+.idea
 .project
 .settings
 eclipse
