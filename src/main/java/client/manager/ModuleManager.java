@@ -113,6 +113,7 @@ public class ModuleManager
         moduleList.add(new ViewTweaks());
         moduleList.add(new PearlRender());
         moduleList.add(new NoRender());
+        moduleList.add(new PopChams());
 
     }
 
@@ -187,6 +188,8 @@ public class ModuleManager
         this.moduleList.stream().filter(Feature::isEnabled).forEach(module -> module.onRender3D(event));
     }
 
+    public static void onWorldRender(Render3DEvent event) { moduleList.stream().filter(Module::isEnabled).forEach(module -> module.onWorldRender(event)); }
+
     public void sortModules(boolean reverse) {
         this.sortedModules = this.getEnabledModules().stream().filter(Module::isDrawn).sorted(Comparator.comparing(module -> this.renderer.getStringWidth(module.getFullArrayString()) * (reverse ? -1 : 1))).collect(Collectors.toList());
     }
@@ -220,10 +223,5 @@ public class ModuleManager
             }
         });
     }
-
-    public static ArrayList<Module> getModules() {
-        return moduleList;
-    }
-
 }
 

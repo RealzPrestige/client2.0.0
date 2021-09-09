@@ -41,6 +41,7 @@ public class Module
     public void onLogin() { }
     public void onLogout() { }
     public void onUpdate() { }
+    public void onWorldRender(Render3DEvent event) { }
     public void onRender2D(Render2DEvent event) { }
     public void onRender3D(Render3DEvent event) { }
     public void onUnload() { }
