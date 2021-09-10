@@ -6,7 +6,6 @@ import client.events.*;
 import client.modules.Feature;
 import client.modules.miscellaneous.FakePlayer;
 import client.modules.miscellaneous.TotemPopCounter;
-import client.modules.visual.PopChams;
 import client.util.Timer;
 import com.google.common.base.Strings;
 import com.mojang.realmsclient.gui.ChatFormatting;
@@ -125,7 +124,6 @@ public class EventManager extends Feature {
                 EntityPlayer player = (EntityPlayer) packet.getEntity(mc.world);
                 MinecraftForge.EVENT_BUS.post(new TotemPopEvent(player));
                 TotemPopCounter.getInstance().onTotemPop(player);
-                PopChams.INSTANCE.onTotemPop(player);
             }
         }
         if (event.getPacket() instanceof SPacketPlayerListItem && !fullNullCheck() && this.logoutTimer.passedS(1.0D)) {
