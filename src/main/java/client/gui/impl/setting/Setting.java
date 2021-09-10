@@ -15,6 +15,7 @@ public class Setting<T> {
     private T min;
     private T max;
     private Color color;
+    private int r,g,b,a;
     private boolean hasRestriction;
     private boolean isColorSetting;
     private Predicate<T> visibility;
@@ -90,10 +91,14 @@ public class Setting<T> {
         this.plannedValue = defaultValue;
     }
 
-    public Setting(String name, int red, int green, int blue, Predicate<T> visibility, Boolean colorSetting) {
+    public Setting(String name, int red, int green, int blue, int alpha, Predicate<T> visibility, Boolean colorSetting) {
         this.name = name;
         this.isColorSetting = colorSetting;
         this.color = new Color(red,green,blue);
+        this.r = red;
+        this.g = green;
+        this.b = blue;
+        this.a = alpha;
         this.visibility = visibility;
         this.description = "";
         this.hasRestriction = true;

@@ -14,6 +14,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.lwjgl.Sys;
 import org.lwjgl.opengl.Display;
 
 import javax.annotation.Nullable;
@@ -78,22 +79,26 @@ public class Client {
     }
 
     public static void unload() {
-        DiscordPresence.stop();
-        Client.onUnload();
-        eventManager = null;
-        friendManager = null;
-        speedManager = null;
-        positionManager = null;
-        rotationManager = null;
-        configManager = null;
-        commandManager = null;
-        colorManager = null;
-        serverManager = null;
-        fileManager = null;
-        potionManager = null;
-        inventoryManager = null;
-        moduleManager = null;
-        textManager = null;
+        try {
+            DiscordPresence.stop();
+            Client.onUnload();
+            eventManager = null;
+            friendManager = null;
+            speedManager = null;
+            positionManager = null;
+            rotationManager = null;
+            configManager = null;
+            commandManager = null;
+            colorManager = null;
+            serverManager = null;
+            fileManager = null;
+            potionManager = null;
+            inventoryManager = null;
+            moduleManager = null;
+            textManager = null;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     public static void onUnload() {
