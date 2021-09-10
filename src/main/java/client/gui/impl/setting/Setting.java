@@ -256,6 +256,10 @@ public class Setting<T> {
         return this.isColorSetting;
     }
 
+    public Color getColor() {
+        return this.color;
+    }
+
     public void setVisibility(Predicate<T> visibility) {
         this.visibility = visibility;
     }
