@@ -7,7 +7,6 @@ import client.modules.Feature;
 import client.modules.miscellaneous.FakePlayer;
 import client.modules.miscellaneous.TotemPopCounter;
 import client.modules.visual.PopChams;
-import client.modules.visual.PopChams2;
 import client.util.Timer;
 import com.google.common.base.Strings;
 import com.mojang.realmsclient.gui.ChatFormatting;
@@ -131,7 +130,6 @@ public class EventManager extends Feature {
                 MinecraftForge.EVENT_BUS.post(new TotemPopEvent(player));
                 TotemPopCounter.getInstance().onTotemPop(player);
                 PopChams.INSTANCE.onTotemPop(player);
-                PopChams2.INSTANCE.onTotemPop(player);
                 popAlpha = PopChams.getInstance().startAlpha.getCurrentState() == PopChams.StartAlpha.LOW ? 50 : PopChams.getInstance().startAlpha.getCurrentState() == PopChams.StartAlpha.LOWMEDIUM ? 100 : PopChams.getInstance().startAlpha.getCurrentState() == PopChams.StartAlpha.MEDIUM ? 150 : PopChams.getInstance().startAlpha.getCurrentState() == PopChams.StartAlpha.MEDIUMHIGH ? 200 : 250;
             }
         }

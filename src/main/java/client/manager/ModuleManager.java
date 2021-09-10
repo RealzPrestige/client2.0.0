@@ -114,7 +114,6 @@ public class ModuleManager
         moduleList.add(new PearlRender());
         moduleList.add(new NoRender());
         moduleList.add(new PopChams());
-        moduleList.add(new PopChams2());
 
     }
 
@@ -148,16 +147,15 @@ public class ModuleManager
     }
 
     public ArrayList<Module> getEnabledModules() {
-        ArrayList<Module> enabledModules = new ArrayList<>();
+        ArrayList<Module> enabledModules = new ArrayList <> ( );
         for (Module module : this.moduleList) {
             if (!module.isEnabled()) continue;
             enabledModules.add(module);
         }
         return enabledModules;
     }
-
     public ArrayList<Module> getModulesByCategory(Module.Category category) {
-        ArrayList<Module> modulesCategory = new ArrayList<>();
+        ArrayList<Module> modulesCategory = new ArrayList <> ( );
         this.moduleList.forEach(module -> {
             if (module.getCategory() == category) {
                 modulesCategory.add(module);
@@ -190,9 +188,7 @@ public class ModuleManager
         this.moduleList.stream().filter(Feature::isEnabled).forEach(module -> module.onRender3D(event));
     }
 
-    public static void onWorldRender(Render3DEvent event) {
-        moduleList.stream().filter(Module::isEnabled).forEach(module -> module.onWorldRender(event));
-    }
+    public static void onWorldRender(Render3DEvent event) { moduleList.stream().filter(Module::isEnabled).forEach(module -> module.onWorldRender(event)); }
 
     public void sortModules(boolean reverse) {
         this.sortedModules = this.getEnabledModules().stream().filter(Module::isDrawn).sorted(Comparator.comparing(module -> this.renderer.getStringWidth(module.getFullArrayString()) * (reverse ? -1 : 1))).collect(Collectors.toList());
@@ -226,10 +222,6 @@ public class ModuleManager
                 module.toggle();
             }
         });
-    }
-
-    public static ArrayList<Module> getModules() {
-        return moduleList;
     }
 }
 
