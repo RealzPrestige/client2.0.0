@@ -54,14 +54,14 @@ public class ClickGui extends Module {
     public Setting<Integer> integerBlue = this.register(new Setting<>("IntegerBlue", 30, 0, 255, v -> gui.getCurrentState() == Gui.NEW));
     public Setting<Integer> integerAlpha = this.register(new Setting<>("IntegerAlpha", 120, 0, 255, v -> gui.getCurrentState() == Gui.NEW));
     public Setting<Boolean> seperateBooleanColors = this.register(new Setting<>("BooleanColors", false, v -> gui.getCurrentState() == Gui.NEW));
-    public Setting<Integer> stateFalseBooleanRed = this.register(new Setting<>("DisabledRed", 30, 0, 255, v -> gui.getCurrentState() == Gui.NEW && seperateBooleanColors.getCurrentState()));
-    public Setting<Integer> stateFalseBooleanGreen = this.register(new Setting<>("DisabledGreen", 30, 0, 255, v -> gui.getCurrentState() == Gui.NEW && seperateBooleanColors.getCurrentState()));
-    public Setting<Integer> stateFalseBooleanBlue = this.register(new Setting<>("DisabledBlue", 30, 0, 255, v -> gui.getCurrentState() == Gui.NEW && seperateBooleanColors.getCurrentState()));
-    public Setting<Integer> stateFalseBooleanAlpha = this.register(new Setting<>("DisabledAlpha", 120, 0, 255, v -> gui.getCurrentState() == Gui.NEW && seperateBooleanColors.getCurrentState()));
-    public Setting<Integer> stateTrueBooleanRed = this.register(new Setting<>("EnabledRed", 30, 0, 255, v -> gui.getCurrentState() == Gui.NEW && seperateBooleanColors.getCurrentState()));
-    public Setting<Integer> stateTrueBooleanGreen = this.register(new Setting<>("EnabledGreen", 30, 0, 255, v -> gui.getCurrentState() == Gui.NEW && seperateBooleanColors.getCurrentState()));
-    public Setting<Integer> stateTrueBooleanBlue = this.register(new Setting<>("EnabledBlue", 30, 0, 255, v -> gui.getCurrentState() == Gui.NEW && seperateBooleanColors.getCurrentState()));
-    public Setting<Integer> stateTrueBooleanAlpha = this.register(new Setting<>("EnabledAlpha", 120, 0, 255, v -> gui.getCurrentState() == Gui.NEW && seperateBooleanColors.getCurrentState()));
+    public Setting<Integer> stateFalseBooleanRed = this.register(new Setting<>("BoolDisabledRed", 30, 0, 255, v -> gui.getCurrentState() == Gui.NEW && seperateBooleanColors.getCurrentState()));
+    public Setting<Integer> stateFalseBooleanGreen = this.register(new Setting<>("BoolDisabledGreen", 30, 0, 255, v -> gui.getCurrentState() == Gui.NEW && seperateBooleanColors.getCurrentState()));
+    public Setting<Integer> stateFalseBooleanBlue = this.register(new Setting<>("BoolDisabledBlue", 30, 0, 255, v -> gui.getCurrentState() == Gui.NEW && seperateBooleanColors.getCurrentState()));
+    public Setting<Integer> stateFalseBooleanAlpha = this.register(new Setting<>("BoolDisabledAlpha", 120, 0, 255, v -> gui.getCurrentState() == Gui.NEW && seperateBooleanColors.getCurrentState()));
+    public Setting<Integer> stateTrueBooleanRed = this.register(new Setting<>("BoolEnabledRed", 30, 0, 255, v -> gui.getCurrentState() == Gui.NEW && seperateBooleanColors.getCurrentState()));
+    public Setting<Integer> stateTrueBooleanGreen = this.register(new Setting<>("BoolEnabledGreen", 30, 0, 255, v -> gui.getCurrentState() == Gui.NEW && seperateBooleanColors.getCurrentState()));
+    public Setting<Integer> stateTrueBooleanBlue = this.register(new Setting<>("BoolEnabledBlue", 30, 0, 255, v -> gui.getCurrentState() == Gui.NEW && seperateBooleanColors.getCurrentState()));
+    public Setting<Integer> stateTrueBooleanAlpha = this.register(new Setting<>("BoolEnabledAlpha", 120, 0, 255, v -> gui.getCurrentState() == Gui.NEW && seperateBooleanColors.getCurrentState()));
 
     //OLD GUI
     public Setting<Boolean> topRectTextBold = this.register(new Setting("TopRectTextBold", true, v -> gui.getCurrentState() == Gui.OLD));

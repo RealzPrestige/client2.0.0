@@ -56,19 +56,15 @@ public class SwingAnimations extends Module {
     }
 
     public void onTick(){
-        switch(swing.getCurrentState()) {
-            case OFFHAND: {
-                mc.player.swingingHand = EnumHand.OFF_HAND;
-            }
-            case MAINHAND: {
+        if(swing.getCurrentState() == Swing.OFFHAND) {
+            mc.player.swingingHand = EnumHand.OFF_HAND;
+        } else if(swing.getCurrentState() == Swing.MAINHAND){
                 mc.player.swingingHand = EnumHand.MAIN_HAND;
-            }
-            case CANCEL: {
+            } else if(swing.getCurrentState() == Swing.CANCEL){
                 mc.player.isSwingInProgress = false;
                 mc.player.swingProgressInt = 0;
                 mc.player.swingProgress = 0.0f;
                 mc.player.prevSwingProgress = 0.0f;
-            }
         }
     }
     @Override

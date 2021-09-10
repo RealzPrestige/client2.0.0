@@ -14,7 +14,7 @@ public class NoRender extends Module {
     public Setting<Boolean> insideBlocks = this.register(new Setting<>("InsideBlocks", false));
     public Setting<Boolean> explosions = this.register(new Setting<>("Explosions", false));
     public NoRender(){
-        super("NoRenders", "Prevents things from being rendered.", Category.VISUAL);
+        super("NoRender", "Prevents things from being rendered.", Category.VISUAL);
         this.setInstance();
     }
 

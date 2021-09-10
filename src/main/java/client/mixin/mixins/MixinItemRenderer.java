@@ -37,13 +37,6 @@ public abstract class MixinItemRenderer {
             GL11.glColor4f(255, 255, 255, 50);
         }
     }
-
-    @Inject(method={"renderSuffocationOverlay"}, at={@At(value="HEAD")}, cancellable=true)
-    public void renderSuffocationOverlay(CallbackInfo ci) {
-        if (NoRender.getInstance().isOn() && NoRender.getInstance().insideBlocks.getCurrentState()) {
-            ci.cancel();
-        }
-    }
 }
 
 
