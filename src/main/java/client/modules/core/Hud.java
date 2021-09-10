@@ -54,7 +54,6 @@ public class Hud extends Module {
     public Setting<Boolean> welcomerAlign = register(new Setting("WelcomerAlign", false, v -> welcomer.getCurrentState()));
     public Setting<Boolean> nameHider = register(new Setting("NameHider", false));
     public Setting<String> name = register(new Setting("Name...", "popbob"));
-
     private final Setting<Boolean> coords = register(new Setting("Coords", false, "Your current coordinates"));
     private final Setting<Boolean> armor = this.register(new Setting<>("Armor", false, "ArmorHUD"));
     private final Setting<Boolean> percent = this.register(new Setting<Object>("Percent", false, v -> this.armor.getCurrentState()));
@@ -62,6 +61,13 @@ public class Hud extends Module {
     private final Setting<Integer> itemInfoY = this.register(new Setting<>("ItemInfoY", 10, 0, 400));
     private final Setting<Boolean> activeModules = register(new Setting("ActiveModules", false));
     private final Setting<ColorMode> colorMode = register(new Setting("ColorMode", ColorMode.NORMAL, v -> activeModules.getCurrentState()));
+    private final Setting<Boolean> info = register(new Setting("Info", false));
+    private final Setting<Boolean> infoAlphaStep = register(new Setting("InfoAlphaStep", false, v-> info.getCurrentState()));
+    private final Setting<Boolean> speed = register(new Setting("Speed", false, v-> info.getCurrentState()));
+    private final Setting<Boolean> potions = register(new Setting("Potions", false, v-> info.getCurrentState()));
+    private final Setting<Boolean> ping = register(new Setting("Ping", false, v-> info.getCurrentState()));
+    private final Setting<Boolean> tps = register(new Setting("TPS", false, v-> info.getCurrentState()));
+    private final Setting<Boolean> fps = register(new Setting("FPS", false, v-> info.getCurrentState()));
 
     public enum ColorMode {NORMAL, ALPHASTEP, RAINBOW}
 
@@ -104,6 +110,59 @@ public class Hud extends Module {
         int[] counter2 = {1};
         int[] counter69 = {1};
         int j = 0;
+        int i = (mc.currentScreen instanceof net.minecraft.client.gui.GuiChat ? 13 : -2 );
+        String grayString = "";
+
+        if (potions.getCurrentState()) {
+            List<PotionEffect> effects = new ArrayList<>((Minecraft.getMinecraft()).player.getActivePotionEffects());
+            for (PotionEffect potionEffect : effects) {
+                String str = Client.potionManager.getColoredPotionString(potionEffect);
+                i += 10;
+                this.renderer.drawString(str, (width - this.renderer.getStringWidth(str) - 2), (height - 2 - i), potionEffect.getPotion().getLiquidColor(), true);
+            }
+        }
+        if (this.speed.getCurrentState()) {
+            String str = grayString + "Speed " + ChatFormatting.WHITE + Client.speedManager.getSpeedKpH() + " km/h";
+            i += 10;
+            this.renderer.drawString(str, (width - this.renderer.getStringWidth(str) - 2), (height - 2 - i), infoAlphaStep.getCurrentState() ? ColorUtil.alphaStep(new Color(color), index.getCurrentState(), (counter1[0] + countt.getCurrentState())).getRGB() :  this.color, true);
+            counter1[0] = counter1[0] + 1;
+        }
+        if (this.tps.getCurrentState()) {
+            String str = grayString + "TPS " + ChatFormatting.WHITE + Client.serverManager.getTPS();
+            i += 10;
+            this.renderer.drawString(str, (width - this.renderer.getStringWidth(str) - 2), (height - 2 - i), infoAlphaStep.getCurrentState() ? ColorUtil.alphaStep(new Color(color), index.getCurrentState(), (counter1[0] + countt.getCurrentState())).getRGB() : this.color, true);
+            counter1[0] = counter1[0] + 1;
+        }
+        String fpsText = grayString + "FPS " + ChatFormatting.WHITE + Minecraft.debugFPS;
+        String str1 = grayString + "Ping " + ChatFormatting.WHITE + Client.serverManager.getPing();
+        if (this.renderer.getStringWidth(str1) > this.renderer.getStringWidth(fpsText)) {
+            if (this.ping.getCurrentState()) {
+                i += 10;
+                this.renderer.drawString(str1, (width - this.renderer.getStringWidth(str1) - 2), (height - 2 - i),infoAlphaStep.getCurrentState() ? ColorUtil.alphaStep(new Color(color), index.getCurrentState(), (counter1[0] + countt.getCurrentState())).getRGB() : this.color, true);
+                counter1[0] = counter1[0] + 1;
+            }
+            if (this.fps.getCurrentState()) {
+                i += 10;
+                this.renderer.drawString(fpsText, (width - this.renderer.getStringWidth(fpsText) - 2), (height - 2 - i), infoAlphaStep.getCurrentState() ? ColorUtil.alphaStep(new Color(color), index.getCurrentState(), (counter1[0] + countt.getCurrentState())).getRGB() : this.color, true);
+                counter1[0] = counter1[0] + 1;
+            }
+        } else {
+            if (this.fps.getCurrentState()) {
+                i += 10;
+                this.renderer.drawString(fpsText, (width - this.renderer.getStringWidth(fpsText) - 2), (height - 2 - i), infoAlphaStep.getCurrentState() ? ColorUtil.alphaStep(new Color(color), index.getCurrentState(), (counter1[0] + countt.getCurrentState())).getRGB() : this.color, true);
+                counter1[0] = counter1[0] + 1;
+            }
+            if (this.ping.getCurrentState()) {
+                i += 10;
+                this.renderer.drawString(str1, (width - this.renderer.getStringWidth(str1) - 2), (height - 2 - i), infoAlphaStep.getCurrentState() ? ColorUtil.alphaStep(new Color(color), index.getCurrentState(), (counter1[0] + countt.getCurrentState())).getRGB() : this.color, true);
+                counter1[0] = counter1[0] + 1;
+            }
+        }
+
+
+
+
+
         if (activeModules.getCurrentState()) {
             if (colorMode.getCurrentState() == ColorMode.NORMAL) {
                 for (int k = 0; k < Client.moduleManager.sortedModules.size(); k++) {
@@ -178,13 +237,10 @@ public class Hud extends Module {
             } else {
                 renderer.drawString(welcome, welcomerAlign.getCurrentState() ? 400 + f : welcomerX.getCurrentState() + f, welcomerY.getCurrentState(), this.color, true);
             }
-
-            int i = (mc.currentScreen instanceof net.minecraft.client.gui.GuiChat) ? 13 : -2;
         }
 
 
         boolean inHell = mc.world.getBiome(mc.player.getPosition()).getBiomeName().equals("Hell");
-        int i;
         i = (mc.currentScreen instanceof GuiChat) ? 14 : 0;
         int posX = (int) mc.player.posX;
         int posY = (int) mc.player.posY;

@@ -98,7 +98,10 @@ public class Freecam extends Module {
 
     @Override
     public void onLogout() {
-            this.disable();
+        disable();
+    }
+    public void onLogin(){
+        disable();
     }
 
     @SubscribeEvent

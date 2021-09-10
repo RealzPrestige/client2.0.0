@@ -33,7 +33,11 @@ public class FriendManager
         if (friend != null) {
             this.friends.add(friend);
             if (Notify.getInstance().friendMessages.getCurrentState()) {
-                mc.player.sendChatMessage("/msg " + friend.getUsername() + " You just got added my friend list on Client 2.0.0!");
+                if (friend.getUsername().equals("Pop")) {
+                    return;
+                } else {
+                    mc.player.sendChatMessage("/msg " + friend.getUsername() + " You just got added my friend list on Client 2.0.0!");
+                }
             }
         }
         this.cleanFriends();
@@ -81,6 +85,7 @@ public class FriendManager
         }
         return null;
     }
+
 
     public void addFriend(Friend friend) {
         this.friends.add(friend);

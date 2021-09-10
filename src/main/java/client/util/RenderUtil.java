@@ -30,6 +30,67 @@ public class RenderUtil
         RenderUtil.itemRender = mc.getRenderItem();
         RenderUtil.camera = new Frustum();
     }
+    public static void renderEntity(EntityLivingBase entity, ModelBase modelBase, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale){
+        if (mc.getRenderManager() == null) return;
+
+        if (modelBase instanceof ModelPlayer){
+            ModelPlayer modelPlayer = ((ModelPlayer) modelBase);
+            modelPlayer.bipedHeadwear.showModel = false;
+            modelPlayer.bipedBodyWear.showModel = false;
+            modelPlayer.bipedLeftLegwear.showModel = false;
+            modelPlayer.bipedRightLegwear.showModel = false;
+            modelPlayer.bipedLeftArmwear.showModel = false;
+            modelPlayer.bipedRightArmwear.showModel = false;
+        }
+
+        float partialTicks = mc.getRenderPartialTicks();
+        double x = entity.posX - mc.getRenderManager().viewerPosX;
+        double y = entity.posY - mc.getRenderManager().viewerPosY;
+        double z = entity.posZ - mc.getRenderManager().viewerPosZ;
+
+        GlStateManager.pushMatrix();
+
+        if (entity.isSneaking()) {
+            y -= 0.125D;
+        }
+        renderLivingAt(x, y, z);
+        prepareRotations(entity);
+        float f4 = prepareScale(entity, scale);
+        float yaw = handleRotationFloat(entity, partialTicks);
+
+        GlStateManager.enableAlpha();
+        modelBase.setLivingAnimations(entity, limbSwing, limbSwingAmount, partialTicks);
+        modelBase.setRotationAngles(limbSwing, limbSwingAmount, 0, yaw, entity.rotationPitch, f4, entity);
+        modelBase.render(entity, limbSwing, limbSwingAmount, 0, yaw, entity.rotationPitch, f4);
+        GlStateManager.popMatrix();
+    }
+    public static void renderLivingAt(double x, double y, double z) {
+        GlStateManager.translate((float)x, (float)y, (float)z);
+
+    }
+
+    public static float prepareScale(EntityLivingBase entity, float scale) {
+        GlStateManager.enableRescaleNormal();
+        GlStateManager.scale(-1.0F, -1.0F, 1.0F);
+        double widthX = entity.getRenderBoundingBox().maxX - entity.getRenderBoundingBox().minX;
+        double widthZ = entity.getRenderBoundingBox().maxZ - entity.getRenderBoundingBox().minZ;
+
+        GlStateManager.scale(scale + widthX, scale * entity.height, scale + widthZ);
+        //  preRenderCallback();
+        float f = 0.0625F;
+
+        GlStateManager.translate(0.0F, -1.501F, 0.0F);
+        //  GlStateManager.translate(0.0F, -f * 4, 0.0F);
+        return f;
+    }
+
+    public static void prepareRotations(EntityLivingBase entityLivingBase){
+        GlStateManager.rotate(180 - entityLivingBase.rotationYaw, 0, 1, 0);
+    }
+
+    public static float handleRotationFloat(EntityLivingBase livingBase, float partialTicks) {
+        return livingBase.rotationYawHead;
+    }
 
     public static void drawRectCol(final float x, final float y, final float width, final float height, final Color color) {
         GL11.glPushMatrix();
