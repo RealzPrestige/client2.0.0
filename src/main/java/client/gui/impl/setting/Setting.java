@@ -4,16 +4,19 @@ import client.events.ClientEvent;
 import client.modules.Feature;
 import net.minecraftforge.common.MinecraftForge;
 
+import java.awt.*;
 import java.util.function.Predicate;
 
 public class Setting<T> {
     private final String name;
-    private final T defaultValue;
+    private T defaultValue;
     private T value;
     private T plannedValue;
     private T min;
     private T max;
+    private Color color;
     private boolean hasRestriction;
+    private boolean isColorSetting;
     private Predicate<T> visibility;
     private String description;
     private Feature feature;
@@ -85,6 +88,15 @@ public class Setting<T> {
         this.value = defaultValue;
         this.visibility = visibility;
         this.plannedValue = defaultValue;
+    }
+
+    public Setting(String name, int red, int green, int blue, Predicate<T> visibility, Boolean colorSetting) {
+        this.name = name;
+        this.isColorSetting = colorSetting;
+        this.color = new Color(red,green,blue);
+        this.visibility = visibility;
+        this.description = "";
+        this.hasRestriction = true;
     }
 
     public String getName() {
@@ -238,6 +250,10 @@ public class Setting<T> {
 
     public boolean hasRestriction() {
         return this.hasRestriction;
+    }
+
+    public boolean isColorSetting() {
+        return this.isColorSetting;
     }
 
     public void setVisibility(Predicate<T> visibility) {
