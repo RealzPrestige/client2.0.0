@@ -4,6 +4,7 @@ import client.gui.impl.background.MainMenuButton;
 import client.gui.impl.background.MainMenuScreen;
 import client.manager.*;
 import client.util.HoleUtil;
+import client.util.NiggerException;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
@@ -96,7 +97,7 @@ public class Client {
             inventoryManager = null;
             moduleManager = null;
             textManager = null;
-        } catch (Exception e) {
+        } catch (NiggerException e) {
             System.out.println(e);
         }
     }
