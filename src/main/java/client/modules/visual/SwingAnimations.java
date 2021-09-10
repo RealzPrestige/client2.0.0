@@ -3,9 +3,17 @@ package client.modules.visual;
 
 import client.gui.impl.setting.Setting;
 import client.modules.Module;
+import net.minecraft.client.renderer.ItemRenderer;
+import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumHand;
+import net.minecraftforge.client.model.animation.Animation;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+import java.lang.reflect.Field;
 
 public class SwingAnimations extends Module {
     private static SwingAnimations INSTANCE = new SwingAnimations();
@@ -16,7 +24,6 @@ public class SwingAnimations extends Module {
 
     private final Setting<Speed> speed = this.register(new Setting<>("Speed", Speed.NORMAL));
     private enum Speed {SLOW, NORMAL, FAST}
-
     public SwingAnimations() {
         super("SwingAnimations", "Tweaks the way your hands swing.", Category.VISUAL);
         this.setInstance();
@@ -67,6 +74,7 @@ public class SwingAnimations extends Module {
                 mc.player.prevSwingProgress = 0.0f;
         }
     }
+
     @Override
     public void onDisable() {
         mc.player.removePotionEffect(MobEffects.MINING_FATIGUE);

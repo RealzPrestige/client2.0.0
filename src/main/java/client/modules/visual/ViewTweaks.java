@@ -4,6 +4,7 @@ import client.gui.impl.setting.Setting;
 import client.modules.Module;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ViewTweaks extends Module {
@@ -23,7 +24,6 @@ public class ViewTweaks extends Module {
     public Setting<Boolean> cameraClip = register(new Setting("CameraClip", false));
     public Setting<Boolean> extend = register(new Setting<>("Extend",false, v-> cameraClip.getCurrentState()));
     public Setting<Double> distance = register(new Setting<>("Distance",10.0, 0.0, 50.0, v-> cameraClip.getCurrentState() && extend.getCurrentState()) );
-
     public ViewTweaks(){
         super("ViewTweaks", "Tweaks the way stuff looks.", Category.VISUAL);
         this.setInstance();

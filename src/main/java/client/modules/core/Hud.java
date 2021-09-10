@@ -3,6 +3,7 @@ package client.modules.core;
 import client.Client;
 import client.events.PacketEvent;
 import client.events.Render2DEvent;
+import client.events.RenderEntityModelEvent;
 import client.gui.impl.setting.Setting;
 import client.modules.Module;
 import client.util.ColorUtil;
@@ -10,10 +11,16 @@ import client.util.RenderUtil;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
+import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderGlobal;
+import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.RenderItem;
+import net.minecraft.client.renderer.entity.RenderEnderCrystal;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
+import net.minecraftforge.client.event.*;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.awt.*;
@@ -25,14 +32,15 @@ import java.util.List;
 public class Hud extends Module {
     private static Hud INSTANCE = new Hud();
     private int color;
-    int packetsSent;
-    int packetsReceived;
     public int count = 0;
 
     private static final ItemStack totem = new ItemStack(Items.TOTEM_OF_UNDYING);
     private static final ItemStack crystals = new ItemStack(Items.END_CRYSTAL);
     private static final ItemStack gapples = new ItemStack(Items.GOLDEN_APPLE);
     private static final ItemStack exp = new ItemStack(Items.EXPERIENCE_BOTTLE);
+    public Setting<Boolean> removeHudEffects = register(new Setting<>("RemoveVanillaHudEffects",true));
+    public Setting<Boolean> removeToolTips = register(new Setting<>("RemoveToolTips",true));
+
     public Setting<Boolean> rainbow = register(new Setting("Rainbow", false));
     public Setting<Boolean> sideway = register(new Setting("RainbowSideway", false, v -> this.rainbow.getCurrentState()));
     public Setting<Integer> rainbowDelay = this.register(new Setting<Object>("Delay", 200, 0, 600, v -> this.rainbow.getCurrentState()));
@@ -63,6 +71,14 @@ public class Hud extends Module {
     private final Setting<Boolean> activeModules = register(new Setting("ActiveModules", false));
     private final Setting<ColorMode> colorMode = register(new Setting("ColorMode", ColorMode.NORMAL, v -> activeModules.getCurrentState()));
 
+    private final Setting<Boolean> info = register(new Setting("Info", false));
+    private final Setting<Boolean> infoAlphaStep = register(new Setting("InfoAlphaStep", false, v-> info.getCurrentState()));
+    private final Setting<Boolean> speed = register(new Setting("Speed", false, v-> info.getCurrentState()));
+    private final Setting<Boolean> potions = register(new Setting("Potions", false, v-> info.getCurrentState()));
+    private final Setting<Boolean> ping = register(new Setting("Ping", false, v-> info.getCurrentState()));
+    private final Setting<Boolean> tps = register(new Setting("TPS", false, v-> info.getCurrentState()));
+    private final Setting<Boolean> fps = register(new Setting("FPS", false, v-> info.getCurrentState()));
+
     public enum ColorMode {NORMAL, ALPHASTEP, RAINBOW}
 
     public Setting<Integer> index = this.register(new Setting("Index", 30, 0, 100, v -> colorMode.getCurrentState() == ColorMode.ALPHASTEP));
@@ -80,15 +96,17 @@ public class Hud extends Module {
         return INSTANCE;
     }
 
-
     @SubscribeEvent
-    public void onPacketSend(PacketEvent.Send event) {
-        ++packetsSent;
+    public void onRenderHud(RenderGameOverlayEvent event){
+        if(removeHudEffects.getCurrentState() && event.getType().equals(RenderGameOverlayEvent.ElementType.POTION_ICONS)){
+            event.setCanceled(true);
+        }
     }
-
     @SubscribeEvent
-    public void onPacketReceive(PacketEvent.Receive event) {
-        ++packetsReceived;
+    public void onRenderToolTip(RenderTooltipEvent event){
+        if(removeToolTips.getCurrentState()) {
+            event.setCanceled(true);
+        }
     }
 
     private void setInstance() {
@@ -102,8 +120,54 @@ public class Hud extends Module {
         int height = this.renderer.scaledHeight;
         int[] counter1 = {1};
         int[] counter2 = {1};
-        int[] counter69 = {1};
         int j = 0;
+        int i = (mc.currentScreen instanceof net.minecraft.client.gui.GuiChat ? 13 : -2 );
+        if (potions.getCurrentState()) {
+            List<PotionEffect> effects = new ArrayList<>((Minecraft.getMinecraft()).player.getActivePotionEffects());
+            for (PotionEffect potionEffect : effects) {
+                String str = Client.potionManager.getColoredPotionString(potionEffect);
+                i += 10;
+                this.renderer.drawString(str, (width - this.renderer.getStringWidth(str) - 2), (height - 2 - i), potionEffect.getPotion().getLiquidColor(), true);
+            }
+        }
+        if (this.speed.getCurrentState()) {
+            String str = "Speed " + ChatFormatting.WHITE + "[" + Client.speedManager.getSpeedKpH() + " km/h]";
+            i += 10;
+            this.renderer.drawString(str, (width - this.renderer.getStringWidth(str) - 2), (height - 2 - i), infoAlphaStep.getCurrentState() ? ColorUtil.alphaStep(new Color(color), index.getCurrentState(), (counter1[0] + countt.getCurrentState())).getRGB() :  this.color, true);
+            counter1[0] = counter1[0] + 1;
+        }
+        if (this.tps.getCurrentState()) {
+            String str = "TPS " + ChatFormatting.WHITE + "[" +  Client.serverManager.getTPS() + "]";
+            i += 10;
+            this.renderer.drawString(str, (width - this.renderer.getStringWidth(str) - 2), (height - 2 - i), infoAlphaStep.getCurrentState() ? ColorUtil.alphaStep(new Color(color), index.getCurrentState(), (counter1[0] + countt.getCurrentState())).getRGB() : this.color, true);
+            counter1[0] = counter1[0] + 1;
+        }
+        String fpsText = "FPS " +  ChatFormatting.WHITE + "[" + Minecraft.debugFPS + "]";
+        String str1 = "Ping " +  ChatFormatting.WHITE + "[" + Client.serverManager.getPing()  + "]";
+        if (this.renderer.getStringWidth(str1) > this.renderer.getStringWidth(fpsText)) {
+            if (this.ping.getCurrentState()) {
+                i += 10;
+                this.renderer.drawString(str1, (width - this.renderer.getStringWidth(str1) - 2), (height - 2 - i),infoAlphaStep.getCurrentState() ? ColorUtil.alphaStep(new Color(color), index.getCurrentState(), (counter1[0] + countt.getCurrentState())).getRGB() : this.color, true);
+                counter1[0] = counter1[0] + 1;
+            }
+            if (this.fps.getCurrentState()) {
+                i += 10;
+                this.renderer.drawString(fpsText, (width - this.renderer.getStringWidth(fpsText) - 2), (height - 2 - i), infoAlphaStep.getCurrentState() ? ColorUtil.alphaStep(new Color(color), index.getCurrentState(), (counter1[0] + countt.getCurrentState())).getRGB() : this.color, true);
+                counter1[0] = counter1[0] + 1;
+            }
+        } else {
+            if (this.fps.getCurrentState()) {
+                i += 10;
+                this.renderer.drawString(fpsText, (width - this.renderer.getStringWidth(fpsText) - 2), (height - 2 - i), infoAlphaStep.getCurrentState() ? ColorUtil.alphaStep(new Color(color), index.getCurrentState(), (counter1[0] + countt.getCurrentState())).getRGB() : this.color, true);
+                counter1[0] = counter1[0] + 1;
+            }
+            if (this.ping.getCurrentState()) {
+                i += 10;
+                this.renderer.drawString(str1, (width - this.renderer.getStringWidth(str1) - 2), (height - 2 - i), infoAlphaStep.getCurrentState() ? ColorUtil.alphaStep(new Color(color), index.getCurrentState(), (counter1[0] + countt.getCurrentState())).getRGB() : this.color, true);
+                counter1[0] = counter1[0] + 1;
+            }
+        }
+
         if (activeModules.getCurrentState()) {
             if (colorMode.getCurrentState() == ColorMode.NORMAL) {
                 for (int k = 0; k < Client.moduleManager.sortedModules.size(); k++) {
@@ -178,13 +242,10 @@ public class Hud extends Module {
             } else {
                 renderer.drawString(welcome, welcomerAlign.getCurrentState() ? 400 + f : welcomerX.getCurrentState() + f, welcomerY.getCurrentState(), this.color, true);
             }
-
-            int i = (mc.currentScreen instanceof net.minecraft.client.gui.GuiChat) ? 13 : -2;
         }
 
 
         boolean inHell = mc.world.getBiome(mc.player.getPosition()).getBiomeName().equals("Hell");
-        int i;
         i = (mc.currentScreen instanceof GuiChat) ? 14 : 0;
         int posX = (int) mc.player.posX;
         int posY = (int) mc.player.posY;
@@ -195,7 +256,7 @@ public class Hud extends Module {
         String coordinates = ChatFormatting.WHITE + "XYZ " + ChatFormatting.RESET + (inHell ? (posX + ", " + posY + ", " + posZ + ChatFormatting.WHITE + " [" + ChatFormatting.RESET + hposX + ", " + hposZ + ChatFormatting.WHITE + "]" + ChatFormatting.RESET) : (posX + ", " + posY + ", " + posZ + ChatFormatting.WHITE + " [" + ChatFormatting.RESET + hposX + ", " + hposZ + ChatFormatting.WHITE + "]"));
         String coords = this.coords.getCurrentState() ? coordinates : "";
         i += 10;
-        if ((ClickGui.getInstance()).rainbow.getCurrentState()) {
+        if (rainbow.getCurrentState()) {
             String rainbowCoords = this.coords.getCurrentState() ? ("XYZ " + (inHell ? (posX + ", " + posY + ", " + posZ + " [" + hposX + ", " + hposZ + "]") : (posX + ", " + posY + ", " + posZ + " [" + hposX + ", " + hposZ + "]"))) : "";
             if (!sideway.getCurrentState()) {
                 this.renderer.drawString(rainbowCoords, 2.0F, (height - i), ColorUtil.rainbowHud((rainbowDelay.getCurrentState())).getRGB(), true);

@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value={EntityRenderer.class}, priority=0x7FFFFFFE)
 public abstract class MixinEntityRenderer {
+
     @ModifyVariable(method={"orientCamera"}, ordinal=3, at=@At(value="STORE", ordinal=0), require=1)
     public double changeCameraDistanceHook(double range) {
         return ViewTweaks.getInstance().isEnabled() && ViewTweaks.getInstance().cameraClip.getCurrentState() && ViewTweaks.getInstance().extend.getCurrentState() ? ViewTweaks.getInstance().distance.getCurrentState() : range;

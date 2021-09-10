@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 public class ModuleManager
         extends Feature {
-    public static ArrayList<Module> moduleList = new ArrayList();
+    public static ArrayList<Module> moduleList = new ArrayList<>();
     public List<Module> sortedModules = new ArrayList<>();
 
     public void init() {
@@ -117,7 +117,7 @@ public class ModuleManager
     }
 
     public Module getModuleByName(String name) {
-        for (Module module : this.moduleList) {
+        for (Module module : moduleList) {
             if (!module.getName().equalsIgnoreCase(name)) continue;
             return module;
         }
@@ -125,7 +125,7 @@ public class ModuleManager
     }
 
     public <T extends Module> T getModuleByClass(Class<T> clazz) {
-        for (Module module : this.moduleList) {
+        for (Module module : moduleList) {
             if (!clazz.isInstance(module)) continue;
             return (T) module;
         }
@@ -137,17 +137,10 @@ public class ModuleManager
         return module != null && module.isOn();
     }
 
-    public Module getModuleByDisplayName(String displayName) {
-        for (Module module : this.moduleList) {
-            if (!module.getDisplayName().equalsIgnoreCase(displayName)) continue;
-            return module;
-        }
-        return null;
-    }
 
     public ArrayList<Module> getEnabledModules() {
         ArrayList<Module> enabledModules = new ArrayList <> ( );
-        for (Module module : this.moduleList) {
+        for (Module module : moduleList) {
             if (!module.isEnabled()) continue;
             enabledModules.add(module);
         }
@@ -155,7 +148,7 @@ public class ModuleManager
     }
     public ArrayList<Module> getModulesByCategory(Module.Category category) {
         ArrayList<Module> modulesCategory = new ArrayList <> ( );
-        this.moduleList.forEach(module -> {
+        moduleList.forEach(module -> {
             if (module.getCategory() == category) {
                 modulesCategory.add(module);
             }
@@ -168,23 +161,23 @@ public class ModuleManager
     }
 
     public void onLoad() {
-        this.moduleList.forEach(Module::onLoad);
+        moduleList.forEach(Module::onLoad);
     }
 
     public void onUpdate() {
-        this.moduleList.stream().filter(Feature::isEnabled).forEach(Module::onUpdate);
+        moduleList.stream().filter(Feature::isEnabled).forEach(Module::onUpdate);
     }
 
     public void onTick() {
-        this.moduleList.stream().filter(Feature::isEnabled).forEach(Module::onTick);
+        moduleList.stream().filter(Feature::isEnabled).forEach(Module::onTick);
     }
 
     public void onRender2D(Render2DEvent event) {
-        this.moduleList.stream().filter(Feature::isEnabled).forEach(module -> module.onRender2D(event));
+        moduleList.stream().filter(Feature::isEnabled).forEach(module -> module.onRender2D(event));
     }
 
     public void onRender3D(Render3DEvent event) {
-        this.moduleList.stream().filter(Feature::isEnabled).forEach(module -> module.onRender3D(event));
+        moduleList.stream().filter(Feature::isEnabled).forEach(module -> module.onRender3D(event));
     }
 
     public void sortModules(boolean reverse) {
@@ -192,20 +185,20 @@ public class ModuleManager
     }
 
     public void onLogout() {
-        this.moduleList.forEach(Module::onLogout);
+        moduleList.forEach(Module::onLogout);
     }
 
     public void onLogin() {
-        this.moduleList.forEach(Module::onLogin);
+        moduleList.forEach(Module::onLogin);
     }
 
     public void onUnload() {
-        this.moduleList.forEach(MinecraftForge.EVENT_BUS::unregister);
-        this.moduleList.forEach(Module::onUnload);
+        moduleList.forEach(MinecraftForge.EVENT_BUS::unregister);
+        moduleList.forEach(Module::onUnload);
     }
 
     public void onUnloadPost() {
-        for (Module module : this.moduleList) {
+        for (Module module : moduleList) {
             module.enabled.setValue(false);
         }
     }
@@ -214,7 +207,7 @@ public class ModuleManager
         if (eventKey == 0 || !Keyboard.getEventKeyState() || ModuleManager.mc.currentScreen instanceof ClientGui) {
             return;
         }
-        this.moduleList.forEach(module -> {
+        moduleList.forEach(module -> {
             if (module.getBind().getKey() == eventKey) {
                 module.toggle();
             }

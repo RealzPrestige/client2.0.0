@@ -22,7 +22,8 @@ public class KeyEXP extends Module {
     private int armorCheck = 0;
     private int delay_count;
     int prvSlot;
-    public Setting<Bind> bind = this.register(new Setting<>("EXPBind:", new Bind(-1)));
+    public Setting<Boolean> middleClick = this.register(new Setting<>("MiddleClick", false));
+    public Setting<Bind> bind = this.register(new Setting<>("EXPBind:", new Bind(-1), v-> !middleClick.getCurrentState()));
     public Setting<Boolean> feet = this.register(new Setting<>("Feet", false));
     public Setting<Boolean> takeOff = this.register(new Setting<>("ArmorTakeOff", false));
     public Setting<Integer> threshold = this.register(new Setting<>("Threshold", 100, 0, 100, v-> this.takeOff.getCurrentState()));
@@ -33,26 +34,30 @@ public class KeyEXP extends Module {
     }
 
     @Override
-    public void onUpdate(){
-        if(this.bind.getCurrentState().getKey() > -1) {
+    public void onUpdate() {
+        if (this.bind.getCurrentState().getKey() > -1) {
             if (Keyboard.isKeyDown(this.bind.getCurrentState().getKey()) && mc.currentScreen == null) {
                 useXp();
-                if(AutoArmor.getInstance().isEnabled()){
+                if (AutoArmor.getInstance().isEnabled()) {
                     this.armorCheck = 1;
                     return;
                 } else {
                     return;
                 }
             } else {
-                if(this.armorCheck == 2){
+                if (this.armorCheck == 2) {
                     AutoArmor.getInstance().enable();
                     this.armorCheck = 0;
 
                 }
             }
-        }else if(this.bind.getCurrentState().getKey() < -1) {
-            if (Mouse.isButtonDown(PlayerUtil.convertToMouse(this.bind.getCurrentState().getKey())) && mc.currentScreen == null) {
+        } else if (middleClick.getCurrentState()) {
+            if (Mouse.isButtonDown(2) && mc.currentScreen == null) {
                 useXp();
+            }
+        }else if (this.bind.getCurrentState().getKey() < -1) {
+                if (Mouse.isButtonDown(PlayerUtil.convertToMouse(this.bind.getCurrentState().getKey())) && mc.currentScreen == null) {
+                    useXp();
             }
         }
     }

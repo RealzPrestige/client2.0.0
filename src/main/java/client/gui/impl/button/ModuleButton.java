@@ -9,9 +9,12 @@ import client.gui.impl.setting.Bind;
 import client.gui.impl.setting.Setting;
 import client.modules.Module;
 import client.modules.core.ClickGui;
+import client.util.ColorUtil;
+import client.util.RenderUtil;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.init.SoundEvents;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,7 +94,9 @@ public class ModuleButton
             }
         }
         if(isHovering(mouseX, mouseY)){
-            renderer.drawStringWithShadow(module.getDescription(), mouseX, mouseY, -1);
+            RenderUtil.drawRect(mouseX + 10, mouseY, mouseX + 10 + renderer.getStringWidth(module.getDescription()), mouseY + 10, ColorUtil.toRGBA(0,0,0, 50));
+            RenderUtil.drawBorder(mouseX + 10, mouseY, renderer.getStringWidth(module.getDescription()), 10, new Color(ColorUtil.toRGBA(ClickGui.getInstance().newared.getCurrentState(), ClickGui.getInstance().newagreen.getCurrentState(), ClickGui.getInstance().newablue.getCurrentState(), 30 / 255)));
+            renderer.drawStringWithShadow(module.getDescription(), mouseX + 10, mouseY, -1);
         }
     }
 

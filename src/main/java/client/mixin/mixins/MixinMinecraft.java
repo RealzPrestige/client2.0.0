@@ -3,7 +3,9 @@ package client.mixin.mixins;
 import client.Client;
 import client.gui.impl.background.MainMenuScreen;
 import client.gui.impl.background.MenuToggler;
+import client.util.Util;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.crash.CrashReport;
@@ -40,10 +42,9 @@ public abstract class MixinMinecraft {
             }
         }
     }
+
     @Shadow
     public abstract void displayGuiScreen(@Nullable GuiScreen var1);
-
-
 
     @Inject(method = {"displayGuiScreen"}, at = {@At(value = "HEAD")})
     private void displayGuiScreen(GuiScreen screen, CallbackInfo ci) {

@@ -17,11 +17,6 @@ public class Viewmodel extends Module {
     public Setting<Float> offhandX = register(new Setting("OffhandX", 0.0f, -1.0f, 1.0f));
     public Setting<Float> offhandY = register(new Setting("OffhandY", 0.0f, -1.0f, 1.0f));
     public Setting<Float> offhandZ = register(new Setting("OffhandZ", 0.0f, -1.0f, 1.0f));
-    public Setting<Integer> red = register(new Setting<>("Red", 255, 0, 255));
-    public Setting<Integer> green = register(new Setting<>("Green", 255, 0, 255));
-    public Setting<Integer> blue = register(new Setting<>("Blue", 255, 0, 255));
-    public Setting<Integer> alpha = register(new Setting<>("Alpha", 255, 0, 255));
-
     private static Viewmodel INSTANCE = new Viewmodel();
 
     public Viewmodel() {
