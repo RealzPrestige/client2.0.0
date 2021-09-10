@@ -6,6 +6,7 @@ import client.events.*;
 import client.modules.Feature;
 import client.modules.miscellaneous.FakePlayer;
 import client.modules.miscellaneous.TotemPopCounter;
+import client.util.NiggerException;
 import client.util.Timer;
 import com.google.common.base.Strings;
 import com.mojang.realmsclient.gui.ChatFormatting;
@@ -48,7 +49,12 @@ public class EventManager extends Feature {
     }
 
     public void onUnload() {
-        MinecraftForge.EVENT_BUS.unregister(this);
+        try {
+
+            MinecraftForge.EVENT_BUS.unregister(this);
+        } catch (NiggerException e) {
+            System.out.println(e);
+        }
     }
 
     @SubscribeEvent
