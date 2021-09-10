@@ -1,26 +1,48 @@
 package client.modules.miscellaneous;
 
-import client.gui.impl.setting.Setting;
 import client.modules.Module;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 
 public class NoEntityTrace extends Module {
-    private static NoEntityTrace INSTANCE = new NoEntityTrace();
-    public Setting<Boolean> pickaxe = register(new Setting<>("Pickaxe", true));
-    public Setting<Boolean> gapple = register(new Setting<>("Gapple", true));
 
-    public NoEntityTrace() {
-        super("NoEntityTrace", "NoHitBox.", Module.Category.MISC);
-        this.setInstance();
+    public NoEntityTrace(){
+        super("NoEntityTrace", "Ignores entity hitboxes on pickaxe swings.", Category.MISC);
     }
 
-    public static NoEntityTrace getINSTANCE() {
-        if (INSTANCE == null) {
-            INSTANCE = new NoEntityTrace();
+    private boolean focus = false;
+
+    @Override
+    public void onUpdate() {
+        mc.world.loadedEntityList.stream()
+                .filter(entity -> entity instanceof EntityLivingBase)
+                .filter(entity -> mc.player == entity)
+                .map(   entity -> (EntityLivingBase) entity)
+                .filter(entity -> !(entity.isDead))
+                .forEach(this::process);
+
+        RayTraceResult normalResult = mc.objectMouseOver;
+
+        if (normalResult != null) {
+            focus = normalResult.typeOfHit == RayTraceResult.Type.ENTITY;
         }
-        return INSTANCE;
     }
 
-    private void setInstance() {
-        INSTANCE = this;
+    private void process(EntityLivingBase event) {
+        RayTraceResult bypassEntityResult = event.rayTrace(6, mc.getRenderPartialTicks());
+
+        if (bypassEntityResult != null && focus) {
+            if (bypassEntityResult.typeOfHit == RayTraceResult.Type.BLOCK) {
+                BlockPos pos = bypassEntityResult.getBlockPos();
+
+                if (mc.gameSettings.keyBindAttack.isKeyDown()) {
+                    mc.playerController.onPlayerDamageBlock(pos, EnumFacing.UP);
+                }
+            }
+        }
     }
 }
+
+

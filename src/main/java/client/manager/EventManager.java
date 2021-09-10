@@ -37,7 +37,6 @@ public class EventManager extends Feature {
     public int incomingpackets;
     public int sendingpackets;
     public int resetTimer;
-    public int popAlpha;
     private final Timer logoutTimer = new Timer();
     private final Timer chorusTimer = new Timer();
     private final AtomicBoolean tickOngoing;
@@ -84,9 +83,6 @@ public class EventManager extends Feature {
             MinecraftForge.EVENT_BUS.post(new DeathEvent(player));
             TotemPopCounter.getInstance().onDeath(player);
         }
-        if(popAlpha > 0){
-            popAlpha = popAlpha - (PopChams.getInstance().popSpeed.getCurrentState() == PopChams.PopSpeed.SLOW ? 1 : PopChams.getInstance().popSpeed.getCurrentState() == PopChams.PopSpeed.SLOWMEDIUM ? 2 : PopChams.getInstance().popSpeed.getCurrentState() == PopChams.PopSpeed.MEDIUM ? 3 : PopChams.getInstance().popSpeed.getCurrentState() == PopChams.PopSpeed.MEDIUMFAST ? 4 : 5);
-        }
 
     }
 
@@ -130,7 +126,6 @@ public class EventManager extends Feature {
                 MinecraftForge.EVENT_BUS.post(new TotemPopEvent(player));
                 TotemPopCounter.getInstance().onTotemPop(player);
                 PopChams.INSTANCE.onTotemPop(player);
-                popAlpha = PopChams.getInstance().startAlpha.getCurrentState() == PopChams.StartAlpha.LOW ? 50 : PopChams.getInstance().startAlpha.getCurrentState() == PopChams.StartAlpha.LOWMEDIUM ? 100 : PopChams.getInstance().startAlpha.getCurrentState() == PopChams.StartAlpha.MEDIUM ? 150 : PopChams.getInstance().startAlpha.getCurrentState() == PopChams.StartAlpha.MEDIUMHIGH ? 200 : 250;
             }
         }
         if (event.getPacket() instanceof SPacketPlayerListItem && !fullNullCheck() && this.logoutTimer.passedS(1.0D)) {

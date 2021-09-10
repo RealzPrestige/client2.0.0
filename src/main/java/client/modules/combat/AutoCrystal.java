@@ -71,6 +71,7 @@ public class AutoCrystal extends Module {
     public Setting<Integer> cAlpha;
     public Setting<Integer> lineWidth;
     public Setting<Boolean> cRainbow;
+    public Setting<Boolean> silentSwitch;
     public Set<BlockPos> placeSet;
     public  BlockPos placePos = null;
     public Timer clearTimer;
@@ -107,6 +108,7 @@ public class AutoCrystal extends Module {
         this.facePlaceHP = (Setting<Float>)this.register(new Setting("FaceplaceHP", 8.0f, 0.0f, 36.0f, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
         this.minDamage = (Setting<Float>)this.register(new Setting("MinDamage", 4.0f, 1.0f, 36.0f, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
         this.maxSelfDamage = (Setting<Float>)this.register(new Setting("MaxSelfDmg",8.0f, 1.0f, 36.0f, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
+        this.silentSwitch = (Setting<Boolean>)this.register(new Setting("SilentSwitch",true, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
         this.swing = (Setting<Boolean>)this.register(new Setting("Swing", false, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
         this.announceOnly = (Setting<Boolean>)this.register(new Setting("AnnounceOnly", false, v-> this.setting.getCurrentState() == Settings.AUTOCRYSTAL));
         this.renderMode = (Setting<RenderMode>)this.register(new Setting<>("RenderMode", RenderMode.NORMAL, v-> this.setting.getCurrentState() == Settings.RENDER));
@@ -240,6 +242,9 @@ public class AutoCrystal extends Module {
             }
 
         }
+        if (silentSwitch.getCurrentState() && (InventoryUtil.findHotbarBlock(ItemEndCrystal.class) > 1)) {
+            mc.player.connection.sendPacket(new CPacketHeldItemChange(InventoryUtil.findHotbarBlock(ItemEndCrystal.class)));
+        }
 
         if (!this.offhand && !this.mainhand) {
             this.renderPos = null;
@@ -248,12 +253,16 @@ public class AutoCrystal extends Module {
 
         if (placePos != null) {
             clearMap(placePos);
-            mc.getConnection().sendPacket(new CPacketPlayerTryUseItemOnBlock(placePos, EnumFacing.UP, this.offhand ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND , 0.5f, 0.5f, 0.5f));
+            Objects.requireNonNull(mc.getConnection()).sendPacket(new CPacketPlayerTryUseItemOnBlock(placePos, EnumFacing.UP, this.offhand ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND , 0.5f, 0.5f, 0.5f));
             renderMap.add(new RenderPos(placePos, 0.0));
             this.placeSet.add(placePos);
             this.renderPos = placePos;
         } else {
             this.renderPos = null;
+        }
+        if (silentSwitch.getCurrentState()) {
+            int oldSlot = mc.player.inventory.currentItem;
+            mc.player.connection.sendPacket(new CPacketHeldItemChange(oldSlot));
         }
     }
 
@@ -281,7 +290,7 @@ public class AutoCrystal extends Module {
             if (entity != null && this.breakTimer.passedMs(this.breakDelay.getCurrentState())) {
                 BlockPos renderPos = entity.getPosition().down();
                 clearMap(renderPos);
-                mc.getConnection().sendPacket(new CPacketUseEntity(entity));
+                Objects.requireNonNull(mc.getConnection()).sendPacket(new CPacketUseEntity(entity));
                 renderMap.add(new RenderPos(renderPos, 0.0));
                 if(swing.getCurrentState()) {
                     mc.player.swingArm(this.offhand ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND);
@@ -307,7 +316,7 @@ public class AutoCrystal extends Module {
         final CPacketUseEntity hitPacket = new CPacketUseEntity();
         hitPacket.entityId = id;
         hitPacket.action = CPacketUseEntity.Action.ATTACK;
-        mc.getConnection().sendPacket(hitPacket);
+        Objects.requireNonNull(mc.getConnection()).sendPacket(hitPacket);
         this.predictedId = id;
         if(swing.getCurrentState()) {
             mc.player.swingArm(this.offhand ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND);

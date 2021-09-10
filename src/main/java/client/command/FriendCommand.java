@@ -35,22 +35,14 @@ public class FriendCommand
                     return;
                 }
             }
-            if(commands[1].equals("Pop")){
-                return;
-            } else {
-                FriendCommand.sendMessage(commands[0] + (Client.friendManager.isFriend(commands[0]) ? " is friended." : " isn't friended."));
-                return;
-            }
+            FriendCommand.sendMessage(commands[0] + (Client.friendManager.isFriend(commands[0]) ? " is friended." : " isn't friended."));
+            return;
         }
         if (commands.length >= 2) {
             switch (commands[0]) {
                 case "add": {
                     Client.friendManager.addFriend(commands[1]);
-                    if(commands[1].equals("Pop")){
-                        return;
-                    } else {
-                        FriendCommand.sendMessage(ChatFormatting.GREEN + commands[1] + " has been friended to your Friend list.");
-                    }
+                    FriendCommand.sendMessage(ChatFormatting.GREEN + commands[1] + " has been friended to your Friend list.");
                     return;
                 }
                 case "del": {

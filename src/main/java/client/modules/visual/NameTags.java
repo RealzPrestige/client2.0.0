@@ -16,11 +16,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import org.lwjgl.opengl.GL11;
 
-import java.util.Iterator;
 import java.util.Objects;
 
 public class NameTags extends Module {
     private static NameTags INSTANCE = new NameTags();
+
     public NameTags() {
         super("Nametags", "Better Nametags", Category.VISUAL);
         this.setInstance();
@@ -40,28 +40,20 @@ public class NameTags extends Module {
     @Override
     public void onRender3D(Render3DEvent event) {
         if (!NameTags.fullNullCheck()) {
-
-            Iterator iterator = mc.world.playerEntities.iterator();
-
-            while (iterator.hasNext()) {
-                Object o = iterator.next();
-                Entity entity = (Entity) o;
-                if (entity instanceof EntityPlayer && entity.isEntityAlive() && !entity.isInvisible()) {
-                    double x = interpolate(entity.lastTickPosX, entity.posX, event.getPartialTicks()) - mc.getRenderManager().renderPosX;
-                    double y = interpolate(entity.lastTickPosY, entity.posY, event.getPartialTicks()) - mc.getRenderManager().renderPosY;
-                    double z = interpolate(entity.lastTickPosZ, entity.posZ, event.getPartialTicks()) - mc.getRenderManager().renderPosZ;
-                    this.renderNameTag((EntityPlayer) entity, x, y, z, event.getPartialTicks());
-                }
+            for (EntityPlayer player : mc.world.playerEntities) {
+                if (player == null || player.equals(NameTags.mc.player) || !player.isEntityAlive() || player.isInvisible() && !EntityUtil.isInFov(player))
+                    continue;
+                double x = this.interpolate(player.lastTickPosX, player.posX, event.getPartialTicks()) - NameTags.mc.getRenderManager().renderPosX;
+                double y = this.interpolate(player.lastTickPosY, player.posY, event.getPartialTicks()) - NameTags.mc.getRenderManager().renderPosY;
+                double z = this.interpolate(player.lastTickPosZ, player.posZ, event.getPartialTicks()) - NameTags.mc.getRenderManager().renderPosZ;
+                this.renderNameTag(player, x, y, z, event.getPartialTicks());
             }
         }
     }
 
 
     private void renderNameTag(EntityPlayer player, double x, double y, double z, float delta) {
-        if(player.getName().equals("FakePlayer")){
-            return;
-        }
-        if(player.getName().equals("Pop")) {
+        if(player.getName().equals("FakePlayer") || player.getName().equals("PopCham")){
             return;
         }
         double tempY = y;
@@ -171,15 +163,15 @@ public class NameTags extends Module {
 
 
     private String getDisplayTag(EntityPlayer player) {
-            String name = player.getDisplayName().getFormattedText();
-            float health = Math.round(EntityUtil.getHealth(player));
-            String color = health > 18.0f ? "\u00a7a" : (health > 16.0f ? "\u00a72" : (health > 12.0f ? "\u00a7e" : (health > 8.0f ? "\u00a76" : (health > 5.0f ? "\u00a7c" : "\u00a74"))));
-            String pingStr = "";
+        String name = player.getDisplayName().getFormattedText();
+        float health = Math.round(EntityUtil.getHealth(player));
+        String color = health > 18.0f ? "\u00a7a" : (health > 16.0f ? "\u00a72" : (health > 12.0f ? "\u00a7e" : (health > 8.0f ? "\u00a76" : (health > 5.0f ? "\u00a7c" : "\u00a74"))));
+        String pingStr = "";
             try {
                 int responseTime = Objects.requireNonNull(mc.getConnection()).getPlayerInfo(player.getUniqueID()).getResponseTime();
                 pingStr = pingStr + responseTime + "ms ";
             } catch (Exception ignored) {
-            }
+        }
        return name + " " +  pingStr + color + health;
     }
 
