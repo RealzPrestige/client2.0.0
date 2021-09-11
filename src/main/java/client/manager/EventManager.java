@@ -6,6 +6,7 @@ import client.events.*;
 import client.modules.Feature;
 import client.modules.miscellaneous.FakePlayer;
 import client.modules.miscellaneous.TotemPopCounter;
+import client.modules.visual.NameTags;
 import client.modules.visual.PopChams;
 import client.util.NiggerException;
 import client.util.Timer;
@@ -118,6 +119,11 @@ public class EventManager extends Feature {
             incomingpackets = 0;
         }
 
+    }
+
+    @SubscribeEvent
+    public void onPlayerDisconnect(EntityRemovedEvent event){
+        NameTags.getInstance().entities.remove(event.getEntity());
     }
 
     @SubscribeEvent

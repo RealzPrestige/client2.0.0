@@ -1,13 +1,17 @@
 package client.mixin.mixins;
 
+import client.events.EntityRemovedEvent;
 import com.google.common.base.Predicate;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
+import net.minecraftforge.common.MinecraftForge;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
 
@@ -19,6 +23,11 @@ public class MixinWorld {
             chunk.getEntitiesOfTypeWithinAABB(entityClass, aabb, listToFill, filter);
         } catch (Exception ignored ) {
         }
+    }
+    @Inject(method = "onEntityRemoved", at = @At("HEAD"), cancellable = true)
+    public void onEntityRemoved(Entity event_packet, CallbackInfo p_Info) {
+        EntityRemovedEvent event = new EntityRemovedEvent(event_packet);
+        MinecraftForge.EVENT_BUS.post(event);
     }
 }
 

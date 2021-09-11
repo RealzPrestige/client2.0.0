@@ -97,13 +97,6 @@ public class Hud extends Module {
         return INSTANCE;
     }
 
-    public void onLogin(){
-        if(isEnabled()){
-            this.disable();
-            this.enable();
-        }
-    }
-
     @SubscribeEvent
     public void onRenderHud(RenderGameOverlayEvent event){
         if(removeHudEffects.getCurrentState() && event.getType().equals(RenderGameOverlayEvent.ElementType.POTION_ICONS)){

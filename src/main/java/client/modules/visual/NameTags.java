@@ -1,6 +1,7 @@
 package client.modules.visual;
 
 import client.Client;
+import client.events.EntityRemovedEvent;
 import client.events.Render3DEvent;
 import client.modules.Module;
 import client.util.ColorUtil;
@@ -15,7 +16,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
-import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.opengl.GL11;
 
 import java.util.HashSet;
@@ -23,7 +24,8 @@ import java.util.Objects;
 
 public class NameTags extends Module {
     private static NameTags INSTANCE = new NameTags();
-    HashSet<EntityPlayer> entities = Sets.newHashSet();
+    public HashSet<EntityPlayer> entities = Sets.newHashSet();
+
     public NameTags() {
         super("Nametags", "Better Nametags", Category.VISUAL);
         this.setInstance();
@@ -49,19 +51,19 @@ public class NameTags extends Module {
                 } else {
                     entities.remove(players);
                 }
-                if(players == null){
+                if (players == null) {
                     entities.remove(players);
                 }
 
-              }
-            }
-            for (EntityPlayer player : entities) {
-                    double x = this.interpolate(player.lastTickPosX, player.posX, event.getPartialTicks()) - NameTags.mc.getRenderManager().renderPosX;
-                    double y = this.interpolate(player.lastTickPosY, player.posY, event.getPartialTicks()) - NameTags.mc.getRenderManager().renderPosY;
-                    double z = this.interpolate(player.lastTickPosZ, player.posZ, event.getPartialTicks()) - NameTags.mc.getRenderManager().renderPosZ;
-                    this.renderNameTag(player, x, y, z, event.getPartialTicks());
             }
         }
+        for (EntityPlayer player : entities) {
+            double x = this.interpolate(player.lastTickPosX, player.posX, event.getPartialTicks()) - NameTags.mc.getRenderManager().renderPosX;
+            double y = this.interpolate(player.lastTickPosY, player.posY, event.getPartialTicks()) - NameTags.mc.getRenderManager().renderPosY;
+            double z = this.interpolate(player.lastTickPosZ, player.posZ, event.getPartialTicks()) - NameTags.mc.getRenderManager().renderPosZ;
+            this.renderNameTag(player, x, y, z, event.getPartialTicks());
+        }
+    }
 
 
     private void renderNameTag(EntityPlayer player, double x, double y, double z, float delta) {
