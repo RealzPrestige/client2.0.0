@@ -96,8 +96,8 @@ public class EventManager extends Feature {
         if(popAlpha > 0){
             popAlpha = popAlpha - (PopChams.getInstance().popSpeed.getCurrentState() == PopChams.PopSpeed.SLOW ? 1 : PopChams.getInstance().popSpeed.getCurrentState() == PopChams.PopSpeed.SLOWMEDIUM ? 2 : PopChams.getInstance().popSpeed.getCurrentState() == PopChams.PopSpeed.MEDIUM ? 3 : PopChams.getInstance().popSpeed.getCurrentState() == PopChams.PopSpeed.MEDIUMFAST ? 4 : 5);
         }
-        if (PopChams.INSTANCE.yTravel.getCurrentState() && y > 12) {
-            y++;
+        if (PopChams.INSTANCE.yTravel.getCurrentState()) {
+            y = y + (PopChams.getInstance().yTravelSpeed.getCurrentState() == PopChams.YTravelSpeed.SLOW ? 1 : PopChams.getInstance().yTravelSpeed.getCurrentState() == PopChams.YTravelSpeed.SLOWMEDIUM ? 2 : PopChams.getInstance().yTravelSpeed.getCurrentState() == PopChams.YTravelSpeed.MEDIUM ? 3 : PopChams.getInstance().yTravelSpeed.getCurrentState() == PopChams.YTravelSpeed.MEDIUMFAST ? 4 : 5);
         }
 
     }
