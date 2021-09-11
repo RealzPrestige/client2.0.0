@@ -6,14 +6,17 @@ import client.modules.Module;
 import client.util.ColorUtil;
 import client.util.EntityUtil;
 import client.util.RenderUtil;
+import com.google.common.collect.Sets;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 
 import java.awt.*;
+import java.util.HashSet;
 
 
 public class CityESP extends Module {
+    HashSet<EntityPlayer> entities = Sets.newHashSet();
     public Setting<Integer> red = register(new Setting("Red", 120, 0, 255));
     public Setting<Integer> green = register(new Setting("Green", 120, 0, 255));
     public Setting<Integer> blue = register(new Setting("Blue", 120, 0, 255));
@@ -28,10 +31,17 @@ public class CityESP extends Module {
     }
 
     public void onRender3D(Render3DEvent event){
-        for (EntityPlayer player : mc.world.playerEntities) {
-             cityBlocks(player);
+            for (EntityPlayer player : mc.world.playerEntities) {
+                if(!player.equals("Pop") || player.entityId != 6900 || !player.isDead || player.getDistance(mc.player) < 300) {
+                    entities.add(player);
+                } else {
+                    entities.remove(player);
+                }
+            }
+            for(EntityPlayer player : entities){
+                cityBlocks(player);
+            }
         }
-    }
 
     public void cityBlocks(EntityPlayer player){
         BlockPos pos = EntityUtil.getPlayerPos(player);

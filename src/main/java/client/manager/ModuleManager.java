@@ -88,7 +88,6 @@ public class ModuleManager
         moduleList.add(new HotbarRefill());
         moduleList.add(new Quiver());
         moduleList.add(new Speedmine());
-        moduleList.add(new AutoEnderChest());
         moduleList.add(new Interactions());
         moduleList.add(new Freecam());
         moduleList.add(new AntiRotate());
@@ -113,6 +112,7 @@ public class ModuleManager
         moduleList.add(new ViewTweaks());
         moduleList.add(new PearlRender());
         moduleList.add(new NoRender());
+        moduleList.add(new PopChams());
 
     }
 

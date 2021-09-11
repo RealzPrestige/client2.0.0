@@ -28,7 +28,7 @@ import java.awt.*;
 public class Speedmine extends Module {
     private static Speedmine INSTANCE = new Speedmine();
     int delay;
-    Timer timer = new Timer();
+    public Timer timer = new Timer();
     public Setting<Mode> mode = register(new Setting<>("Mode", Mode.PACKET));
     public enum Mode {PACKET, INSTANT}
     public Setting<Boolean> silentSwitch = register(new Setting<>("SilentSwitch", false, v-> mode.getCurrentState() == Mode.PACKET));
@@ -42,8 +42,8 @@ public class Speedmine extends Module {
     public Setting<Integer> alpha = register(new Setting<>("Alpha", 120, 0, 255, v -> render.getCurrentState()));
 
     int currentAlpha;
-    BlockPos currentPos;
-    IBlockState currentBlockState;
+    public BlockPos currentPos;
+    public IBlockState currentBlockState;
 
     public Speedmine() {
         super("Speedmine", "Speeds up mining and tweaks.", Category.PLAYER);

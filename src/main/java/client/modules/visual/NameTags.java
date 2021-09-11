@@ -7,6 +7,7 @@ import client.util.ColorUtil;
 import client.util.EntityUtil;
 import client.util.PlayerUtil;
 import client.util.RenderUtil;
+import com.google.common.collect.Sets;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.entity.Entity;
@@ -14,13 +15,15 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
+import net.minecraft.util.math.BlockPos;
 import org.lwjgl.opengl.GL11;
 
+import java.util.HashSet;
 import java.util.Objects;
 
 public class NameTags extends Module {
     private static NameTags INSTANCE = new NameTags();
-
+    HashSet<EntityPlayer> entities = Sets.newHashSet();
     public NameTags() {
         super("Nametags", "Better Nametags", Category.VISUAL);
         this.setInstance();
@@ -40,16 +43,22 @@ public class NameTags extends Module {
     @Override
     public void onRender3D(Render3DEvent event) {
         if (!NameTags.fullNullCheck()) {
-            for (EntityPlayer player : mc.world.playerEntities) {
-                if (player == null || player.equals(NameTags.mc.player) || !player.isEntityAlive() || player.isInvisible() && !EntityUtil.isInFov(player))
-                    continue;
-                double x = this.interpolate(player.lastTickPosX, player.posX, event.getPartialTicks()) - NameTags.mc.getRenderManager().renderPosX;
-                double y = this.interpolate(player.lastTickPosY, player.posY, event.getPartialTicks()) - NameTags.mc.getRenderManager().renderPosY;
-                double z = this.interpolate(player.lastTickPosZ, player.posZ, event.getPartialTicks()) - NameTags.mc.getRenderManager().renderPosZ;
-                this.renderNameTag(player, x, y, z, event.getPartialTicks());
+            for (EntityPlayer players : mc.world.playerEntities) {
+                if (players.getEntityId() != 6900 || !players.getName().equals("Pop") || players.getName().equals(mc.player.getName()) || !players.isDead || players.getDistance(mc.player) < 300 || !EntityUtil.isInFov(players) || players.isEntityAlive() || players.getHealth() > 0.0f) {
+                    entities.add(players);
+                } else {
+                    entities.remove(players);
+                }
+
+              }
+            }
+            for (EntityPlayer player : entities) {
+                    double x = this.interpolate(player.lastTickPosX, player.posX, event.getPartialTicks()) - NameTags.mc.getRenderManager().renderPosX;
+                    double y = this.interpolate(player.lastTickPosY, player.posY, event.getPartialTicks()) - NameTags.mc.getRenderManager().renderPosY;
+                    double z = this.interpolate(player.lastTickPosZ, player.posZ, event.getPartialTicks()) - NameTags.mc.getRenderManager().renderPosZ;
+                    this.renderNameTag(player, x, y, z, event.getPartialTicks());
             }
         }
-    }
 
 
     private void renderNameTag(EntityPlayer player, double x, double y, double z, float delta) {

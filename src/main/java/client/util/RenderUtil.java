@@ -398,6 +398,14 @@ public class RenderUtil
         Client.textManager.drawStringWithShadow(text, 0.0f, 0.0f, -5592406);
         GlStateManager.popMatrix();
     }
+    public static void drawTextWhite(BlockPos pos, String text) {
+        GlStateManager.pushMatrix();
+        RenderUtil.glBillboardDistanceScaled((float) pos.getX() + 0.5f, (float) pos.getY() + 0.5f, (float) pos.getZ() + 0.5f, mc.player, 1.0f);
+        GlStateManager.disableDepth();
+        GlStateManager.translate(-((double) Client.textManager.getStringWidth(text) / 2.0), 0.0, 0.0);
+        Client.textManager.drawStringWithShadow(text, 0.0f, 0.0f, -1);
+        GlStateManager.popMatrix();
+    }
 
     public static void drawRect(float x, float y, float w, float h, int color) {
         float alpha = (float) (color >> 24 & 0xFF) / 255.0f;

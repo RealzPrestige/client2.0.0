@@ -3,6 +3,7 @@ package client.modules.player;
 import client.Client;
 import client.gui.impl.setting.Setting;
 import client.modules.Module;
+import client.util.EntityUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -41,8 +42,8 @@ public class AutoMine extends Module {
         if (fullNullCheck()) return;
 
         if (mode.getCurrentState() == Mode.COMBAT) {
-            if (Speedmine.getInstance().currentPos == null && findLookingPlayer(range.getCurrentState()) != null && !Client.friendManager.isFriend(findLookingPlayer(range.getCurrentState())) && isBurrowed(findLookingPlayer(range.getCurrentState())) && gayIdiots.getCurrentState()) {
-                target = findLookingPlayer(range.getCurrentState());
+            if (Speedmine.getInstance().currentPos == null && EntityUtil.getTarget(range.getCurrentState()) != null && !Client.friendManager.isFriend(EntityUtil.getTarget(range.getCurrentState())) && isBurrowed(EntityUtil.getTarget(range.getCurrentState())) && gayIdiots.getCurrentState()) {
+                target = EntityUtil.getTarget(range.getCurrentState());
                 BlockPos gay = new BlockPos(target.posX, target.posY + 0.2, target.posZ);
                 if (!(mc.world.getBlockState(gay).getBlock() == Blocks.AIR)) {
                     Speedmine.getInstance().currentPos = gay;
@@ -51,9 +52,9 @@ public class AutoMine extends Module {
             }
         }
         if (mode.getCurrentState() == Mode.COMBAT) {
-            if (Speedmine.getInstance().currentPos == null && findLookingPlayer(range.getCurrentState()) != null && !Client.friendManager.isFriend(findLookingPlayer(range.getCurrentState())) && surround.getCurrentState()) {
-                if (isCityable(findLookingPlayer(range.getCurrentState()), endCrystal.getCurrentState()) != null) {
-                    Speedmine.getInstance().currentPos = isCityable(findLookingPlayer(range.getCurrentState()), endCrystal.getCurrentState());
+            if (Speedmine.getInstance().currentPos == null && EntityUtil.getTarget(range.getCurrentState()) != null && !Client.friendManager.isFriend(EntityUtil.getTarget(range.getCurrentState())) && surround.getCurrentState()) {
+                if (isCityable(EntityUtil.getTarget(range.getCurrentState()), endCrystal.getCurrentState()) != null) {
+                    Speedmine.getInstance().currentPos = isCityable(EntityUtil.getTarget(range.getCurrentState()), endCrystal.getCurrentState());
                 }
             }
         }
@@ -78,50 +79,6 @@ public class AutoMine extends Module {
         BlockPos pos = new BlockPos(Math.floor(player.posX), Math.floor(player.posY + 0.2), Math.floor(player.posZ));
         return mc.world.getBlockState(pos).getBlock() == Blocks.ENDER_CHEST ||
                 mc.world.getBlockState(pos).getBlock() == Blocks.OBSIDIAN;
-    }
-
-    public static EntityPlayer findLookingPlayer(double rangeMax) {
-        // Get player
-        ArrayList<EntityPlayer> listPlayer = new ArrayList<>();
-        // Only who is in a distance of enemyRange
-        for (EntityPlayer playerSin : mc.world.playerEntities) {
-            if (basicChecksEntity(playerSin))
-                continue;
-            if (mc.player.getDistance(playerSin) <= rangeMax) {
-                listPlayer.add(playerSin);
-            }
-        }
-
-        EntityPlayer target = null;
-        // Get coordinate eyes + rotation
-        Vec3d positionEyes = mc.player.getPositionEyes(mc.getRenderPartialTicks());
-        Vec3d rotationEyes = mc.player.getLook(mc.getRenderPartialTicks());
-        // Precision
-        int precision = 2;
-        // Iterate for every blocks
-        for (int i = 0; i < (int) rangeMax; i++) {
-            // Iterate for the precision
-            for (int j = precision; j > 0; j--) {
-                // Iterate for all players
-                for (EntityPlayer targetTemp : listPlayer) {
-                    // Get box of the player
-                    AxisAlignedBB playerBox = targetTemp.getEntityBoundingBox();
-                    // Get coordinate of the vec3d
-                    double xArray = positionEyes.x + (rotationEyes.x * i) + rotationEyes.x / j;
-                    double yArray = positionEyes.y + (rotationEyes.y * i) + rotationEyes.y / j;
-                    double zArray = positionEyes.z + (rotationEyes.z * i) + rotationEyes.z / j;
-                    // If it's inside
-                    if (playerBox.maxY >= yArray && playerBox.minY <= yArray
-                            && playerBox.maxX >= xArray && playerBox.minX <= xArray
-                            && playerBox.maxZ >= zArray && playerBox.minZ <= zArray) {
-                        // Get target
-                        target = targetTemp;
-                    }
-                }
-            }
-        }
-
-        return target;
     }
 
     public static BlockPos isCityable(final EntityPlayer player, final boolean end_crystal) {

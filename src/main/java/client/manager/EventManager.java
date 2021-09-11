@@ -6,6 +6,7 @@ import client.events.*;
 import client.modules.Feature;
 import client.modules.miscellaneous.FakePlayer;
 import client.modules.miscellaneous.TotemPopCounter;
+import client.modules.visual.PopChams;
 import client.util.NiggerException;
 import client.util.Timer;
 import com.google.common.base.Strings;
@@ -37,6 +38,7 @@ public class EventManager extends Feature {
     public int incomingpackets;
     public int sendingpackets;
     public int resetTimer;
+    public int popAlpha;
     private final Timer logoutTimer = new Timer();
     private final Timer chorusTimer = new Timer();
     private final AtomicBoolean tickOngoing;
@@ -89,6 +91,10 @@ public class EventManager extends Feature {
             TotemPopCounter.getInstance().onDeath(player);
         }
 
+        if(popAlpha > 0){
+            popAlpha = popAlpha - (PopChams.getInstance().popSpeed.getCurrentState() == PopChams.PopSpeed.SLOW ? 1 : PopChams.getInstance().popSpeed.getCurrentState() == PopChams.PopSpeed.SLOWMEDIUM ? 2 : PopChams.getInstance().popSpeed.getCurrentState() == PopChams.PopSpeed.MEDIUM ? 3 : PopChams.getInstance().popSpeed.getCurrentState() == PopChams.PopSpeed.MEDIUMFAST ? 4 : 5);
+        }
+
     }
 
     @SubscribeEvent
@@ -130,6 +136,10 @@ public class EventManager extends Feature {
                 EntityPlayer player = (EntityPlayer) packet.getEntity(mc.world);
                 MinecraftForge.EVENT_BUS.post(new TotemPopEvent(player));
                 TotemPopCounter.getInstance().onTotemPop(player);
+                if(PopChams.getInstance().isEnabled()) {
+                    PopChams.INSTANCE.onTotemPop(player);
+                    popAlpha = PopChams.getInstance().startAlpha.getCurrentState() == PopChams.StartAlpha.LOW ? 50 : PopChams.getInstance().startAlpha.getCurrentState() == PopChams.StartAlpha.LOWMEDIUM ? 100 : PopChams.getInstance().startAlpha.getCurrentState() == PopChams.StartAlpha.MEDIUM ? 150 : PopChams.getInstance().startAlpha.getCurrentState() == PopChams.StartAlpha.MEDIUMHIGH ? 200 : 250;
+                }
             }
         }
         if (event.getPacket() instanceof SPacketPlayerListItem && !fullNullCheck() && this.logoutTimer.passedS(1.0D)) {

@@ -31,22 +31,22 @@ public class TotemPopCounter extends Module {
 
     public void onDeath(EntityPlayer player) {
         if (TotemPopContainer.containsKey(player.getName())) {
-            int l_Count = TotemPopContainer.get(player.getName());
+            int totemCount = TotemPopContainer.get(player.getName());
             TotemPopContainer.remove(player.getName());
-            if (l_Count == 1) {
+            if (totemCount == 1) {
                     int id = 0;
                     for (char character : player.getName().toCharArray()) {
                         id += character;
                         id *= 10;
                     }
-                    mc.ingameGUI.getChatGUI().printChatMessageWithOptionalDeletion(new TextComponentString(Notify.getInstance().getCommandMessage() + " " + ChatFormatting.WHITE + ChatFormatting.BOLD + player.getName() + ChatFormatting.RESET + ChatFormatting.RED + " died after popping " + ChatFormatting.WHITE + ChatFormatting.BOLD + l_Count + ChatFormatting.RESET + ChatFormatting.RED + " totem."), id);
+                    mc.ingameGUI.getChatGUI().printChatMessageWithOptionalDeletion(new TextComponentString(Notify.getInstance().getCommandMessage() + " " + ChatFormatting.WHITE + ChatFormatting.BOLD + player.getName() + ChatFormatting.RESET + ChatFormatting.RED + " died after popping " + ChatFormatting.WHITE + ChatFormatting.BOLD + totemCount + ChatFormatting.RESET + ChatFormatting.RED + " totem."), id);
             } else {
                     int id = 0;
                     for (char character : player.getName().toCharArray()) {
                         id += character;
                         id *= 10;
                     }
-                mc.ingameGUI.getChatGUI().printChatMessageWithOptionalDeletion(new TextComponentString(Notify.getInstance().getCommandMessage() + " " + ChatFormatting.WHITE + ChatFormatting.BOLD + player.getName() + ChatFormatting.RESET + ChatFormatting.RED + " died after popping " + ChatFormatting.WHITE + ChatFormatting.BOLD + l_Count + ChatFormatting.RESET + ChatFormatting.RED + " totems."), id);
+                mc.ingameGUI.getChatGUI().printChatMessageWithOptionalDeletion(new TextComponentString(Notify.getInstance().getCommandMessage() + " " + ChatFormatting.WHITE + ChatFormatting.BOLD + player.getName() + ChatFormatting.RESET + ChatFormatting.RED + " died after popping " + ChatFormatting.WHITE + ChatFormatting.BOLD + totemCount + ChatFormatting.RESET + ChatFormatting.RED + " totems."), id);
             }
         }
     }
@@ -58,27 +58,27 @@ public class TotemPopCounter extends Module {
         if (mc.player.equals(player)) {
             return;
         }
-        int l_Count = 1;
+        int totemCount = 1;
         if (TotemPopContainer.containsKey(player.getName())) {
-            l_Count = TotemPopContainer.get(player.getName());
-            TotemPopContainer.put(player.getName(), ++l_Count);
+            totemCount = TotemPopContainer.get(player.getName());
+            TotemPopContainer.put(player.getName(), ++totemCount);
         } else {
-            TotemPopContainer.put(player.getName(), l_Count);
+            TotemPopContainer.put(player.getName(), totemCount);
         }
-        if (l_Count == 1) {
+        if (totemCount == 1) {
                 int id = 0;
                 for (char character : player.getName().toCharArray()) {
                     id += character;
                     id *= 10;
                 }
-            mc.ingameGUI.getChatGUI().printChatMessageWithOptionalDeletion(new TextComponentString(Notify.getInstance().getCommandMessage() + " " + ChatFormatting.WHITE + ChatFormatting.BOLD + player.getName() + ChatFormatting.RESET + ChatFormatting.RED + " has popped " + ChatFormatting.WHITE + ChatFormatting.BOLD + l_Count + ChatFormatting.RESET + ChatFormatting.RED + " totem."), id);
+            mc.ingameGUI.getChatGUI().printChatMessageWithOptionalDeletion(new TextComponentString(Notify.getInstance().getCommandMessage() + " " + ChatFormatting.WHITE + ChatFormatting.BOLD + player.getName() + ChatFormatting.RESET + ChatFormatting.RED + " has popped " + ChatFormatting.WHITE + ChatFormatting.BOLD + totemCount + ChatFormatting.RESET + ChatFormatting.RED + " totem."), id);
         } else {
                 int id = 0;
                 for (char character : player.getName().toCharArray()) {
                     id += character;
                     id *= 10;
                 }
-            mc.ingameGUI.getChatGUI().printChatMessageWithOptionalDeletion(new TextComponentString(Notify.getInstance().getCommandMessage() + " " + ChatFormatting.WHITE + ChatFormatting.BOLD + player.getName() + ChatFormatting.RESET + ChatFormatting.RED + " has popped " + ChatFormatting.WHITE + ChatFormatting.BOLD + l_Count + ChatFormatting.RESET + ChatFormatting.RED + " totems."), id);
+            mc.ingameGUI.getChatGUI().printChatMessageWithOptionalDeletion(new TextComponentString(Notify.getInstance().getCommandMessage() + " " + ChatFormatting.WHITE + ChatFormatting.BOLD + player.getName() + ChatFormatting.RESET + ChatFormatting.RED + " has popped " + ChatFormatting.WHITE + ChatFormatting.BOLD + totemCount + ChatFormatting.RESET + ChatFormatting.RED + " totems."), id);
             }
     }
 }

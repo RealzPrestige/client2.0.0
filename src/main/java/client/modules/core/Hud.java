@@ -19,6 +19,7 @@ import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.entity.RenderEnderCrystal;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.play.server.SPacketEntityTeleport;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.client.event.*;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -96,6 +97,13 @@ public class Hud extends Module {
         return INSTANCE;
     }
 
+    public void onLogin(){
+        if(isEnabled()){
+            this.disable();
+            this.enable();
+        }
+    }
+
     @SubscribeEvent
     public void onRenderHud(RenderGameOverlayEvent event){
         if(removeHudEffects.getCurrentState() && event.getType().equals(RenderGameOverlayEvent.ElementType.POTION_ICONS)){
@@ -108,6 +116,7 @@ public class Hud extends Module {
             event.setCanceled(true);
         }
     }
+
 
     private void setInstance() {
         INSTANCE = this;
