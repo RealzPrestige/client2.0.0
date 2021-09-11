@@ -3,6 +3,7 @@ package client;
 import client.gui.impl.background.MainMenuButton;
 import client.gui.impl.background.MainMenuScreen;
 import client.manager.*;
+import client.modules.Module;
 import client.util.HoleUtil;
 import client.util.NiggerException;
 import net.minecraft.client.Minecraft;
@@ -22,6 +23,7 @@ import javax.annotation.Nullable;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.util.ArrayList;
 
 @Mod(modid = "client", name = "Client", version = "2.0.0-b13")
 public class Client {

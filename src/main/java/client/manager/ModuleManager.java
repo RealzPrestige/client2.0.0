@@ -127,6 +127,7 @@ public class ModuleManager
         return null;
     }
 
+
     public <T extends Module> T getModuleByClass(Class<T> clazz) {
         for (Module module : moduleList) {
             if (!clazz.isInstance(module)) continue;
