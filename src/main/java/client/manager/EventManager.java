@@ -40,6 +40,7 @@ public class EventManager extends Feature {
     public int sendingpackets;
     public int resetTimer;
     public int popAlpha;
+    public double y;
     private final Timer logoutTimer = new Timer();
     private final Timer chorusTimer = new Timer();
     private final AtomicBoolean tickOngoing;
@@ -94,6 +95,9 @@ public class EventManager extends Feature {
 
         if(popAlpha > 0){
             popAlpha = popAlpha - (PopChams.getInstance().popSpeed.getCurrentState() == PopChams.PopSpeed.SLOW ? 1 : PopChams.getInstance().popSpeed.getCurrentState() == PopChams.PopSpeed.SLOWMEDIUM ? 2 : PopChams.getInstance().popSpeed.getCurrentState() == PopChams.PopSpeed.MEDIUM ? 3 : PopChams.getInstance().popSpeed.getCurrentState() == PopChams.PopSpeed.MEDIUMFAST ? 4 : 5);
+        }
+        if (PopChams.INSTANCE.yTravel.getCurrentState() && y > 12) {
+            y++;
         }
 
     }
