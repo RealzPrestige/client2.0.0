@@ -24,6 +24,8 @@ public class MixinGuiNewChat
     public List<ChatLine> drawnChatLines;
     private ChatLine chatLine;
 
+    //TODO:alphastep timestamps
+
     @Redirect(method={"drawChat"}, at=@At(value="INVOKE", target="Lnet/minecraft/client/gui/FontRenderer;drawStringWithShadow(Ljava/lang/String;FFI)I"))
     private int drawStringWithShadow(FontRenderer fontRenderer, String text, float x, float y, int color) {
         if (text.contains("\u00a7+")) {
