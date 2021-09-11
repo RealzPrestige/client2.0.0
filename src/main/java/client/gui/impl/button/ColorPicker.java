@@ -1,4 +1,4 @@
 package client.gui.impl.button;
 
-public class ColorPicker { //TODO: zprestige u promised to do this
+public class ColorPicker { //TODO: kambing u promised to do this
 }

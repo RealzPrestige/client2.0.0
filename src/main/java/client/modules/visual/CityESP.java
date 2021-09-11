@@ -1,16 +1,26 @@
 package client.modules.visual;
 
 import client.events.Render3DEvent;
+import client.events.RenderEntityModelEvent;
 import client.gui.impl.setting.Setting;
 import client.modules.Module;
 import client.util.ColorUtil;
 import client.util.EntityUtil;
 import client.util.RenderUtil;
 import com.google.common.collect.Sets;
+import net.minecraft.client.renderer.entity.RenderEnderCrystal;
+import net.minecraft.client.renderer.entity.RenderEntityItem;
+import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.entity.item.EntityEnderCrystal;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import javax.swing.text.html.parser.Entity;
 import java.awt.*;
 import java.util.HashSet;
 
@@ -25,14 +35,13 @@ public class CityESP extends Module {
     public Setting<Integer> selfgreen = register(new Setting("SelfGreen", 50, 0, 255));
     public Setting<Integer> selfblue = register(new Setting("SelfBlue", 0, 0, 255));
     public Setting<Integer> selfalpha = register(new Setting("SelfAlpha", 120, 0, 255));
-
     public CityESP(){
         super("CityESP", "Shows spots where enemies are vulnerable.", Category.VISUAL);
     }
 
     public void onRender3D(Render3DEvent event){
             for (EntityPlayer player : mc.world.playerEntities) {
-                if(!player.equals("Pop") || player.entityId != 6900 || !player.isDead || player.getDistance(mc.player) < 300) {
+                if(!player.equals("Pop") || player.entityId != 6900 || !player.isDead || player.getDistance(mc.player) < 20) {
                     entities.add(player);
                 } else {
                     entities.remove(player);

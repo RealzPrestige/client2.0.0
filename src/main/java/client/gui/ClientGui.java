@@ -93,7 +93,7 @@ public class ClientGui extends GuiScreen {
         }
 
         for (final Module.Category category : Client.moduleManager.getCategories()) {
-                this.components.add(new Component(category.getName(), x += 110, 10, true) {
+                this.components.add(new Component(category.getName(), x += 112, 10, true) {
 
                     @Override
                     public void setupItems() {

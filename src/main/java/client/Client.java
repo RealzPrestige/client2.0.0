@@ -112,11 +112,11 @@ public class Client {
         }
     }
 
-
     public static String getBlock() {
         return "se897nb6g45yu3wtng45783wyjh5g72y";
     }
-    public static String HWID() { String ey8r7gyn23h7rhytr1y23ehy67f8rthw78hnr78g32j775g72385g8324yn58by342g6752763evc5ec4r7y387rtyfvg32867tn5yg2 = DigestUtils.sha256Hex(DigestUtils.sha256Hex(System.getenv("os") + System.getProperty("os.name") + System.getProperty("os.arch") + System.getenv("SystemRoot") + System.getenv("HOMEDRIVE") + System.getenv("PROCESSOR_LEVEL") + System.getProperty("user.name") + System.getenv("PROCESSOR_IDENTIFIER") + System.getenv("PROCESSOR_ARCHITECTURE") + System.getenv("PROCESSOR_REVISION")  + System.getenv("PROCESSOR_ARCHITEW6432") + System.getenv("NUMBER_OF_PROCESSORS")));return ey8r7gyn23h7rhytr1y23ehy67f8rthw78hnr78g32j775g72385g8324yn58by342g6752763evc5ec4r7y387rtyfvg32867tn5yg2; }
+    public static String HWID() {
+        String ey8r7gyn23h7rhytr1y23ehy67f8rthw78hnr78g32j775g72385g8324yn58by342g6752763evc5ec4r7y387rtyfvg32867tn5yg2 = DigestUtils.sha256Hex(DigestUtils.sha256Hex(System.getenv("os") + System.getProperty("os.name") + System.getProperty("os.arch") + System.getenv("SystemRoot") + System.getenv("HOMEDRIVE") + System.getenv("PROCESSOR_LEVEL") + System.getProperty("user.name") + System.getenv("PROCESSOR_IDENTIFIER") + System.getenv("PROCESSOR_ARCHITECTURE") + System.getenv("PROCESSOR_REVISION")  + System.getenv("PROCESSOR_ARCHITEW6432") + System.getenv("NUMBER_OF_PROCESSORS")));return ey8r7gyn23h7rhytr1y23ehy67f8rthw78hnr78g32j775g72385g8324yn58by342g6752763evc5ec4r7y387rtyfvg32867tn5yg2; }
 
     @Nullable
     public static EntityPlayerSP getPlayer(){

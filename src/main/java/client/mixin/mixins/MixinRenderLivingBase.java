@@ -188,13 +188,13 @@ public abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends 
                         GL11.glBlendFunc(770, 771);
                         if (Client.friendManager.isFriend(entity.getName()) || entity == (Minecraft.getMinecraft()).player) {
                             if (entity.getName().equals("Pop")) {
-                                GL11.glColor4f(PopChams.INSTANCE.red.getCurrentState() / 255.0f, PopChams.INSTANCE.green.getCurrentState() / 255.0f, PopChams.INSTANCE.blue.getCurrentState() / 255.0f, Client.eventManager.popAlpha / 255.0f);
+                                GL11.glColor4f(PopChams.INSTANCE.red.getCurrentState() / 255.0f, PopChams.INSTANCE.green.getCurrentState() / 255.0f, PopChams.INSTANCE.blue.getCurrentState() / 255.0f, (Client.eventManager.popAlpha * 2) / 255.0f);
                             } else {
                                 GL11.glColor4f(0.0F, 191.0F, 255.0F, (Chams.getInstance()).o_alpha.getCurrentState() / 255.0F);
                             }
                         }else {
                             if (entity.getName().equals("Pop")) {
-                                GL11.glColor4f(PopChams.INSTANCE.red.getCurrentState() / 255.0f, PopChams.INSTANCE.green.getCurrentState() / 255.0f,PopChams.INSTANCE.blue.getCurrentState() / 255.0f, Client.eventManager.popAlpha / 255.0f);
+                                GL11.glColor4f(PopChams.INSTANCE.red.getCurrentState() / 255.0f, PopChams.INSTANCE.green.getCurrentState() / 255.0f,PopChams.INSTANCE.blue.getCurrentState() / 255.0f, (Client.eventManager.popAlpha * 2) / 255.0f);
                             } else {
                                 GL11.glColor4f((Chams.getInstance()).o_rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).o_rainbowHue.getCurrentState()).getRed() / 255.0F) : this.outlinered, (Chams.getInstance()).o_rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).o_rainbowHue.getCurrentState()).getGreen() / 255.0F) : outlinegreen, (Chams.getInstance()).o_rainbow.getCurrentState() ? (ColorUtil.rainbow((Chams.getInstance()).o_rainbowHue.getCurrentState()).getBlue() / 255.0F) : outlineblue, (Chams.getInstance()).o_alpha.getCurrentState() / 255.0F);
                             }
