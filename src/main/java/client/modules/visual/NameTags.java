@@ -44,7 +44,7 @@ public class NameTags extends Module {
     public void onRender3D(Render3DEvent event) {
         if (!NameTags.fullNullCheck()) {
             for (EntityPlayer players : mc.world.playerEntities) {
-                if (players.getEntityId() != 6900 || !players.getName().equals("Pop") || players.getName().equals(mc.player.getName()) || !players.isDead || players.getDistance(mc.player) < 300 || !EntityUtil.isInFov(players) || players.isEntityAlive() || players.getHealth() > 0.0f) {
+                if (players.getName().equals(mc.player.getName()) || !players.isDead || players.getDistance(mc.player) < 300 || !EntityUtil.isInFov(players) || !players.isDead || players.getEntityId() != 6900 || !players.getName().equals("Pop")) {
                     entities.add(players);
                 } else {
                     entities.remove(players);
