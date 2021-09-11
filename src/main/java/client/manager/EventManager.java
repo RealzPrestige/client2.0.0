@@ -12,6 +12,7 @@ import client.util.NiggerException;
 import client.util.Timer;
 import com.google.common.base.Strings;
 import com.mojang.realmsclient.gui.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
@@ -36,6 +37,7 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class EventManager extends Feature {
+    public static final Minecraft mc = Minecraft.getMinecraft();
     public int incomingpackets;
     public int sendingpackets;
     public int resetTimer;

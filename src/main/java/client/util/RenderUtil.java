@@ -3,17 +3,22 @@ package client.util;
 import client.Client;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.culling.ICamera;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
@@ -21,8 +26,8 @@ import java.util.Objects;
 
 import static org.lwjgl.opengl.GL11.*;
 
-public class RenderUtil
-        implements Util{
+public class RenderUtil{
+    public static final Minecraft mc = Minecraft.getMinecraft();
     public static Tessellator tessellator;
     public static RenderItem itemRender;
     public static ICamera camera;
@@ -31,6 +36,15 @@ public class RenderUtil
         RenderUtil.camera = new Frustum();
     }
 
+    public static void drawCrosshairs(double separation, double width, double thickness, boolean dynamic, int color) {
+        int screenWidth = new ScaledResolution(mc).getScaledWidth();
+        int screenHeight = new ScaledResolution(mc).getScaledHeight();
+        separation += (EntityUtil.isMoving() && dynamic) ? 1 : 0;
+        RenderUtil.drawLine((float) ((screenWidth / 2) - separation), (float) ((screenHeight / 2)), (float) ((screenWidth / 2) - separation - width), (float) ((screenHeight / 2)), (int) thickness, color);
+        RenderUtil.drawLine((float) ((screenWidth / 2) + separation), (float) ((screenHeight / 2)), (float) ((screenWidth / 2) + separation + width), (float) ((screenHeight / 2)), (int) thickness, color);
+        RenderUtil.drawLine((float) ((screenWidth / 2)), (float) ((screenHeight / 2) - separation), (float) ((screenWidth / 2)), (float) ((screenHeight / 2) - separation - width), (int) thickness, color);
+        RenderUtil.drawLine((float) ((screenWidth / 2)), (float) ((screenHeight / 2) + separation), (float) ((screenWidth / 2)), (float) ((screenHeight / 2) + separation + width), (int) thickness, color);
+    }
     public static void drawRectCol(final float x, final float y, final float width, final float height, final Color color) {
         GL11.glPushMatrix();
         GL11.glDisable(3553);

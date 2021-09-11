@@ -8,6 +8,7 @@ import client.modules.core.ClickGui;
 import client.util.ColorUtil;
 import client.util.RenderUtil;
 import com.mojang.realmsclient.gui.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.init.SoundEvents;
@@ -26,7 +27,7 @@ public class Component
     private int y2;
     private int width;
     private int height;
-
+    public static final Minecraft mc = Minecraft.getMinecraft();
     private boolean open;
 
     public Component(String name, int x, int y, boolean open) {

@@ -6,7 +6,6 @@ import client.gui.impl.setting.EnumConverter;
 import client.gui.impl.setting.Setting;
 import client.modules.Feature;
 import client.modules.Module;
-import client.util.Util;
 import com.google.gson.*;
 
 import java.io.*;
@@ -16,7 +15,7 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class ConfigManager implements Util {
+public class ConfigManager {
     public ArrayList<Feature> features = new ArrayList<>();
 
     public String config = "client/config/";

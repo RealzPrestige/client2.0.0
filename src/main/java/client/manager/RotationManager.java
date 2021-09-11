@@ -2,12 +2,13 @@ package client.manager;
 
 import client.modules.Feature;
 import client.util.MathUtil;
-import client.util.Util;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.Vec3d;
 
 public class RotationManager
         extends Feature {
+    public static final Minecraft mc = Minecraft.getMinecraft();
     private float yaw;
     private float pitch;
 
@@ -30,13 +31,13 @@ public class RotationManager
 
 
     public void lookAtVec3d(Vec3d vec3d) {
-        float[] angle = MathUtil.calcAngle(RotationManager.mc.player.getPositionEyes(Util.mc.getRenderPartialTicks()), new Vec3d(vec3d.x, vec3d.y, vec3d.z));
+        float[] angle = MathUtil.calcAngle(RotationManager.mc.player.getPositionEyes(mc.getRenderPartialTicks()), new Vec3d(vec3d.x, vec3d.y, vec3d.z));
         this.setPlayerRotations(angle[0], angle[1]);
     }
 
 
     public void lookAtEntity(Entity entity) {
-        float[] angle = MathUtil.calcAngle(RotationManager.mc.player.getPositionEyes(Util.mc.getRenderPartialTicks()), entity.getPositionEyes(Util.mc.getRenderPartialTicks()));
+        float[] angle = MathUtil.calcAngle(RotationManager.mc.player.getPositionEyes(mc.getRenderPartialTicks()), entity.getPositionEyes(mc.getRenderPartialTicks()));
         this.setPlayerRotations(angle[0], angle[1]);
     }
 

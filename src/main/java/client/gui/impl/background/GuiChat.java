@@ -4,7 +4,6 @@ import client.Client;
 import client.modules.miscellaneous.ChatModifications;
 import client.util.MathUtil;
 import client.util.Timer;
-import client.util.Util;
 import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
@@ -22,7 +21,7 @@ import java.util.Iterator;
 import java.util.List;
 
 @SideOnly(Side.CLIENT)
-public class GuiChat extends GuiNewChat implements Util {
+public class GuiChat extends GuiNewChat  {
     private static final Logger LOGGER = Client.LOGGER;
     private final Minecraft mc;
     private final Timer messageTimer = new Timer();

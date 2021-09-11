@@ -8,11 +8,13 @@ import client.gui.impl.setting.Bind;
 import client.gui.impl.setting.Setting;
 import client.modules.core.Notify;
 import com.mojang.realmsclient.gui.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.common.MinecraftForge;
 
 public class Module
         extends Feature {
+    public static final Minecraft mc = Minecraft.getMinecraft();
     private final String description;
     private final Category category;
     public Setting<Boolean> enabled = register( new Setting <> ( "Enabled" , false ));

@@ -1,10 +1,11 @@
 package client.manager;
 
 import client.modules.Feature;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.play.client.CPacketPlayer;
 
-public class PositionManager
-        extends Feature {
+public class PositionManager extends Feature {
+    public static final Minecraft mc = Minecraft.getMinecraft();
     private double x;
     private double y;
     private double z;

@@ -2,7 +2,7 @@ package client.manager;
 
 import client.modules.Feature;
 import client.util.Timer;
-import client.util.Util;
+import net.minecraft.client.Minecraft;
 
 import java.text.DecimalFormat;
 import java.util.Arrays;
@@ -10,6 +10,7 @@ import java.util.Objects;
 
 public class ServerManager
         extends Feature {
+    public static final Minecraft mc = Minecraft.getMinecraft();
     private final float[] tpsCounts = new float[10];
     private final DecimalFormat format = new DecimalFormat("##.00#");
     private final Timer timer = new Timer();
@@ -80,7 +81,7 @@ public class ServerManager
             return 0;
         }
         try {
-            return Objects.requireNonNull(Util.mc.getConnection()).getPlayerInfo(Util.mc.getConnection().getGameProfile().getId()).getResponseTime();
+            return Objects.requireNonNull(mc.getConnection()).getPlayerInfo(mc.getConnection().getGameProfile().getId()).getResponseTime();
         } catch (Exception e) {
             return 0;
         }

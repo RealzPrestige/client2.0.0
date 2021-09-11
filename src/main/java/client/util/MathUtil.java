@@ -1,5 +1,6 @@
 package client.util;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
@@ -10,9 +11,8 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
-public class MathUtil
-        implements Util {
-
+public class MathUtil {
+    public static final Minecraft mc = Minecraft.getMinecraft();
     public static double[] directionSpeed(final double speed) {
         float forward = MathUtil.mc.player.movementInput.moveForward;
         float side = MathUtil.mc.player.movementInput.moveStrafe;

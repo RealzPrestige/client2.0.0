@@ -12,6 +12,7 @@ import client.modules.miscellaneous.*;
 import client.modules.movement.*;
 import client.modules.player.*;
 import client.modules.visual.*;
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 import org.lwjgl.input.Keyboard;
 
@@ -25,6 +26,7 @@ public class ModuleManager
         extends Feature {
     public static ArrayList<Module> moduleList = new ArrayList<>();
     public List<Module> sortedModules = new ArrayList<>();
+    public static final Minecraft mc = Minecraft.getMinecraft();
 
     public void init() {
 
@@ -113,6 +115,7 @@ public class ModuleManager
         moduleList.add(new PearlRender());
         moduleList.add(new NoRender());
         moduleList.add(new PopChams());
+        moduleList.add(new CrossHairModifier());
 
     }
 
@@ -204,7 +207,7 @@ public class ModuleManager
     }
 
     public void onKeyPressed(int eventKey) {
-        if (eventKey == 0 || !Keyboard.getEventKeyState() || ModuleManager.mc.currentScreen instanceof ClientGui) {
+        if (eventKey == 0 || !Keyboard.getEventKeyState() || mc.currentScreen instanceof ClientGui) {
             return;
         }
         moduleList.forEach(module -> {

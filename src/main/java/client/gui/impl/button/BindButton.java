@@ -8,6 +8,7 @@ import client.modules.core.ClickGui;
 import client.util.ColorUtil;
 import client.util.RenderUtil;
 import com.mojang.realmsclient.gui.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.init.SoundEvents;
 
@@ -15,7 +16,7 @@ public class BindButton
         extends Button {
     private final Setting setting;
     public boolean isListening;
-
+    public static final Minecraft mc = Minecraft.getMinecraft();
     public BindButton(Setting setting) {
         super(setting.getName());
         this.setting = setting;

@@ -34,7 +34,8 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-public class PlayerUtil implements Util {
+public class PlayerUtil{
+    public static final Minecraft mc = Minecraft.getMinecraft();
     private static final JsonParser PARSER = new JsonParser();
 
     public static int getRoundedDamage(ItemStack stack) {
@@ -45,14 +46,14 @@ public class PlayerUtil implements Util {
         return item instanceof ItemArmor || item instanceof ItemSword || item instanceof ItemTool || item instanceof ItemShield;
     }
     public static void setMoveSpeed(MoveEvent event, double speed) {
-        double forward = ElytraFlight.mc.player.movementInput.moveForward;
-        double strafe = ElytraFlight.mc.player.movementInput.moveStrafe;
-        float yaw = ElytraFlight.mc.player.rotationYaw;
+        double forward = mc.player.movementInput.moveForward;
+        double strafe = mc.player.movementInput.moveStrafe;
+        float yaw = mc.player.rotationYaw;
         if (forward == 0.0 && strafe == 0.0) {
             event.setX(0.0);
             event.setZ(0.0);
-            ElytraFlight.mc.player.motionX = 0.0;
-            ElytraFlight.mc.player.motionZ = 0.0;
+            mc.player.motionX = 0.0;
+            mc.player.motionZ = 0.0;
         } else {
             if (forward != 0.0) {
                 if (strafe > 0.0) {
@@ -71,8 +72,8 @@ public class PlayerUtil implements Util {
             double z = forward * speed * Math.cos(Math.toRadians(yaw)) - strafe * speed * -Math.sin(Math.toRadians(yaw));
             event.setX(x);
             event.setZ(z);
-            ElytraFlight.mc.player.motionX = x;
-            ElytraFlight.mc.player.motionZ = z;
+            mc.player.motionX = x;
+            mc.player.motionZ = z;
         }
     }
     public static double getDirection() {

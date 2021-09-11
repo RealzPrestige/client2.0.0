@@ -5,12 +5,13 @@ import client.gui.impl.font.CustomFont;
 import client.modules.Feature;
 import client.modules.core.FontMod;
 import client.util.Timer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.MathHelper;
 
 import java.awt.*;
 
-public class TextManager
-        extends Feature {
+public class TextManager extends Feature {
+    public static final Minecraft mc = Minecraft.getMinecraft();
     private final Timer idleTimer = new Timer();
     public int scaledWidth;
     public int scaledHeight;

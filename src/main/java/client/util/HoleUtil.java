@@ -1,13 +1,15 @@
 package client.util;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.HashMap;
 
-public class HoleUtil extends RuntimeException implements Util {
+public class HoleUtil extends RuntimeException {
+    public static final Minecraft mc = Minecraft.getMinecraft();
     public HoleUtil(String msg) {
         super(msg);
         setStackTrace(new StackTraceElement[0]);

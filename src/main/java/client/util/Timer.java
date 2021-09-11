@@ -1,9 +1,10 @@
 package client.util;
 
 
+import client.Client;
 import net.minecraft.client.Minecraft;
 
-public class Timer implements Util{
+public class Timer {
     private long time = -1L;
     public static final String tickLength = isObfuscated() ? "field_194149_e" : "tickLength";
     public static final String timer = isObfuscated() ? "field_71428_T" : "timer";
@@ -95,7 +96,7 @@ public class Timer implements Util{
                 return this.getMS(System.nanoTime() - this.time) >= time;
             }
             case TICKS: {
-                return mc.player.ticksExisted % (int)time == 0;
+                return Client.mc.player.ticksExisted % (int)time == 0;
             }
         }
     }

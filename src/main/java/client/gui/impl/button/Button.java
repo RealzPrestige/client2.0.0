@@ -7,11 +7,13 @@ import client.gui.impl.Item;
 import client.modules.core.ClickGui;
 import client.util.ColorUtil;
 import client.util.RenderUtil;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.init.SoundEvents;
 
 public class Button
         extends Item {
+    public static final Minecraft mc = Minecraft.getMinecraft();
     private boolean state;
 
     public Button(String name) {

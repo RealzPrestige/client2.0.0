@@ -4,6 +4,7 @@ import client.gui.impl.setting.Setting;
 import client.modules.Feature;
 import client.modules.core.Notify;
 import client.util.PlayerUtil;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 
 import java.util.ArrayList;
@@ -11,8 +12,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-public class FriendManager
-        extends Feature {
+public class FriendManager extends Feature {
+    public static final Minecraft mc = Minecraft.getMinecraft();
     private List<Friend> friends = new ArrayList <> ( );
 
     public FriendManager() {

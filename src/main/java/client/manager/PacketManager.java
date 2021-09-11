@@ -3,6 +3,7 @@ package client.manager;
 import client.Client;
 import client.events.PacketEvent;
 import client.modules.Feature;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.CPacketUseEntity;
@@ -17,11 +18,11 @@ import java.util.concurrent.ConcurrentHashMap;
 public class PacketManager
         extends Feature {
     private final List<Packet<?>> noEventPackets = new ArrayList();
-
+    public static final Minecraft mc = Minecraft.getMinecraft();
     public void sendPacketNoEvent(Packet<?> packet) {
         if (packet != null && !PacketManager.nullCheck()) {
             this.noEventPackets.add(packet);
-            PacketManager.mc.player.connection.sendPacket(packet);
+            mc.player.connection.sendPacket(packet);
         }
     }
 

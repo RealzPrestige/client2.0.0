@@ -5,7 +5,7 @@ import client.events.ClientEvent;
 import client.gui.ClientGui;
 import client.gui.impl.setting.Setting;
 import client.modules.Module;
-import client.util.Util;
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.input.Keyboard;
 
@@ -132,7 +132,7 @@ public class ClickGui extends Module {
 
     @Override
     public void onEnable() {
-        Util.mc.displayGuiScreen(ClientGui.getClickGui());
+        mc.displayGuiScreen(ClientGui.getClickGui());
     }
 
     @Override

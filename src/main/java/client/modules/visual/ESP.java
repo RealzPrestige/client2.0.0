@@ -49,7 +49,7 @@ public class ESP extends Module {
     public Setting<Integer> bedrockOutlineGreen = register(new Setting<>("BedrockOutlineGreen", 255, 0, 255, v-> holes.getCurrentState() && bedrockOutline.getCurrentState()));
     public Setting<Integer> bedrockOutlineBlue = register(new Setting<>("BedrockOutlineBlue", 0, 0, 255, v-> holes.getCurrentState() && bedrockOutline.getCurrentState()));
     public Setting<Integer> bedrockOutlineAlpha = register(new Setting<>("BedrockOutlineAlpha", 255, 0, 255, v-> holes.getCurrentState() && bedrockOutline.getCurrentState()));
-    public Setting<Integer> bedrockOutlineLineWidth = register(new Setting<>("BedrockOutlineLineWidth", 1, 0.1, 5, v-> holes.getCurrentState() && bedrockOutline.getCurrentState()));
+    public Setting<Integer> bedrockOutlineLineWidth = register(new Setting<>("BedrockOutlineLineWidth", 1, 0, 5, v-> holes.getCurrentState() && bedrockOutline.getCurrentState()));
 
     public Setting<Boolean> obsidianBox = register(new Setting<>("ObsidianBox", true, v-> holes.getCurrentState()));
     public Setting<Boolean> obsidianFlat = register(new Setting<>("ObsidianFlat", false, v-> holes.getCurrentState()));
@@ -62,7 +62,7 @@ public class ESP extends Module {
     public Setting<Integer> obsidianOutlineGreen = register(new Setting<>("ObsidianOutlineGreen", 0, 0, 255, v-> holes.getCurrentState() && obsidianOutline.getCurrentState()));
     public Setting<Integer> obsidianOutlineBlue = register(new Setting<>("ObsidianOutlineBlue", 0, 0, 255, v-> holes.getCurrentState() && obsidianOutline.getCurrentState()));
     public Setting<Integer> obsidianOutlineAlpha = register(new Setting<>("ObsidianOutlineAlpha", 255, 0, 255, v-> holes.getCurrentState() && obsidianOutline.getCurrentState()));
-    public Setting<Integer> obsidianOutlineLineWidth = register(new Setting<>("obsidianOutlineLineWidth", 1, 0.1, 5, v-> holes.getCurrentState() && obsidianOutline.getCurrentState()));
+    public Setting<Integer> obsidianOutlineLineWidth = register(new Setting<>("ObsidianOutlineLineWidth", 1, 0, 5, v-> holes.getCurrentState() && obsidianOutline.getCurrentState()));
 
     public Setting<Boolean> bottles = register(new Setting<>("Bottles", true));
     public Setting<Integer> bottlesred = register(new Setting<>( "BottlesRed", 255, 0, 255, v -> this.bottles.getCurrentState( ) ));
@@ -77,7 +77,7 @@ public class ESP extends Module {
     public Setting<Integer> o_alpha = register(new Setting<>("OrbsAlpha", 150, 0, 255, v -> this.orbs.getCurrentState( ) ));
 
     public ESP() {
-    super("ESP", "Draws boxes on your screen.", Category.VISUAL);
+        super("ESP", "Draws boxes on your screen.", Category.VISUAL);
     }
 
     public void onTick() {
@@ -190,9 +190,9 @@ public class ESP extends Module {
                     BlockPos pos = new BlockPos(x, y, z);
                     if(updates > updateDelay.getCurrentState()) {
                         if (mc.world.getBlockState(pos.up()).getBlock() == Blocks.AIR && mc.world.getBlockState(pos).getBlock() == Blocks.AIR && mc.world.getBlockState(pos.down()).getBlock() == Blocks.BEDROCK && mc.world.getBlockState(pos.north()).getBlock() == Blocks.BEDROCK && mc.world.getBlockState(pos.south()).getBlock() == Blocks.BEDROCK && mc.world.getBlockState(pos.west()).getBlock() == Blocks.BEDROCK && mc.world.getBlockState(pos.east()).getBlock() == Blocks.BEDROCK) {
-                           bedrockholes.add(pos);
+                            bedrockholes.add(pos);
                         } else if (mc.world.getBlockState(pos.up()).getBlock() == Blocks.AIR && mc.world.getBlockState(pos).getBlock() == Blocks.AIR && (mc.world.getBlockState(pos.down()).getBlock() == Blocks.BEDROCK || mc.world.getBlockState(pos.down()).getBlock() == Blocks.OBSIDIAN) && (mc.world.getBlockState(pos.north()).getBlock() == Blocks.OBSIDIAN || mc.world.getBlockState(pos.north()).getBlock() == Blocks.BEDROCK) && (mc.world.getBlockState(pos.south()).getBlock() == Blocks.OBSIDIAN || mc.world.getBlockState(pos.south()).getBlock() == Blocks.BEDROCK) && (mc.world.getBlockState(pos.west()).getBlock() == Blocks.OBSIDIAN || mc.world.getBlockState(pos.west()).getBlock() == Blocks.BEDROCK) && (mc.world.getBlockState(pos.east()).getBlock() == Blocks.OBSIDIAN || mc.world.getBlockState(pos.east()).getBlock() == Blocks.BEDROCK)) {
-                          obsidianholes.add(pos);
+                            obsidianholes.add(pos);
                         } else if (mc.world.getBlockState(pos.up()).getBlock() == Blocks.AIR && mc.world.getBlockState(pos.north().up()).getBlock() == Blocks.AIR && mc.world.getBlockState(pos).getBlock() == Blocks.AIR && mc.world.getBlockState(pos.down()).getBlock() == Blocks.BEDROCK && mc.world.getBlockState(pos.north().down()).getBlock() == Blocks.BEDROCK && mc.world.getBlockState(pos.north()).getBlock() == Blocks.AIR && mc.world.getBlockState(pos.north().north()).getBlock() == Blocks.BEDROCK && mc.world.getBlockState(pos.east()).getBlock() == Blocks.BEDROCK && mc.world.getBlockState(pos.north().east()).getBlock() == Blocks.BEDROCK && mc.world.getBlockState(pos.south()).getBlock() == Blocks.BEDROCK && mc.world.getBlockState(pos.north().west()).getBlock() == Blocks.BEDROCK && mc.world.getBlockState(pos.west()).getBlock() == Blocks.BEDROCK && mc.world.getBlockState(pos.east()).getBlock() == Blocks.BEDROCK) {
                             bedrockholes.add(pos);
                             bedrockholes.add(pos.north());
@@ -215,4 +215,3 @@ public class ESP extends Module {
         return updates + " | " + Minecraft.getDebugFPS();
     }
 }
-

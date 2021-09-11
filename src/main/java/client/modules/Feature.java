@@ -4,12 +4,11 @@ import client.Client;
 import client.gui.ClientGui;
 import client.gui.impl.setting.Setting;
 import client.manager.TextManager;
-import client.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Feature implements Util{
+public class Feature{
     public List<Setting> settings = new ArrayList <> ( );
     public TextManager renderer = Client.textManager;
     private String name;
@@ -22,11 +21,11 @@ public class Feature implements Util{
     }
 
     public static boolean nullCheck() {
-        return Feature.mc.player == null;
+        return Client.mc.player == null;
     }
 
     public static boolean fullNullCheck() {
-        return Feature.mc.player == null || Feature.mc.world == null;
+        return Client.mc.player == null || Client.mc.world == null;
     }
 
     public String getName() {
@@ -55,7 +54,7 @@ public class Feature implements Util{
     public Setting register(Setting setting) {
         setting.setFeature(this);
         this.settings.add(setting);
-        if (this instanceof Module && Feature.mc.currentScreen instanceof ClientGui) {
+        if (this instanceof Module && Client.mc.currentScreen instanceof ClientGui) {
             ClientGui.getInstance().updateModule((Module) this);
         }
         return setting;
@@ -70,7 +69,7 @@ public class Feature implements Util{
         if (!removeList.isEmpty()) {
             this.settings.removeAll(removeList);
         }
-        if (this instanceof Module && Feature.mc.currentScreen instanceof ClientGui) {
+        if (this instanceof Module && Client.mc.currentScreen instanceof ClientGui) {
             ClientGui.getInstance().updateModule((Module) this);
         }
     }

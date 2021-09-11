@@ -9,6 +9,7 @@ import java.util.HashMap;
 
 public class SpeedManager
         extends Feature {
+    public static final Minecraft mc = Minecraft.getMinecraft();
     public static final double LAST_JUMP_INFO_DURATION_DEFAULT = 3.0;
     public static boolean didJumpThisTick = false;
     public static boolean isJumping = false;

@@ -3,14 +3,15 @@ package client.command;
 import client.Client;
 import client.modules.Feature;
 import com.mojang.realmsclient.gui.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentBase;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public abstract class Command
-        extends Feature {
+public abstract class Command extends Feature {
+    public static final Minecraft mc = Minecraft.getMinecraft();
     protected String name;
     protected String[] commands;
 
