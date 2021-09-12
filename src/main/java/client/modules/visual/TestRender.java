@@ -28,6 +28,7 @@ public class TestRender extends Module {
     }
 
     public void onTick(){
+        
         /**RED**/
         if(redda > red.getCurrentState()){
             redda = redda - (red.getCurrentState() > 200 ? red.getCurrentState() / 32 : red.getCurrentState() > 150 ? red.getCurrentState() / 16 : red.getCurrentState() > 100 ? red.getCurrentState() / 8 : red.getCurrentState() > 50 ? red.getCurrentState() / 4 : red.getCurrentState());

@@ -8,7 +8,6 @@ import client.modules.miscellaneous.FakePlayer;
 import client.modules.miscellaneous.TotemPopCounter;
 import client.modules.visual.NameTags;
 import client.modules.visual.PopChams;
-import client.util.NiggerException;
 import client.util.Timer;
 import com.google.common.base.Strings;
 import com.mojang.realmsclient.gui.ChatFormatting;
@@ -57,12 +56,7 @@ public class EventManager extends Feature {
     }
 
     public void onUnload() {
-        try {
-
             MinecraftForge.EVENT_BUS.unregister(this);
-        } catch (NiggerException e) {
-            System.out.println(e);
-        }
     }
 
     @SubscribeEvent

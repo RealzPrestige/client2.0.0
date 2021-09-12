@@ -91,7 +91,7 @@ public class Holefiller extends Module {
             if (holes.size() == 0) {
                 return;
             }
-            final int lastSlot = this.mc.player.inventory.currentItem;
+            final int lastSlot = mc.player.inventory.currentItem;
             this.blockSlot = InventoryUtil.getItemFromHotbar(Item.getItemFromBlock(Blocks.OBSIDIAN));
             if (this.blockSlot == -1) {
                 return;

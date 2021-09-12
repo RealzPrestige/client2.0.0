@@ -3,9 +3,7 @@ package client;
 import client.gui.impl.background.MainMenuButton;
 import client.gui.impl.background.MainMenuScreen;
 import client.manager.*;
-import client.modules.Module;
 import client.util.HoleUtil;
-import client.util.NiggerException;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
@@ -16,14 +14,11 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.lwjgl.Sys;
 import org.lwjgl.opengl.Display;
-
 import javax.annotation.Nullable;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
-import java.util.ArrayList;
 
 @Mod(modid = "client", name = "Client", version = "2.0.0-b13")
 public class Client {
@@ -80,7 +75,6 @@ public class Client {
     }
 
     public static void unload() {
-        try {
             DiscordPresence.stop();
             Client.onUnload();
             eventManager = null;
@@ -96,9 +90,6 @@ public class Client {
             inventoryManager = null;
             moduleManager = null;
             textManager = null;
-        } catch (NiggerException e) {
-            System.out.println(e);
-        }
     }
 
     public static void onUnload() {
