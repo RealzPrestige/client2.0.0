@@ -262,12 +262,23 @@ public class BlockUtil {
             sneaking = true;
         }
         if (rotate) {
-            Client.rotationManager.lookAtVec3d(hitVec);
+            lookAtVec3d(hitVec);
         }
         BlockUtil.rightClickBlock(neighbour, hitVec, hand, opposite, packet);
         Client.mc.player.swingArm(EnumHand.MAIN_HAND);
         Client.mc.rightClickDelayTimer = 4;
         return sneaking || isSneaking;
+    }
+    public static void setPlayerRotations(float yaw, float pitch) {
+        mc.player.rotationYaw = yaw;
+        mc.player.rotationYawHead = yaw;
+        mc.player.rotationPitch = pitch;
+    }
+
+
+    public static void lookAtVec3d(Vec3d vec3d) {
+        float[] angle = MathUtil.calcAngle(mc.player.getPositionEyes(mc.getRenderPartialTicks()), new Vec3d(vec3d.x, vec3d.y, vec3d.z));
+        setPlayerRotations(angle[0], angle[1]);
     }
 
     public static void placeCrystalOnBlock(BlockPos pos, EnumHand hand, boolean swing) {

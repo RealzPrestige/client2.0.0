@@ -43,6 +43,8 @@ public class EventManager extends Feature {
     public int resetTimer;
     public int popAlpha;
     public double y;
+    private float yaw;
+    private float pitch;
     private final Timer logoutTimer = new Timer();
     private final Timer chorusTimer = new Timer();
     private final AtomicBoolean tickOngoing;
@@ -114,13 +116,16 @@ public class EventManager extends Feature {
         if (fullNullCheck())
             return;
         if (event.getStage() == 0) {
-            Client.speedManager.updateValues();
-            Client.rotationManager.updateRotations();
-            Client.positionManager.updatePosition();
+            this.yaw = mc.player.rotationYaw;
+            this.pitch = mc.player.rotationPitch;
         }
         if (event.getStage() == 1) {
-            Client.rotationManager.restoreRotations();
-            Client.positionManager.restorePosition();
+            mc.player.rotationYaw = this.yaw;
+            mc.player.rotationYawHead = this.yaw;
+            mc.player.rotationPitch = this.pitch;
+            mc.player.rotationYaw = this.yaw;
+            mc.player.rotationYawHead = this.yaw;
+            mc.player.rotationPitch = this.pitch;
         }
         if(resetTimer < 20) {
             ++resetTimer;

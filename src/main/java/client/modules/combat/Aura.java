@@ -10,6 +10,7 @@ import client.util.PlayerUtil;
 import client.util.Timer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class Aura extends Module {
@@ -55,7 +56,7 @@ public class Aura extends Module {
         if (target == null)
             return;
         if (this.rotate.getCurrentState())
-            Client.rotationManager.lookAtEntity(target);
+            lookAtEntity(target);
         EntityUtil.attackEntity(target, this.packet.getCurrentState(), true);
         this.timer.reset();
     }
@@ -93,4 +94,18 @@ public class Aura extends Module {
         }
         return target;
     }
+    public void lookAtVec3d(Vec3d vec3d) {
+        float[] angle = MathUtil.calcAngle(mc.player.getPositionEyes(mc.getRenderPartialTicks()), new Vec3d(vec3d.x, vec3d.y, vec3d.z));
+        this.setPlayerRotations(angle[0], angle[1]);
+    }
+    public void setPlayerRotations(float yaw, float pitch) {
+        mc.player.rotationYaw = yaw;
+        mc.player.rotationYawHead = yaw;
+        mc.player.rotationPitch = pitch;
+    }
+    public void lookAtEntity(Entity entity) {
+        float[] angle = MathUtil.calcAngle(mc.player.getPositionEyes(mc.getRenderPartialTicks()), entity.getPositionEyes(mc.getRenderPartialTicks()));
+        this.setPlayerRotations(angle[0], angle[1]);
+    }
+
 }

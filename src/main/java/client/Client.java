@@ -38,7 +38,6 @@ public class Client {
     public static ColorManager colorManager;
     public static InventoryManager inventoryManager;
     public static PotionManager potionManager;
-    public static RotationManager rotationManager;
     public static PositionManager positionManager;
     public static SpeedManager speedManager;
     public static FileManager fileManager;
@@ -63,7 +62,6 @@ public class Client {
         commandManager = new CommandManager();
         friendManager = new FriendManager();
         moduleManager = new ModuleManager();
-        rotationManager = new RotationManager();
         packetManager = new PacketManager();
         eventManager = new EventManager();
         speedManager = new SpeedManager();
@@ -89,7 +87,6 @@ public class Client {
             friendManager = null;
             speedManager = null;
             positionManager = null;
-            rotationManager = null;
             configManager = null;
             commandManager = null;
             colorManager = null;
