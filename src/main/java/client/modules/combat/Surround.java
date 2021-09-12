@@ -49,7 +49,7 @@ public class Surround extends Module {
         this.blocksPerTick = (Setting<Integer>)this.register(new Setting<>("BlocksPerTick", 20, 1, 20));
         this.noGhost = (Setting<Boolean>)this.register(new Setting<>("PacketPlace", false));
         this.centerp = (Setting<Boolean>)this.register(new Setting<>("Center", false));
-        this.centerPlayer = (Setting<Center>)this.register(new Setting("Center", Center.SMOOTH, v-> this.centerp.getCurrentState()));
+        this.centerPlayer = (Setting<Center>)this.register(new Setting("CenterMode", Center.SMOOTH, v-> this.centerp.getCurrentState()));
         this.rotate = (Setting<Boolean>)this.register(new Setting<>("Rotate", true));
         this.floor = true;
         this.timer = new client.util.Timer();
