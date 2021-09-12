@@ -1,17 +1,22 @@
 package client.mixin.mixins;
 
 import client.modules.miscellaneous.NoEntityTrace;
+import client.modules.visual.Chams;
 import client.modules.visual.NoRender;
 import client.modules.visual.ViewTweaks;
 import com.google.common.base.Predicate;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemPickaxe;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
+import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
@@ -30,6 +35,7 @@ public abstract class MixinEntityRenderer {
         }
         return worldClient.getEntitiesInAABBexcluding(entityIn, boundingBox, predicate);
     }
+
 
     @ModifyVariable(method={"orientCamera"}, ordinal=3, at=@At(value="STORE", ordinal=0), require=1)
     public double changeCameraDistanceHook(double range) {

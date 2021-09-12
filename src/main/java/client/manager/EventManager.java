@@ -93,13 +93,18 @@ public class EventManager extends Feature {
                 continue;
             MinecraftForge.EVENT_BUS.post(new DeathEvent(player));
             TotemPopCounter.getInstance().onDeath(player);
+            PopChams.getInstance().onTotemPop(player);
         }
 
         if(popAlpha > 0){
             popAlpha = popAlpha - (PopChams.getInstance().popSpeed.getCurrentState() == PopChams.PopSpeed.SLOW ? 1 : PopChams.getInstance().popSpeed.getCurrentState() == PopChams.PopSpeed.SLOWMEDIUM ? 2 : PopChams.getInstance().popSpeed.getCurrentState() == PopChams.PopSpeed.MEDIUM ? 3 : PopChams.getInstance().popSpeed.getCurrentState() == PopChams.PopSpeed.MEDIUMFAST ? 4 : 5);
         }
-        if (PopChams.INSTANCE.yTravel.getCurrentState()) {
-            y = y + (PopChams.getInstance().yTravelSpeed.getCurrentState() == PopChams.YTravelSpeed.SLOW ? 1 : PopChams.getInstance().yTravelSpeed.getCurrentState() == PopChams.YTravelSpeed.SLOWMEDIUM ? 2 : PopChams.getInstance().yTravelSpeed.getCurrentState() == PopChams.YTravelSpeed.MEDIUM ? 3 : PopChams.getInstance().yTravelSpeed.getCurrentState() == PopChams.YTravelSpeed.MEDIUMFAST ? 4 : 5);
+        if(PopChams.getInstance().clonedPlayer != null) {
+            if (PopChams.getInstance().yTravel.getCurrentState()) {
+                PopChams.getInstance().clonedPlayer.posY = PopChams.getInstance().clonedPlayer.posY + (PopChams.getInstance().yTravelSpeed.getCurrentState() == PopChams.YTravelSpeed.SLOW ? 0.1 / 5 : PopChams.getInstance().yTravelSpeed.getCurrentState() == PopChams.YTravelSpeed.SLOWMEDIUM ? 0.2 / 5 : PopChams.getInstance().yTravelSpeed.getCurrentState() == PopChams.YTravelSpeed.MEDIUM ? 0.3 / 5 : PopChams.getInstance().yTravelSpeed.getCurrentState() == PopChams.YTravelSpeed.MEDIUMFAST ? 0.4 / 5 : 0.5 / 5);
+            } else {
+                return;
+            }
         }
 
     }

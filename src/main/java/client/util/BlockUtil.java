@@ -5,7 +5,10 @@ import client.command.Command;
 import net.minecraft.block.*;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.item.EntityEnderCrystal;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
@@ -15,16 +18,53 @@ import net.minecraft.network.play.client.CPacketAnimation;
 import net.minecraft.network.play.client.CPacketEntityAction;
 import net.minecraft.network.play.client.CPacketPlayer;
 import net.minecraft.network.play.client.CPacketPlayerTryUseItemOnBlock;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.NonNullList;
+import net.minecraft.potion.Potion;
+import net.minecraft.util.*;
 import net.minecraft.util.math.*;
+import net.minecraft.world.Explosion;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class BlockUtil {
     public static final Minecraft mc = Minecraft.getMinecraft();
+
+    public static float calculateDamage(double posX, double posY, double posZ, Entity entity) {
+        float doubleSize = 12.0f;
+        double size = entity.getDistance(posX, posY, posZ) / (double)doubleSize;
+        Vec3d vec3d = new Vec3d(posX, posY, posZ);
+        double value = (1.0 - size) * (double)entity.world.getBlockDensity(vec3d, entity.getEntityBoundingBox());
+        float damage = (int)((value * value + value) / 2.0 * 7.0 * (double)doubleSize + 1.0);
+        double finalDamage = 1.0;
+        if (entity instanceof EntityLivingBase) {
+            finalDamage = getBlastReduction((EntityLivingBase)entity, getMultipliedDamage(damage), new Explosion(mc.world, null, posX, posY, posZ, 6.0f, false, true));
+        }
+        return (float)finalDamage;
+    }
+    public static float getBlastReduction(EntityLivingBase entity, float damage, Explosion explosion) {
+        try {
+            if (entity instanceof EntityPlayer) {
+                EntityPlayer player = (EntityPlayer)entity;
+                DamageSource source = DamageSource.causeExplosionDamage((Explosion)explosion);
+                damage = CombatRules.getDamageAfterAbsorb((float)damage, (float)player.getTotalArmorValue(), (float)((float)player.getEntityAttribute(SharedMonsterAttributes.ARMOR_TOUGHNESS).getAttributeValue()));
+                float modifier = MathHelper.clamp((float) EnchantmentHelper.getEnchantmentModifierDamage((Iterable)player.getArmorInventoryList(), (DamageSource)source), (float)0.0f, (float)20.0f);
+                damage *= 1.0f - modifier / 25.0f;
+                if (entity.isPotionActive(Objects.requireNonNull(Potion.getPotionById((int)11)))) {
+                    damage -= damage / 4.0f;
+                }
+                return damage;
+            }
+        }
+        catch (NullPointerException exception) {
+            exception.printStackTrace();
+        }
+        damage = CombatRules.getDamageAfterAbsorb((float)damage, (float)entity.getTotalArmorValue(), (float)((float)entity.getEntityAttribute(SharedMonsterAttributes.ARMOR_TOUGHNESS).getAttributeValue()));
+        return damage;
+    }
+    private static float getMultipliedDamage(float damage) {
+        return damage * (mc.world.getDifficulty().getId() == 0 ? 0.0f : (mc.world.getDifficulty().getId() == 2 ? 1.0f : (mc.world.getDifficulty().getId() == 1 ? 0.5f : 1.5f)));
+    }
+
     public static void placeCrystalOnBlockHacker(final BlockPos pos, final EnumHand hand) {
         final RayTraceResult result = Client.mc.world.rayTraceBlocks(new Vec3d(Client.mc.player.posX, Client.mc.player.posY + Client.mc.player.getEyeHeight(), Client.mc.player.posZ), new Vec3d(pos.getX() + 0.5, pos.getY() - 0.5, pos.getZ() + 0.5));
         final EnumFacing facing = (result == null || result.sideHit == null) ? EnumFacing.UP : result.sideHit;
