@@ -669,5 +669,125 @@ public class RenderUtil{
         GlStateManager.disableBlend();
         GlStateManager.popMatrix();
     }
+
+    //Kami5
+    public static void renderEntity(EntityLivingBase entity, ModelBase modelBase, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
+        if (mc.getRenderManager() == null) return;
+
+        if (modelBase instanceof ModelPlayer) {
+            ModelPlayer modelPlayer = ((ModelPlayer) modelBase);
+            modelPlayer.bipedHeadwear.showModel = false;
+            modelPlayer.bipedBodyWear.showModel = false;
+            modelPlayer.bipedLeftLegwear.showModel = false;
+            modelPlayer.bipedRightLegwear.showModel = false;
+            modelPlayer.bipedLeftArmwear.showModel = false;
+            modelPlayer.bipedRightArmwear.showModel = false;
+        }
+
+        float partialTicks = mc.getRenderPartialTicks();
+        double x = entity.posX - mc.getRenderManager().viewerPosX;
+        double y = entity.posY - mc.getRenderManager().viewerPosY;
+        double z = entity.posZ - mc.getRenderManager().viewerPosZ;
+
+        GlStateManager.pushMatrix();
+
+        if (entity.isSneaking()) {
+            y -= 0.125D;
+        }
+        renderLivingAt(x, y, z);
+        prepareRotations(entity);
+        float f4 = prepareScale(entity, scale);
+        float yaw = handleRotationFloat(entity, partialTicks);
+
+        GlStateManager.enableAlpha();
+        modelBase.setLivingAnimations(entity, limbSwing, limbSwingAmount, partialTicks);
+        modelBase.setRotationAngles(limbSwing, limbSwingAmount, 0, yaw, entity.rotationPitch, f4, entity);
+        modelBase.render(entity, limbSwing, limbSwingAmount, 0, yaw, entity.rotationPitch, f4);
+
+        //  GlStateManager.depthMask(true);
+
+        //   GlStateManager.disableRescaleNormal();
+        //   GlStateManager.disableBlendProfile(GlStateManager.Profile.PLAYER_SKIN);
+
+        GlStateManager.popMatrix();
+    }
+
+    public static void renderLivingAt(double x, double y, double z) {
+        GlStateManager.translate((float) x, (float) y, (float) z);
+
+    }
+
+    public static float prepareScale(EntityLivingBase entity, float scale) {
+        GlStateManager.enableRescaleNormal();
+        GlStateManager.scale(-1.0F, -1.0F, 1.0F);
+        double widthX = entity.getRenderBoundingBox().maxX - entity.getRenderBoundingBox().minX;
+        double widthZ = entity.getRenderBoundingBox().maxZ - entity.getRenderBoundingBox().minZ;
+
+        GlStateManager.scale(scale + widthX, scale * entity.height, scale + widthZ);
+        //  preRenderCallback();
+        float f = 0.0625F;
+
+        GlStateManager.translate(0.0F, -1.501F, 0.0F);
+        //  GlStateManager.translate(0.0F, -f * 4, 0.0F);
+        return f;
+    }
+
+    public static void prepareRotations(EntityLivingBase entityLivingBase) {
+        GlStateManager.rotate(180 - entityLivingBase.rotationYaw, 0, 1, 0);
+    }
+
+    public static float handleRotationFloat(EntityLivingBase livingBase, float partialTicks) {
+        return livingBase.rotationYawHead;
+    }
+
+    public static class RenderTesselator extends Tessellator {
+
+        public static RenderTesselator INSTANCE = new RenderTesselator();
+
+        public RenderTesselator() {
+            super(0x200000);
+        }
+
+        public static void prepare(int mode) {
+            prepareGL();
+            begin(mode);
+        }
+
+        public static void prepareGL() {
+            //GlStateManager.blendFunc(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+            GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+            GlStateManager.glLineWidth(1.5F);
+            GlStateManager.disableTexture2D();
+            GlStateManager.depthMask(false);
+            GlStateManager.enableBlend();
+            GlStateManager.disableDepth();
+            GlStateManager.disableLighting();
+            GlStateManager.disableCull();
+            GlStateManager.enableAlpha();
+            GlStateManager.color(1, 1, 1);
+        }
+
+        public static void begin(int mode) {
+            INSTANCE.getBuffer().begin(mode, DefaultVertexFormats.POSITION_COLOR);
+        }
+
+        public static void release() {
+            render();
+            releaseGL();
+        }
+
+        public static void render() {
+            INSTANCE.draw();
+        }
+
+        public static void releaseGL() {
+            GlStateManager.enableCull();
+            GlStateManager.depthMask(true);
+            GlStateManager.enableTexture2D();
+            GlStateManager.enableBlend();
+            GlStateManager.enableDepth();
+        }
+    }
 }
 
