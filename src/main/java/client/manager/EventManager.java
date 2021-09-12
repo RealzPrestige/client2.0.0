@@ -4,22 +4,27 @@ import client.Client;
 import client.command.Command;
 import client.events.*;
 import client.modules.Feature;
-import client.modules.miscellaneous.FakePlayer;
 import client.modules.miscellaneous.TotemPopCounter;
 import client.modules.visual.NameTags;
 import client.modules.visual.PopChams;
+import client.modules.visual.PopChamsRewrite;
 import client.util.NiggerException;
+import client.util.RenderUtil;
 import client.util.Timer;
 import com.google.common.base.Strings;
+import com.mojang.authlib.GameProfile;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.network.play.server.SPacketEntityStatus;
 import net.minecraft.network.play.server.SPacketPlayerListItem;
 import net.minecraft.network.play.server.SPacketSoundEffect;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.client.event.ClientChatEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
@@ -31,15 +36,18 @@ import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.GL11;
 
 import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import static client.util.RenderUtil.renderEntity;
+
 public class EventManager extends Feature {
     public static final Minecraft mc = Minecraft.getMinecraft();
-    public int incomingpackets;
-    public int sendingpackets;
+    public int incomingPackets;
+    public int sendingPackets;
     public int resetTimer;
     public int popAlpha;
     public double y;
@@ -48,6 +56,7 @@ public class EventManager extends Feature {
     private final Timer logoutTimer = new Timer();
     private final Timer chorusTimer = new Timer();
     private final AtomicBoolean tickOngoing;
+
     public EventManager() {
         this.tickOngoing = new AtomicBoolean(false);
     }
@@ -98,10 +107,10 @@ public class EventManager extends Feature {
             PopChams.getInstance().onTotemPop(player);
         }
 
-        if(popAlpha > 0){
+        if (popAlpha > 0) {
             popAlpha = popAlpha - (PopChams.getInstance().popSpeed.getCurrentState() == PopChams.PopSpeed.SLOW ? 1 : PopChams.getInstance().popSpeed.getCurrentState() == PopChams.PopSpeed.SLOWMEDIUM ? 2 : PopChams.getInstance().popSpeed.getCurrentState() == PopChams.PopSpeed.MEDIUM ? 3 : PopChams.getInstance().popSpeed.getCurrentState() == PopChams.PopSpeed.MEDIUMFAST ? 4 : 5);
         }
-        if(PopChams.getInstance().clonedPlayer != null) {
+        if (PopChams.getInstance().clonedPlayer != null) {
             if (PopChams.getInstance().yTravel.getCurrentState()) {
                 PopChams.getInstance().clonedPlayer.posY = PopChams.getInstance().clonedPlayer.posY + (PopChams.getInstance().yTravelSpeed.getCurrentState() == PopChams.YTravelSpeed.SLOW ? 0.1 / 5 : PopChams.getInstance().yTravelSpeed.getCurrentState() == PopChams.YTravelSpeed.SLOWMEDIUM ? 0.2 / 5 : PopChams.getInstance().yTravelSpeed.getCurrentState() == PopChams.YTravelSpeed.MEDIUM ? 0.3 / 5 : PopChams.getInstance().yTravelSpeed.getCurrentState() == PopChams.YTravelSpeed.MEDIUMFAST ? 0.4 / 5 : 0.5 / 5);
             } else {
@@ -127,28 +136,29 @@ public class EventManager extends Feature {
             mc.player.rotationYawHead = this.yaw;
             mc.player.rotationPitch = this.pitch;
         }
-        if(resetTimer < 20) {
+        if (resetTimer < 20) {
             ++resetTimer;
         } else {
             resetTimer = 0;
-            sendingpackets = 0;
-            incomingpackets = 0;
+            sendingPackets = 0;
+            incomingPackets = 0;
         }
 
     }
 
     @SubscribeEvent
-    public void onPlayerDisconnect(EntityRemovedEvent event){
+    public void onPlayerDisconnect(EntityRemovedEvent event) {
         NameTags.getInstance().entities.remove(event.getEntity());
     }
 
     @SubscribeEvent
     public void onPacketSend(PacketEvent.Send event) {
-        ++sendingpackets;
+        ++sendingPackets;
     }
+
     @SubscribeEvent
     public void onPacketReceive(PacketEvent.Receive event) {
-        ++incomingpackets;
+        ++incomingPackets;
         if (event.getStage() != 0)
             return;
         Client.serverManager.onPacketReceived();
@@ -158,7 +168,12 @@ public class EventManager extends Feature {
                 EntityPlayer player = (EntityPlayer) packet.getEntity(mc.world);
                 MinecraftForge.EVENT_BUS.post(new TotemPopEvent(player));
                 TotemPopCounter.getInstance().onTotemPop(player);
-                if(PopChams.getInstance().isEnabled()) {
+                if (PopChamsRewrite.INSTANCE.isEnabled()) {
+                    if (PopChamsRewrite.INSTANCE.self.getCurrentState() || packet.getEntity(mc.world).getEntityId() != mc.player.getEntityId()) {
+                        PopChamsRewrite.INSTANCE.totemPopChamsOnPopPacketTriggeredEventReceivedPackets(player);
+                    }
+                }
+                if (PopChams.getInstance().isEnabled()) {
                     PopChams.INSTANCE.onTotemPop(player);
                     popAlpha = PopChams.getInstance().startAlpha.getCurrentState() == PopChams.StartAlpha.LOW ? 50 : PopChams.getInstance().startAlpha.getCurrentState() == PopChams.StartAlpha.LOWMEDIUM ? 100 : PopChams.getInstance().startAlpha.getCurrentState() == PopChams.StartAlpha.MEDIUM ? 150 : PopChams.getInstance().startAlpha.getCurrentState() == PopChams.StartAlpha.MEDIUMHIGH ? 200 : 250;
                 }
@@ -192,10 +207,10 @@ public class EventManager extends Feature {
         }
         if (event.getPacket() instanceof net.minecraft.network.play.server.SPacketTimeUpdate) {
             Client.serverManager.update();
-        } else if ( event.getPacket ( ) instanceof SPacketSoundEffect && ( (SPacketSoundEffect) event.getPacket ( ) ).getSound ( ) == SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT ) {
-            if ( ! chorusTimer.passedMs ( 100 ) )
-                MinecraftForge.EVENT_BUS.post ( new ChorusEvent ( ( (SPacketSoundEffect) event.getPacket ( ) ).getX ( ) , ( (SPacketSoundEffect) event.getPacket ( ) ).getY ( ) , ( (SPacketSoundEffect) event.getPacket ( ) ).getZ ( ) ) );
-            chorusTimer.reset ( );
+        } else if (event.getPacket() instanceof SPacketSoundEffect && ((SPacketSoundEffect) event.getPacket()).getSound() == SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT) {
+            if (!chorusTimer.passedMs(100))
+                MinecraftForge.EVENT_BUS.post(new ChorusEvent(((SPacketSoundEffect) event.getPacket()).getX(), ((SPacketSoundEffect) event.getPacket()).getY(), ((SPacketSoundEffect) event.getPacket()).getZ()));
+            chorusTimer.reset();
         }
         /**
          *
@@ -204,7 +219,7 @@ public class EventManager extends Feature {
          *
          */
 
-        else if ( event.getPacket ( ) instanceof SPacketSoundEffect && ( (SPacketSoundEffect) event.getPacket ( ) ).getSound ( ) == SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT ) {
+        else if (event.getPacket() instanceof SPacketSoundEffect && ((SPacketSoundEffect) event.getPacket()).getSound() == SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT) {
             if (!chorusTimer.passedMs(100)) {
                 MinecraftForge.EVENT_BUS.post(new ChorusEvent(((SPacketSoundEffect) event.getPacket()).getX(), ((SPacketSoundEffect) event.getPacket()).getY(), ((SPacketSoundEffect) event.getPacket()).getZ()));
                 chorusTimer.reset();
@@ -212,34 +227,7 @@ public class EventManager extends Feature {
         }
     }
 
-    @SubscribeEvent
-    public void onWorldRender(RenderWorldLastEvent event) {
-        if (event.isCanceled())
-            return;
-        mc.profiler.startSection("client");
-        GlStateManager.disableTexture2D();
-        GlStateManager.enableBlend();
-        GlStateManager.disableAlpha();
-        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-        GlStateManager.shadeModel(7425);
-        GlStateManager.disableDepth();
-        GlStateManager.glLineWidth(1.0F);
-        Render3DEvent render3dEvent = new Render3DEvent(event.getPartialTicks());
-        Client.moduleManager.onRender3D(render3dEvent);
-        GlStateManager.glLineWidth(1.0F);
-        GlStateManager.shadeModel(7424);
-        GlStateManager.disableBlend();
-        GlStateManager.enableAlpha();
-        GlStateManager.enableTexture2D();
-        GlStateManager.enableDepth();
-        GlStateManager.enableCull();
-        GlStateManager.enableCull();
-        GlStateManager.depthMask(true);
-        GlStateManager.enableTexture2D();
-        GlStateManager.enableBlend();
-        GlStateManager.enableDepth();
-        mc.profiler.endSection();
-    }
+
 
     @SubscribeEvent
     public void renderHUD(RenderGameOverlayEvent.Post event) {
@@ -280,7 +268,12 @@ public class EventManager extends Feature {
             }
         }
     }
+
     public boolean ticksOngoing() {
         return this.tickOngoing.get();
+    }
+
+    public double normalize(double value, double min, double max) {
+        return ((value - min) / (max - min));
     }
 }

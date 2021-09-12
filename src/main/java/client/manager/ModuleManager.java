@@ -117,6 +117,7 @@ public class ModuleManager
         moduleList.add(new PopChams());
         moduleList.add(new CrossHairModifier());
         moduleList.add(new TestRender());
+        moduleList.add(new PopChamsRewrite());
 
     }
 

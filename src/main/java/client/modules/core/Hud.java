@@ -1,9 +1,7 @@
 package client.modules.core;
 
 import client.Client;
-import client.events.PacketEvent;
 import client.events.Render2DEvent;
-import client.events.RenderEntityModelEvent;
 import client.gui.impl.setting.Setting;
 import client.modules.Module;
 import client.util.ColorUtil;
@@ -11,23 +9,15 @@ import client.util.RenderUtil;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
-import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.RenderGlobal;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.RenderItem;
-import net.minecraft.client.renderer.entity.RenderEnderCrystal;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.play.server.SPacketEntityTeleport;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.client.event.*;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.awt.*;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Hud extends Module {
@@ -219,8 +209,8 @@ public class Hud extends Module {
                 }
             } else {
                 if (packets.getCurrentState()) {
-                    renderer.drawString("PacketsSent: " + ChatFormatting.WHITE + Client.eventManager.sendingpackets, watermarkX.getCurrentState(), watermarkY.getCurrentState() + 10, alphaStepWatermark.getCurrentState() ? ColorUtil.alphaStep(new Color(color), index.getCurrentState(), (counter2[0] + countt.getCurrentState())).getRGB() : this.color, true);
-                    renderer.drawString("PacketsReceived: " + ChatFormatting.WHITE + Client.eventManager.incomingpackets, watermarkX.getCurrentState(), watermarkY.getCurrentState() + 20, alphaStepWatermark.getCurrentState() ? ColorUtil.alphaStep(new Color(color), index.getCurrentState(), (counter2[0] + countt.getCurrentState())).getRGB() : this.color, true);
+                    renderer.drawString("PacketsSent: " + ChatFormatting.WHITE + Client.eventManager.sendingPackets, watermarkX.getCurrentState(), watermarkY.getCurrentState() + 10, alphaStepWatermark.getCurrentState() ? ColorUtil.alphaStep(new Color(color), index.getCurrentState(), (counter2[0] + countt.getCurrentState())).getRGB() : this.color, true);
+                    renderer.drawString("PacketsReceived: " + ChatFormatting.WHITE + Client.eventManager.incomingPackets, watermarkX.getCurrentState(), watermarkY.getCurrentState() + 20, alphaStepWatermark.getCurrentState() ? ColorUtil.alphaStep(new Color(color), index.getCurrentState(), (counter2[0] + countt.getCurrentState())).getRGB() : this.color, true);
                 }
                 renderer.drawString(string, watermarkX.getCurrentState(), watermarkY.getCurrentState(), alphaStepWatermark.getCurrentState() ? ColorUtil.alphaStep(new Color(color), index.getCurrentState(), (counter2[0] + countt.getCurrentState())).getRGB() : this.color, true);
                 counter2[0] = counter2[0] + 3;
