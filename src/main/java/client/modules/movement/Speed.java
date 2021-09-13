@@ -25,7 +25,7 @@ public class Speed extends Module {
     public Setting<Bind> switchBind = register(new Setting<>("SwitchBind", new Bind(-1)));
     public enum Mode{STRAFE, INSTANT}
     public Speed(){
-        super("Strafe", "Increases and tweaks movement.", Category.MOVEMENT);
+        super("Speed", "Increases and tweaks movement.", Category.MOVEMENT);
         this.setInstance();
     }
 

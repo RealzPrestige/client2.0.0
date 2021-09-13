@@ -86,6 +86,7 @@ public class ModuleManager
         moduleList.add(new AntiAim());
         moduleList.add(new AutoWalk());
         moduleList.add(new Strafe());
+        moduleList.add(new Anchor());
 
         //PLAYER
         moduleList.add(new KeyEXP());
@@ -120,6 +121,7 @@ public class ModuleManager
         moduleList.add(new NoRender());
         moduleList.add(new PopChams());
         moduleList.add(new CrossHairModifier());
+        moduleList.add(new PopChamsRewrite());
 
     }
 

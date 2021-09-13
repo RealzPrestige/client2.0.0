@@ -55,7 +55,6 @@ public class PopChamsRewrite extends Module {
 
             GL11.glLineWidth(1);
 
-            int lineA = 255;
             int fillA = alpha.getCurrentState();
 
             if (System.currentTimeMillis() - startTime > fadeStart.getCurrentState()) {
@@ -63,12 +62,8 @@ public class PopChamsRewrite extends Module {
                 double normal = normalize(((double) time), 0, fadeStart.getCurrentState());
                 normal = MathHelper.clamp(normal, 0, 1);
                 normal = (-normal) + 1;
-                lineA = (int) (normal * lineA);
                 fillA = (int) (normal * fillA);
             }
-            //Color lineColor = new Color(PopChams.red.getValInt(), PopChams.green.getValInt(), PopChams.blue.getValInt(), lineA);
-            //Color fillColor = new Color(PopChams.red.getValInt(), PopChams.green.getValInt(), PopChams.blue.getValInt(), fillA);
-
             if (player != null) {
                 RenderUtil.RenderTesselator.prepareGL();
                 GlStateManager.pushMatrix();

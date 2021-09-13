@@ -1,13 +1,17 @@
 package client.modules.combat;
 
+import client.command.Command;
 import client.events.Render3DEvent;
 import client.gui.impl.setting.Setting;
 import client.modules.Module;
+import client.modules.movement.Step;
 import client.util.BlockUtil;
 import client.util.InventoryUtil;
 import client.util.PlayerUtil;
 import client.util.RenderUtil;
 import com.google.common.collect.Sets;
+import com.mojang.realmsclient.gui.ChatFormatting;
+import net.minecraft.block.BlockEnderChest;
 import net.minecraft.block.BlockObsidian;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumHand;
@@ -21,6 +25,7 @@ import java.util.Map;
 
 public class SurroundRewrite extends Module {
     int maxBlocks;
+    int itemSlot;
     HashMap<BlockPos, Integer> surroundFadeBlock = new HashMap<>();
     HashSet<BlockPos> staticBlocks = Sets.newHashSet();
     public Setting<SpeedFactor> speedFactor = register(new Setting<>("SpeedFactor", SpeedFactor.UPDATE));
@@ -31,6 +36,8 @@ public class SurroundRewrite extends Module {
     public enum SwingMode{MAINHAND, OFFHAND}
     public Setting<DisableMode> disableMode = register(new Setting<>("DisableMode", DisableMode.SMART));
     public enum DisableMode{ONCOMPLETE, MOTION, ONGROUND, SMART, STEPHEIGHT}
+    public Setting<BlockSelection> blocks = register(new Setting<>("Blocks", BlockSelection.OBSIDIAN));
+    public enum BlockSelection{OBSIDIAN, ECHEST, AUTO}
     public Setting<Boolean> bottomBlocks = register(new Setting<>("BottomBlocks", false));
     public Setting<Boolean> bottomBlocksExtend = register(new Setting<>("BottomBlocksExtend", false, v-> bottomBlocks.getCurrentState()));
     public Setting<Boolean> maxBlock = register(new Setting<>("MaxBlocks", false));
@@ -55,7 +62,7 @@ public class SurroundRewrite extends Module {
     public Setting<Integer> fadeStep = register(new Setting<>("FadeStep", 20, 10, 100, v-> render.getCurrentState() && renderMode.getCurrentState() == RenderMode.FADE));
 
     public SurroundRewrite(){
-        super("SurroundRewrite", "", Category.COMBAT);
+        super("SurroundRewrite", "Surrounds you with Obsidian.", Category.COMBAT);
     }
     public void onUpdate(){
         if(speedFactor.getCurrentState() == SpeedFactor.UPDATE){
@@ -92,14 +99,31 @@ public class SurroundRewrite extends Module {
     public void doSurround(){
         BlockPos pos = PlayerUtil.getPlayerPos();
         BlockPos center = PlayerUtil.getCenterPos(pos.getX(), pos.getY(), pos.getZ());
-        int obbySlot = InventoryUtil.findHotbarBlock(BlockObsidian.class);
         int originalSlot = Surround.mc.player.inventory.currentItem;
-        if(obbySlot == -1){
-            return;
+        switch(blocks.getCurrentState()){
+            case OBSIDIAN: {
+                itemSlot = InventoryUtil.findHotbarBlock(BlockObsidian.class);
+                break;
+            }
+            case ECHEST: {
+                itemSlot = InventoryUtil.findHotbarBlock(BlockEnderChest.class);
+                break;
+            }
+            case AUTO: {
+                if(InventoryUtil.findHotbarBlock(BlockObsidian.class) != -1){
+                    itemSlot = InventoryUtil.findHotbarBlock(BlockObsidian.class);
+                } else if(InventoryUtil.findHotbarBlock(BlockEnderChest.class) != -1) {
+                    itemSlot = InventoryUtil.findHotbarBlock(BlockEnderChest.class);
+                }
+            }
+        }
+        if(itemSlot == -1){
+            Command.sendMessage(ChatFormatting.WHITE + "<Client 2.0.0>" + ChatFormatting.BOLD +  " Surround: " + ChatFormatting.RESET + ChatFormatting.GRAY+ "No blocks found, Disabling.");
+            disable();
         }
         switch(disableMode.getCurrentState()) {
             case SMART: {
-                if (mc.player.motionY > 0.2 && !mc.player.onGround && mc.player.stepHeight > 0.6) {
+                if (mc.player.motionY > 0.2 && !mc.player.onGround && mc.player.stepHeight > 0.6 || Step.getInstance().isEnabled()) {
                     disable();
                 }
                 break;
@@ -130,10 +154,10 @@ public class SurroundRewrite extends Module {
             }
         }
         if(bottomBlocksExtend.getCurrentState()) {
-            if (mc.world.getBlockState(center.down().north()).getBlock() == Blocks.AIR && mc.world.getEntitiesWithinAABBExcludingEntity(null, new AxisAlignedBB(center.down().north())).isEmpty()) {
+            if (mc.world.getBlockState(center.down().north()).getBlock() == Blocks.AIR) {
                 if (maxBlock.getCurrentState()) {
                     if (maxBlocks < maxBlocksAmount.getCurrentState()) {
-                        mc.player.inventory.currentItem = obbySlot;
+                        mc.player.inventory.currentItem = itemSlot;
                         mc.playerController.updateController();
                         BlockUtil.placeBlock(center.down().north(), EnumHand.MAIN_HAND, rotate.getCurrentState(), placeMode.getCurrentState() == PlaceMode.PACKET, false);
                         mc.player.inventory.currentItem = originalSlot;
@@ -148,7 +172,7 @@ public class SurroundRewrite extends Module {
                         return;
                     }
                 } else {
-                    mc.player.inventory.currentItem = obbySlot;
+                    mc.player.inventory.currentItem = itemSlot;
                     mc.playerController.updateController();
                     BlockUtil.placeBlock(center.down().north(), EnumHand.MAIN_HAND, rotate.getCurrentState(), placeMode.getCurrentState() == PlaceMode.PACKET, false);
                     mc.player.inventory.currentItem = originalSlot;
@@ -162,10 +186,10 @@ public class SurroundRewrite extends Module {
                 }
             }
 
-            if (mc.world.getBlockState(center.down().east()).getBlock() == Blocks.AIR && mc.world.getEntitiesWithinAABBExcludingEntity(null, new AxisAlignedBB(center.down().east())).isEmpty()) {
+            if (mc.world.getBlockState(center.down().east()).getBlock() == Blocks.AIR) {
                 if (maxBlock.getCurrentState()) {
                     if (maxBlocks < maxBlocksAmount.getCurrentState()) {
-                        mc.player.inventory.currentItem = obbySlot;
+                        mc.player.inventory.currentItem = itemSlot;
                         mc.playerController.updateController();
                         BlockUtil.placeBlock(center.down().east(), EnumHand.MAIN_HAND, rotate.getCurrentState(), placeMode.getCurrentState() == PlaceMode.PACKET, false);
                         mc.player.inventory.currentItem = originalSlot;
@@ -180,7 +204,7 @@ public class SurroundRewrite extends Module {
                         return;
                     }
                 } else {
-                    mc.player.inventory.currentItem = obbySlot;
+                    mc.player.inventory.currentItem = itemSlot;
                     mc.playerController.updateController();
                     BlockUtil.placeBlock(center.down().east(), EnumHand.MAIN_HAND, rotate.getCurrentState(), placeMode.getCurrentState() == PlaceMode.PACKET, false);
                     mc.player.inventory.currentItem = originalSlot;
@@ -194,10 +218,10 @@ public class SurroundRewrite extends Module {
                 }
             }
 
-            if (mc.world.getBlockState(center.down().south()).getBlock() == Blocks.AIR && mc.world.getEntitiesWithinAABBExcludingEntity(null, new AxisAlignedBB(center.down().south())).isEmpty()) {
+            if (mc.world.getBlockState(center.down().south()).getBlock() == Blocks.AIR) {
                 if (maxBlock.getCurrentState()) {
                     if (maxBlocks < maxBlocksAmount.getCurrentState()) {
-                        mc.player.inventory.currentItem = obbySlot;
+                        mc.player.inventory.currentItem = itemSlot;
                         mc.playerController.updateController();
                         BlockUtil.placeBlock(center.down().south(), EnumHand.MAIN_HAND, rotate.getCurrentState(), placeMode.getCurrentState() == PlaceMode.PACKET, false);
                         mc.player.inventory.currentItem = originalSlot;
@@ -212,7 +236,7 @@ public class SurroundRewrite extends Module {
                         return;
                     }
                 } else {
-                    mc.player.inventory.currentItem = obbySlot;
+                    mc.player.inventory.currentItem = itemSlot;
                     mc.playerController.updateController();
                     BlockUtil.placeBlock(center.down().south(), EnumHand.MAIN_HAND, rotate.getCurrentState(), placeMode.getCurrentState() == PlaceMode.PACKET, false);
                     mc.player.inventory.currentItem = originalSlot;
@@ -225,10 +249,10 @@ public class SurroundRewrite extends Module {
                     }
                 }
             }
-            if (mc.world.getBlockState(center.down().west()).getBlock() == Blocks.AIR && mc.world.getEntitiesWithinAABBExcludingEntity(null, new AxisAlignedBB(center.down().west())).isEmpty()) {
+            if (mc.world.getBlockState(center.down().west()).getBlock() == Blocks.AIR) {
                 if (maxBlock.getCurrentState()) {
                     if (maxBlocks < maxBlocksAmount.getCurrentState()) {
-                        mc.player.inventory.currentItem = obbySlot;
+                        mc.player.inventory.currentItem = itemSlot;
                         mc.playerController.updateController();
                         BlockUtil.placeBlock(center.down().west(), EnumHand.MAIN_HAND, rotate.getCurrentState(), placeMode.getCurrentState() == PlaceMode.PACKET, false);
                         mc.player.inventory.currentItem = originalSlot;
@@ -243,7 +267,7 @@ public class SurroundRewrite extends Module {
                         return;
                     }
                 } else {
-                    mc.player.inventory.currentItem = obbySlot;
+                    mc.player.inventory.currentItem = itemSlot;
                     mc.playerController.updateController();
                     BlockUtil.placeBlock(center.down().west(), EnumHand.MAIN_HAND, rotate.getCurrentState(), placeMode.getCurrentState() == PlaceMode.PACKET, false);
                     mc.player.inventory.currentItem = originalSlot;
@@ -259,10 +283,10 @@ public class SurroundRewrite extends Module {
         }
 
         //Get Bottom
-        if(mc.world.getBlockState(center.down()).getBlock() == Blocks.AIR && mc.world.getEntitiesWithinAABBExcludingEntity(null, new AxisAlignedBB(center.down())).isEmpty()) {
+        if(mc.world.getBlockState(center.down()).getBlock() == Blocks.AIR) {
             if (maxBlock.getCurrentState()) {
                 if (maxBlocks < maxBlocksAmount.getCurrentState()) {
-                    mc.player.inventory.currentItem = obbySlot;
+                    mc.player.inventory.currentItem = itemSlot;
                     mc.playerController.updateController();
                     BlockUtil.placeBlock(center.down(), EnumHand.MAIN_HAND, rotate.getCurrentState(), placeMode.getCurrentState() == PlaceMode.PACKET, false);
                     mc.player.inventory.currentItem = originalSlot;
@@ -277,7 +301,7 @@ public class SurroundRewrite extends Module {
                     return;
                 }
             } else {
-                mc.player.inventory.currentItem = obbySlot;
+                mc.player.inventory.currentItem = itemSlot;
                 mc.playerController.updateController();
                 BlockUtil.placeBlock(center.down(), EnumHand.MAIN_HAND, rotate.getCurrentState(), placeMode.getCurrentState() == PlaceMode.PACKET, false);
                 mc.player.inventory.currentItem = originalSlot;
@@ -291,10 +315,10 @@ public class SurroundRewrite extends Module {
             }
         }
             //Get north:
-        if(mc.world.getBlockState(center.north()).getBlock() == Blocks.AIR && mc.world.getEntitiesWithinAABBExcludingEntity(null, new AxisAlignedBB(center.north())).isEmpty()){
+        if(mc.world.getBlockState(center.north()).getBlock() == Blocks.AIR){
             if(maxBlock.getCurrentState()) {
                 if(maxBlocks < maxBlocksAmount.getCurrentState()) {
-                    mc.player.inventory.currentItem = obbySlot;
+                    mc.player.inventory.currentItem = itemSlot;
                     mc.playerController.updateController();
                     BlockUtil.placeBlock(center.north(), EnumHand.MAIN_HAND, rotate.getCurrentState(), placeMode.getCurrentState() == PlaceMode.PACKET, false);
                     mc.player.inventory.currentItem = originalSlot;
@@ -309,7 +333,7 @@ public class SurroundRewrite extends Module {
                     return;
                 }
             } else {
-                mc.player.inventory.currentItem = obbySlot;
+                mc.player.inventory.currentItem = itemSlot;
                 mc.playerController.updateController();
                 BlockUtil.placeBlock(center.north(), EnumHand.MAIN_HAND, rotate.getCurrentState(), placeMode.getCurrentState() == PlaceMode.PACKET, false);
                 mc.player.inventory.currentItem = originalSlot;
@@ -323,10 +347,10 @@ public class SurroundRewrite extends Module {
             }
         }
         //Get east:
-        if(mc.world.getBlockState(center.east()).getBlock() == Blocks.AIR && mc.world.getEntitiesWithinAABBExcludingEntity(null, new AxisAlignedBB(center.east())).isEmpty()){
+        if(mc.world.getBlockState(center.east()).getBlock() == Blocks.AIR){
             if(maxBlock.getCurrentState()) {
                 if (maxBlocks < maxBlocksAmount.getCurrentState()) {
-                    mc.player.inventory.currentItem = obbySlot;
+                    mc.player.inventory.currentItem = itemSlot;
                     mc.playerController.updateController();
                     BlockUtil.placeBlock(center.east(), EnumHand.MAIN_HAND, rotate.getCurrentState(), placeMode.getCurrentState() == PlaceMode.PACKET, false);
                     mc.player.inventory.currentItem = originalSlot;
@@ -341,7 +365,7 @@ public class SurroundRewrite extends Module {
                     return;
                 }
             } else {
-                mc.player.inventory.currentItem = obbySlot;
+                mc.player.inventory.currentItem = itemSlot;
                 mc.playerController.updateController();
                 BlockUtil.placeBlock(center.east(), EnumHand.MAIN_HAND, rotate.getCurrentState(), placeMode.getCurrentState() == PlaceMode.PACKET, false);
                 mc.player.inventory.currentItem = originalSlot;
@@ -355,10 +379,10 @@ public class SurroundRewrite extends Module {
             }
         }
         //Get south:
-        if(mc.world.getBlockState(center.south()).getBlock() == Blocks.AIR && mc.world.getEntitiesWithinAABBExcludingEntity(null, new AxisAlignedBB(center.south())).isEmpty()){
+        if(mc.world.getBlockState(center.south()).getBlock() == Blocks.AIR){
             if(maxBlock.getCurrentState()) {
                 if (maxBlocks < maxBlocksAmount.getCurrentState()) {
-                    mc.player.inventory.currentItem = obbySlot;
+                    mc.player.inventory.currentItem = itemSlot;
                     mc.playerController.updateController();
                     BlockUtil.placeBlock(center.south(), EnumHand.MAIN_HAND, rotate.getCurrentState(), placeMode.getCurrentState() == PlaceMode.PACKET, false);
                     mc.player.inventory.currentItem = originalSlot;
@@ -374,7 +398,7 @@ public class SurroundRewrite extends Module {
                     return;
                 }
             }  else {
-                mc.player.inventory.currentItem = obbySlot;
+                mc.player.inventory.currentItem = itemSlot;
                 mc.playerController.updateController();
                 BlockUtil.placeBlock(center.south(), EnumHand.MAIN_HAND, rotate.getCurrentState(), placeMode.getCurrentState() == PlaceMode.PACKET, false);
                 mc.player.inventory.currentItem = originalSlot;
@@ -388,10 +412,10 @@ public class SurroundRewrite extends Module {
             }
         }
         //Get west:
-        if(mc.world.getBlockState(center.west()).getBlock() == Blocks.AIR && mc.world.getEntitiesWithinAABBExcludingEntity(null, new AxisAlignedBB(center.west())).isEmpty()){
+        if(mc.world.getBlockState(center.west()).getBlock() == Blocks.AIR){
             if(maxBlock.getCurrentState()) {
                 if (maxBlocks < maxBlocksAmount.getCurrentState()) {
-                    mc.player.inventory.currentItem = obbySlot;
+                    mc.player.inventory.currentItem = itemSlot;
                     mc.playerController.updateController();
                     BlockUtil.placeBlock(center.west(), EnumHand.MAIN_HAND, rotate.getCurrentState(), placeMode.getCurrentState() == PlaceMode.PACKET, false);
                     mc.player.inventory.currentItem = originalSlot;
@@ -406,7 +430,7 @@ public class SurroundRewrite extends Module {
                     return;
                 }
             } else {
-                mc.player.inventory.currentItem = obbySlot;
+                mc.player.inventory.currentItem = itemSlot;
                 mc.playerController.updateController();
                 BlockUtil.placeBlock(center.west(), EnumHand.MAIN_HAND, rotate.getCurrentState(), placeMode.getCurrentState() == PlaceMode.PACKET, false);
                 mc.player.inventory.currentItem = originalSlot;

@@ -243,7 +243,7 @@ public class Surround extends Module {
     }
 
     private boolean placeBlocks(final Vec3d pos, final Vec3d[] vec3ds, final boolean hasHelpingBlocks, final boolean isHelping, final boolean isExtending) {
-        boolean gotHelp = true;
+        boolean gotHelp;
         for (final Vec3d vec3d : vec3ds) {
             gotHelp = true;
             final BlockPos position = new BlockPos(pos).add(vec3d.x, vec3d.y, vec3d.z);

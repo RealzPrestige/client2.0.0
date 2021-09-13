@@ -59,7 +59,7 @@ public class AutoCrystal extends Module {
     public Setting<Float> accel;
     public Setting<Float> moveSpeed;
     public Setting<Enum> fade;
-    public enum Enum{FAST, MEDIUM, SLOW}
+    public enum Enum{SLOW, MEDIUM, FAST, FASTER, FASTEST}
     public Setting<Integer> red;
     public Setting<Integer> green;
     public Setting<Integer> blue;
@@ -366,7 +366,7 @@ public class AutoCrystal extends Module {
             }
             if (renderPos.alpha > Math.max(alpha.getCurrentState(), rainbow.getCurrentState() ? ColorUtil.rainbow(ClickGui.getInstance().rainbowHue.getCurrentState()).getRGB() : ColorUtil.toRGBA(red.getCurrentState(), green.getCurrentState(), blue.getCurrentState())))
                 toRemove.add(renderPos);
-            renderPos.alpha = renderPos.alpha + (fade.getCurrentState() == Enum.FAST ? 1.5 : fade.getCurrentState() == Enum.SLOW ? 0.5 : 1);
+            renderPos.alpha = renderPos.alpha + (fade.getCurrentState() == Enum.FAST ? 1.5 : fade.getCurrentState() == Enum.SLOW ? 0.5 : fade.getCurrentState() == Enum.FASTER ? 2.0 : fade.getCurrentState() == Enum.FASTEST ? 2.5 : 1.0);
             if (currentTargets.contains(renderPos.pos)) {
                 renderPos.alpha = 0;
             } else if (renderMode.getCurrentState() != RenderMode.FADE) {
