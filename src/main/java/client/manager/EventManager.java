@@ -8,7 +8,7 @@ import client.modules.miscellaneous.TotemPopCounter;
 import client.modules.visual.NameTags;
 import client.modules.visual.PopChams;
 import client.modules.visual.PopChamsRewrite;
-import client.util.NiggerException;
+
 import client.util.RenderUtil;
 import client.util.Timer;
 import com.google.common.base.Strings;
@@ -66,12 +66,7 @@ public class EventManager extends Feature {
     }
 
     public void onUnload() {
-        try {
-
             MinecraftForge.EVENT_BUS.unregister(this);
-        } catch (NiggerException e) {
-            System.out.println(e);
-        }
     }
 
     @SubscribeEvent
@@ -170,7 +165,7 @@ public class EventManager extends Feature {
                 TotemPopCounter.getInstance().onTotemPop(player);
                 if (PopChamsRewrite.INSTANCE.isEnabled()) {
                     if (PopChamsRewrite.INSTANCE.self.getCurrentState() || packet.getEntity(mc.world).getEntityId() != mc.player.getEntityId()) {
-                        PopChamsRewrite.INSTANCE.totemPopChamsOnPopPacketTriggeredEventReceivedPackets(player);
+                        PopChamsRewrite.INSTANCE.k(player);
                     }
                 }
                 if (PopChams.getInstance().isEnabled()) {
