@@ -33,17 +33,11 @@ public abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends 
     protected ModelBase mainModel;
     @Shadow
     protected boolean renderMarker;
-
     float red;
-
     float green;
-
     float blue;
-
     float outlinered;
-
     float outlinegreen;
-
     float outlineblue;
     protected MixinRenderLivingBase(RenderManager renderManager) {
         super(renderManager);

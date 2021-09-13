@@ -254,7 +254,7 @@ public class AutoCrystal extends Module {
 
         if (placePos != null) {
             clearMap(placePos);
-            Objects.requireNonNull(mc.getConnection()).sendPacket(new CPacketPlayerTryUseItemOnBlock(placePos, EnumFacing.UP, this.offhand ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND , 0.5f, 0.5f, 0.5f));
+            mc.getConnection().sendPacket(new CPacketPlayerTryUseItemOnBlock(placePos, EnumFacing.UP, this.offhand ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND , 0.5f, 0.5f, 0.5f));
             renderMap.add(new RenderPos(placePos, 0.0));
             this.placeSet.add(placePos);
             this.renderPos = placePos;
@@ -291,7 +291,7 @@ public class AutoCrystal extends Module {
             if (entity != null && this.breakTimer.passedMs(this.breakDelay.getCurrentState())) {
                 BlockPos renderPos = entity.getPosition().down();
                 clearMap(renderPos);
-                Objects.requireNonNull(mc.getConnection()).sendPacket(new CPacketUseEntity(entity));
+                mc.getConnection().sendPacket(new CPacketUseEntity(entity));
                 renderMap.add(new RenderPos(renderPos, 0.0));
                 if(swing.getCurrentState()) {
                     mc.player.swingArm(this.offhand ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND);
@@ -317,7 +317,7 @@ public class AutoCrystal extends Module {
         final CPacketUseEntity hitPacket = new CPacketUseEntity();
         hitPacket.entityId = id;
         hitPacket.action = CPacketUseEntity.Action.ATTACK;
-        Objects.requireNonNull(mc.getConnection()).sendPacket(hitPacket);
+        mc.getConnection().sendPacket(hitPacket);
         this.predictedId = id;
         if(swing.getCurrentState()) {
             mc.player.swingArm(this.offhand ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND);

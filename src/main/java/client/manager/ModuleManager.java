@@ -4,6 +4,7 @@ import client.events.Render2DEvent;
 import client.events.Render3DEvent;
 import client.gui.ClientGui;
 import client.gui.impl.background.MenuToggler;
+import client.gui.impl.button.BindButton;
 import client.modules.Feature;
 import client.modules.Module;
 import client.modules.combat.*;
@@ -52,6 +53,8 @@ public class ModuleManager
         moduleList.add(new Criticals());
         moduleList.add(new AntiCity());
         moduleList.add(new ObiAssist());
+        moduleList.add(new HolefillerRewrite());
+        moduleList.add(new SurroundRewrite());
 
         //MISCELLANEOUS
         moduleList.add(new FakePlayer());
@@ -117,8 +120,6 @@ public class ModuleManager
         moduleList.add(new NoRender());
         moduleList.add(new PopChams());
         moduleList.add(new CrossHairModifier());
-        moduleList.add(new TestRender());
-        moduleList.add(new PopChamsRewrite());
 
     }
 

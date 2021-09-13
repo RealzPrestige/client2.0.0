@@ -119,10 +119,12 @@ public class PlayerUtil{
         return (float)(100 - (int)(red * 100.0f));
     }
 
-    public static Vec3d getCenter(final double posX, final double posY, final double posZ) {
+    public static Vec3d getCenterVec3d(final double posX, final double posY, final double posZ) {
         return new Vec3d(Math.floor(posX) + 0.5, Math.floor(posY), Math.floor(posZ) + 0.5);
     }
-
+    public static BlockPos getCenterPos(final double posX, final double posY, final double posZ) {
+        return new BlockPos(Math.floor(posX) + 0.5, Math.floor(posY), Math.floor(posZ) + 0.5);
+    }
     public static void faceVector(Vec3d vec, boolean normalizeAngle) {
         float[] rotations = EntityUtil.getLegitRotations(vec);
         mc.player.connection.sendPacket(new CPacketPlayer.Rotation(rotations[0], normalizeAngle ? (float) MathHelper.normalizeAngle((int) rotations[1], 360) : rotations[1], mc.player.onGround));

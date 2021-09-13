@@ -485,6 +485,14 @@ public class RenderUtil{
             RenderUtil.drawBlockOutline(pos, secondC ? secondColor : color, lineWidth, air);
         }
     }
+    public static void drawBoxESP(BlockPos pos, Color color, boolean secondC, Color secondColor, float lineWidth, boolean outline, boolean box, float boxAlpha, boolean air) {
+        if (box) {
+            RenderUtil.drawBox(pos, new Color(color.getRed(), color.getGreen(), color.getBlue(), boxAlpha));
+        }
+        if (outline) {
+            RenderUtil.drawBlockOutline(pos, secondC ? secondColor : color, lineWidth, air);
+        }
+    }
     public static void drawPerryESP ( AxisAlignedBB a , Color boxColor , Color outlineColor , float lineWidth , boolean outline , boolean box , float alpha , float scale , float slab ) {
         double f = 0.5 * ( 1 - scale );
         AxisAlignedBB bb = RenderUtil.interpolateAxis ( new AxisAlignedBB (
