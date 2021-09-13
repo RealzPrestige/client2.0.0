@@ -209,8 +209,8 @@ public class Hud extends Module {
                 }
             } else {
                 if (packets.getCurrentState()) {
-                    renderer.drawString("PacketsSent: " + ChatFormatting.WHITE + Client.eventManager.sendingpackets, watermarkX.getCurrentState(), watermarkY.getCurrentState() + 10, alphaStepWatermark.getCurrentState() ? ColorUtil.alphaStep(new Color(color), index.getCurrentState(), (counter2[0] + countt.getCurrentState())).getRGB() : this.color, true);
-                    renderer.drawString("PacketsReceived: " + ChatFormatting.WHITE + Client.eventManager.incomingpackets, watermarkX.getCurrentState(), watermarkY.getCurrentState() + 20, alphaStepWatermark.getCurrentState() ? ColorUtil.alphaStep(new Color(color), index.getCurrentState(), (counter2[0] + countt.getCurrentState())).getRGB() : this.color, true);
+                    renderer.drawString("PacketsSent: " + ChatFormatting.WHITE + Client.eventManager.sendingPackets, watermarkX.getCurrentState(), watermarkY.getCurrentState() + 10, alphaStepWatermark.getCurrentState() ? ColorUtil.alphaStep(new Color(color), index.getCurrentState(), (counter2[0] + countt.getCurrentState())).getRGB() : this.color, true);
+                    renderer.drawString("PacketsReceived: " + ChatFormatting.WHITE + Client.eventManager.incomingPackets, watermarkX.getCurrentState(), watermarkY.getCurrentState() + 20, alphaStepWatermark.getCurrentState() ? ColorUtil.alphaStep(new Color(color), index.getCurrentState(), (counter2[0] + countt.getCurrentState())).getRGB() : this.color, true);
                 }
                 renderer.drawString(string, watermarkX.getCurrentState(), watermarkY.getCurrentState(), alphaStepWatermark.getCurrentState() ? ColorUtil.alphaStep(new Color(color), index.getCurrentState(), (counter2[0] + countt.getCurrentState())).getRGB() : this.color, true);
                 counter2[0] = counter2[0] + 3;
