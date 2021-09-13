@@ -2,6 +2,7 @@ package client.modules.visual;
 
 import client.Client;
 import client.events.Render3DEvent;
+import client.events.TotemPopEvent;
 import client.gui.impl.setting.Setting;
 import client.modules.Module;
 import client.util.RenderUtil;
@@ -11,9 +12,12 @@ import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.opengl.GL11;
 
 import static client.util.RenderUtil.renderEntity;
+import static org.lwjgl.opengl.GL11.glDisable;
+import static org.lwjgl.opengl.GL11.glEnable;
 
 public class PopChamsRewrite extends Module {
     EntityPlayer player = null;
@@ -37,17 +41,18 @@ public class PopChamsRewrite extends Module {
     public PopChamsRewrite() {
         super("PopChamsRewrite", "Rewrote Op module.", Category.VISUAL);}
 
-        public void totemPopChamsOnPopPacketTriggeredEventReceivedPackets(EntityPlayer player) {
-            if (self.getCurrentState() || player != mc.player) {
+        public void k(EntityPlayer poppedPlayer) {
+            if (self.getCurrentState() || poppedPlayer != mc.player) {
                 GameProfile profile = new GameProfile(mc.player.getUniqueID(), "");
                 player = new EntityOtherPlayerMP(mc.world, profile);
-                player.copyLocationAndAnglesFrom(player);
-                playerModel = new ModelPlayer(0, false);
+                player.copyLocationAndAnglesFrom(poppedPlayer);
                 startTime = System.currentTimeMillis();
             }
         }
         @Override
         public void onRender3D(Render3DEvent event) {
+            playerModel = new ModelPlayer(0, false);
+
             GL11.glLineWidth(1);
 
             int lineA = 255;
@@ -66,15 +71,23 @@ public class PopChamsRewrite extends Module {
 
             if (player != null) {
                 RenderUtil.RenderTesselator.prepareGL();
-                GlStateManager.color(red.getCurrentState(), green.getCurrentState(), blue.getCurrentState(), fillA);
-                GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
-                renderEntity(player, playerModel, player.limbSwing, player.limbSwingAmount, player.ticksExisted, player.rotationYawHead, player.rotationPitch, 1);
-
-                GlStateManager.color(red.getCurrentState(), green.getCurrentState(), blue.getCurrentState(), fillA);
-                GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
-                renderEntity(player, playerModel, player.limbSwing, player.limbSwingAmount, player.ticksExisted, player.rotationYawHead, player.rotationPitch, 1);
-                GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
-                //       glPopAttrib();
+                GlStateManager.pushMatrix();
+                GL11.glPushAttrib(1048575);
+                glDisable(3553);
+                glDisable(2896);
+                glEnable(2848);
+                glEnable(3042);
+                GL11.glBlendFunc(770, 771);
+                glDisable(2929);
+                GL11.glDepthMask(false);
+                GL11.glColor4f(red.getCurrentState()/255.0f, green.getCurrentState()/255.0f, blue.getCurrentState()/255.0f, fillA/255.0f);
+                renderEntity(player, playerModel, 0, 0, player.ticksExisted, player.rotationYawHead, player.rotationPitch, 1);
+                glDisable(2896);
+                glEnable(2929);
+                renderEntity(player, playerModel, 0, 0, player.ticksExisted, player.rotationYawHead, player.rotationPitch, 1);
+                glEnable(2896);
+                GlStateManager.popAttrib();
+                GlStateManager.popMatrix();
                 RenderUtil.RenderTesselator.releaseGL();
             }
         }
@@ -82,6 +95,10 @@ public class PopChamsRewrite extends Module {
     double normalize(double value, double min, double max) {
         return ((value - min) / (max - min));
 
+        }
+        @Override
+        public void onEnable(){
+        k(mc.player);
         }
 }
 

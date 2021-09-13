@@ -9,22 +9,17 @@ import client.modules.visual.NameTags;
 import client.modules.visual.PopChams;
 import client.modules.visual.PopChamsRewrite;
 import client.util.NiggerException;
-import client.util.RenderUtil;
 import client.util.Timer;
 import com.google.common.base.Strings;
-import com.mojang.authlib.GameProfile;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.network.play.server.SPacketEntityStatus;
 import net.minecraft.network.play.server.SPacketPlayerListItem;
 import net.minecraft.network.play.server.SPacketSoundEffect;
-import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.client.event.ClientChatEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
@@ -36,13 +31,10 @@ import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent;
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.GL11;
 
 import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-import static client.util.RenderUtil.renderEntity;
 
 public class EventManager extends Feature {
     public static final Minecraft mc = Minecraft.getMinecraft();
@@ -105,6 +97,7 @@ public class EventManager extends Feature {
             MinecraftForge.EVENT_BUS.post(new DeathEvent(player));
             TotemPopCounter.getInstance().onDeath(player);
             PopChams.getInstance().onTotemPop(player);
+            PopChamsRewrite.INSTANCE.k(player);
         }
 
         if (popAlpha > 0) {
@@ -169,10 +162,8 @@ public class EventManager extends Feature {
                 MinecraftForge.EVENT_BUS.post(new TotemPopEvent(player));
                 TotemPopCounter.getInstance().onTotemPop(player);
                 if (PopChamsRewrite.INSTANCE.isEnabled()) {
-                    if (PopChamsRewrite.INSTANCE.self.getCurrentState() || packet.getEntity(mc.world).getEntityId() != mc.player.getEntityId()) {
-                        PopChamsRewrite.INSTANCE.totemPopChamsOnPopPacketTriggeredEventReceivedPackets(player);
+                        PopChamsRewrite.INSTANCE.k(player);
                     }
-                }
                 if (PopChams.getInstance().isEnabled()) {
                     PopChams.INSTANCE.onTotemPop(player);
                     popAlpha = PopChams.getInstance().startAlpha.getCurrentState() == PopChams.StartAlpha.LOW ? 50 : PopChams.getInstance().startAlpha.getCurrentState() == PopChams.StartAlpha.LOWMEDIUM ? 100 : PopChams.getInstance().startAlpha.getCurrentState() == PopChams.StartAlpha.MEDIUM ? 150 : PopChams.getInstance().startAlpha.getCurrentState() == PopChams.StartAlpha.MEDIUMHIGH ? 200 : 250;
