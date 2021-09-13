@@ -94,7 +94,7 @@ public class Setting<T> {
     public Setting(String name, int red, int green, int blue, int alpha, Predicate<T> visibility, Boolean colorSetting) {
         this.name = name;
         this.isColorSetting = colorSetting;
-        this.color = new Color(red,green,blue);
+        this.color = new Color(red,green,blue,alpha);
         this.r = red;
         this.g = green;
         this.b = blue;
@@ -109,6 +109,11 @@ public class Setting<T> {
     }
 
     public T getCurrentState() {
+        return this.value;
+    }
+
+    //made skidding easier
+    public T getValue() {
         return this.value;
     }
 

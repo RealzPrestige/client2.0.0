@@ -64,7 +64,7 @@ public class PopChamsRewrite extends Module {
             //Color lineColor = new Color(PopChams.red.getValInt(), PopChams.green.getValInt(), PopChams.blue.getValInt(), lineA);
             //Color fillColor = new Color(PopChams.red.getValInt(), PopChams.green.getValInt(), PopChams.blue.getValInt(), fillA);
 
-            if (player != null && PopChams.INSTANCE.isEnabled()) {
+            if (player != null) {
                 RenderUtil.RenderTesselator.prepareGL();
                 GlStateManager.color(red.getCurrentState(), green.getCurrentState(), blue.getCurrentState(), fillA);
                 GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
@@ -77,30 +77,6 @@ public class PopChamsRewrite extends Module {
                 //       glPopAttrib();
                 RenderUtil.RenderTesselator.releaseGL();
             }
-
-            mc.profiler.startSection("client");
-            GlStateManager.disableTexture2D();
-            GlStateManager.enableBlend();
-            GlStateManager.disableAlpha();
-            GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-            GlStateManager.shadeModel(7425);
-            GlStateManager.disableDepth();
-            GlStateManager.glLineWidth(1.0F);
-            Render3DEvent render3dEvent = new Render3DEvent(event.getPartialTicks());
-            Client.moduleManager.onRender3D(render3dEvent);
-            GlStateManager.glLineWidth(1.0F);
-            GlStateManager.shadeModel(7424);
-            GlStateManager.disableBlend();
-            GlStateManager.enableAlpha();
-            GlStateManager.enableTexture2D();
-            GlStateManager.enableDepth();
-            GlStateManager.enableCull();
-            GlStateManager.enableCull();
-            GlStateManager.depthMask(true);
-            GlStateManager.enableTexture2D();
-            GlStateManager.enableBlend();
-            GlStateManager.enableDepth();
-            mc.profiler.endSection();
         }
 
     double normalize(double value, double min, double max) {

@@ -80,11 +80,12 @@ public class ModuleManager
         moduleList.add(new NoSlow());
         moduleList.add(new ElytraFlight());
         moduleList.add(new Jesus());
-        moduleList.add(new Strafe());
+        moduleList.add(new Speed());
         moduleList.add(new NoFall());
         moduleList.add(new FastSwim());
         moduleList.add(new AntiAim());
         moduleList.add(new AutoWalk());
+        moduleList.add(new Strafe());
 
         //PLAYER
         moduleList.add(new KeyEXP());

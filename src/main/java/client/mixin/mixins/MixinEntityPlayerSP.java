@@ -1,7 +1,7 @@
 package client.mixin.mixins;
 
 import client.events.*;
-import client.modules.movement.Strafe;
+import client.modules.movement.Speed;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -28,9 +28,9 @@ public abstract class MixinEntityPlayerSP
     }
     @Redirect(method={"onUpdateWalkingPlayer"}, at=@At(value="FIELD", target="net/minecraft/util/math/AxisAlignedBB.minY:D"))
     private double minYHook(AxisAlignedBB bb) {
-        if (Strafe.getInstance().isOn() && Strafe.getInstance().changeY && Strafe.getInstance().mode.getCurrentState() == Strafe.Mode.INSTANT) {
-            Strafe.getInstance().changeY = false;
-            return Strafe.getInstance().minY;
+        if (Speed.getInstance().isOn() && Speed.getInstance().changeY && Speed.getInstance().mode.getCurrentState() == Speed.Mode.INSTANT) {
+            Speed.getInstance().changeY = false;
+            return Speed.getInstance().minY;
         }
         return bb.minY;
     }
