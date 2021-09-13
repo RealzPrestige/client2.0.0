@@ -54,6 +54,7 @@ public class ModuleManager
         moduleList.add(new AntiCity());
         moduleList.add(new ObiAssist());
         moduleList.add(new HolefillerRewrite());
+        moduleList.add(new SurroundRewrite());
 
         //MISCELLANEOUS
         moduleList.add(new FakePlayer());

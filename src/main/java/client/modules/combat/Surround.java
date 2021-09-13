@@ -71,7 +71,7 @@ public class Surround extends Module {
         }
         this.lastHotbarSlot = Surround.mc.player.inventory.currentItem;
         this.startPos = EntityUtil.getRoundedBlockPos( Surround.mc.player );
-        this.center = PlayerUtil.getCenter(Surround.mc.player.posX, Surround.mc.player.posY, Surround.mc.player.posZ);
+        this.center = PlayerUtil.getCenterVec3d(Surround.mc.player.posX, Surround.mc.player.posY, Surround.mc.player.posZ);
         if(this.centerp.getCurrentState()) {
             switch (this.centerPlayer.getCurrentState()) {
                 case INSTANT: {
@@ -176,7 +176,7 @@ public class Surround extends Module {
             this.toggle();
         }
         this.offHand = InventoryUtil.isBlock(Surround.mc.player.getHeldItemOffhand().getItem(), BlockObsidian.class);
-        Surround.isPlacing = false;
+        isPlacing = false;
         this.didPlace = false;
         this.extenders = 1;
         this.placements = 0;
@@ -304,13 +304,6 @@ public class Surround extends Module {
             this.didPlace = true;
             ++this.placements;
         }
-    }
-
-    private List<BlockPos> position() {
-        if (this.floor) {
-            return Arrays.asList(new BlockPos(Surround.mc.player.getPositionVector()).add(0, -1, 0), new BlockPos(Surround.mc.player.getPositionVector()).add(1, 0, 0), new BlockPos(Surround.mc.player.getPositionVector()).add(-1, 0, 0), new BlockPos(Surround.mc.player.getPositionVector()).add(0, 0, -1), new BlockPos(Surround.mc.player.getPositionVector()).add(0, 0, 1));
-        }
-        return Arrays.asList(new BlockPos(Surround.mc.player.getPositionVector()).add(1, 0, 0), new BlockPos(Surround.mc.player.getPositionVector()).add(-1, 0, 0), new BlockPos(Surround.mc.player.getPositionVector()).add(0, 0, -1), new BlockPos(Surround.mc.player.getPositionVector()).add(0, 0, 1));
     }
     static {
         Surround.isPlacing = false;
