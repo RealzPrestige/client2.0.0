@@ -14,10 +14,10 @@ public class Anchor extends Module {
 
     HashSet<BlockPos> holes = Sets.newHashSet();
     public Setting<Double> onGroundDistance = register(new Setting("HoleDistance", 0.5, 0.1, 3.0));
-    public Setting<Float> walkSpeed = register(new Setting("SlowWalkSpeed", 0.1f, 0.0f, 0.5f));
+    public Setting<Float> walkSpeed = register(new Setting("SlowWalkSpeed", 0.1f, 0.0f, 1.0f));
 
     public Anchor(){
-        super("Anchor", "", Category.MOVEMENT);
+        super("Anchor", "Slows down walking speed when near safe spots.", Category.MOVEMENT);
     }
 
     public void onUpdate(){
