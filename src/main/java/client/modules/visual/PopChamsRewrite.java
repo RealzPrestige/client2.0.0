@@ -29,9 +29,9 @@ public class PopChamsRewrite extends Module {
      */
 
     public Setting<Boolean> self = register(new Setting<>("Self", true));
-    public Setting<Integer> range = register(new Setting<>("Range", 30, 10, 100));
     public Setting<Boolean> solid = register(new Setting<>("Solid", true));
     public Setting<Boolean> outline = register(new Setting<>("Outline", true));
+    public Setting<Integer> range = register(new Setting<>("Range", 30, 10, 100));
     public Setting<Integer> fadeStart = register(new Setting<>("FadeTime", 1000, 0, 5000));
     public Setting<Integer> red = register(new Setting<>("Red", 255, 0, 255));
     public Setting<Integer> green = register(new Setting<>("Green", 255, 0, 255));
@@ -42,15 +42,13 @@ public class PopChamsRewrite extends Module {
         super("PopChamsRewrite", "Rewrote Op module.", Category.VISUAL);}
 
         public void k(EntityPlayer poppedPlayer) {
-            if (self.getCurrentState() || poppedPlayer != mc.player) {
-                if (mc.player.getDistance(player) < range.getValue()){
-                GameProfile profile = new GameProfile(mc.player.getUniqueID(), "");
-                player = new EntityOtherPlayerMP(mc.world, profile);
-                player.copyLocationAndAnglesFrom(poppedPlayer);
-                startTime = System.currentTimeMillis();
-            }
-            }
-        }
+                if (self.getCurrentState() || poppedPlayer != mc.player) {
+                        GameProfile profile = new GameProfile(mc.player.getUniqueID(), "");
+                        player = new EntityOtherPlayerMP(mc.world, profile);
+                        player.copyLocationAndAnglesFrom(poppedPlayer);
+                        startTime = System.currentTimeMillis();
+                    }
+                }
         @Override
         public void onUpdate(){
         for (EntityPlayer entity : mc.world.playerEntities) {
@@ -79,7 +77,7 @@ public class PopChamsRewrite extends Module {
                 lineA = (int) (normal * lineA);
                 fillA = (int) (normal * fillA);
             }
-            if (player != null) {
+            if (player != null && mc.player.getDistance(player) < range.getValue()) {
                 RenderUtil.RenderTesselator.prepareGL();
                 if (solid.getValue()) {
                     GlStateManager.pushMatrix();
