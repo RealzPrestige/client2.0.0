@@ -21,6 +21,10 @@ public class ChatModifications extends Module {
     public Setting<Boolean> suffix = this.register(new Setting("Suffix", true));
     public Setting<Boolean> space = this.register(new Setting("TimeStamps", true));
     public Setting<Boolean> customChat = this.register(new Setting("CustomChat", false));
+    public Setting<Boolean> alphaStep = this.register(new Setting("TimeAlphastep", false));
+    public Setting<Integer> R = this.register(new Setting<>("AlphastepR", 255, 0, 255, v -> this.alphaStep.getValue()));
+    public Setting<Integer> G = this.register(new Setting<>("AlphastepG", 255, 0, 255, v -> this.alphaStep.getValue()));
+    public Setting<Integer> B = this.register(new Setting<>("AlphastepB", 255, 0, 255, v -> this.alphaStep.getValue()));
     public Setting<TextUtil.Color> bracket = this.register(new Setting<Object>("Bracket", TextUtil.Color.WHITE, v -> this.timeStamps.getCurrentState() != TextUtil.Color.NONE));
     public Setting<TextUtil.Color> timeStamps = this.register(new Setting<>("Time", TextUtil.Color.NONE));
     public Setting<Boolean> rainbowTimeStamps = this.register(new Setting<Object>("RainbowTimeStamps", Boolean.FALSE, v -> this.timeStamps.getCurrentState() != TextUtil.Color.NONE));
@@ -37,6 +41,7 @@ public class ChatModifications extends Module {
 
     public static GuiChat guiChatSmooth;
     public static GuiNewChat guiChat;
+    public String message;
 
     public ChatModifications() {
         super("ChatModifications", "Modifies your chat to look cleaner.", Category.MISC);
@@ -90,7 +95,7 @@ public class ChatModifications extends Module {
                 return;
             }
             String originalMessage = ((SPacketChat) event.getPacket()).chatComponent.getFormattedText();
-            String message = this.getTimeString(originalMessage) + originalMessage;
+            message = this.getTimeString(originalMessage) + originalMessage;
             ((SPacketChat) event.getPacket()).chatComponent = new TextComponentString(message);
         }
     }
