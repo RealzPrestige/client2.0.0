@@ -165,7 +165,7 @@ public class EventManager extends Feature {
                 TotemPopCounter.getInstance().onTotemPop(player);
                 if (PopChamsRewrite.INSTANCE.isEnabled()) {
                     if (PopChamsRewrite.INSTANCE.self.getCurrentState() || packet.getEntity(mc.world).getEntityId() != mc.player.getEntityId()) {
-                        PopChamsRewrite.INSTANCE.k(player);
+                        PopChamsRewrite.INSTANCE.poppedPlayers.put(player,(int)System.currentTimeMillis());
                     }
                 }
                 if (PopChams.getInstance().isEnabled()) {
