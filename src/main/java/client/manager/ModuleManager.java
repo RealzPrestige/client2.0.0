@@ -55,6 +55,7 @@ public class ModuleManager
         moduleList.add(new ObiAssist());
         moduleList.add(new HolefillerRewrite());
         moduleList.add(new SurroundRewrite());
+        moduleList.add(new AntiTrap());
 
         //MISCELLANEOUS
         moduleList.add(new FakePlayer());

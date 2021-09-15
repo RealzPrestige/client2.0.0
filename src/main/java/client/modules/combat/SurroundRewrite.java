@@ -5,10 +5,7 @@ import client.events.Render3DEvent;
 import client.gui.impl.setting.Setting;
 import client.modules.Module;
 import client.modules.movement.Step;
-import client.util.BlockUtil;
-import client.util.InventoryUtil;
-import client.util.PlayerUtil;
-import client.util.RenderUtil;
+import client.util.*;
 import com.google.common.collect.Sets;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.block.BlockEnderChest;
@@ -99,7 +96,7 @@ public class SurroundRewrite extends Module {
     public void doSurround(){
         BlockPos pos = PlayerUtil.getPlayerPos();
         BlockPos center = PlayerUtil.getCenterPos(pos.getX(), pos.getY(), pos.getZ());
-        int originalSlot = Surround.mc.player.inventory.currentItem;
+        int originalSlot = mc.player.inventory.currentItem;
         switch(blocks.getCurrentState()){
             case OBSIDIAN: {
                 itemSlot = InventoryUtil.findHotbarBlock(BlockObsidian.class);
@@ -442,6 +439,17 @@ public class SurroundRewrite extends Module {
                     staticBlocks.add(center.west());
                 }
             }
+        }
+    }
+    @Override
+    public String hudInfoString() {
+        if(maxBlocks > 0){
+            return "Placing";
+        }
+        if(EntityUtil.isSafe(mc.player)){
+            return "Safe";
+        } else {
+            return "Unsafe";
         }
     }
 }

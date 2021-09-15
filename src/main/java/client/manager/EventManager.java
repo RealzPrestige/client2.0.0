@@ -95,8 +95,9 @@ public class EventManager extends Feature {
             return;
         Client.moduleManager.onTick();
         for (EntityPlayer player : mc.world.playerEntities) {
-            if (player == null || player.getHealth() > 0.0F)
+            if (player == null || player.getHealth() > 0.0F) {
                 continue;
+            }
             MinecraftForge.EVENT_BUS.post(new DeathEvent(player));
             TotemPopCounter.getInstance().onDeath(player);
             PopChams.getInstance().onTotemPop(player);

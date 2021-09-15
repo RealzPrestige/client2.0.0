@@ -143,7 +143,8 @@ public class HolefillerRewrite extends Module {
             int lastSlot = mc.player.inventory.currentItem;
             if(autoSwitch.getCurrentState()) {
                 if (silentSwitch.getCurrentState()) {
-                    mc.getConnection().sendPacket(new CPacketHeldItemChange(blockSlot));
+                    mc.player.inventory.currentItem = blockSlot;
+                    mc.playerController.updateController();
 
                 } else {
                     mc.player.inventory.currentItem = blockSlot;
@@ -169,7 +170,8 @@ public class HolefillerRewrite extends Module {
                 }
             }
                 if (autoSwitch.getCurrentState() && silentSwitch.getCurrentState()) {
-                    mc.getConnection().sendPacket(new CPacketHeldItemChange(lastSlot));
+                    mc.player.inventory.currentItem = lastSlot;
+                    mc.playerController.updateController();
             }
                 if(autoDisable.getCurrentState()){
                     disable();
@@ -187,7 +189,8 @@ public class HolefillerRewrite extends Module {
                 blockSlot = InventoryUtil.getItemFromHotbar(Item.getItemFromBlock(Blocks.OBSIDIAN));
                 if(autoSwitch.getCurrentState()) {
                     if (silentSwitch.getCurrentState()) {
-                        mc.getConnection().sendPacket(new CPacketHeldItemChange(blockSlot));
+                        mc.player.inventory.currentItem = blockSlot;
+                        mc.playerController.updateController();
                     } else {
                         mc.player.inventory.currentItem = blockSlot;
                     }
@@ -244,7 +247,8 @@ public class HolefillerRewrite extends Module {
                     }
                 }
                 if(autoSwitch.getCurrentState() && silentSwitch.getCurrentState()) {
-                   mc.getConnection().sendPacket(new CPacketHeldItemChange(lastSlot));
+                    mc.player.inventory.currentItem = lastSlot;
+                    mc.playerController.updateController();
                 }
                 if(autoDisable.getCurrentState()){
                     disable();
@@ -341,6 +345,11 @@ public class HolefillerRewrite extends Module {
             return facing;
         }
         return null;
+    }
+
+    @Override
+    public String hudInfoString() {
+        return "Auto";
     }
 
 }
