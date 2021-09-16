@@ -46,12 +46,17 @@ public class ModuleButton
                     newItems.add(new Slider(setting));
                     continue;
                 }
-                if (!setting.isEnumSetting()) continue;
-                newItems.add(new EnumButton(setting));
+                if (setting.isEnumSetting()) {
+                    newItems.add(new EnumButton(setting));
+                    continue;
+                }
+                if (setting.isColorSetting()) {
+                    newItems.add(new ColorPicker(setting));
+                }
             }
+            newItems.add(new BindButton(this.module.getSettingByName("Keybind")));
+            this.items = newItems;
         }
-        newItems.add(new BindButton(this.module.getSettingByName("Keybind")));
-        this.items = newItems;
     }
 
     @Override

@@ -38,6 +38,7 @@ public class ModuleManager
         moduleList.add(new Notify());
         moduleList.add(new RPC());
         moduleList.add(new MenuToggler());
+        moduleList.add(new Example());
 
         //COMBAT
         moduleList.add(new AutoArmor());

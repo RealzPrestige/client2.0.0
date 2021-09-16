@@ -91,15 +91,27 @@ public class Setting<T> {
         this.plannedValue = defaultValue;
     }
 
-    public Setting(String name, int red, int green, int blue, int alpha, Predicate<T> visibility, Boolean colorSetting) {
+    public Setting(String name, int red, int green, int blue, int alpha, Predicate<T> visibility) {
         this.name = name;
-        this.isColorSetting = colorSetting;
+        this.isColorSetting = true;
         this.color = new Color(red,green,blue,alpha);
         this.r = red;
         this.g = green;
         this.b = blue;
         this.a = alpha;
         this.visibility = visibility;
+        this.description = "";
+        this.hasRestriction = true;
+    }
+
+    public Setting(String name, int red, int green, int blue, int alpha) {
+        this.name = name;
+        this.isColorSetting = true;
+        this.color = new Color(red,green,blue,alpha);
+        this.r = red;
+        this.g = green;
+        this.b = blue;
+        this.a = alpha;
         this.description = "";
         this.hasRestriction = true;
     }
@@ -243,7 +255,7 @@ public class Setting<T> {
     }
 
     public boolean isEnumSetting() {
-        return !this.isNumberSetting() && !(this.value instanceof String) && !(this.value instanceof Bind) && !(this.value instanceof Character) && !(this.value instanceof Boolean);
+        return !this.isNumberSetting() && !(this.value instanceof String) && !(this.value instanceof Bind) && !(this.value instanceof Character) && !(this.value instanceof Boolean) && !(this.isColorSetting);
     }
 
     public boolean isStringSetting() {
