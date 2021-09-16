@@ -11,7 +11,7 @@ import net.minecraft.client.Minecraft;
 
 import java.awt.*;
 
-public class ColorPicker extends Button { //TODO: finish this
+public class ColorPicker extends Button { //TODO: kambing finish this
     public static final Minecraft mc = Minecraft.getMinecraft();
     public Setting setting;
     public Boolean open = false;
